@@ -1,4 +1,4 @@
-# Install script for directory: /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src/SFML
+# Install script for directory: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src/SFML
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,27 +43,12 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build/src/SFML/System/cmake_install.cmake")
-endif()
+  # Include the install script for each subdirectory.
+  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/cmake_install.cmake")
+  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/cmake_install.cmake")
+  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/cmake_install.cmake")
+  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/cmake_install.cmake")
+  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/cmake_install.cmake")
 
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build/src/SFML/Window/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build/src/SFML/Network/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build/src/SFML/Graphics/cmake_install.cmake")
-endif()
-
-if(NOT CMAKE_INSTALL_LOCAL_ONLY)
-  # Include the install script for the subdirectory.
-  include("/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build/src/SFML/Audio/cmake_install.cmake")
 endif()
 

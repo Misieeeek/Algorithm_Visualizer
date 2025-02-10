@@ -85,6 +85,51 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 .PHONY : rebuild_cache/fast
 
+# Special rule for the target list_install_components
+list_install_components:
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Available install components are: \"Unspecified\" \"devel\""
+.PHONY : list_install_components
+
+# Special rule for the target list_install_components
+list_install_components/fast: list_install_components
+.PHONY : list_install_components/fast
+
+# Special rule for the target install
+install: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install
+
+# Special rule for the target install
+install/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Install the project..."
+	/usr/bin/cmake -P cmake_install.cmake
+.PHONY : install/fast
+
+# Special rule for the target install/local
+install/local: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local
+
+# Special rule for the target install/local
+install/local/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing only the local directory..."
+	/usr/bin/cmake -DCMAKE_INSTALL_LOCAL_ONLY=1 -P cmake_install.cmake
+.PHONY : install/local/fast
+
+# Special rule for the target install/strip
+install/strip: preinstall
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip
+
+# Special rule for the target install/strip
+install/strip/fast: preinstall/fast
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --cyan "Installing the project stripped..."
+	/usr/bin/cmake -DCMAKE_INSTALL_DO_STRIP=1 -P cmake_install.cmake
+.PHONY : install/strip/fast
+
 # The main all target
 all: cmake_check_build_system
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles /home/misieeek/Documents/dev/Algorithm_Visualizer/build//CMakeFiles/progress.marks
@@ -129,29 +174,94 @@ Algorithm_Visualizer/fast:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/build
 .PHONY : Algorithm_Visualizer/fast
 
-Algorithm_Visualizer.o: Algorithm_Visualizer.cpp.o
-.PHONY : Algorithm_Visualizer.o
+#=============================================================================
+# Target rules for targets named sfml-system
+
+# Build rule for target.
+sfml-system: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sfml-system
+.PHONY : sfml-system
+
+# fast build rule for target.
+sfml-system/fast:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build
+.PHONY : sfml-system/fast
+
+#=============================================================================
+# Target rules for targets named sfml-window
+
+# Build rule for target.
+sfml-window: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sfml-window
+.PHONY : sfml-window
+
+# fast build rule for target.
+sfml-window/fast:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build
+.PHONY : sfml-window/fast
+
+#=============================================================================
+# Target rules for targets named sfml-network
+
+# Build rule for target.
+sfml-network: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sfml-network
+.PHONY : sfml-network
+
+# fast build rule for target.
+sfml-network/fast:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build
+.PHONY : sfml-network/fast
+
+#=============================================================================
+# Target rules for targets named sfml-graphics
+
+# Build rule for target.
+sfml-graphics: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sfml-graphics
+.PHONY : sfml-graphics
+
+# fast build rule for target.
+sfml-graphics/fast:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
+.PHONY : sfml-graphics/fast
+
+#=============================================================================
+# Target rules for targets named sfml-audio
+
+# Build rule for target.
+sfml-audio: cmake_check_build_system
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 sfml-audio
+.PHONY : sfml-audio
+
+# fast build rule for target.
+sfml-audio/fast:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build
+.PHONY : sfml-audio/fast
+
+algorithm_visualizer.o: algorithm_visualizer.cpp.o
+.PHONY : algorithm_visualizer.o
 
 # target to build an object file
-Algorithm_Visualizer.cpp.o:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o
-.PHONY : Algorithm_Visualizer.cpp.o
+algorithm_visualizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o
+.PHONY : algorithm_visualizer.cpp.o
 
-Algorithm_Visualizer.i: Algorithm_Visualizer.cpp.i
-.PHONY : Algorithm_Visualizer.i
+algorithm_visualizer.i: algorithm_visualizer.cpp.i
+.PHONY : algorithm_visualizer.i
 
 # target to preprocess a source file
-Algorithm_Visualizer.cpp.i:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.i
-.PHONY : Algorithm_Visualizer.cpp.i
+algorithm_visualizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.i
+.PHONY : algorithm_visualizer.cpp.i
 
-Algorithm_Visualizer.s: Algorithm_Visualizer.cpp.s
-.PHONY : Algorithm_Visualizer.s
+algorithm_visualizer.s: algorithm_visualizer.cpp.s
+.PHONY : algorithm_visualizer.s
 
 # target to generate assembly for a file
-Algorithm_Visualizer.cpp.s:
-	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.s
-.PHONY : Algorithm_Visualizer.cpp.s
+algorithm_visualizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.s
+.PHONY : algorithm_visualizer.cpp.s
 
 src/main_menu.o: src/main_menu.cpp.o
 .PHONY : src/main_menu.o
@@ -177,6 +287,54 @@ src/main_menu.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.s
 .PHONY : src/main_menu.cpp.s
 
+src/main_window.o: src/main_window.cpp.o
+.PHONY : src/main_window.o
+
+# target to build an object file
+src/main_window.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o
+.PHONY : src/main_window.cpp.o
+
+src/main_window.i: src/main_window.cpp.i
+.PHONY : src/main_window.i
+
+# target to preprocess a source file
+src/main_window.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.i
+.PHONY : src/main_window.cpp.i
+
+src/main_window.s: src/main_window.cpp.s
+.PHONY : src/main_window.s
+
+# target to generate assembly for a file
+src/main_window.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.s
+.PHONY : src/main_window.cpp.s
+
+src/options.o: src/options.cpp.o
+.PHONY : src/options.o
+
+# target to build an object file
+src/options.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o
+.PHONY : src/options.cpp.o
+
+src/options.i: src/options.cpp.i
+.PHONY : src/options.i
+
+# target to preprocess a source file
+src/options.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.i
+.PHONY : src/options.cpp.i
+
+src/options.s: src/options.cpp.s
+.PHONY : src/options.s
+
+# target to generate assembly for a file
+src/options.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.s
+.PHONY : src/options.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -184,14 +342,29 @@ help:
 	@echo "... clean"
 	@echo "... depend"
 	@echo "... edit_cache"
+	@echo "... install"
+	@echo "... install/local"
+	@echo "... install/strip"
+	@echo "... list_install_components"
 	@echo "... rebuild_cache"
 	@echo "... Algorithm_Visualizer"
-	@echo "... Algorithm_Visualizer.o"
-	@echo "... Algorithm_Visualizer.i"
-	@echo "... Algorithm_Visualizer.s"
+	@echo "... sfml-audio"
+	@echo "... sfml-graphics"
+	@echo "... sfml-network"
+	@echo "... sfml-system"
+	@echo "... sfml-window"
+	@echo "... algorithm_visualizer.o"
+	@echo "... algorithm_visualizer.i"
+	@echo "... algorithm_visualizer.s"
 	@echo "... src/main_menu.o"
 	@echo "... src/main_menu.i"
 	@echo "... src/main_menu.s"
+	@echo "... src/main_window.o"
+	@echo "... src/main_window.i"
+	@echo "... src/main_window.s"
+	@echo "... src/options.o"
+	@echo "... src/options.i"
+	@echo "... src/options.s"
 .PHONY : help
 
 

@@ -4,9 +4,9 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DSFML_STATIC -DSTBI_FAILURE_USERMSG
 
-CXX_INCLUDES = -I/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src -isystem /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include -isystem /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/extlibs/headers/stb_image -isystem /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/extlibs/headers/glad/include -isystem /usr/include/freetype2
+CXX_INCLUDES = -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/extlibs/headers/stb_image -I/usr/include/freetype2
 
-CXX_FLAGS = -std=gnu++17 -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wdouble-promotion -Wformat=2 -Wimplicit-fallthrough -Wsuggest-override -Wnull-dereference -Wold-style-cast -Wpedantic -Wmisleading-indentation -Wduplicated-cond -Wlogical-op -Wduplicated-branches
+CXX_FLAGS = -std=gnu++17 -fvisibility=hidden
 
-# Custom flags: _deps/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/Image.cpp.o_FLAGS = -fno-strict-aliasing
+# Custom flags: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/ImageLoader.cpp.o_FLAGS = -fno-strict-aliasing
 

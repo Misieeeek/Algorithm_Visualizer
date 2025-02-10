@@ -6,7 +6,7 @@ enum AppState { MAIN_MENU=-1, VISUALIZE, OPTIONS, EXIT };
 
 int main()
 {
-    MainWindow mainWindow;
+   MainWindow mainWindow;
    /* sf::RenderWindow window(sf::VideoMode(1280, 720), "Algorithm Visualizer", sf::Style::Close | sf::Style::Resize);
     MainMenu mainMenu;
     Options option;
