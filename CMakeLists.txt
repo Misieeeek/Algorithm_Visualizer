@@ -4,15 +4,29 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 project(Algorithm_Visualizer VERSION 1.0)
 
-find_package(SFML 2.6.1 REQUIRED COMPONENTS graphics window system)
-set(SFML_ROOT "${CMAKE_SOURCE_DIR}/external/SFML")
-set(CMAKE_PREFIX_PATH ${SFML_ROOT})
-include_directories(${SFML_INCLUDE_DIRS})
+include(FetchContent)
+
+#SFML
+set(BUILD_SHARED_LIBS OFF)
+set(FETCHCONTENT_BASE_DIR ${CMAKE_SOURCE_DIR}/external/SFML)
+
+FetchContent_Declare(
+    SFML
+    GIT_REPOSITORY https://github.com/SFML/SFML.git
+    GIT_TAG 2.5.1
+)
+FetchContent_MakeAvailable(SFML)
+
+include_directories(
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/external/SFML/include
+)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-add_executable(${PROJECT_NAME} Algorithm_Visualizer.cpp ${SRC_FILES})
+add_executable(${PROJECT_NAME} algorithm_visualizer.cpp ${SRC_FILES})
+# Linkowanie bibliotek SFML
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
-set_property(TARGET ${PROJECT_NAME} PROPERTY VS_DEBUGGER_WORKING_DIRECTORY ${CMAKE_SOURCE_DIR})
+target_include_directories(${PROJECT_NAME} PRIVATE ${CMAKE_SOURCE_DIR}/external/SFML/lib)

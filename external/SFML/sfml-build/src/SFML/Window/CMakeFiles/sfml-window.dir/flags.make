@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DSFML_STATIC
 
-CXX_INCLUDES = -I/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src -isystem /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include -isystem /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/extlibs/headers/glad/include -isystem /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/extlibs/headers/vulkan
+CXX_INCLUDES = -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src
 
-CXX_FLAGS = -std=gnu++17 -fvisibility=hidden -fvisibility-inlines-hidden -Wall -Wextra -Wshadow -Wnon-virtual-dtor -Wcast-align -Wunused -Woverloaded-virtual -Wconversion -Wsign-conversion -Wdouble-promotion -Wformat=2 -Wimplicit-fallthrough -Wsuggest-override -Wnull-dereference -Wold-style-cast -Wpedantic -Wmisleading-indentation -Wduplicated-cond -Wlogical-op -Wduplicated-branches
+CXX_FLAGS = -std=gnu++17 -fvisibility=hidden
 

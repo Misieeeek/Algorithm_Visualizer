@@ -2,10 +2,14 @@ CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o: \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_menu.cpp \
  /usr/include/stdc-predef.h \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/include/main_menu.h \
- /usr/include/SFML/Graphics.hpp /usr/include/SFML/Window.hpp \
- /usr/include/SFML/System.hpp /usr/include/SFML/Config.hpp \
- /usr/include/SFML/System/Clock.hpp /usr/include/SFML/System/Export.hpp \
- /usr/include/SFML/System/Time.hpp /usr/include/SFML/System/Err.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Config.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Clock.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Export.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Time.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Err.hpp \
  /usr/include/c++/13/ostream /usr/include/c++/13/bits/requires_hosted.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
@@ -153,13 +157,15 @@ CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o: \
  /usr/include/c++/13/bits/locale_facets.tcc \
  /usr/include/c++/13/bits/basic_ios.tcc \
  /usr/include/c++/13/bits/ostream.tcc \
- /usr/include/SFML/System/FileInputStream.hpp \
- /usr/include/SFML/System/InputStream.hpp \
- /usr/include/SFML/System/NonCopyable.hpp \
- /usr/include/SFML/System/Lock.hpp \
- /usr/include/SFML/System/MemoryInputStream.hpp \
- /usr/include/SFML/System/Mutex.hpp /usr/include/SFML/System/Sleep.hpp \
- /usr/include/SFML/System/String.hpp /usr/include/SFML/System/Utf.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/FileInputStream.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/InputStream.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/NonCopyable.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Lock.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/MemoryInputStream.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Mutex.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Sleep.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/String.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Utf.hpp \
  /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algo.h \
  /usr/include/c++/13/bits/algorithmfwd.h \
  /usr/include/c++/13/bits/stl_heap.h \
@@ -172,75 +178,85 @@ CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o: \
  /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
  /usr/include/libintl.h /usr/include/c++/13/bits/codecvt.h \
  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
- /usr/include/c++/13/bits/locale_conv.h /usr/include/SFML/System/Utf.inl \
+ /usr/include/c++/13/bits/locale_conv.h \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Utf.inl \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
- /usr/include/SFML/System/String.inl /usr/include/SFML/System/Thread.hpp \
- /usr/include/SFML/System/Thread.inl \
- /usr/include/SFML/System/ThreadLocal.hpp \
- /usr/include/SFML/System/ThreadLocalPtr.hpp \
- /usr/include/SFML/System/ThreadLocalPtr.inl \
- /usr/include/SFML/System/Vector2.hpp \
- /usr/include/SFML/System/Vector2.inl \
- /usr/include/SFML/System/Vector3.hpp \
- /usr/include/SFML/System/Vector3.inl \
- /usr/include/SFML/Window/Clipboard.hpp \
- /usr/include/SFML/Window/Export.hpp /usr/include/SFML/Window/Context.hpp \
- /usr/include/SFML/Window/GlResource.hpp \
- /usr/include/SFML/Window/ContextSettings.hpp \
- /usr/include/SFML/Window/Cursor.hpp /usr/include/SFML/Window/Event.hpp \
- /usr/include/SFML/Window/Joystick.hpp \
- /usr/include/SFML/Window/Keyboard.hpp /usr/include/SFML/Window/Mouse.hpp \
- /usr/include/SFML/Window/Sensor.hpp /usr/include/SFML/Window/Touch.hpp \
- /usr/include/SFML/Window/VideoMode.hpp /usr/include/c++/13/vector \
- /usr/include/c++/13/bits/stl_uninitialized.h \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/String.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Thread.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Thread.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/ThreadLocal.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/ThreadLocalPtr.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/ThreadLocalPtr.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Vector2.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Vector2.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Vector3.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Vector3.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Clipboard.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Export.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Context.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/GlResource.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/ContextSettings.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Cursor.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Event.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Joystick.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Keyboard.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Mouse.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Sensor.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Touch.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/VideoMode.hpp \
+ /usr/include/c++/13/vector /usr/include/c++/13/bits/stl_uninitialized.h \
  /usr/include/c++/13/bits/stl_vector.h \
  /usr/include/c++/13/bits/stl_bvector.h \
- /usr/include/c++/13/bits/vector.tcc /usr/include/SFML/Window/Window.hpp \
- /usr/include/SFML/Window/WindowBase.hpp \
- /usr/include/SFML/Window/Vulkan.hpp \
- /usr/include/SFML/Window/WindowHandle.hpp \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
- /usr/include/SFML/Window/WindowStyle.hpp \
- /usr/include/SFML/Graphics/BlendMode.hpp \
- /usr/include/SFML/Graphics/Export.hpp \
- /usr/include/SFML/Graphics/CircleShape.hpp \
- /usr/include/SFML/Graphics/Shape.hpp \
- /usr/include/SFML/Graphics/Drawable.hpp \
- /usr/include/SFML/Graphics/RenderStates.hpp \
- /usr/include/SFML/Graphics/Transform.hpp \
- /usr/include/SFML/Graphics/Rect.hpp /usr/include/SFML/Graphics/Rect.inl \
- /usr/include/SFML/Graphics/Transformable.hpp \
- /usr/include/SFML/Graphics/VertexArray.hpp \
- /usr/include/SFML/Graphics/Vertex.hpp \
- /usr/include/SFML/Graphics/Color.hpp \
- /usr/include/SFML/Graphics/PrimitiveType.hpp \
- /usr/include/SFML/Graphics/ConvexShape.hpp \
- /usr/include/SFML/Graphics/Font.hpp /usr/include/SFML/Graphics/Glyph.hpp \
- /usr/include/SFML/Graphics/Texture.hpp \
- /usr/include/SFML/Graphics/Image.hpp /usr/include/c++/13/map \
- /usr/include/c++/13/bits/stl_tree.h \
+ /usr/include/c++/13/bits/vector.tcc \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Window.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/WindowHandle.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/WindowStyle.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/BlendMode.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Export.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/CircleShape.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Shape.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Drawable.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/RenderStates.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Transform.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Rect.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Rect.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Transformable.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/VertexArray.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Vertex.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Color.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/PrimitiveType.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/ConvexShape.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Font.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Glyph.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Texture.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Image.hpp \
+ /usr/include/c++/13/map /usr/include/c++/13/bits/stl_tree.h \
  /usr/include/c++/13/ext/aligned_buffer.h \
  /usr/include/c++/13/bits/node_handle.h \
  /usr/include/c++/13/bits/stl_map.h \
  /usr/include/c++/13/bits/stl_multimap.h \
  /usr/include/c++/13/bits/erase_if.h \
- /usr/include/SFML/Graphics/RectangleShape.hpp \
- /usr/include/SFML/Graphics/RenderTarget.hpp \
- /usr/include/SFML/Graphics/View.hpp \
- /usr/include/SFML/Graphics/RenderTexture.hpp \
- /usr/include/SFML/Graphics/RenderWindow.hpp \
- /usr/include/SFML/Graphics/Shader.hpp \
- /usr/include/SFML/Graphics/Glsl.hpp /usr/include/SFML/Graphics/Glsl.inl \
- /usr/include/SFML/Graphics/Sprite.hpp \
- /usr/include/SFML/Graphics/Text.hpp \
- /usr/include/SFML/Graphics/VertexBuffer.hpp /usr/include/c++/13/iostream \
- /usr/include/c++/13/istream /usr/include/c++/13/bits/istream.tcc \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/RectangleShape.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/RenderTarget.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/View.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/RenderTexture.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/RenderWindow.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Shader.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Glsl.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Glsl.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Sprite.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Text.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/VertexBuffer.hpp \
+ /usr/include/c++/13/iostream /usr/include/c++/13/istream \
+ /usr/include/c++/13/bits/istream.tcc \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/include/main_window.h \
  /usr/include/c++/13/filesystem /usr/include/c++/13/bits/fs_fwd.h \
- /usr/include/c++/13/cstdint /usr/include/c++/13/bits/chrono.h \
- /usr/include/c++/13/ratio /usr/include/c++/13/limits \
- /usr/include/c++/13/bits/parse_numbers.h \
+ /usr/include/c++/13/cstdint \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+ /usr/include/c++/13/bits/chrono.h /usr/include/c++/13/ratio \
+ /usr/include/c++/13/limits /usr/include/c++/13/bits/parse_numbers.h \
  /usr/include/c++/13/bits/fs_path.h /usr/include/c++/13/iomanip \
  /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/sstream \
  /usr/include/c++/13/bits/sstream.tcc /usr/include/c++/13/codecvt \

@@ -23,6 +23,10 @@ Algorithm_Visualizer_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 Algorithm_Visualizer_SOURCE_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer
 
+//TRUE to build SFML as shared libraries, FALSE to build it as
+// static libraries
+BUILD_SHARED_LIBS:BOOL=OFF
+
 //Path to a program.
 CMAKE_ADDR2LINE:FILEPATH=/usr/bin/addr2line
 
@@ -111,56 +115,8 @@ CMAKE_EXPORT_COMPILE_COMMANDS:BOOL=
 //Value Computed by CMake.
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles/pkgRedirects
 
-//User executables (bin)
-CMAKE_INSTALL_BINDIR:PATH=bin
-
-//Read-only architecture-independent data (DATAROOTDIR)
-CMAKE_INSTALL_DATADIR:PATH=
-
-//Read-only architecture-independent data root (share)
-CMAKE_INSTALL_DATAROOTDIR:PATH=share
-
-//Documentation root (DATAROOTDIR/doc/PROJECT_NAME)
-CMAKE_INSTALL_DOCDIR:PATH=
-
-//C header files (include)
-CMAKE_INSTALL_INCLUDEDIR:PATH=include
-
-//Info documentation (DATAROOTDIR/info)
-CMAKE_INSTALL_INFODIR:PATH=
-
-//Object code libraries (lib)
-CMAKE_INSTALL_LIBDIR:PATH=lib
-
-//Program executables (libexec)
-CMAKE_INSTALL_LIBEXECDIR:PATH=libexec
-
-//Locale-dependent data (DATAROOTDIR/locale)
-CMAKE_INSTALL_LOCALEDIR:PATH=
-
-//Modifiable single-machine data (var)
-CMAKE_INSTALL_LOCALSTATEDIR:PATH=var
-
-//Man documentation (DATAROOTDIR/man)
-CMAKE_INSTALL_MANDIR:PATH=
-
-//C header files for non-gcc (/usr/include)
-CMAKE_INSTALL_OLDINCLUDEDIR:PATH=/usr/include
-
 //Install path prefix, prepended onto install directories.
 CMAKE_INSTALL_PREFIX:PATH=/usr/local
-
-//Run-time variable data (LOCALSTATEDIR/run)
-CMAKE_INSTALL_RUNSTATEDIR:PATH=
-
-//System admin executables (sbin)
-CMAKE_INSTALL_SBINDIR:PATH=sbin
-
-//Modifiable architecture-independent data (com)
-CMAKE_INSTALL_SHAREDSTATEDIR:PATH=com
-
-//Read-only single-machine data (etc)
-CMAKE_INSTALL_SYSCONFDIR:PATH=etc
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=/usr/bin/ld
@@ -197,9 +153,8 @@ CMAKE_OBJCOPY:FILEPATH=/usr/bin/objcopy
 //Path to a program.
 CMAKE_OBJDUMP:FILEPATH=/usr/bin/objdump
 
-//The minimal iOS version that will be able to run the built binaries.
-// Cannot be lower than 13.0
-CMAKE_OSX_DEPLOYMENT_TARGET:STRING=13.0
+//macOS architecture to build; 64-bit is expected
+CMAKE_OSX_ARCHITECTURES:STRING=x86_64
 
 //Value Computed by CMake
 CMAKE_PROJECT_DESCRIPTION:STATIC=
@@ -335,6 +290,12 @@ OGG_INCLUDE_DIR:PATH=/usr/include
 OGG_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libogg.so
 
 //Path to a file.
+OPENAL_INCLUDE_DIR:PATH=/usr/include/AL
+
+//Path to a library.
+OPENAL_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libopenal.so
+
+//Path to a file.
 OPENGL_EGL_INCLUDE_DIR:PATH=/usr/include
 
 //Path to a file.
@@ -374,62 +335,53 @@ OPENGL_opengl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libOpenGL.so
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
 
 //Value Computed by CMake
-SFML_BINARY_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build
+SFML_BINARY_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build
 
-//ON to build SFML's Audio module.
-SFML_BUILD_AUDIO:BOOL=ON
+//TRUE to build SFML's Audio module.
+SFML_BUILD_AUDIO:BOOL=TRUE
 
-//ON to build SFML's Graphics module.
-SFML_BUILD_GRAPHICS:BOOL=ON
+//TRUE to generate the API documentation, FALSE to ignore it
+SFML_BUILD_DOC:BOOL=FALSE
 
-//ON to build SFML's Network module.
-SFML_BUILD_NETWORK:BOOL=ON
+//TRUE to build the SFML examples, FALSE to ignore them
+SFML_BUILD_EXAMPLES:BOOL=FALSE
 
-//ON to build SFML's Window module. This setting is ignored, if
-// the graphics module is built.
-SFML_BUILD_WINDOW:BOOL=ON
+//TRUE to build SFML's Graphics module.
+SFML_BUILD_GRAPHICS:BOOL=TRUE
 
-//ON to configure extras, OFF to ignore them
-SFML_CONFIGURE_EXTRAS:BOOL=OFF
+//TRUE to build SFML's Network module.
+SFML_BUILD_NETWORK:BOOL=TRUE
 
-//The directory containing a CMake configuration file for SFML.
-SFML_DIR:PATH=/usr/lib/x86_64-linux-gnu/cmake/SFML
+//TRUE to build SFML's Window module. This setting is ignored,
+// if the graphics module is built.
+SFML_BUILD_WINDOW:BOOL=TRUE
 
-//ON to enable precompiled headers for SFML builds -- only supported
-// on Windows/Linux and for static library builds
-SFML_ENABLE_PCH:BOOL=OFF
+//External libraries (FLAC, Freetype, Vorbis, ...) installation
+// directory
+SFML_DEPENDENCIES_INSTALL_PREFIX:PATH=.
 
-//Enable sanitizers
-SFML_ENABLE_SANITIZERS:BOOL=OFF
-
-//Enable standard library assertions
-SFML_ENABLE_STDLIB_ASSERTIONS:BOOL=OFF
-
-//ON to automatically install pkg-config files so other projects
+//TRUE to automatically install pkg-config files so other projects
 // can find SFML
-SFML_INSTALL_PKGCONFIG_FILES:BOOL=ON
+SFML_INSTALL_PKGCONFIG_FILES:BOOL=TRUE
 
 //Value Computed by CMake
 SFML_IS_TOP_LEVEL:STATIC=OFF
 
-//ON to use an OpenGL ES implementation, OFF to use a desktop OpenGL
-// implementation
+//Prefix installation path for miscellaneous files
+SFML_MISC_INSTALL_PREFIX:PATH=share/SFML
+
+//TRUE to use an OpenGL ES implementation, FALSE to use a desktop
+// OpenGL implementation
 SFML_OPENGL_ES:BOOL=0
 
 //Install directory for SFML's pkg-config .pc files
-SFML_PKGCONFIG_INSTALL_DIR:PATH=lib/pkgconfig
+SFML_PKGCONFIG_INSTALL_PREFIX:PATH=/usr/local/lib/pkgconfig
 
 //Value Computed by CMake
-SFML_SOURCE_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src
+SFML_SOURCE_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src
 
-//ON to use DRM windowing backend
-SFML_USE_DRM:BOOL=OFF
-
-//ON to use system dependencies, OFF to use the bundled ones.
-SFML_USE_SYSTEM_DEPS:BOOL=ON
-
-//Treat compiler warnings as errors
-SFML_WARNINGS_AS_ERRORS:BOOL=OFF
+//TRUE to use system dependencies, FALSE to use the bundled ones.
+SFML_USE_SYSTEM_DEPS:BOOL=FALSE
 
 //Path to a file.
 UDEV_INCLUDE_DIR:PATH=/usr/include
@@ -851,22 +803,26 @@ X11_xkbfile_INCLUDE_PATH:PATH=X11_xkbfile_INCLUDE_PATH-NOTFOUND
 //Path to a library.
 X11_xkbfile_LIB:FILEPATH=X11_xkbfile_LIB-NOTFOUND
 
-//Value Computed by CMake
-hello_BINARY_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/build
+//Dependencies for the target
+sfml-audio_LIB_DEPENDS:STATIC=general;sfml-system;
 
-//Value Computed by CMake
-hello_IS_TOP_LEVEL:STATIC=ON
+//Dependencies for the target
+sfml-graphics_LIB_DEPENDS:STATIC=general;sfml-window;
 
-//Value Computed by CMake
-hello_SOURCE_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer
+//Dependencies for the target
+sfml-network_LIB_DEPENDS:STATIC=general;sfml-system;
+
+//Dependencies for the target
+sfml-system_LIB_DEPENDS:STATIC=general;pthread;general;rt;
+
+//Dependencies for the target
+sfml-window_LIB_DEPENDS:STATIC=general;sfml-system;
 
 
 ########################
 # INTERNAL cache entries
 ########################
 
-//Test ATOMIC_TEST
-ATOMIC_TEST:INTERNAL=1
 //ADVANCED property for variable: CMAKE_ADDR2LINE
 CMAKE_ADDR2LINE-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_AR
@@ -949,8 +905,6 @@ CMAKE_GENERATOR_TOOLSET:INTERNAL=
 CMAKE_HAVE_CONNECT:INTERNAL=1
 //Have function gethostbyname
 CMAKE_HAVE_GETHOSTBYNAME:INTERNAL=1
-//Test CMAKE_HAVE_LIBC_PTHREAD
-CMAKE_HAVE_LIBC_PTHREAD:INTERNAL=1
 //Have function remove
 CMAKE_HAVE_REMOVE:INTERNAL=1
 //Have function shmat
@@ -958,40 +912,8 @@ CMAKE_HAVE_SHMAT:INTERNAL=1
 //Source directory with the top level CMakeLists.txt file for this
 // project
 CMAKE_HOME_DIRECTORY:INTERNAL=/home/misieeek/Documents/dev/Algorithm_Visualizer
-//ADVANCED property for variable: CMAKE_INSTALL_BINDIR
-CMAKE_INSTALL_BINDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_DATADIR
-CMAKE_INSTALL_DATADIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_DATAROOTDIR
-CMAKE_INSTALL_DATAROOTDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_DOCDIR
-CMAKE_INSTALL_DOCDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_INCLUDEDIR
-CMAKE_INSTALL_INCLUDEDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_INFODIR
-CMAKE_INSTALL_INFODIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_LIBDIR
-CMAKE_INSTALL_LIBDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_LIBEXECDIR
-CMAKE_INSTALL_LIBEXECDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_LOCALEDIR
-CMAKE_INSTALL_LOCALEDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_LOCALSTATEDIR
-CMAKE_INSTALL_LOCALSTATEDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_MANDIR
-CMAKE_INSTALL_MANDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_OLDINCLUDEDIR
-CMAKE_INSTALL_OLDINCLUDEDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_RUNSTATEDIR
-CMAKE_INSTALL_RUNSTATEDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_SBINDIR
-CMAKE_INSTALL_SBINDIR-ADVANCED:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_SHAREDSTATEDIR
-CMAKE_INSTALL_SHAREDSTATEDIR-ADVANCED:INTERNAL=1
 //Install .so files without execute permission.
 CMAKE_INSTALL_SO_NO_EXE:INTERNAL=1
-//ADVANCED property for variable: CMAKE_INSTALL_SYSCONFDIR
-CMAKE_INSTALL_SYSCONFDIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_LINKER
 CMAKE_LINKER-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MAKE_PROGRAM
@@ -1009,7 +931,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_NM
 CMAKE_NM-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=8
 //ADVANCED property for variable: CMAKE_OBJCOPY
 CMAKE_OBJCOPY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_OBJDUMP
@@ -1056,18 +978,14 @@ CMAKE_UNAME:INTERNAL=/usr/bin/uname
 CMAKE_VERBOSE_MAKEFILE-ADVANCED:INTERNAL=1
 //Details about finding FLAC
 FIND_PACKAGE_MESSAGE_DETAILS_FLAC:INTERNAL=[/usr/lib/x86_64-linux-gnu/libFLAC.so][/usr/include][v()]
-//Details about finding Freetype
-FIND_PACKAGE_MESSAGE_DETAILS_Freetype:INTERNAL=[/usr/lib/x86_64-linux-gnu/libfreetype.so][/usr/include/freetype2][2.13.2][v()]
+//Details about finding OpenAL
+FIND_PACKAGE_MESSAGE_DETAILS_OpenAL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libopenal.so][/usr/include/AL][v()]
 //Details about finding OpenGL
-FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libOpenGL.so][/usr/lib/x86_64-linux-gnu/libGLX.so][/usr/include][cfound components: OpenGL ][v()]
-//Details about finding Threads
-FIND_PACKAGE_MESSAGE_DETAILS_Threads:INTERNAL=[TRUE][v()]
-//Details about finding UDev
-FIND_PACKAGE_MESSAGE_DETAILS_UDev:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libudev.so][v()]
-//Details about finding Vorbis
-FIND_PACKAGE_MESSAGE_DETAILS_Vorbis:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libogg.so][/usr/include][/usr/lib/x86_64-linux-gnu/libvorbis.so][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_OpenGL:INTERNAL=[/usr/lib/x86_64-linux-gnu/libOpenGL.so][/usr/lib/x86_64-linux-gnu/libGLX.so][/usr/include][c ][v()]
+//Details about finding VORBIS
+FIND_PACKAGE_MESSAGE_DETAILS_VORBIS:INTERNAL=[/usr/lib/x86_64-linux-gnu/libvorbisenc.so;/usr/lib/x86_64-linux-gnu/libvorbisfile.so;/usr/lib/x86_64-linux-gnu/libvorbis.so;/usr/lib/x86_64-linux-gnu/libogg.so][/usr/include][/usr/include][v()]
 //Details about finding X11
-FIND_PACKAGE_MESSAGE_DETAILS_X11:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libX11.so][cfound components: Xrandr Xcursor Xi ][v()]
+FIND_PACKAGE_MESSAGE_DETAILS_X11:INTERNAL=[/usr/include][/usr/lib/x86_64-linux-gnu/libX11.so][c ][v()]
 //ADVANCED property for variable: FLAC_INCLUDE_DIR
 FLAC_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: FLAC_LIBRARY
@@ -1084,6 +1002,10 @@ GIT_EXECUTABLE-ADVANCED:INTERNAL=1
 OGG_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OGG_LIBRARY
 OGG_LIBRARY-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENAL_INCLUDE_DIR
+OPENAL_INCLUDE_DIR-ADVANCED:INTERNAL=1
+//ADVANCED property for variable: OPENAL_LIBRARY
+OPENAL_LIBRARY-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_EGL_INCLUDE_DIR
 OPENGL_EGL_INCLUDE_DIR-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: OPENGL_GLES2_INCLUDE_DIR
@@ -1392,6 +1314,4 @@ X11_xkbfile_INCLUDE_PATH-ADVANCED:INTERNAL=1
 X11_xkbfile_LIB-ADVANCED:INTERNAL=1
 //linker supports push/pop state
 _CMAKE_LINKER_PUSHPOP_STATE_SUPPORTED:INTERNAL=TRUE
-//CMAKE_INSTALL_PREFIX during last run
-_GNUInstallDirs_LAST_CMAKE_INSTALL_PREFIX:INTERNAL=/usr/local
 

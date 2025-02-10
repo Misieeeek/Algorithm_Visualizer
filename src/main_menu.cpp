@@ -23,14 +23,14 @@ MainMenu::MainMenu() : selected_item_index(0)
     }
     main_menu_options[NUMBER_OF_ITEMS-1].setFillColor(sf::Color::Red);
     main_menu_options[0].setFillColor(sf::Color::Green);
-    setSelected(0);
+    selected = 0;
 }
 
 MainMenu::~MainMenu()
 {
 }
 
-void MainMenu::MoveUp()
+void MainMenu::move_up()
 {
     if (selected_item_index - 1 >= 0)
     {
@@ -40,18 +40,18 @@ void MainMenu::MoveUp()
             main_menu_options[selected_item_index].setFillColor(sf::Color::White);
         selected_item_index--;
         main_menu_options[selected_item_index].setFillColor(sf::Color::Green);
-        setSelected(selected_item_index);
+        selected = selected_item_index;
     }
 }
 
-void MainMenu::MoveDown()
+void MainMenu::move_down()
 {
     if (selected_item_index + 1 < NUMBER_OF_ITEMS)
     {
         main_menu_options[selected_item_index].setFillColor(sf::Color::White);
         selected_item_index++;
         main_menu_options[selected_item_index].setFillColor(sf::Color::Green);
-        setSelected(selected_item_index);
+        selected = selected_item_index;
     }
 }
 

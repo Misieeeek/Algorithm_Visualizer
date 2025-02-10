@@ -1,4 +1,4 @@
-# Install script for directory: /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src/SFML/System
+# Install script for directory: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src/SFML/System
 
 # Set the install prefix
 if(NOT DEFINED CMAKE_INSTALL_PREFIX)
@@ -43,10 +43,6 @@ if(NOT DEFINED CMAKE_OBJDUMP)
 endif()
 
 if(CMAKE_INSTALL_COMPONENT STREQUAL "devel" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build/lib/libsfml-system.a")
-endif()
-
-if(CMAKE_INSTALL_COMPONENT STREQUAL "devel" OR NOT CMAKE_INSTALL_COMPONENT)
-  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/cmake/SFML" TYPE FILE FILES "/home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build/src/SFML/System/SFMLSystemDependencies.cmake")
+  file(INSTALL DESTINATION "${CMAKE_INSTALL_PREFIX}/lib" TYPE STATIC_LIBRARY FILES "/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/lib/libsfml-system.a")
 endif()
 

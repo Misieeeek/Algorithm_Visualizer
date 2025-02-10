@@ -69,19 +69,19 @@ include CMakeFiles/Algorithm_Visualizer.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/Algorithm_Visualizer.dir/flags.make
 
-CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/flags.make
-CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o: /home/misieeek/Documents/dev/Algorithm_Visualizer/Algorithm_Visualizer.cpp
-CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/compiler_depend.ts
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o -MF CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o.d -o CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/Algorithm_Visualizer.cpp
+CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/flags.make
+CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o: /home/misieeek/Documents/dev/Algorithm_Visualizer/algorithm_visualizer.cpp
+CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o -MF CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o.d -o CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/algorithm_visualizer.cpp
 
-CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misieeek/Documents/dev/Algorithm_Visualizer/Algorithm_Visualizer.cpp > CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.i
+CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misieeek/Documents/dev/Algorithm_Visualizer/algorithm_visualizer.cpp > CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.i
 
-CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misieeek/Documents/dev/Algorithm_Visualizer/Algorithm_Visualizer.cpp -o CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.s
+CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misieeek/Documents/dev/Algorithm_Visualizer/algorithm_visualizer.cpp -o CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.s
 
 CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/flags.make
 CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o: /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_menu.cpp
@@ -97,22 +97,59 @@ CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_menu.cpp -o CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.s
 
+CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/flags.make
+CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o: /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_window.cpp
+CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o -MF CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o.d -o CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_window.cpp
+
+CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_window.cpp > CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.i
+
+CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_window.cpp -o CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.s
+
+CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/flags.make
+CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o: /home/misieeek/Documents/dev/Algorithm_Visualizer/src/options.cpp
+CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o: CMakeFiles/Algorithm_Visualizer.dir/compiler_depend.ts
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -MD -MT CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o -MF CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o.d -o CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/src/options.cpp
+
+CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Preprocessing CXX source to CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/misieeek/Documents/dev/Algorithm_Visualizer/src/options.cpp > CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.i
+
+CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green "Compiling CXX source to assembly CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/misieeek/Documents/dev/Algorithm_Visualizer/src/options.cpp -o CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.s
+
 # Object files for target Algorithm_Visualizer
 Algorithm_Visualizer_OBJECTS = \
-"CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o" \
-"CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o"
+"CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o" \
+"CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o" \
+"CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o" \
+"CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o"
 
 # External object files for target Algorithm_Visualizer
 Algorithm_Visualizer_EXTERNAL_OBJECTS =
 
-Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/Algorithm_Visualizer.cpp.o
+Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o
 Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o
+Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o
+Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o
 Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/build.make
-Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libsfml-graphics.so.2.6.1
-Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libsfml-window.so.2.6.1
-Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libsfml-system.so.2.6.1
+Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/lib/libsfml-graphics.a
+Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/lib/libsfml-window.a
+Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/lib/libsfml-system.a
+Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libudev.so
+Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libGL.so
+Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libX11.so
+Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libXrandr.so
+Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libfreetype.so
 Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable Algorithm_Visualizer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --green --bold --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable Algorithm_Visualizer"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/Algorithm_Visualizer.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

@@ -64,29 +64,150 @@ CMAKE_BINARY_DIR = /home/misieeek/Documents/dev/Algorithm_Visualizer/build
 
 # The main recursive "all" target.
 all: CMakeFiles/Algorithm_Visualizer.dir/all
+all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/all
 .PHONY : all
 
 # The main recursive "preinstall" target.
-preinstall:
+preinstall: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/preinstall
 .PHONY : preinstall
 
 # The main recursive "clean" target.
 clean: CMakeFiles/Algorithm_Visualizer.dir/clean
+clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/clean
 .PHONY : clean
+
+#=============================================================================
+# Directory level rules for directory /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build
+
+# Recursive "all" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/all
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/all
+
+# Recursive "preinstall" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/preinstall: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/preinstall
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/preinstall
+
+# Recursive "clean" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/clean
+
+#=============================================================================
+# Directory level rules for directory /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML
+
+# Recursive "all" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/all
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/all
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/all
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/all
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/all
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/all
+
+# Recursive "preinstall" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/preinstall: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/preinstall
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/preinstall: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/preinstall
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/preinstall: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/preinstall
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/preinstall: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/preinstall
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/preinstall: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/preinstall
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/preinstall
+
+# Recursive "clean" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/clean
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/clean
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/clean
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/clean
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/clean
+
+#=============================================================================
+# Directory level rules for directory /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio
+
+# Recursive "all" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/all
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/all
+
+# Recursive "preinstall" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/preinstall:
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/preinstall
+
+# Recursive "clean" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/clean
+
+#=============================================================================
+# Directory level rules for directory /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics
+
+# Recursive "all" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/all
+
+# Recursive "preinstall" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/preinstall:
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/preinstall
+
+# Recursive "clean" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/clean
+
+#=============================================================================
+# Directory level rules for directory /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network
+
+# Recursive "all" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/all
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/all
+
+# Recursive "preinstall" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/preinstall:
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/preinstall
+
+# Recursive "clean" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/clean
+
+#=============================================================================
+# Directory level rules for directory /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System
+
+# Recursive "all" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/all
+
+# Recursive "preinstall" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/preinstall:
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/preinstall
+
+# Recursive "clean" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/clean
+
+#=============================================================================
+# Directory level rules for directory /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window
+
+# Recursive "all" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/all
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/all
+
+# Recursive "preinstall" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/preinstall:
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/preinstall
+
+# Recursive "clean" directory target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/clean: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/clean
 
 #=============================================================================
 # Target rules for target CMakeFiles/Algorithm_Visualizer.dir
 
 # All Build rule for target.
-CMakeFiles/Algorithm_Visualizer.dir/all:
+CMakeFiles/Algorithm_Visualizer.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+CMakeFiles/Algorithm_Visualizer.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/all
+CMakeFiles/Algorithm_Visualizer.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/depend
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/build
-	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=1,2,3 "Built target Algorithm_Visualizer"
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=1,2,3,4 "Built target Algorithm_Visualizer"
 .PHONY : CMakeFiles/Algorithm_Visualizer.dir/all
 
 # Build rule for subdir invocation for target.
 CMakeFiles/Algorithm_Visualizer.dir/rule: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 3
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 71
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 CMakeFiles/Algorithm_Visualizer.dir/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 0
 .PHONY : CMakeFiles/Algorithm_Visualizer.dir/rule
@@ -99,6 +220,137 @@ Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/rule
 CMakeFiles/Algorithm_Visualizer.dir/clean:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/clean
 .PHONY : CMakeFiles/Algorithm_Visualizer.dir/clean
+
+#=============================================================================
+# Target rules for target /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir
+
+# All Build rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/depend
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=62,63,64,65,66,67,68,69,70,71,72,73,74,75,76 "Built target sfml-system"
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+
+# Build rule for subdir invocation for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 15
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 0
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/rule
+
+# Convenience name for target.
+sfml-system: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/rule
+.PHONY : sfml-system
+
+# clean rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/clean:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/clean
+
+#=============================================================================
+# Target rules for target /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir
+
+# All Build rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/depend
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=77,78,79,80,81,82,83,84,85,86,87,88,89,90,91,92,93,94,95,96,97,98,99,100 "Built target sfml-window"
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/all
+
+# Build rule for subdir invocation for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 39
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 0
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/rule
+
+# Convenience name for target.
+sfml-window: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/rule
+.PHONY : sfml-window
+
+# clean rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/clean:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/clean
+
+#=============================================================================
+# Target rules for target /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir
+
+# All Build rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/depend
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=52,53,54,55,56,57,58,59,60,61 "Built target sfml-network"
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/all
+
+# Build rule for subdir invocation for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 25
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 0
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/rule
+
+# Convenience name for target.
+sfml-network: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/rule
+.PHONY : sfml-network
+
+# clean rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/clean:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/clean
+
+#=============================================================================
+# Target rules for target /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir
+
+# All Build rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/all
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/depend
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51 "Built target sfml-graphics"
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all
+
+# Build rule for subdir invocation for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 67
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 0
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/rule
+
+# Convenience name for target.
+sfml-graphics: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/rule
+.PHONY : sfml-graphics
+
+# clean rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/clean:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/clean
+
+#=============================================================================
+# Target rules for target /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir
+
+# All Build rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/all: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/all
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/depend
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build
+	@$(CMAKE_COMMAND) -E cmake_echo_color "--switch=$(COLOR)" --progress-dir=/home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles --progress-num=5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23 "Built target sfml-audio"
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/all
+
+# Build rule for subdir invocation for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/rule: cmake_check_build_system
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 34
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/all
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 0
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/rule
+
+# Convenience name for target.
+sfml-audio: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/rule
+.PHONY : sfml-audio
+
+# clean rule for target.
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/clean:
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/clean
+.PHONY : /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/clean
 
 #=============================================================================
 # Special targets to cleanup operation of make.

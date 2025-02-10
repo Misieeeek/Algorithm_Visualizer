@@ -1,15 +1,14 @@
-_deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/JoystickManager.cpp.o: \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src/SFML/Window/JoystickManager.cpp \
+/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/JoystickManager.cpp.o: \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src/SFML/Window/JoystickManager.cpp \
  /usr/include/stdc-predef.h \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src/SFML/Window/JoystickManager.hpp \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/Window/Joystick.hpp \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/Window/Export.hpp \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/Config.hpp \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/System/String.hpp \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/System/Export.hpp \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/System/Utf.hpp \
- /usr/include/c++/13/array /usr/include/c++/13/compare \
- /usr/include/c++/13/initializer_list \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src/SFML/Window/JoystickManager.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Joystick.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window/Export.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Config.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/String.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Export.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Utf.hpp \
+ /usr/include/c++/13/algorithm /usr/include/c++/13/bits/stl_algobase.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/c++config.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/os_defines.h \
  /usr/include/features.h /usr/include/features-time64.h \
@@ -20,15 +19,14 @@ _deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/JoystickManager.cpp.
  /usr/include/x86_64-linux-gnu/gnu/stubs.h \
  /usr/include/x86_64-linux-gnu/gnu/stubs-64.h \
  /usr/include/x86_64-linux-gnu/c++/13/bits/cpu_defines.h \
- /usr/include/c++/13/pstl/pstl_config.h /usr/include/c++/13/type_traits \
+ /usr/include/c++/13/pstl/pstl_config.h \
  /usr/include/c++/13/bits/functexcept.h \
  /usr/include/c++/13/bits/exception_defines.h \
- /usr/include/c++/13/bits/stl_algobase.h \
  /usr/include/c++/13/bits/cpp_type_traits.h \
  /usr/include/c++/13/ext/type_traits.h \
  /usr/include/c++/13/ext/numeric_traits.h \
- /usr/include/c++/13/bits/stl_pair.h /usr/include/c++/13/bits/move.h \
- /usr/include/c++/13/bits/utility.h \
+ /usr/include/c++/13/bits/stl_pair.h /usr/include/c++/13/type_traits \
+ /usr/include/c++/13/bits/move.h /usr/include/c++/13/bits/utility.h \
  /usr/include/c++/13/bits/stl_iterator_base_types.h \
  /usr/include/c++/13/bits/stl_iterator_base_funcs.h \
  /usr/include/c++/13/bits/concept_check.h \
@@ -36,61 +34,33 @@ _deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/JoystickManager.cpp.
  /usr/include/c++/13/bits/stl_iterator.h \
  /usr/include/c++/13/bits/ptr_traits.h /usr/include/c++/13/debug/debug.h \
  /usr/include/c++/13/bits/predefined_ops.h /usr/include/c++/13/bit \
- /usr/include/c++/13/bits/range_access.h /usr/include/c++/13/locale \
- /usr/include/c++/13/bits/requires_hosted.h \
- /usr/include/c++/13/bits/localefwd.h \
- /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h \
- /usr/include/c++/13/clocale /usr/include/locale.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
- /usr/include/x86_64-linux-gnu/bits/locale.h \
- /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
- /usr/include/c++/13/iosfwd /usr/include/c++/13/bits/stringfwd.h \
- /usr/include/c++/13/bits/memoryfwd.h /usr/include/c++/13/bits/postypes.h \
- /usr/include/c++/13/cwchar /usr/include/wchar.h \
+ /usr/include/c++/13/bits/stl_algo.h \
+ /usr/include/c++/13/bits/algorithmfwd.h \
+ /usr/include/c++/13/initializer_list /usr/include/c++/13/bits/stl_heap.h \
+ /usr/include/c++/13/bits/uniform_int_dist.h \
+ /usr/include/c++/13/bits/stl_tempbuf.h /usr/include/c++/13/new \
+ /usr/include/c++/13/bits/exception.h \
+ /usr/include/c++/13/bits/stl_construct.h /usr/include/c++/13/cstdlib \
+ /usr/include/stdlib.h \
  /usr/include/x86_64-linux-gnu/bits/libc-header-start.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stddef.h \
+ /usr/include/x86_64-linux-gnu/bits/waitflags.h \
+ /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
  /usr/include/x86_64-linux-gnu/bits/floatn.h \
  /usr/include/x86_64-linux-gnu/bits/floatn-common.h \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
- /usr/include/x86_64-linux-gnu/bits/wchar.h \
- /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
- /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
- /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
- /usr/include/c++/13/cctype /usr/include/ctype.h \
+ /usr/include/x86_64-linux-gnu/bits/types/locale_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/__locale_t.h \
+ /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/bits/types.h \
  /usr/include/x86_64-linux-gnu/bits/typesizes.h \
  /usr/include/x86_64-linux-gnu/bits/time64.h \
- /usr/include/x86_64-linux-gnu/bits/endian.h \
- /usr/include/x86_64-linux-gnu/bits/endianness.h \
- /usr/include/c++/13/bits/locale_classes.h /usr/include/c++/13/string \
- /usr/include/c++/13/bits/char_traits.h \
- /usr/include/c++/13/bits/allocator.h \
- /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
- /usr/include/c++/13/bits/new_allocator.h /usr/include/c++/13/new \
- /usr/include/c++/13/bits/exception.h \
- /usr/include/c++/13/bits/ostream_insert.h \
- /usr/include/c++/13/bits/cxxabi_forced.h \
- /usr/include/c++/13/bits/stl_function.h \
- /usr/include/c++/13/backward/binders.h \
- /usr/include/c++/13/bits/refwrap.h /usr/include/c++/13/bits/invoke.h \
- /usr/include/c++/13/bits/basic_string.h \
- /usr/include/c++/13/ext/alloc_traits.h \
- /usr/include/c++/13/bits/alloc_traits.h \
- /usr/include/c++/13/bits/stl_construct.h /usr/include/c++/13/string_view \
- /usr/include/c++/13/bits/functional_hash.h \
- /usr/include/c++/13/bits/hash_bytes.h \
- /usr/include/c++/13/bits/string_view.tcc \
- /usr/include/c++/13/ext/string_conversions.h /usr/include/c++/13/cstdlib \
- /usr/include/stdlib.h /usr/include/x86_64-linux-gnu/bits/waitflags.h \
- /usr/include/x86_64-linux-gnu/bits/waitstatus.h \
- /usr/include/x86_64-linux-gnu/sys/types.h \
  /usr/include/x86_64-linux-gnu/bits/types/clock_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/clockid_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/time_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/timer_t.h \
  /usr/include/x86_64-linux-gnu/bits/stdint-intn.h /usr/include/endian.h \
+ /usr/include/x86_64-linux-gnu/bits/endian.h \
+ /usr/include/x86_64-linux-gnu/bits/endianness.h \
  /usr/include/x86_64-linux-gnu/bits/byteswap.h \
  /usr/include/x86_64-linux-gnu/bits/uintn-identity.h \
  /usr/include/x86_64-linux-gnu/sys/select.h \
@@ -106,7 +76,43 @@ _deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/JoystickManager.cpp.
  /usr/include/x86_64-linux-gnu/bits/struct_mutex.h \
  /usr/include/x86_64-linux-gnu/bits/struct_rwlock.h /usr/include/alloca.h \
  /usr/include/x86_64-linux-gnu/bits/stdlib-float.h \
- /usr/include/c++/13/bits/std_abs.h /usr/include/c++/13/cstdio \
+ /usr/include/c++/13/bits/std_abs.h \
+ /usr/include/c++/13/pstl/glue_algorithm_defs.h \
+ /usr/include/c++/13/pstl/execution_defs.h /usr/include/c++/13/locale \
+ /usr/include/c++/13/bits/requires_hosted.h \
+ /usr/include/c++/13/bits/localefwd.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/c++locale.h \
+ /usr/include/c++/13/clocale /usr/include/locale.h \
+ /usr/include/x86_64-linux-gnu/bits/locale.h /usr/include/c++/13/iosfwd \
+ /usr/include/c++/13/bits/stringfwd.h \
+ /usr/include/c++/13/bits/memoryfwd.h /usr/include/c++/13/bits/postypes.h \
+ /usr/include/c++/13/cwchar /usr/include/wchar.h \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdarg.h \
+ /usr/include/x86_64-linux-gnu/bits/wchar.h \
+ /usr/include/x86_64-linux-gnu/bits/types/wint_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/mbstate_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/__mbstate_t.h \
+ /usr/include/x86_64-linux-gnu/bits/types/__FILE.h \
+ /usr/include/x86_64-linux-gnu/bits/types/FILE.h \
+ /usr/include/c++/13/cctype /usr/include/ctype.h \
+ /usr/include/c++/13/bits/locale_classes.h /usr/include/c++/13/string \
+ /usr/include/c++/13/bits/char_traits.h \
+ /usr/include/c++/13/bits/allocator.h \
+ /usr/include/x86_64-linux-gnu/c++/13/bits/c++allocator.h \
+ /usr/include/c++/13/bits/new_allocator.h \
+ /usr/include/c++/13/bits/ostream_insert.h \
+ /usr/include/c++/13/bits/cxxabi_forced.h \
+ /usr/include/c++/13/bits/stl_function.h \
+ /usr/include/c++/13/backward/binders.h \
+ /usr/include/c++/13/bits/refwrap.h /usr/include/c++/13/bits/invoke.h \
+ /usr/include/c++/13/bits/range_access.h \
+ /usr/include/c++/13/bits/basic_string.h \
+ /usr/include/c++/13/ext/alloc_traits.h \
+ /usr/include/c++/13/bits/alloc_traits.h /usr/include/c++/13/string_view \
+ /usr/include/c++/13/bits/functional_hash.h \
+ /usr/include/c++/13/bits/hash_bytes.h \
+ /usr/include/c++/13/bits/string_view.tcc \
+ /usr/include/c++/13/ext/string_conversions.h /usr/include/c++/13/cstdio \
  /usr/include/stdio.h /usr/include/x86_64-linux-gnu/bits/types/__fpos_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/__fpos64_t.h \
  /usr/include/x86_64-linux-gnu/bits/types/struct_FILE.h \
@@ -157,17 +163,12 @@ _deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/JoystickManager.cpp.
  /usr/include/x86_64-linux-gnu/c++/13/bits/messages_members.h \
  /usr/include/libintl.h /usr/include/c++/13/bits/codecvt.h \
  /usr/include/c++/13/bits/locale_facets_nonio.tcc \
- /usr/include/c++/13/bits/locale_conv.h /usr/include/c++/13/cstdint \
- /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
- /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/System/Utf.inl \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/include/SFML/System/String.inl \
+ /usr/include/c++/13/bits/locale_conv.h \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/Utf.inl \
  /usr/include/c++/13/iterator /usr/include/c++/13/bits/stream_iterator.h \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src/SFML/Window/JoystickImpl.hpp \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src/SFML/System/EnumArray.hpp \
- /usr/include/c++/13/cassert /usr/include/assert.h \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-src/src/SFML/Window/Unix/JoystickImpl.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/String.inl \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src/SFML/Window/JoystickImpl.hpp \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/src/SFML/Window/Unix/JoystickImpl.hpp \
  /usr/include/linux/input.h /usr/include/x86_64-linux-gnu/sys/time.h \
  /usr/include/x86_64-linux-gnu/sys/ioctl.h \
  /usr/include/x86_64-linux-gnu/bits/ioctls.h \
@@ -185,4 +186,5 @@ _deps/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/JoystickManager.cpp.
  /usr/include/x86_64-linux-gnu/asm/posix_types.h \
  /usr/include/x86_64-linux-gnu/asm/posix_types_64.h \
  /usr/include/asm-generic/posix_types.h \
- /usr/include/linux/input-event-codes.h
+ /usr/include/linux/input-event-codes.h \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System/NonCopyable.hpp

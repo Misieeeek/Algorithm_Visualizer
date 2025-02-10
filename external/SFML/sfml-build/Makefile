@@ -132,14 +132,14 @@ install/strip/fast: preinstall/fast
 
 # The main all target
 all: cmake_check_build_system
-	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles /home/misieeek/Documents/dev/Algorithm_Visualizer/build/_deps/sfml-build//CMakeFiles/progress.marks
-	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/sfml-build/all
+	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build//CMakeFiles/progress.marks
+	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/all
 	$(CMAKE_COMMAND) -E cmake_progress_start /home/misieeek/Documents/dev/Algorithm_Visualizer/build/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
 clean:
-	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/sfml-build/clean
+	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/clean
 .PHONY : clean
 
 # The main clean target
@@ -148,12 +148,12 @@ clean/fast: clean
 
 # Prepare targets for installation.
 preinstall: all
-	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/sfml-build/preinstall
+	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/preinstall
 .PHONY : preinstall
 
 # Prepare targets for installation.
 preinstall/fast:
-	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 _deps/sfml-build/preinstall
+	cd /home/misieeek/Documents/dev/Algorithm_Visualizer/build && $(MAKE) $(MAKESILENT) -f CMakeFiles/Makefile2 /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/preinstall
 .PHONY : preinstall/fast
 
 # clear depends
