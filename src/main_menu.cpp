@@ -7,12 +7,8 @@ MainMenu::MainMenu() : selected_item_index(0)
    std::filesystem::current_path(std::filesystem::path(__FILE__).parent_path().parent_path());
 
     if (!open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
-        std::cerr << "Nie udało się załadować czcionki!" << std::endl;
+        std::cerr << "Failed to load font" << std::endl;
     }
-   /* if (!open_sans.loadFromFile("/assets/fonts/OpenSans-Regular.ttf"))
-   {
-        std::cout << "No font foooooooppppppound\n";
-    }*/
 
     std::string options[] = { "Visualize", "Options", "About", "Exit" };
 
@@ -63,4 +59,9 @@ void MainMenu::draw(sf::RenderWindow& window)
 {
     for (int i = 0; i < NUMBER_OF_ITEMS; i++)
         window.draw(main_menu_options[i]);
+}
+
+void MainMenu::change_option(int selected)
+{
+    std::cout << selected << std::endl;
 }
