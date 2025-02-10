@@ -11,7 +11,7 @@ include_directories(${SFML_INCLUDE_DIRS})
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
 
-add_executable(${PROJECT_NAME} Algorithm_Visualizer.cpp ${SRC_FILES})
+add_executable(${PROJECT_NAME} algorithm_visualizer.cpp ${SRC_FILES})
 target_link_libraries(${PROJECT_NAME} PRIVATE sfml-graphics sfml-window sfml-system)
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 
