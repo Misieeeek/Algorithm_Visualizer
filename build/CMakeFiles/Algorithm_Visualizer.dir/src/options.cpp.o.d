@@ -2,6 +2,8 @@ CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o: \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/src/options.cpp \
  /usr/include/stdc-predef.h \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/include/options.h \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/include/main_menu.h \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/include/main_window.h \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics.hpp \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Window.hpp \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/System.hpp \
@@ -248,5 +250,19 @@ CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o: \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/Text.hpp \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include/SFML/Graphics/VertexBuffer.hpp \
  /usr/include/c++/13/iostream /usr/include/c++/13/istream \
- /usr/include/c++/13/bits/istream.tcc \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/include/main_window.h
+ /usr/include/c++/13/bits/istream.tcc /usr/include/c++/13/filesystem \
+ /usr/include/c++/13/bits/fs_fwd.h /usr/include/c++/13/cstdint \
+ /usr/lib/gcc/x86_64-linux-gnu/13/include/stdint.h /usr/include/stdint.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-uintn.h \
+ /usr/include/x86_64-linux-gnu/bits/stdint-least.h \
+ /usr/include/c++/13/bits/chrono.h /usr/include/c++/13/ratio \
+ /usr/include/c++/13/limits /usr/include/c++/13/bits/parse_numbers.h \
+ /usr/include/c++/13/bits/fs_path.h /usr/include/c++/13/iomanip \
+ /usr/include/c++/13/bits/quoted_string.h /usr/include/c++/13/sstream \
+ /usr/include/c++/13/bits/sstream.tcc /usr/include/c++/13/codecvt \
+ /usr/include/c++/13/ext/concurrence.h \
+ /usr/include/c++/13/bits/shared_ptr.h \
+ /usr/include/c++/13/bits/shared_ptr_base.h \
+ /usr/include/c++/13/bits/allocated_ptr.h \
+ /usr/include/c++/13/bits/unique_ptr.h /usr/include/c++/13/bits/fs_dir.h \
+ /usr/include/c++/13/bits/fs_ops.h

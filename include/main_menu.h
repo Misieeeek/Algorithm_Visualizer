@@ -6,7 +6,7 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
 
-#define NUMBER_OF_ITEMS 4
+#define NUMBER_OF_ITEMS 3
 
 class MainMenu : public Screen {
 private:

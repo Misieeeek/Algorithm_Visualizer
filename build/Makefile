@@ -335,6 +335,30 @@ src/options.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.s
 .PHONY : src/options.cpp.s
 
+src/visualizer.o: src/visualizer.cpp.o
+.PHONY : src/visualizer.o
+
+# target to build an object file
+src/visualizer.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.o
+.PHONY : src/visualizer.cpp.o
+
+src/visualizer.i: src/visualizer.cpp.i
+.PHONY : src/visualizer.i
+
+# target to preprocess a source file
+src/visualizer.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.i
+.PHONY : src/visualizer.cpp.i
+
+src/visualizer.s: src/visualizer.cpp.s
+.PHONY : src/visualizer.s
+
+# target to generate assembly for a file
+src/visualizer.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Algorithm_Visualizer.dir/build.make CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.s
+.PHONY : src/visualizer.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -365,6 +389,9 @@ help:
 	@echo "... src/options.o"
 	@echo "... src/options.i"
 	@echo "... src/options.s"
+	@echo "... src/visualizer.o"
+	@echo "... src/visualizer.i"
+	@echo "... src/visualizer.s"
 .PHONY : help
 
 

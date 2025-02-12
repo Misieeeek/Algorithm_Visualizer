@@ -1,7 +1,11 @@
 #include "options.h"
+#include "main_menu.h"
+#include "main_window.h"
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <filesystem>
 
-Options::Options() : selected_options_index(0) {
+Options::Options(Screen **screen_ptr, MainMenu *menu)
+    : selected_options_index(0) {
 
   std::filesystem::current_path(
       std::filesystem::path(__FILE__).parent_path().parent_path());
@@ -9,6 +13,10 @@ Options::Options() : selected_options_index(0) {
   if (!open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
     std::cerr << "Failed to load font" << std::endl;
   }
+
+  current_screen = screen_ptr;
+  main_menu = menu;
+
   std::string options[] = {"Speed", "Window", "Back"};
 
   for (int i = 0; i < NUMBER_OF_OPTIONS; i++) {
@@ -52,16 +60,19 @@ void Options::draw(sf::RenderWindow &window) {
     window.draw(options_options[i]);
 }
 
+void Options::setState(State new_state) { current_state = new_state; }
+
 void Options::change_option(int selected) {
   switch (selected) {
   case 0:
-    std::cout << "Speed" << "\n";
+    // std::cout << "Speed" << "\n";
     break;
   case 1:
-    std::cout << "Window" << "\n";
+    // std::cout << "Window" << "\n";
     break;
   case 2:
-
+    *current_screen = main_menu;
+    (*current_screen)->setState(Screen::State::MAINMENU);
     break;
   }
 }

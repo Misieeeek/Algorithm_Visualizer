@@ -1,5 +1,5 @@
-#ifndef OPTIONS_H
-#define OPTIONS_H
+#ifndef VISUALIZER_H
+#define VISUALIZER_H
 #pragma once
 
 #include "main_menu.h"
@@ -8,25 +8,25 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <iostream>
 
-#define NUMBER_OF_OPTIONS 3
+#define NUMBER_OF_ALGORITHMS 2
 
-class Options : public Screen {
+class Visualizer : public Screen {
 private:
   Screen **current_screen;
   MainMenu *main_menu;
-  int selected_options_index;
-  sf::Text options_options[NUMBER_OF_OPTIONS];
+  int selected_algorithm_index;
+  sf::Text list_algorithms[NUMBER_OF_ALGORITHMS];
   sf::Font open_sans;
-  int selected_option;
+  int selected_algorithm;
 
 public:
-  Options(Screen **screen_ptr, MainMenu *menu);
-  ~Options();
+  Visualizer(Screen **screen_ptr, MainMenu *menu);
+  ~Visualizer();
 
   void draw(sf::RenderWindow &window) override;
   void move_up() override;
   void move_down() override;
-  int pressed() override { return selected_option; }
+  int pressed() override { return selected_algorithm; }
   void change_option(int selected) override;
   void setState(State newState) override;
 };

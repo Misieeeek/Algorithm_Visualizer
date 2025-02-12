@@ -10,7 +10,7 @@ MainMenu::MainMenu() : selected_item_index(0) {
     std::cerr << "Failed to load font" << std::endl;
   }
 
-  std::string options[] = {"Visualize", "Options", "About", "Exit"};
+  std::string options[] = {"Visualize", "Options", "Exit"};
 
   for (int i = 0; i < NUMBER_OF_ITEMS; i++) {
     main_menu_options[i].setFont(open_sans);
@@ -25,7 +25,7 @@ MainMenu::MainMenu() : selected_item_index(0) {
   selected = 0;
 }
 
-MainMenu::~MainMenu() {}
+MainMenu::~MainMenu() { std::cout << "KONIC!" << std::endl; }
 
 void MainMenu::move_up() {
   if (selected_item_index - 1 >= 0) {
@@ -54,5 +54,5 @@ void MainMenu::draw(sf::RenderWindow &window) {
 }
 
 void MainMenu::change_option(int selected) {
-  std::cout << selected << std::endl;
+  // std::cout << selected << std::endl;
 }

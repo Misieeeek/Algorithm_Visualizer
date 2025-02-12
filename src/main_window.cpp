@@ -1,9 +1,9 @@
 #include "main_window.h"
 #include "main_menu.h"
 #include "options.h"
+#include "visualizer.h"
 
 MainWindow::MainWindow() {
-  current_state = State::MAINMENU;
   sf::RenderWindow window(sf::VideoMode(1280, 720), "Algorithm Visualizer",
                           sf::Style::Close | sf::Style::Resize);
   is_running(window);
@@ -12,12 +12,10 @@ MainWindow::MainWindow() {
 MainWindow::~MainWindow() {}
 
 void MainWindow::is_running(sf::RenderWindow &window) {
-  MainMenu mainMenu;
-  Options options;
-  // Visualizer visualize;
-  // Aboutscreen about;
-
-  Screen *current_screen = &mainMenu;
+  MainMenu main_menu;
+  Screen *current_screen = &main_menu;
+  Options options(&current_screen, &main_menu);
+  Visualizer visualize(&current_screen, &main_menu);
 
   while (window.isOpen()) {
     sf::Event evnt;
@@ -36,26 +34,26 @@ void MainWindow::is_running(sf::RenderWindow &window) {
           break;
         case sf::Keyboard::Enter:
           int selected = current_screen->pressed();
-          if (current_state == State::MAINMENU) {
+          if (current_screen->getState() == Screen::State::MAINMENU) {
             switch (selected) {
             case 0:
-              current_state = State::VISUALIZESCREEN;
-              // current_screen = &visualize;
+              current_screen->setState(Screen::State::VISUALIZESCREEN);
+              current_screen = &visualize;
               break;
             case 1:
-              current_state = State::OPTIONSSCREEN;
+              current_screen->setState(Screen::State::OPTIONSSCREEN);
               current_screen = &options;
               break;
-            case 2:
-              current_state = State::ABOUTSCREEN;
-              // current_screen = &about;
+              // case 2:
+              //  current_state = State::ABOUTSCREEN;
+              //   current_screen = &about;
               break;
-            case 3:
+            case 2:
               window.close();
               break;
             }
-          } else
-            current_screen->change_option(selected);
+          }
+          current_screen->change_option(selected);
           break;
         }
         break;
@@ -63,24 +61,6 @@ void MainWindow::is_running(sf::RenderWindow &window) {
     }
     window.clear();
     current_screen->draw(window);
-    /*switch (current_state)
-    {
-    case State::MAINMENU:
-        current_screen->draw(window);
-        break;
-    case State::VISUALIZESCREEN:
-        current_screen->draw(window);
-        break;
-    case State::OPTIONSSCREEN:
-        current_screen->draw(window);
-        break;
-    case State::ABOUTSCREEN:
-        //
-        break;
-    case State::EXIT:
-        window.close();
-        break;
-    }*/
     window.display();
   }
 }

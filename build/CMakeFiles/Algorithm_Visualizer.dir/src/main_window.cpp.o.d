@@ -250,4 +250,5 @@ CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o: \
  /home/misieeek/Documents/dev/Algorithm_Visualizer/include/main_menu.h \
  /usr/include/c++/13/iostream /usr/include/c++/13/istream \
  /usr/include/c++/13/bits/istream.tcc \
- /home/misieeek/Documents/dev/Algorithm_Visualizer/include/options.h
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/include/options.h \
+ /home/misieeek/Documents/dev/Algorithm_Visualizer/include/visualizer.h

@@ -9,6 +9,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o.d"
   "CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o"
   "CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o.d"
+  "CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.o"
+  "CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.o.d"
 )
 
 # Per-language clean rules from dependency scanning.
