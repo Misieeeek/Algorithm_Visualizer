@@ -2,6 +2,8 @@
 #include "main_menu.h"
 #include "options.h"
 #include "visualizer.h"
+#include <SFML/System/Sleep.hpp>
+#include <SFML/System/Time.hpp>
 
 MainWindow::MainWindow() {
   sf::RenderWindow window(sf::VideoMode(1280, 720), "Algorithm Visualizer",

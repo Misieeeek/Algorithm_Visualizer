@@ -17,14 +17,20 @@ Visualizer::Visualizer(Screen **screen_ptr, MainMenu *menu)
   current_screen = screen_ptr;
   main_menu = menu;
 
-  std::string algo[] = {"Insertion Sort", "Back"};
+  std::string algo[] = {"Sorting Algorithms",
+                        "Searching Algorithms",
+                        "Data Structures",
+                        "Dynamic Programming",
+                        "Greedy Algorithms",
+                        "Advanced Data Structures",
+                        "Back"};
 
   for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
     list_algorithms[i].setFont(open_sans);
     list_algorithms[i].setFillColor(sf::Color::White);
-    list_algorithms[i].setCharacterSize(70);
+    list_algorithms[i].setCharacterSize(35);
     list_algorithms[i].setStyle(sf::Text::Bold);
-    list_algorithms[i].setPosition(50, 100 * i + 150);
+    list_algorithms[i].setPosition(50, 50 * i + 150);
     list_algorithms[i].setString(algo[i]);
   }
   list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
@@ -67,7 +73,7 @@ void Visualizer::change_option(int selected) {
   case 0:
     std::cout << "IS" << "\n";
     break;
-  case 1:
+  case 6:
     *current_screen = main_menu;
     (*current_screen)->setState(Screen::State::MAINMENU);
     break;

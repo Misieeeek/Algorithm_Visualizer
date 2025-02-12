@@ -1,5 +1,6 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <cstddef>
 #pragma once
 
 #include "main_menu.h"
@@ -8,7 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <iostream>
 
-#define NUMBER_OF_ALGORITHMS 2
+#define NUMBER_OF_ALGORITHMS 7
 
 class Visualizer : public Screen {
 private:

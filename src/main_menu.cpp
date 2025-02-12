@@ -25,7 +25,7 @@ MainMenu::MainMenu() : selected_item_index(0) {
   selected = 0;
 }
 
-MainMenu::~MainMenu() { std::cout << "KONIC!" << std::endl; }
+MainMenu::~MainMenu() {}
 
 void MainMenu::move_up() {
   if (selected_item_index - 1 >= 0) {
