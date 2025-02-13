@@ -335,7 +335,7 @@ OPENGL_opengl_LIBRARY:FILEPATH=/usr/lib/x86_64-linux-gnu/libOpenGL.so
 OPENGL_xmesa_INCLUDE_DIR:PATH=OPENGL_xmesa_INCLUDE_DIR-NOTFOUND
 
 //Value Computed by CMake
-SFML_BINARY_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build
+SFML_BINARY_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build
 
 //TRUE to build SFML's Audio module.
 SFML_BUILD_AUDIO:BOOL=TRUE
@@ -378,7 +378,7 @@ SFML_OPENGL_ES:BOOL=0
 SFML_PKGCONFIG_INSTALL_PREFIX:PATH=/usr/local/lib/pkgconfig
 
 //Value Computed by CMake
-SFML_SOURCE_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src
+SFML_SOURCE_DIR:STATIC=/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML
 
 //TRUE to use system dependencies, FALSE to use the bundled ones.
 SFML_USE_SYSTEM_DEPS:BOOL=FALSE

@@ -1,0 +1,32 @@
+[
+{
+  "directory": "/home/misieeek/Documents/dev/Algorithm_Visualizer/build",
+  "command": "/usr/bin/c++ -DSFML_STATIC -I/home/misieeek/Documents/dev/Algorithm_Visualizer/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/include -std=gnu++17 -o CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/algorithm_visualizer.cpp",
+  "file": "/home/misieeek/Documents/dev/Algorithm_Visualizer/algorithm_visualizer.cpp",
+  "output": "CMakeFiles/Algorithm_Visualizer.dir/algorithm_visualizer.cpp.o"
+},
+{
+  "directory": "/home/misieeek/Documents/dev/Algorithm_Visualizer/build",
+  "command": "/usr/bin/c++ -DSFML_STATIC -I/home/misieeek/Documents/dev/Algorithm_Visualizer/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/include -std=gnu++17 -o CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_menu.cpp",
+  "file": "/home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_menu.cpp",
+  "output": "CMakeFiles/Algorithm_Visualizer.dir/src/main_menu.cpp.o"
+},
+{
+  "directory": "/home/misieeek/Documents/dev/Algorithm_Visualizer/build",
+  "command": "/usr/bin/c++ -DSFML_STATIC -I/home/misieeek/Documents/dev/Algorithm_Visualizer/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/include -std=gnu++17 -o CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_window.cpp",
+  "file": "/home/misieeek/Documents/dev/Algorithm_Visualizer/src/main_window.cpp",
+  "output": "CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o"
+},
+{
+  "directory": "/home/misieeek/Documents/dev/Algorithm_Visualizer/build",
+  "command": "/usr/bin/c++ -DSFML_STATIC -I/home/misieeek/Documents/dev/Algorithm_Visualizer/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/include -std=gnu++17 -o CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/src/options.cpp",
+  "file": "/home/misieeek/Documents/dev/Algorithm_Visualizer/src/options.cpp",
+  "output": "CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o"
+},
+{
+  "directory": "/home/misieeek/Documents/dev/Algorithm_Visualizer/build",
+  "command": "/usr/bin/c++ -DSFML_STATIC -I/home/misieeek/Documents/dev/Algorithm_Visualizer/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/include -std=gnu++17 -o CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.o -c /home/misieeek/Documents/dev/Algorithm_Visualizer/src/visualizer.cpp",
+  "file": "/home/misieeek/Documents/dev/Algorithm_Visualizer/src/visualizer.cpp",
+  "output": "CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.o"
+}
+]

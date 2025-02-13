@@ -184,7 +184,7 @@ sfml-system: cmake_check_build_system
 
 # fast build rule for target.
 sfml-system/fast:
-	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/System/CMakeFiles/sfml-system.dir/build
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/System/CMakeFiles/sfml-system.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/System/CMakeFiles/sfml-system.dir/build
 .PHONY : sfml-system/fast
 
 #=============================================================================
@@ -197,7 +197,7 @@ sfml-window: cmake_check_build_system
 
 # fast build rule for target.
 sfml-window/fast:
-	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Window/CMakeFiles/sfml-window.dir/build
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Window/CMakeFiles/sfml-window.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Window/CMakeFiles/sfml-window.dir/build
 .PHONY : sfml-window/fast
 
 #=============================================================================
@@ -210,7 +210,7 @@ sfml-network: cmake_check_build_system
 
 # fast build rule for target.
 sfml-network/fast:
-	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Network/CMakeFiles/sfml-network.dir/build
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Network/CMakeFiles/sfml-network.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Network/CMakeFiles/sfml-network.dir/build
 .PHONY : sfml-network/fast
 
 #=============================================================================
@@ -223,7 +223,7 @@ sfml-graphics: cmake_check_build_system
 
 # fast build rule for target.
 sfml-graphics/fast:
-	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Graphics/CMakeFiles/sfml-graphics.dir/build
 .PHONY : sfml-graphics/fast
 
 #=============================================================================
@@ -236,7 +236,7 @@ sfml-audio: cmake_check_build_system
 
 # fast build rule for target.
 sfml-audio/fast:
-	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build
+	$(MAKE) $(MAKESILENT) -f /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build.make /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/src/SFML/Audio/CMakeFiles/sfml-audio.dir/build
 .PHONY : sfml-audio/fast
 
 algorithm_visualizer.o: algorithm_visualizer.cpp.o

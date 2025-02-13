@@ -156,9 +156,9 @@ Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/src/main_window.cpp.o
 Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/src/options.cpp.o
 Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/src/visualizer.cpp.o
 Algorithm_Visualizer: CMakeFiles/Algorithm_Visualizer.dir/build.make
-Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/lib/libsfml-graphics.a
-Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/lib/libsfml-window.a
-Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-build/lib/libsfml-system.a
+Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/lib/libsfml-graphics.a
+Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/lib/libsfml-window.a
+Algorithm_Visualizer: /home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/build/lib/libsfml-system.a
 Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libudev.so
 Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libGL.so
 Algorithm_Visualizer: /usr/lib/x86_64-linux-gnu/libX11.so

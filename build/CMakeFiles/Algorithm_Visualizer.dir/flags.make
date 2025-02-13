@@ -4,7 +4,7 @@
 # compile CXX with /usr/bin/c++
 CXX_DEFINES = -DSFML_STATIC
 
-CXX_INCLUDES = -I/home/misieeek/Documents/dev/Algorithm_Visualizer/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/lib -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/sfml-src/include
+CXX_INCLUDES = -I/home/misieeek/Documents/dev/Algorithm_Visualizer/include -I/home/misieeek/Documents/dev/Algorithm_Visualizer/external/SFML/include
 
 CXX_FLAGS = -std=gnu++17
 
