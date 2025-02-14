@@ -1,6 +1,6 @@
-.cache/*                # Every file/directory that begins with .
-external/*              # Ignoruje wszystko w external/
-!external/.gitkeep      # Ale zachowuje pusty katalog external/
+/.cache/*
+#external/              # Ignoruje wszystko w external/
+#!external/.gitkeep      # Ale zachowuje pusty katalog external/
 
-build/*                 # Ignoruje wszystko w build/
-!build/.gitkeep         # Ale zachowuje pusty katalog build/
+/build/*                 # Ignoruje wszystko w build/
+!/build/.gitkeep         # Ale zachowuje pusty katalog build/
