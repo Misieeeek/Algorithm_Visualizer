@@ -36,6 +36,7 @@ void MainWindow::is_running(sf::RenderWindow &window) {
           break;
         case sf::Keyboard::Enter:
           int selected = current_screen->pressed();
+          std::cout << selected << std::endl;
           if (current_screen->getState() == Screen::State::MAINMENU) {
             switch (selected) {
             case 0:
@@ -45,10 +46,6 @@ void MainWindow::is_running(sf::RenderWindow &window) {
             case 1:
               current_screen->setState(Screen::State::OPTIONSSCREEN);
               current_screen = &options;
-              break;
-              // case 2:
-              //  current_state = State::ABOUTSCREEN;
-              //   current_screen = &about;
               break;
             case 2:
               window.close();

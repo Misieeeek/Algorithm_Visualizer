@@ -71,9 +71,13 @@ void Visualizer::setState(State new_state) { current_state = new_state; }
 void Visualizer::change_option(int selected) {
   switch (selected) {
   case 0:
-    std::cout << "IS" << "\n";
+    (*current_screen)->setState(Screen::State::VISUALIZESCREEN);
+    break;
+  case 1:
+    (*current_screen)->setState(Screen::State::VISUALIZESCREEN);
     break;
   case 6:
+    selected = -1;
     *current_screen = main_menu;
     (*current_screen)->setState(Screen::State::MAINMENU);
     break;

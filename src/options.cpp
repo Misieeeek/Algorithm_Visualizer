@@ -65,12 +65,13 @@ void Options::setState(State new_state) { current_state = new_state; }
 void Options::change_option(int selected) {
   switch (selected) {
   case 0:
-    // std::cout << "Speed" << "\n";
+    (*current_screen)->setState(Screen::State::OPTIONSSCREEN);
     break;
   case 1:
-    // std::cout << "Window" << "\n";
+    (*current_screen)->setState(Screen::State::OPTIONSSCREEN);
     break;
   case 2:
+    selected = -1;
     *current_screen = main_menu;
     (*current_screen)->setState(Screen::State::MAINMENU);
     break;

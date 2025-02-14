@@ -1,13 +1,11 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
-#include <cstddef>
 #pragma once
 
 #include "main_menu.h"
 #include "main_window.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <iostream>
 
 #define NUMBER_OF_ALGORITHMS 7
 
