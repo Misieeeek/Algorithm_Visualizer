@@ -1,4 +1,4 @@
-.cahce/*                # Every file/directory that begins with .
+.cache/*                # Every file/directory that begins with .
 external/*              # Ignoruje wszystko w external/
 !external/.gitkeep      # Ale zachowuje pusty katalog external/
 
