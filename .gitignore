@@ -1,5 +1,6 @@
-.*                      # Every file/directory that begins with .
-external/*              # Everything from external directory
-#!external/.gitkeep      # Keeps only the directory
-build/*                 # Everything form build directory
-!build/.gitkeep         # Keeps only the directory 
+.cahce/*                # Every file/directory that begins with .
+external/*              # Ignoruje wszystko w external/
+!external/.gitkeep      # Ale zachowuje pusty katalog external/
+
+build/*                 # Ignoruje wszystko w build/
+!build/.gitkeep         # Ale zachowuje pusty katalog build/
