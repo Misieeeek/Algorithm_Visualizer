@@ -1,5 +1,5 @@
 .*                      # Every file/directory that begins with .
 external/*              # Everything from external directory
-!external/.gitkeep      # Keeps only the directory
+#!external/.gitkeep      # Keeps only the directory
 build/*                 # Everything form build directory
-!build/.gitkeep         # Keeps only the directory 
+#!build/.gitkeep         # Keeps only the directory 
