@@ -37,14 +37,14 @@ void MainWindow::is_running(sf::RenderWindow &window) {
         case sf::Keyboard::Enter:
           int selected = current_screen->pressed();
           std::cout << selected << std::endl;
-          if (current_screen->getState() == Screen::State::MAINMENU) {
+          if (current_screen->get_state() == Screen::State::MAINMENU) {
             switch (selected) {
             case 0:
-              current_screen->setState(Screen::State::VISUALIZESCREEN);
+              current_screen->set_state(Screen::State::VISUALIZESCREEN);
               current_screen = &visualize;
               break;
             case 1:
-              current_screen->setState(Screen::State::OPTIONSSCREEN);
+              current_screen->set_state(Screen::State::OPTIONSSCREEN);
               current_screen = &options;
               break;
             case 2:

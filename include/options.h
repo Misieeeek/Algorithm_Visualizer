@@ -6,7 +6,6 @@
 #include "main_window.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
-#include <iostream>
 
 #define NUMBER_OF_OPTIONS 3
 
@@ -28,7 +27,9 @@ public:
   void move_down() override;
   int pressed() override { return selected_option; }
   void change_option(int selected) override;
-  void setState(State newState) override;
+  void set_state(State new_state) override;
+
+  void drop_down(int option) override;
 };
 
 #endif

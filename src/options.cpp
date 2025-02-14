@@ -60,20 +60,21 @@ void Options::draw(sf::RenderWindow &window) {
     window.draw(options_options[i]);
 }
 
-void Options::setState(State new_state) { current_state = new_state; }
+void Options::set_state(State new_state) { current_state = new_state; }
 
 void Options::change_option(int selected) {
   switch (selected) {
   case 0:
-    (*current_screen)->setState(Screen::State::OPTIONSSCREEN);
+    (*current_screen)->set_state(Screen::State::OPTIONSSCREEN);
     break;
   case 1:
-    (*current_screen)->setState(Screen::State::OPTIONSSCREEN);
+    (*current_screen)->set_state(Screen::State::OPTIONSSCREEN);
     break;
   case 2:
-    selected = -1;
     *current_screen = main_menu;
-    (*current_screen)->setState(Screen::State::MAINMENU);
+    (*current_screen)->set_state(Screen::State::MAINMENU);
     break;
   }
 }
+
+void Options::drop_down(int option) {}

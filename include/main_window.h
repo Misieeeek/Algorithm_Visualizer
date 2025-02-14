@@ -19,8 +19,10 @@ public:
   virtual int pressed() = 0;
   virtual void change_option(int selected) = 0;
   virtual ~Screen() = default;
-  virtual void setState(State newState) { current_state = newState; }
-  virtual State getState() const { return current_state; }
+  virtual void set_state(State new_state) { current_state = new_state; }
+  virtual State get_state() const { return current_state; }
+
+  virtual void drop_down(int option) = 0;
 };
 
 class MainWindow {

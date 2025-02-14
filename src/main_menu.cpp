@@ -53,6 +53,6 @@ void MainMenu::draw(sf::RenderWindow &window) {
     window.draw(main_menu_options[i]);
 }
 
-void MainMenu::change_option(int selected) {
-  // std::cout << selected << std::endl;
-}
+void MainMenu::change_option(int selected) {}
+
+void MainMenu::drop_down(int option) {}

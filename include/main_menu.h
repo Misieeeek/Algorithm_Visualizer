@@ -3,7 +3,6 @@
 #pragma once
 
 #include "main_window.h"
-#include <SFML/Graphics.hpp>
 #include <iostream>
 
 #define NUMBER_OF_ITEMS 3
@@ -24,6 +23,8 @@ public:
   void move_down() override;
   int pressed() override { return selected; }
   void change_option(int selected) override;
+
+  void drop_down(int option) override;
 };
 
 #endif
