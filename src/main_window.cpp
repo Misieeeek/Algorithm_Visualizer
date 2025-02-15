@@ -4,6 +4,7 @@
 #include "visualizer.h"
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
+#include <cstddef>
 
 MainWindow::MainWindow() {
   sf::RenderWindow window(sf::VideoMode(1280, 720), "Algorithm Visualizer",
@@ -19,7 +20,14 @@ void MainWindow::is_running(sf::RenderWindow &window) {
   Options options(&current_screen, &main_menu);
   Visualizer visualize(&current_screen, &main_menu);
 
+  std::cout << "MainMenu: " << &main_menu << "\nScreen: " << current_screen
+            << "\nOptions: " << &options << "\nVisualizer: " << &visualize
+            << std::endl;
+
+  int selected;
+
   while (window.isOpen()) {
+    //(*current_screen)->handle_input();
     sf::Event evnt;
     while (window.pollEvent(evnt)) {
       switch (evnt.type) {
@@ -35,16 +43,13 @@ void MainWindow::is_running(sf::RenderWindow &window) {
           current_screen->move_down();
           break;
         case sf::Keyboard::Enter:
-          int selected = current_screen->pressed();
-          std::cout << selected << std::endl;
-          if (current_screen->get_state() == Screen::State::MAINMENU) {
+          selected = current_screen->pressed();
+          if (current_screen == &main_menu) {
             switch (selected) {
             case 0:
-              current_screen->set_state(Screen::State::VISUALIZESCREEN);
               current_screen = &visualize;
               break;
             case 1:
-              current_screen->set_state(Screen::State::OPTIONSSCREEN);
               current_screen = &options;
               break;
             case 2:
@@ -52,6 +57,7 @@ void MainWindow::is_running(sf::RenderWindow &window) {
               break;
             }
           }
+          std::cout << selected << std::endl;
           current_screen->change_option(selected);
           break;
         }

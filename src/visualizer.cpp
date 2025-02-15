@@ -1,10 +1,11 @@
 #include "visualizer.h"
 #include "main_menu.h"
 #include "main_window.h"
+#include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <filesystem>
 
-Visualizer::Visualizer(Screen **screen_ptr, MainMenu *menu)
+Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
     : selected_algorithm_index(0) {
 
   std::filesystem::current_path(
@@ -14,7 +15,6 @@ Visualizer::Visualizer(Screen **screen_ptr, MainMenu *menu)
     std::cerr << "Failed to load font" << std::endl;
   }
 
-  opend = false;
   current_screen = screen_ptr;
   main_menu = menu;
 
@@ -60,6 +60,8 @@ void Visualizer::move_down() {
 }
 
 void Visualizer::draw(sf::RenderWindow &window) {
+  opend = true;
+  // main_active = false;
   switch (static_cast<int>(ac)) {
   case 0: // SORTING
     window.draw(list_algorithms[0]);
@@ -68,51 +70,53 @@ void Visualizer::draw(sf::RenderWindow &window) {
     for (int i = 1; i < NUMBER_OF_ALGORITHMS; i++)
       window.draw(list_algorithms[i]);
     break;
-  default:
-    for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++)
+  case 1: // SEARCHING
+    for (int i = 0; i < 1; i++)
       window.draw(list_algorithms[i]);
+    for (int i = 0; i < NUMBER_OF_SEARCH_ALGO; i++)
+      window.draw(list_algo_search[i]);
+    for (int i = 2; i < NUMBER_OF_ALGORITHMS; i++)
+      window.draw(list_algorithms[i]);
+  default:
+    for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
+      list_algorithms[i].setPosition(50, 50 * i + 150);
+      window.draw(list_algorithms[i]);
+    }
   }
 }
 
-void Visualizer::set_state(State new_state) { current_state = new_state; }
-
 void Visualizer::change_option(int selected) {
   switch (selected) {
-  case 0:
-    if (opend) {
-      (*current_screen)->set_state(Screen::State::VISUALIZESCREEN);
+  case 0: // SORTING
+    if (opend)
       drop_down(selected);
-    }
-    std::cout << opend << std::endl;
-    opend = true;
     break;
-  case 1:
-    (*current_screen)->set_state(Screen::State::VISUALIZESCREEN);
+  case 1: // SEARCHING
     drop_down(selected);
     break;
-  case 2:
-    (*current_screen)->set_state(Screen::State::VISUALIZESCREEN);
+  case 2: // DS
     drop_down(selected);
     break;
-  case 3:
-    (*current_screen)->set_state(Screen::State::VISUALIZESCREEN);
+  case 3: // DYNAMIC ALGORITHMS
     drop_down(selected);
     break;
-  case 4:
-    (*current_screen)->set_state(Screen::State::VISUALIZESCREEN);
+  case 4: // GREEDY ALGORITHMS
     drop_down(selected);
     break;
-  case 5:
-    (*current_screen)->set_state(Screen::State::VISUALIZESCREEN);
+  case 5: // ADVANCED  DS
     drop_down(selected);
     break;
-  case 6:
-    (*current_screen)->set_state(Screen::State::VISUALIZESCREEN);
+  case 6: // GRAPH ALGORITHMS
     drop_down(selected);
     break;
-  case 7:
+  case 7: // EXIT
+    opend = false;
+    selected_algorithm = 0;
+    selected_algorithm_index = 0;
+    list_algorithms[0].setFillColor(sf::Color::Green);
+    list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
+    // main_active = true;
     *current_screen = main_menu;
-    (*current_screen)->set_state(Screen::State::MAINMENU);
     break;
   }
 }
@@ -125,6 +129,7 @@ void Visualizer::drop_down(int option) {
     break;
   case 1:
     ac = Algocat::SEARCHING;
+    searching_algo_list();
     break;
   case 2:
     ac = Algocat::DS;
@@ -151,11 +156,36 @@ void Visualizer::sorting_algo_list() {
   for (int i = 0; i < NUMBER_OF_SORT_ALGO; i++) {
     list_algo_sort[i].setFont(open_sans);
     list_algo_sort[i].setFillColor(sf::Color::White);
-    list_algo_sort[i].setCharacterSize(10);
+    list_algo_sort[i].setCharacterSize(20);
     list_algo_sort[i].setStyle(sf::Text::Bold);
-    list_algo_sort[i].setPosition(50, 35 * i + 150);
+    list_algo_sort[i].setPosition(100, 35 * i + 200);
     list_algo_sort[i].setString(algo_sort[i]);
   }
   list_algo_sort[NUMBER_OF_SORT_ALGO - 1].setFillColor(sf::Color::Red);
   list_algo_sort[0].setFillColor(sf::Color::Green);
+
+  for (int i = 1; i < NUMBER_OF_ALGORITHMS; i++) {
+    list_algorithms[i].setPosition(50, 35 * i + 360);
+  }
 }
+
+void Visualizer::searching_algo_list() {
+  std::string algo_search[] = {"Linear Search", "Binary Search"};
+
+  for (int i = 0; i < NUMBER_OF_SEARCH_ALGO; i++) {
+    list_algo_search[i].setFont(open_sans);
+    list_algo_search[i].setFillColor(sf::Color::White);
+    list_algo_search[i].setCharacterSize(20);
+    list_algo_search[i].setStyle(sf::Text::Bold);
+    list_algo_search[i].setPosition(100, 35 * i + 250);
+    list_algo_search[i].setString(algo_search[i]);
+  }
+  list_algo_search[NUMBER_OF_SEARCH_ALGO - 1].setFillColor(sf::Color::Red);
+  list_algo_search[0].setFillColor(sf::Color::Green);
+
+  for (int i = 2; i < NUMBER_OF_ALGORITHMS; i++) {
+    list_algorithms[i].setPosition(0, 35 * i + 360);
+  }
+}
+
+void Visualizer::handle_input() {}

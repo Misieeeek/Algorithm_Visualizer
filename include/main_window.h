@@ -5,24 +5,21 @@
 #include <SFML/Graphics.hpp>
 
 class Screen {
-public:
-  enum class State { MAINMENU, VISUALIZESCREEN, OPTIONSSCREEN };
-
 protected:
-  State current_state;
+  bool opend;
+  bool main_active;
 
 public:
-  Screen() : current_state(State::MAINMENU) {};
+  Screen() : opend(false), main_active(true) {};
   virtual void draw(sf::RenderWindow &window) = 0;
   virtual void move_up() = 0;
   virtual void move_down() = 0;
   virtual int pressed() = 0;
   virtual void change_option(int selected) = 0;
   virtual ~Screen() = default;
-  virtual void set_state(State new_state) { current_state = new_state; }
-  virtual State get_state() const { return current_state; }
 
   virtual void drop_down(int option) = 0;
+  virtual void handle_input() = 0;
 };
 
 class MainWindow {
