@@ -10,6 +10,11 @@
 #define NUMBER_OF_ALGORITHMS 8
 #define NUMBER_OF_SORT_ALGO 6
 #define NUMBER_OF_SEARCH_ALGO 2
+#define NUMBER_OF_DS_ALGO 8
+#define NUMBER_OF_DYNAMIC_ALGO 4
+#define NUMBER_OF_GREEDY_ALGO 2
+#define NUMBER_OF_ADVANCEDDS_ALGO 3
+#define NUMBER_OF_GRAPH_ALGO 3
 
 class Visualizer : public Screen {
 private:
@@ -26,6 +31,25 @@ private:
 
   // DROP DOWN MENU FOR SEARCH ALGORITHMS
   sf::Text list_algo_search[NUMBER_OF_SEARCH_ALGO];
+
+  // DROP DOWN MENU FOR DS ALGORITHMS
+  sf::Text list_algo_ds[NUMBER_OF_DS_ALGO];
+
+  // DROP DOWN MENU FOR DYNAMIC PROGRAMMING ALGORITHMS
+  sf::Text list_algo_dynamic[NUMBER_OF_DYNAMIC_ALGO];
+
+  // DROP DOWN MENU FOR GREEDY ALGORITHMS
+  sf::Text list_algo_greedy[NUMBER_OF_GREEDY_ALGO];
+
+  // DROP DOWN MENU FOR ADVANCED DATA STRUCTURES ALGORITHMS
+  sf::Text list_algo_advancedds[NUMBER_OF_ADVANCEDDS_ALGO];
+
+  // DROP DOWN MENU FOR GRAPH ALGORITHMS
+  sf::Text list_algo_graph[NUMBER_OF_GRAPH_ALGO];
+
+  // TEXT STYLES
+  int category_font_size = 35;
+  int drop_down_item_font_size = 20;
 
 public:
   enum class Algocat {
@@ -47,11 +71,15 @@ public:
   void move_down() override;
   int pressed() override { return selected_algorithm; }
   void change_option(int selected) override;
-  void handle_input() override;
 
   void drop_down(int option) override;
   void sorting_algo_list();
   void searching_algo_list();
+  void ds_algo_list();
+  void dynamic_algo_list();
+  void greedy_algo_list();
+  void advancedds_algo_list();
+  void graph_algo_list();
 
 private:
   Algocat ac;

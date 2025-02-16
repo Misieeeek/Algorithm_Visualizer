@@ -20,7 +20,6 @@ public:
   virtual ~Screen() = default;
 
   virtual void drop_down(int option) = 0;
-  virtual void handle_input() = 0;
 };
 
 class MainWindow {

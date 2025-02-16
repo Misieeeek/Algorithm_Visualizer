@@ -23,7 +23,6 @@ void MainWindow::is_running(sf::RenderWindow &window) {
   int selected;
 
   while (window.isOpen()) {
-    //(*current_screen)->handle_input();
     sf::Event evnt;
     while (window.pollEvent(evnt)) {
       switch (evnt.type) {

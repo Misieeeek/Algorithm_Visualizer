@@ -56,5 +56,3 @@ void MainMenu::draw(sf::RenderWindow &window) {
 void MainMenu::change_option(int selected) {}
 
 void MainMenu::drop_down(int option) {}
-
-void MainMenu::handle_input() {}

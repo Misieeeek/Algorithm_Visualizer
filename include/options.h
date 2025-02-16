@@ -27,7 +27,6 @@ public:
   void move_down() override;
   int pressed() override { return selected_option; }
   void change_option(int selected) override;
-  void handle_input() override;
 
   void drop_down(int option) override;
 };

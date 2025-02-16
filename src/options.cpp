@@ -73,5 +73,3 @@ void Options::change_option(int selected) {
 }
 
 void Options::drop_down(int option) {}
-
-void Options::handle_input() { *current_screen = main_menu; }
