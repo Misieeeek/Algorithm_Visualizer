@@ -34,6 +34,7 @@ Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
   list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
   list_algorithms[0].setFillColor(sf::Color::Green);
   selected_algorithm = 0;
+  dropped = false;
 }
 
 Visualizer::~Visualizer() {}
@@ -62,6 +63,7 @@ void Visualizer::move_down() {
 void Visualizer::draw(sf::RenderWindow &window) {
   opend = true;
   // main_active = false;
+
   switch (static_cast<int>(ac)) {
   case 0: // SORTING
     window.draw(list_algorithms[0]);
@@ -77,6 +79,11 @@ void Visualizer::draw(sf::RenderWindow &window) {
       window.draw(list_algo_search[i]);
     for (int i = 2; i < NUMBER_OF_ALGORITHMS; i++)
       window.draw(list_algorithms[i]);
+  case 7:
+    for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
+      list_algorithms[i].setPosition(50, 50 * i + 150);
+      window.draw(list_algorithms[i]);
+    }
   default:
     for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
       list_algorithms[i].setPosition(50, 50 * i + 150);
@@ -88,11 +95,24 @@ void Visualizer::draw(sf::RenderWindow &window) {
 void Visualizer::change_option(int selected) {
   switch (selected) {
   case 0: // SORTING
-    if (opend)
-      drop_down(selected);
+    if (opend) {
+      if (!dropped) {
+        dropped = true;
+        drop_down(selected);
+      } else {
+        drop_down(7);
+        dropped = false;
+      }
+    }
     break;
   case 1: // SEARCHING
-    drop_down(selected);
+    if (!dropped) {
+      dropped = true;
+      drop_down(selected);
+    } else {
+      drop_down(7);
+      dropped = false;
+    }
     break;
   case 2: // DS
     drop_down(selected);
@@ -115,7 +135,7 @@ void Visualizer::change_option(int selected) {
     selected_algorithm_index = 0;
     list_algorithms[0].setFillColor(sf::Color::Green);
     list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
-    // main_active = true;
+    dropped = true;
     *current_screen = main_menu;
     break;
   }
@@ -145,6 +165,9 @@ void Visualizer::drop_down(int option) {
     break;
   case 6:
     ac = Algocat::GRAPH;
+    break;
+  case 7:
+    ac = Algocat::NONE;
     break;
   }
 }

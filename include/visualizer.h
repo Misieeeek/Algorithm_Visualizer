@@ -35,7 +35,8 @@ public:
     DYNAMIC,
     GREEDY,
     ADVANCEDDS,
-    GRAPH
+    GRAPH,
+    NONE
   };
 
   Visualizer(Screen **screen_ptr, Screen *menu);

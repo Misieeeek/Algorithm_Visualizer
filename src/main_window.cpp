@@ -20,10 +20,6 @@ void MainWindow::is_running(sf::RenderWindow &window) {
   Options options(&current_screen, &main_menu);
   Visualizer visualize(&current_screen, &main_menu);
 
-  std::cout << "MainMenu: " << &main_menu << "\nScreen: " << current_screen
-            << "\nOptions: " << &options << "\nVisualizer: " << &visualize
-            << std::endl;
-
   int selected;
 
   while (window.isOpen()) {
@@ -57,7 +53,6 @@ void MainWindow::is_running(sf::RenderWindow &window) {
               break;
             }
           }
-          std::cout << selected << std::endl;
           current_screen->change_option(selected);
           break;
         }

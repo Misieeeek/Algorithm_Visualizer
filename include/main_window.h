@@ -8,6 +8,7 @@ class Screen {
 protected:
   bool opend;
   bool main_active;
+  bool dropped;
 
 public:
   Screen() : opend(false), main_active(true) {};
