@@ -28,6 +28,7 @@ private:
   sf::Font open_sans;
   int selected_algorithm;
 
+  // DROP DOWN MENU ITEMS LIST
   std::vector<sf::Text> list_algo;
 
   // DROP DOWN MENU FOR SORTING ALGORITHMS
@@ -75,6 +76,11 @@ private:
   int category_font_size = 35;
   int drop_down_item_font_size = 20;
 
+  //
+  int dropped_items;
+  int dropped_items_index;
+  bool category_option;
+
 public:
   enum class Algocat {
     SORTING,
@@ -93,7 +99,7 @@ public:
   void draw(sf::RenderWindow &window) override;
   void move_up() override;
   void move_down() override;
-  int pressed() override { return selected_algorithm; }
+  int pressed() override;
   void change_option(int selected) override;
 
   void drop_down(int option) override;
