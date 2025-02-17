@@ -35,6 +35,10 @@ Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
   list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
   list_algorithms[0].setFillColor(sf::Color::Green);
   dropped = false;
+
+  for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
+    for (int j = 0; i <)
+  }
 }
 
 Visualizer::~Visualizer() {}
@@ -203,119 +207,4 @@ int Visualizer::pressed() {
     return dropped_items;
 }
 
-void Visualizer::go_to_algo_screen(int selected) {
-  switch (static_cast<int>(ac)) {
-  case 0: // SORTING ALGORITHMS
-    switch (selected) {
-    case 0: // INSERTION SORT
-      std::cout << "INSERTION SORT" << std::endl;
-      break;
-    case 1: // SELECTION SORT
-      std::cout << "SELECTION SORT" << std::endl;
-      break;
-    case 2: // MERGE SORT
-      std::cout << "MERGE SORT" << std::endl;
-      break;
-    case 3: // BUBBLE SORT
-      std::cout << "BUBBLE SORT" << std::endl;
-      break;
-    case 4: // HEAP SORT
-      std::cout << "HEAP SORT" << std::endl;
-      break;
-    case 5: // QUICK SORT
-      std::cout << "QUCIK SORT" << std::endl;
-      break;
-    }
-    break;
-  case 1: // SEARCHING ALGORITHMS
-    switch (selected) {
-    case 0: // LINEAR SEARCH
-      std::cout << "LINEAR SEARCH" << std::endl;
-      break;
-    case 1: // BINARY SEARCH
-      std::cout << "BINARY SEARCH" << std::endl;
-      break;
-    }
-    break;
-  case 2: // DATA STRUCTURES
-    switch (selected) {
-    case 0: // STACK
-      std::cout << "STACK" << std::endl;
-      break;
-    case 1: // QUEUE
-      std::cout << "QUEUE" << std::endl;
-      break;
-    case 2: // LINKED LIST
-      std::cout << "LINKED LIST" << std::endl;
-      break;
-    case 3: // HASH TABLE
-      std::cout << "HASH TABLE" << std::endl;
-      break;
-    case 4: // BINARY SEARCH TREE
-      std::cout << "BINARY SEARCH TREE" << std::endl;
-      break;
-    case 5: // RED-BLACK TREE
-      std::cout << "RED-BLACK TREE" << std::endl;
-      break;
-    case 6: // AVL TREE
-      std::cout << "AVL TREE" << std::endl;
-      break;
-    case 7: // TREAPS
-      std::cout << "TREAPS" << std::endl;
-      break;
-    }
-    break;
-  case 3: // DYNAMIC PROGRAMMING
-    switch (selected) {
-    case 0: // CUT ROD
-      std::cout << "CUT ROD" << std::endl;
-      break;
-    case 1: // CUT ROD (MEMO)
-      std::cout << "CUT ROD (MEMO)" << std::endl;
-      break;
-    case 2: // CUT ROD (TAB)
-      std::cout << "CUT ROD (TAB)" << std::endl;
-      break;
-    case 3: // LONGEST COMMON SUBSEQUENCE
-      std::cout << "LONGEST COMMON SUBSEQUENCE" << std::endl;
-      break;
-    }
-    break;
-  case 4: // GREEDY
-    switch (selected) {
-    case 0: // HUFFMAN CODING
-      std::cout << "HUFFMAN CODING" << std::endl;
-      break;
-    case 1: // ACTIVITY SELECTOR
-      std::cout << "ACTIVITY SELECTOR" << std::endl;
-      break;
-    }
-    break;
-  case 5: // ADVANCEDS DS
-    switch (selected) {
-    case 0: // B-TREE
-      std::cout << "B-TREE" << std::endl;
-      break;
-    case 1: // FIBONACCI TREE
-      std::cout << "FIBONACCI TREE" << std::endl;
-      break;
-    case 2: // VAN EMDE BOAS TREE
-      std::cout << "VAN EMDE BOAS TREE" << std::endl;
-      break;
-    }
-    break;
-  case 6: // GRAPH
-    switch (selected) {
-    case 0: // 1
-      std::cout << "1" << std::endl;
-      break;
-    case 1: // 2
-      std::cout << "2" << std::endl;
-      break;
-    case 2: // 3
-      std::cout << "3" << std::endl;
-      break;
-    }
-    break;
-  }
-}
+void Visualizer::go_to_algo_screen(int selected) {}

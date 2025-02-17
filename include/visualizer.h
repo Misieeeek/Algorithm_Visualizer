@@ -76,12 +76,16 @@ private:
   int category_font_size = 35;
   int drop_down_item_font_size = 20;
 
-  //
+  // DROP DOWN MENU COUNTERS AND CHECKER FOR CATEGORY OPTION
   int dropped_items;
   int dropped_items_index;
   bool category_option;
 
+  // CHOOSED OPTION FROM DROP DOWN MENU
+  std::vector<std::vector<int>> algorithms;
+
 public:
+  // STATE OF PRESSED CATEGORY
   enum class Algocat {
     SORTING,
     SEARCHING,
