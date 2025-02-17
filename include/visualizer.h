@@ -103,12 +103,12 @@ public:
   void change_option(int selected) override;
 
   void drop_down(int option) override;
-
   void general_algo_list(int number_of_categories,
                          std::vector<std::string> list_of_algo, int end_iter,
                          int add_val_pos_x_drop_down,
                          int add_val_pos_x_categories_before,
                          int adda_val_pos_x_categories_afer);
+  void go_to_algo_screen(int selected);
 
 private:
   Algocat ac;
