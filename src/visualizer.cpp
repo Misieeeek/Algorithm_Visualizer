@@ -4,6 +4,11 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <filesystem>
+#include <utility>
+
+std::map<std::pair<Algocat, int>, std::function<void()>,
+         algocat_pair_comparator>
+    algorithm_map;
 
 Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
     : selected_algorithm_index(0), selected_algorithm(0),
@@ -36,9 +41,8 @@ Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
   list_algorithms[0].setFillColor(sf::Color::Green);
   dropped = false;
 
-  for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
-    for (int j = 0; i <)
-  }
+  // INITIALIZE MAP FOR ALGORITHMS
+  initialize_algorithms();
 }
 
 Visualizer::~Visualizer() {}
@@ -207,4 +211,71 @@ int Visualizer::pressed() {
     return dropped_items;
 }
 
-void Visualizer::go_to_algo_screen(int selected) {}
+void Visualizer::initialize_algorithms() {
+  //------------------------------------------- SORTING
+  algorithm_map[{Algocat::SORTING, 0}] = []() {
+    std::cout << "Insertion Sort\n";
+  };
+  algorithm_map[{Algocat::SORTING, 1}] = []() {
+    std::cout << "Selection Sort\n";
+  };
+  algorithm_map[{Algocat::SORTING, 2}] = []() { std::cout << "Merge Sort\n"; };
+  algorithm_map[{Algocat::SORTING, 3}] = []() { std::cout << "Bubble Sort\n"; };
+  algorithm_map[{Algocat::SORTING, 4}] = []() { std::cout << "Heap Sort\n"; };
+  algorithm_map[{Algocat::SORTING, 5}] = []() { std::cout << "Quick Sort\n"; };
+  algorithm_map[{Algocat::SEARCHING, 0}] = []() {
+    std::cout << "Linear Search\n";
+  };
+  algorithm_map[{Algocat::SEARCHING, 1}] = []() {
+    std::cout << "Binary Search\n";
+  };
+  algorithm_map[{Algocat::DS, 0}] = []() { std::cout << "Stack\n"; };
+  algorithm_map[{Algocat::DS, 1}] = []() { std::cout << "Queue\n"; };
+  algorithm_map[{Algocat::DS, 2}] = []() { std::cout << "Linked List\n"; };
+  algorithm_map[{Algocat::DS, 3}] = []() { std::cout << "Hash Table\n"; };
+  algorithm_map[{Algocat::DS, 4}] = []() {
+    std::cout << "Binary Search Tree\n";
+  };
+  algorithm_map[{Algocat::DS, 5}] = []() { std::cout << "Red-Black Tree\n"; };
+  algorithm_map[{Algocat::DS, 6}] = []() { std::cout << "AVL Tree\n"; };
+  algorithm_map[{Algocat::DS, 7}] = []() { std::cout << "Treaps\n"; };
+  algorithm_map[{Algocat::DYNAMIC, 0}] = []() { std::cout << "Cut Rod\n"; };
+  algorithm_map[{Algocat::DYNAMIC, 1}] = []() {
+    std::cout << "Cut Rod (Memo)\n";
+  };
+  algorithm_map[{Algocat::DYNAMIC, 2}] = []() {
+    std::cout << "Cut Rod (Tab)\n";
+  };
+  algorithm_map[{Algocat::DYNAMIC, 3}] = []() {
+    std::cout << "Longest Common Subsequence\n";
+  };
+
+  algorithm_map[{Algocat::GREEDY, 0}] = []() {
+    std::cout << "Huffman Codign\n";
+  };
+  algorithm_map[{Algocat::GREEDY, 1}] = []() {
+    std::cout << "Activity Selector\n";
+  };
+  algorithm_map[{Algocat::ADVANCEDDS, 0}] = []() { std::cout << "B-Tree\n"; };
+  algorithm_map[{Algocat::ADVANCEDDS, 1}] = []() {
+    std::cout << "Fibonacci Tree\n";
+  };
+  algorithm_map[{Algocat::ADVANCEDDS, 2}] = []() {
+    std::cout << "Van Emde Boas Tree\n";
+  };
+  algorithm_map[{Algocat::GRAPH, 0}] = []() { std::cout << "1\n"; };
+  algorithm_map[{Algocat::GRAPH, 1}] = []() { std::cout << "2\n"; };
+  algorithm_map[{Algocat::GRAPH, 2}] = []() { std::cout << "3\n"; };
+}
+
+void Visualizer::go_to_algo_screen(int selected) {
+  auto it = algorithm_map.find(std::make_pair(ac, selected));
+  if (it != algorithm_map.end()) {
+    it->second(); // ALGORITHM STYLES
+    render();     // VISUALIZATION
+  } else {
+    std::cerr << "Algorithm not found" << std::endl;
+  }
+}
+
+void Visualizer::render() {}

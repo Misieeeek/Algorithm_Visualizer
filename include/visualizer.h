@@ -6,9 +6,13 @@
 #include "main_window.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <functional>
+#include <map>
 #include <string>
+#include <utility>
 #include <vector>
 
+// NUMBER OF ALGORITHMS BY CATEGORY
 #define NUMBER_OF_ALGORITHMS 8
 #define NUMBER_OF_SORT_ALGO 6
 #define NUMBER_OF_SEARCH_ALGO 2
@@ -17,6 +21,33 @@
 #define NUMBER_OF_GREEDY_ALGO 2
 #define NUMBER_OF_ADVANCEDDS_ALGO 3
 #define NUMBER_OF_GRAPH_ALGO 3
+
+// STATE OF PRESSED CATEGORY
+enum class Algocat {
+  SORTING,
+  SEARCHING,
+  DS,
+  DYNAMIC,
+  GREEDY,
+  ADVANCEDDS,
+  GRAPH,
+  NONE
+};
+
+// COMPARATOR FOR STD::PAIR<ALGOCAT, INT> TO BE USED IN THE MAP
+struct algocat_pair_comparator {
+  bool operator()(const std::pair<Algocat, int> &lhs,
+                  const std::pair<Algocat, int> &rhs) const {
+    if (lhs.first != rhs.first)
+      return lhs.first < rhs.first; // Compare categories first
+    return lhs.second < rhs.second; // Then compare the index
+  }
+};
+
+// GLOBAL DECLARATION OF ALGORITHM MAP
+extern std::map<std::pair<Algocat, int>, std::function<void()>,
+                algocat_pair_comparator>
+    algorithm_map;
 
 class Visualizer : public Screen {
 private:
@@ -85,18 +116,6 @@ private:
   std::vector<std::vector<int>> algorithms;
 
 public:
-  // STATE OF PRESSED CATEGORY
-  enum class Algocat {
-    SORTING,
-    SEARCHING,
-    DS,
-    DYNAMIC,
-    GREEDY,
-    ADVANCEDDS,
-    GRAPH,
-    NONE
-  };
-
   Visualizer(Screen **screen_ptr, Screen *menu);
   ~Visualizer();
 
@@ -113,6 +132,8 @@ public:
                          int add_val_pos_x_categories_before,
                          int adda_val_pos_x_categories_afer);
   void go_to_algo_screen(int selected);
+  void render();
+  void initialize_algorithms();
 
 private:
   Algocat ac;
