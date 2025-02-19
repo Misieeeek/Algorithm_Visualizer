@@ -19,6 +19,7 @@ void MainWindow::is_running(sf::RenderWindow &window) {
   Screen *current_screen = &main_menu;
   Options options(&current_screen, &main_menu);
   Visualizer visualize(&current_screen, &main_menu);
+  Sorting_Class sort_clas(&current_screen, &visualize);
 
   int selected;
 

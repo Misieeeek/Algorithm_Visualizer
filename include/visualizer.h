@@ -50,7 +50,41 @@ extern std::map<std::pair<Algocat, int>, std::function<void()>,
     algorithm_map;
 
 class Visualizer : public Screen {
+public:
+  Visualizer(Screen **screen_ptr, Screen *menu);
+  ~Visualizer();
+
+  // RESPOSIBLE FOR DRAWING EVERYTHING
+  void draw(sf::RenderWindow &window) override;
+  // MOVE UP OR DOWN (OPTIONS)
+  void move_up() override;
+  void move_down() override;
+  // RETURN A NUMBER OF WHICH OPTION WAS PRESSED
+  int pressed() override;
+  // RESPONSIBLE FOR CHANGING THE OPTION (WHEN SELECTED, DO SOMETHING)
+  void change_option(int selected) override;
+  // RESPOSIBLE FOR DROP DOWN MENUS OF EACH CATEGORY OF ALGORITHMS
+  void drop_down(int option) override;
+  // RESPONSIBLE FOR STYLE OF DROP DOWN MENU
+  void general_algo_list(int number_of_categories,
+                         std::vector<std::string> list_of_algo, int end_iter,
+                         int add_val_pos_x_drop_down,
+                         int add_val_pos_x_categories_before,
+                         int adda_val_pos_x_categories_afer);
+  // RESPONSIBLE FOR FINDING THE SELECTED ALGORITHM AND ACTIVATING IT FROM DOWN
+  // MENU
+  void go_to_algo_screen(int selected);
+  //
+  void render();
+  // RESPONSIBLE FOR LOADING ALGORITHM SCREENS (BTW IT LOADS EVERYTHING WHEN
+  // CONSTRUCTOR IS ACTIVATED, WOULD BE MUCH MORE EFFICIENT, WHEN IT LOADS ONE,
+  // THE NEEDED ONE, AFTERWARDS IF NOT NEEDED ANYMORE DELETING IT).
+  void initialize_algorithms();
+
 private:
+  // KEEPS THE STATE OF ALGOCAT CURRENTLY SELECTED
+  Algocat ac;
+
   // MAIN MENU FOR EVERY CATEGORY OF ALGORITHMS
   Screen **current_screen;
   Screen *main_menu;
@@ -111,32 +145,30 @@ private:
   int dropped_items;
   int dropped_items_index;
   bool category_option;
+};
 
-  // CHOOSED OPTION FROM DROP DOWN MENU
-  std::vector<std::vector<int>> algorithms;
-
+class Sorting_Class : public Screen {
 public:
-  Visualizer(Screen **screen_ptr, Screen *menu);
-  ~Visualizer();
-
+  // IHERITENCE FROM CLASS SCREEN
   void draw(sf::RenderWindow &window) override;
   void move_up() override;
   void move_down() override;
   int pressed() override;
   void change_option(int selected) override;
 
-  void drop_down(int option) override;
-  void general_algo_list(int number_of_categories,
-                         std::vector<std::string> list_of_algo, int end_iter,
-                         int add_val_pos_x_drop_down,
-                         int add_val_pos_x_categories_before,
-                         int adda_val_pos_x_categories_afer);
-  void go_to_algo_screen(int selected);
-  void render();
-  void initialize_algorithms();
+  Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr); // MENU HAS TO CHANGE
+                                                           // TO VISUALIZER
+  ~Sorting_Class();
 
 private:
-  Algocat ac;
+  // DISPLAYS SCREEN FOR SORTING
+  Screen **current_screen;
+  Visualizer *visualize; // HERE NEEDS TO BE VISUALIZER MENU
+  int selected_sorting_algo_index;
+  sf::Text list_sort_algo[NUMBER_OF_ALGORITHMS]; // HERE NEEDS TO BE A NUMBER OF
+                                                 // TOTAL SORTING ELEMENTS
+  sf::Font open_sans;
+  int selected_sort_algo;
 };
 
 #endif
