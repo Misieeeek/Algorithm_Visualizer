@@ -53,6 +53,10 @@ void MainMenu::draw(sf::RenderWindow &window) {
     window.draw(main_menu_options[i]);
 }
 
+void MainMenu::move_left() {}
+
+void MainMenu::move_right() {}
+
 void MainMenu::change_option(int selected) {}
 
 void MainMenu::drop_down(int option) {}

@@ -4,6 +4,7 @@
 #include "visualizer.h"
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/Window/Keyboard.hpp>
 #include <cstddef>
 
 MainWindow::MainWindow() {
@@ -19,7 +20,6 @@ void MainWindow::is_running(sf::RenderWindow &window) {
   Screen *current_screen = &main_menu;
   Options options(&current_screen, &main_menu);
   Visualizer visualize(&current_screen, &main_menu);
-  Sorting_Class sort_clas(&current_screen, &visualize);
 
   int selected;
 
@@ -37,6 +37,12 @@ void MainWindow::is_running(sf::RenderWindow &window) {
           break;
         case sf::Keyboard::Down:
           current_screen->move_down();
+          break;
+        case sf::Keyboard::Left:
+          current_screen->move_left();
+          break;
+        case sf::Keyboard::Right:
+          current_screen->move_right();
           break;
         case sf::Keyboard::Enter:
           selected = current_screen->pressed();

@@ -55,6 +55,10 @@ void Options::move_down() {
   }
 }
 
+void Options::move_left() {}
+
+void Options::move_right() {}
+
 void Options::draw(sf::RenderWindow &window) {
   for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
     window.draw(options_options[i]);

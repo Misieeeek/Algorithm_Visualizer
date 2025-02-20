@@ -24,7 +24,7 @@ Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
 
   current_screen = screen_ptr;
   main_menu = menu;
-
+  sort_class = new Sorting_Class(screen_ptr, this);
   std::string algo[] = {"Sorting Algorithms", "Searching Algorithms",
                         "Data Structures",    "Dynamic Programming",
                         "Greedy Algorithms",  "Advanced Data Structures",
@@ -46,7 +46,7 @@ Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
   initialize_algorithms();
 }
 
-Visualizer::~Visualizer() {}
+Visualizer::~Visualizer() { delete sort_class; }
 
 void Visualizer::move_up() {
   if (dropped || !category_option) {
@@ -98,6 +98,9 @@ void Visualizer::move_down() {
     }
   }
 }
+
+void Visualizer::move_left() {}
+void Visualizer::move_right() {}
 
 void Visualizer::draw(sf::RenderWindow &window) {
   opend = true;
@@ -215,7 +218,8 @@ int Visualizer::pressed() {
 void Visualizer::initialize_algorithms() {
   //------------------------------------------- SORTING
   algorithm_map[{Algocat::SORTING, 0}] = [this]() {
-    std::unique_ptr<Sorting> sort_class = std::make_unique<InsertionSort>();
+    *current_screen = sort_class;
+    sort_class->insertion_sort();
   };
   algorithm_map[{Algocat::SORTING, 1}] = []() {
     std::cout << "Selection Sort\n";
@@ -289,11 +293,101 @@ void Visualizer::render() {}
 //------------------------------------------------------- Sorting
 
 Sorting_Class::Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr)
-    : current_screen(screen_ptr), visualize(viz_ptr), selected_sort_algo(0) {
+    : current_screen(screen_ptr), visualize(viz_ptr), selected_sort_algo(0),
+      selected_sorting_algo_index(0) {
+
   std::cout << "Sorting_Class screen initialized with Visualizer access.\n";
+  std::filesystem::current_path(
+      std::filesystem::path(__FILE__).parent_path().parent_path());
+
+  if (!open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
+    std::cerr << "Failed to load font" << std::endl;
+  }
 }
-void Sorting_Class::draw(sf::RenderWindow &window) {}
-void Sorting_Class::move_up() {}
-void Sorting_Class::move_down() {}
-int Sorting_Class::pressed() { return 0; }
-void Sorting_Class::change_option(int selected) {}
+
+Sorting_Class::~Sorting_Class() {
+  std::cout << "DESTRUCTOR SORTING" << std::endl;
+}
+void Sorting_Class::draw(sf::RenderWindow &window) {
+  for (int i = 0; i < algorithm_variants.size(); i++)
+    window.draw(algorithm_variants[i]);
+}
+
+void Sorting_Class::move_up() {
+  std::cout << selected_sorting_algo_index << std::endl;
+  if (selected_sorting_algo_index - 1 >= 0) {
+    if (selected_sorting_algo_index == algorithm_variants.size() - 1)
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::Red);
+    else
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::White);
+    selected_sorting_algo_index--;
+    algorithm_variants[selected_sorting_algo_index].setFillColor(
+        sf::Color::Green);
+    selected_sort_algo = selected_sorting_algo_index;
+  }
+}
+
+void Sorting_Class::move_down() {
+  if (selected_sorting_algo_index + 1 <
+      algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS) {
+    algorithm_variants[selected_sorting_algo_index].setFillColor(
+        sf::Color::White);
+    selected_sorting_algo_index++;
+    algorithm_variants[selected_sorting_algo_index].setFillColor(
+        sf::Color::Green);
+    selected_sort_algo = selected_sorting_algo_index;
+  }
+}
+
+void Sorting_Class::move_left() {}
+
+void Sorting_Class::move_right() {}
+
+int Sorting_Class::pressed() { return selected_sort_algo; }
+
+void Sorting_Class::change_option(int selected) {
+  if (selected == algorithm_variants.size() - 1 - NUMBER_OF_SORT_OPTIONS) {
+    selected_sort_algo = 0;
+    selected_sorting_algo_index = 0;
+    algorithm_variants[0].setFillColor(sf::Color::Green);
+    algorithm_variants[algorithm_variants.size() - 1 - NUMBER_OF_SORT_OPTIONS]
+        .setFillColor(sf::Color::Red);
+    *current_screen = visualize;
+  } else {
+    std::cout << selected << std::endl;
+  }
+}
+
+void Sorting_Class::drop_down(int option) {}
+
+void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
+  for (int i = 0; i < NUMBER_OF_SORT_OPTIONS; i++)
+
+    algorithm_variants.resize(variants.size());
+  for (int i = 0; i < variants.size(); i++) {
+    algorithm_variants[i].setFont(open_sans);
+    algorithm_variants[i].setFillColor(sf::Color::White);
+    algorithm_variants[i].setCharacterSize(char_size);
+    algorithm_variants[i].setStyle(sf::Text::Bold);
+    algorithm_variants[i].setPosition(50, 50 * i + pos_y);
+    algorithm_variants[i].setString(variants[i]);
+  }
+  algorithm_variants[variants.size() - 1 - NUMBER_OF_SORT_OPTIONS].setFillColor(
+      sf::Color::Red);
+  algorithm_variants[0].setFillColor(sf::Color::Green);
+  for (int i = variants.size() - NUMBER_OF_SORT_OPTIONS; i < variants.size();
+       i++)
+    algorithm_variants[i].setPosition(550, 50 * i + pos_y);
+}
+
+void Sorting_Class::insertion_sort() {
+  std::vector<std::string> insertion_sort_variants = {
+      "Insertion Sort",     "Recursive Insertion Sort",
+      "Shell Sort",         "Binary Insertion Sort",
+      "Library Sort",       "Back",
+      "Number of elements", "Minimum value",
+      "Maximum value"};
+  set_style(insertion_sort_variants, 150);
+}

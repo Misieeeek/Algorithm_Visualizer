@@ -15,6 +15,8 @@ public:
   virtual void draw(sf::RenderWindow &window) = 0;
   virtual void move_up() = 0;
   virtual void move_down() = 0;
+  virtual void move_left() = 0;
+  virtual void move_right() = 0;
   virtual int pressed() = 0;
   virtual void change_option(int selected) = 0;
   virtual ~Screen() = default;

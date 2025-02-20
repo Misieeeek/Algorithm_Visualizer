@@ -22,6 +22,9 @@
 #define NUMBER_OF_ADVANCEDDS_ALGO 3
 #define NUMBER_OF_GRAPH_ALGO 3
 
+// NUMBER OF OPTIONS FOR SORTING ALGORITHMS
+#define NUMBER_OF_SORT_OPTIONS 3
+
 // STATE OF PRESSED CATEGORY
 enum class Algocat {
   SORTING,
@@ -49,6 +52,9 @@ extern std::map<std::pair<Algocat, int>, std::function<void()>,
                 algocat_pair_comparator>
     algorithm_map;
 
+// FORWARD DECLARATION OF CLASS Sorting_Class
+class Sorting_Class;
+
 class Visualizer : public Screen {
 public:
   Visualizer(Screen **screen_ptr, Screen *menu);
@@ -56,9 +62,11 @@ public:
 
   // RESPOSIBLE FOR DRAWING EVERYTHING
   void draw(sf::RenderWindow &window) override;
-  // MOVE UP OR DOWN (OPTIONS)
+  // MOVE UP/DOWN/RIGHT/LEFT (OPTIONS)
   void move_up() override;
   void move_down() override;
+  void move_left() override;
+  void move_right() override;
   // RETURN A NUMBER OF WHICH OPTION WAS PRESSED
   int pressed() override;
   // RESPONSIBLE FOR CHANGING THE OPTION (WHEN SELECTED, DO SOMETHING)
@@ -88,6 +96,7 @@ private:
   // MAIN MENU FOR EVERY CATEGORY OF ALGORITHMS
   Screen **current_screen;
   Screen *main_menu;
+  Sorting_Class *sort_class;
   int selected_algorithm_index;
   sf::Text list_algorithms[NUMBER_OF_ALGORITHMS];
   sf::Font open_sans;
@@ -153,22 +162,37 @@ public:
   void draw(sf::RenderWindow &window) override;
   void move_up() override;
   void move_down() override;
+  void move_left() override;
+  void move_right() override;
   int pressed() override;
   void change_option(int selected) override;
+  void drop_down(int option) override;
 
   Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr); // MENU HAS TO CHANGE
                                                            // TO VISUALIZER
   ~Sorting_Class();
 
+  void set_style(std::vector<std::string> variants, int y_pos);
+  void insertion_sort();
+
 private:
   // DISPLAYS SCREEN FOR SORTING
   Screen **current_screen;
-  Visualizer *visualize; // HERE NEEDS TO BE VISUALIZER MENU
+  Visualizer *visualize;
   int selected_sorting_algo_index;
   sf::Text list_sort_algo[NUMBER_OF_ALGORITHMS]; // HERE NEEDS TO BE A NUMBER OF
                                                  // TOTAL SORTING ELEMENTS
   sf::Font open_sans;
   int selected_sort_algo;
+  // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM
+  std::vector<sf::Text> algorithm_variants;
+  // TEXT STYLE
+  int char_size = 20;
+
+  // VISUALIZATION OPTIONS
+  int elements;
+  int min_range_of_numbers;
+  int max_range_of_numbers;
 };
 
 #endif

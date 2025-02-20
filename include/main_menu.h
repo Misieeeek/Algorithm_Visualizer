@@ -21,6 +21,8 @@ public:
   void draw(sf::RenderWindow &window) override;
   void move_up() override;
   void move_down() override;
+  void move_left() override;
+  void move_right() override;
   int pressed() override { return selected; }
   void change_option(int selected) override;
 
