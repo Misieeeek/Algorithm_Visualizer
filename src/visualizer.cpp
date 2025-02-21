@@ -3,6 +3,7 @@
 #include "main_window.h"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 #include <filesystem>
 #include <memory>
 #include <utility>
@@ -290,29 +291,30 @@ void Visualizer::go_to_algo_screen(int selected) {
 
 void Visualizer::render() {}
 
+void Visualizer::typed_on(sf::Event input) {}
 //------------------------------------------------------- Sorting
 
 Sorting_Class::Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr)
     : current_screen(screen_ptr), visualize(viz_ptr), selected_sort_algo(0),
-      selected_sorting_algo_index(0) {
+      selected_sorting_algo_index(0), char_size_text_variants(20) {
 
-  std::cout << "Sorting_Class screen initialized with Visualizer access.\n";
   std::filesystem::current_path(
       std::filesystem::path(__FILE__).parent_path().parent_path());
 
   if (!open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
     std::cerr << "Failed to load font" << std::endl;
   }
+  textbox(20, 3, 0, 150);
 }
 
-Sorting_Class::~Sorting_Class() {
-  std::cout << "DESTRUCTOR SORTING" << std::endl;
-}
+Sorting_Class::~Sorting_Class() {}
+
 void Sorting_Class::draw(sf::RenderWindow &window) {
   for (int i = 0; i < algorithm_variants.size(); i++)
     window.draw(algorithm_variants[i]);
   for (int i = 0; i < headers.size(); i++)
     window.draw(headers[i]);
+  window.draw(textbox_input_style);
 }
 
 void Sorting_Class::move_up() {
@@ -391,7 +393,9 @@ void Sorting_Class::change_option(int selected) {
         .setFillColor(sf::Color::Red);
     *current_screen = visualize;
   } else {
-    std::cout << selected << std::endl;
+    if (selected == 6) {
+      textbox(20, 3, 0, 150);
+    }
   }
 }
 
@@ -403,7 +407,7 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
   for (int i = 0; i < variants.size(); i++) {
     algorithm_variants[i].setFont(open_sans);
     algorithm_variants[i].setFillColor(sf::Color::White);
-    algorithm_variants[i].setCharacterSize(char_size);
+    algorithm_variants[i].setCharacterSize(char_size_text_variants);
     algorithm_variants[i].setStyle(sf::Text::Bold);
     algorithm_variants[i].setPosition(50, 50 * i + pos_y);
     algorithm_variants[i].setString(variants[i]);
@@ -431,12 +435,37 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
     temp = 500;
   }
 }
+
 void Sorting_Class::insertion_sort() {
   std::vector<std::string> insertion_sort_variants = {
-      "Insertion Sort",     "Recursive Insertion Sort",
-      "Shell Sort",         "Binary Insertion Sort",
-      "Library Sort",       "Back",
-      "Number of elements", "Minimum value",
-      "Maximum value"};
+      "Insertion Sort",      "Recursive Insertion Sort",
+      "Shell Sort",          "Binary Insertion Sort",
+      "Library Sort",        "Back",
+      "Number of elemenst:", "Minimum value:",
+      "Maximum value:"};
   set_style(insertion_sort_variants, 150);
+}
+
+void Sorting_Class::textbox(int char_size_textbox, int number_of_inputs,
+                            int selected, int pos_y) {
+  /*for (int i = 0; i < number_of_inputs; i++) {
+    textbox_input_style[i].setFont(open_sans);
+    textbox_input_style[i].setFillColor(sf::Color::White);
+    textbox_input_style[i].setCharacterSize(char_size_text_variants);
+    textbox_input_style[i].setPosition(600, 50 * i + pos_y);
+  }*/
+  textbox_input_style.setFont(open_sans);
+  textbox_input_style.setFillColor(sf::Color::White);
+  textbox_input_style.setCharacterSize(char_size_text_variants);
+  textbox_input_style.setPosition(950, 50 * 0 + pos_y);
+  selected_input_option = selected;
+}
+
+void Sorting_Class::typed_on(sf::Event input) {
+  //  if (selected_input_option >= 0 || selected_input_option < 3) {
+  int char_typed = input.text.unicode;
+  // if (char_typed < 128) {
+  input_logic(char_typed);
+  //}
+  //}
 }

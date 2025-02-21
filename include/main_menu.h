@@ -1,5 +1,6 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
+#include <SFML/Window/Event.hpp>
 #pragma once
 
 #include "main_window.h"
@@ -27,6 +28,7 @@ public:
   void change_option(int selected) override;
 
   void drop_down(int option) override;
+  void typed_on(sf::Event input) override;
 };
 
 #endif

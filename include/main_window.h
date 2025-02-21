@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include <SFML/Window/Event.hpp>
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -22,6 +23,7 @@ public:
   virtual ~Screen() = default;
 
   virtual void drop_down(int option) = 0;
+  virtual void typed_on(sf::Event input) = 0;
 };
 
 class MainWindow {

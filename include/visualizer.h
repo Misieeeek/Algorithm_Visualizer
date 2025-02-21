@@ -1,5 +1,6 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <sstream>
 #pragma once
 
 #include "main_menu.h"
@@ -8,6 +9,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <functional>
 #include <map>
+#include <sstream>
 #include <string>
 #include <utility>
 #include <vector>
@@ -21,6 +23,9 @@
 #define NUMBER_OF_GREEDY_ALGO 2
 #define NUMBER_OF_ADVANCEDDS_ALGO 3
 #define NUMBER_OF_GRAPH_ALGO 3
+
+// INPUT KEYS TO SKIP
+#define DELETE_KEY 8
 
 // NUMBER OF OPTIONS FOR SORTING ALGORITHMS
 #define NUMBER_OF_SORT_OPTIONS 3
@@ -88,6 +93,8 @@ public:
   // CONSTRUCTOR IS ACTIVATED, WOULD BE MUCH MORE EFFICIENT, WHEN IT LOADS ONE,
   // THE NEEDED ONE, AFTERWARDS IF NOT NEEDED ANYMORE DELETING IT).
   void initialize_algorithms();
+
+  void typed_on(sf::Event input) override;
 
 private:
   // KEEPS THE STATE OF ALGOCAT CURRENTLY SELECTED
@@ -167,6 +174,7 @@ public:
   int pressed() override;
   void change_option(int selected) override;
   void drop_down(int option) override;
+  void typed_on(sf::Event input) override;
 
   Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr); // MENU HAS TO CHANGE
                                                            // TO VISUALIZER
@@ -174,26 +182,56 @@ public:
 
   void set_style(std::vector<std::string> variants, int y_pos);
   void insertion_sort();
+  void textbox(int char_size_textbox, int number_of_inputs, int selected,
+               int pos_y);
 
 private:
   // DISPLAYS SCREEN FOR SORTING
   Screen **current_screen;
   Visualizer *visualize;
   int selected_sorting_algo_index;
-  sf::Text list_sort_algo[NUMBER_OF_ALGORITHMS]; // HERE NEEDS TO BE A NUMBER OF
-                                                 // TOTAL SORTING ELEMENTS
   sf::Font open_sans;
   int selected_sort_algo;
+
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM
   std::vector<sf::Text> algorithm_variants;
+
   // TEXT STYLE
-  int char_size = 20;
+  int char_size_text_variants;
   std::vector<std::string> headers_text;
   std::vector<sf::Text> headers;
+
   // VISUALIZATION OPTIONS
   int elements;
   int min_range_of_numbers;
   int max_range_of_numbers;
+
+  // INPUT FOR OPTIONS
+  sf::Text textbox_input_style;
+  std::ostringstream text_input;
+  int selected_input_option;
+
+  // INPUT LOGIC
+  void input_logic(int char_typed) {
+    if (char_typed == DELETE_KEY) {
+      if (text_input.str().length() > 0) {
+        delete_last_char();
+      }
+    }
+    textbox_input_style.setString(text_input.str() + "_");
+  }
+
+  void delete_last_char() {
+    std::string t = text_input.str();
+    std::string newT = "";
+    for (int i = 0; i < t.length() - 1; i++) {
+      newT += t[i];
+    }
+    text_input.str();
+    text_input << newT;
+
+    textbox_input_style.setString(text_input.str());
+  }
 };
 
 #endif

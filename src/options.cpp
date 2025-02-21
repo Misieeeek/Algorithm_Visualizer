@@ -2,6 +2,7 @@
 #include "main_menu.h"
 #include "main_window.h"
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 #include <filesystem>
 
 Options::Options(Screen **screen_ptr, MainMenu *menu)
@@ -77,3 +78,5 @@ void Options::change_option(int selected) {
 }
 
 void Options::drop_down(int option) {}
+
+void Options::typed_on(sf::Event input) {}

@@ -6,6 +6,7 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cstddef>
+#include <exception>
 
 MainWindow::MainWindow() {
   sf::RenderWindow window(sf::VideoMode(1280, 720), "Algorithm Visualizer",
@@ -30,6 +31,8 @@ void MainWindow::is_running(sf::RenderWindow &window) {
       case sf::Event::Closed:
         window.close();
         break;
+      case sf::Event::TextEntered:
+        current_screen->typed_on(evnt);
       case sf::Event::KeyPressed:
         switch (evnt.key.code) {
         case sf::Keyboard::Up:

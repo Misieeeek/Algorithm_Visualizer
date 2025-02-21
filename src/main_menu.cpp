@@ -1,4 +1,5 @@
 #include "main_menu.h"
+#include <SFML/Window/Event.hpp>
 #include <filesystem>
 
 MainMenu::MainMenu() : selected_item_index(0) {
@@ -60,3 +61,5 @@ void MainMenu::move_right() {}
 void MainMenu::change_option(int selected) {}
 
 void MainMenu::drop_down(int option) {}
+
+void MainMenu::typed_on(sf::Event input) {}

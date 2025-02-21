@@ -1,5 +1,6 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
+#include <SFML/Window/Event.hpp>
 #pragma once
 
 #include "main_menu.h"
@@ -29,8 +30,8 @@ public:
   void move_right() override;
   int pressed() override { return selected_option; }
   void change_option(int selected) override;
-
   void drop_down(int option) override;
+  void typed_on(sf::Event input) override;
 };
 
 #endif
