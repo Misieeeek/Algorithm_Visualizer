@@ -188,7 +188,8 @@ private:
   std::vector<sf::Text> algorithm_variants;
   // TEXT STYLE
   int char_size = 20;
-
+  std::vector<std::string> headers_text;
+  std::vector<sf::Text> headers;
   // VISUALIZATION OPTIONS
   int elements;
   int min_range_of_numbers;

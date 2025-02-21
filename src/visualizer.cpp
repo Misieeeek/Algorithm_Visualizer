@@ -311,12 +311,14 @@ Sorting_Class::~Sorting_Class() {
 void Sorting_Class::draw(sf::RenderWindow &window) {
   for (int i = 0; i < algorithm_variants.size(); i++)
     window.draw(algorithm_variants[i]);
+  for (int i = 0; i < headers.size(); i++)
+    window.draw(headers[i]);
 }
 
 void Sorting_Class::move_up() {
-  std::cout << selected_sorting_algo_index << std::endl;
   if (selected_sorting_algo_index - 1 >= 0) {
-    if (selected_sorting_algo_index == algorithm_variants.size() - 1)
+    if (selected_sorting_algo_index ==
+        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
       algorithm_variants[selected_sorting_algo_index].setFillColor(
           sf::Color::Red);
     else
@@ -330,10 +332,14 @@ void Sorting_Class::move_up() {
 }
 
 void Sorting_Class::move_down() {
-  if (selected_sorting_algo_index + 1 <
-      algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS) {
-    algorithm_variants[selected_sorting_algo_index].setFillColor(
-        sf::Color::White);
+  if (selected_sorting_algo_index + 1 < algorithm_variants.size()) {
+    if (selected_sorting_algo_index ==
+        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::Red);
+    else
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::White);
     selected_sorting_algo_index++;
     algorithm_variants[selected_sorting_algo_index].setFillColor(
         sf::Color::Green);
@@ -341,9 +347,38 @@ void Sorting_Class::move_down() {
   }
 }
 
-void Sorting_Class::move_left() {}
+void Sorting_Class::move_left() {
+  if (!(selected_sorting_algo_index + 1 <
+        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS + 1)) {
+    if (selected_sorting_algo_index ==
+        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::Red);
+    else
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::White);
+    selected_sorting_algo_index = 0;
+    selected_sort_algo = 0;
+    algorithm_variants[0].setFillColor(sf::Color::Green);
+  }
+}
 
-void Sorting_Class::move_right() {}
+void Sorting_Class::move_right() {
+  if (!(selected_sorting_algo_index >=
+        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS)) {
+    if (selected_sorting_algo_index ==
+        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::Red);
+    else
+      algorithm_variants[selected_sorting_algo_index].setFillColor(
+          sf::Color::White);
+    selected_sorting_algo_index =
+        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS;
+    selected_sort_algo = selected_sorting_algo_index;
+    algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+  }
+}
 
 int Sorting_Class::pressed() { return selected_sort_algo; }
 
@@ -364,7 +399,6 @@ void Sorting_Class::drop_down(int option) {}
 
 void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
   for (int i = 0; i < NUMBER_OF_SORT_OPTIONS; i++)
-
     algorithm_variants.resize(variants.size());
   for (int i = 0; i < variants.size(); i++) {
     algorithm_variants[i].setFont(open_sans);
@@ -377,11 +411,26 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
   algorithm_variants[variants.size() - 1 - NUMBER_OF_SORT_OPTIONS].setFillColor(
       sf::Color::Red);
   algorithm_variants[0].setFillColor(sf::Color::Green);
+  int count = 0;
   for (int i = variants.size() - NUMBER_OF_SORT_OPTIONS; i < variants.size();
-       i++)
-    algorithm_variants[i].setPosition(550, 50 * i + pos_y);
+       i++) {
+    algorithm_variants[i].setPosition(550, 50 * count + pos_y);
+    count++;
+  }
+  headers_text = {"Variants", "Options"};
+  headers_text.resize(2);
+  headers.resize(2);
+  int temp = 0;
+  for (int i = 0; i < headers_text.size(); i++) {
+    headers[i].setFont(open_sans);
+    headers[i].setFillColor(sf::Color::White);
+    headers[i].setCharacterSize(40);
+    headers[i].setStyle(sf::Text::Bold);
+    headers[i].setPosition(30 + temp, pos_y - 75);
+    headers[i].setString(headers_text[i]);
+    temp = 500;
+  }
 }
-
 void Sorting_Class::insertion_sort() {
   std::vector<std::string> insertion_sort_variants = {
       "Insertion Sort",     "Recursive Insertion Sort",
