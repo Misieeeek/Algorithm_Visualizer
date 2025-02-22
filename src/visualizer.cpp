@@ -1,19 +1,20 @@
 #include "visualizer.h"
-#include "main_menu.h"
-#include "main_window.h"
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <filesystem>
 #include <memory>
 #include <utility>
+#include "main_menu.h"
+#include "main_window.h"
 
 std::map<std::pair<Algocat, int>, std::function<void()>,
          algocat_pair_comparator>
     algorithm_map;
 
-Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
-    : selected_algorithm_index(0), selected_algorithm(0),
+Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
+    : selected_algorithm_index(0),
+      selected_algorithm(0),
       category_option(true) {
 
   std::filesystem::current_path(
@@ -47,7 +48,9 @@ Visualizer::Visualizer(Screen **screen_ptr, Screen *menu)
   initialize_algorithms();
 }
 
-Visualizer::~Visualizer() { delete sort_class; }
+Visualizer::~Visualizer() {
+  delete sort_class;
+}
 
 void Visualizer::move_up() {
   if (dropped || !category_option) {
@@ -103,7 +106,7 @@ void Visualizer::move_down() {
 void Visualizer::move_left() {}
 void Visualizer::move_right() {}
 
-void Visualizer::draw(sf::RenderWindow &window) {
+void Visualizer::draw(sf::RenderWindow& window) {
   opend = true;
   if (static_cast<int>(ac) >= 0 && static_cast<int>(ac) < 7) {
     for (int i = 0; i < list_algo.size(); i++)
@@ -119,8 +122,8 @@ void Visualizer::draw(sf::RenderWindow &window) {
 }
 
 void Visualizer::change_option(int selected) {
-  if (!dropped) {        // Place where drop down menu is deactivated
-    if (selected == 7) { // EXIT out of visualizer
+  if (!dropped) {         // Place where drop down menu is deactivated
+    if (selected == 7) {  // EXIT out of visualizer
       opend = false;
       selected_algorithm = 0;
       selected_algorithm_index = 0;
@@ -128,8 +131,8 @@ void Visualizer::change_option(int selected) {
       list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
       dropped = true;
       *current_screen = main_menu;
-    } else {       // Every other option than EXIT
-      if (opend) { // Prevents activating drop down menu comming from main menu
+    } else {        // Every other option than EXIT
+      if (opend) {  // Prevents activating drop down menu comming from main menu
         dropped = true;
         dropped_items = 0;
         dropped_items_index = 0;
@@ -139,11 +142,11 @@ void Visualizer::change_option(int selected) {
         dropped = false;
       }
     }
-  } else {                 // Place where drop down menu is active
-    if (category_option) { // currently standing at algorithm category
+  } else {                  // Place where drop down menu is active
+    if (category_option) {  // currently standing at algorithm category
       dropped = false;
       drop_down(7);
-    } else { // Place where drop down menus options are executed
+    } else {  // Place where drop down menus options are executed
       go_to_algo_screen(selected);
     }
   }
@@ -151,38 +154,38 @@ void Visualizer::change_option(int selected) {
 
 void Visualizer::drop_down(int option) {
   switch (option) {
-  case 0:
-    ac = Algocat::SORTING;
-    general_algo_list(NUMBER_OF_SORT_ALGO, algo_sort, 1, 100, 50, 260);
-    break;
-  case 1:
-    ac = Algocat::SEARCHING;
-    general_algo_list(NUMBER_OF_SEARCH_ALGO, algo_search, 2, 250, 150, 220);
-    break;
-  case 2:
-    ac = Algocat::DS;
-    general_algo_list(NUMBER_OF_DS_ALGO, algo_ds, 3, 200, 50, 320);
-    break;
-  case 3:
-    ac = Algocat::DYNAMIC;
-    general_algo_list(NUMBER_OF_DYNAMIC_ALGO, algo_dynamic, 4, 300, 100, 230);
-    break;
-  case 4:
-    ac = Algocat::GREEDY;
-    general_algo_list(NUMBER_OF_GREEDY_ALGO, algo_greedy, 5, 390, 140, 210);
-    break;
-  case 5:
-    ac = Algocat::ADVANCEDDS;
-    general_algo_list(NUMBER_OF_ADVANCEDDS_ALGO, algo_advancedds, 6, 400, 100,
-                      210);
-    break;
-  case 6:
-    ac = Algocat::GRAPH;
-    general_algo_list(NUMBER_OF_GRAPH_ALGO, algo_graph, 7, 445, 100, 185);
-    break;
-  case 7:
-    ac = Algocat::NONE;
-    break;
+    case 0:
+      ac = Algocat::SORTING;
+      general_algo_list(NUMBER_OF_SORT_ALGO, algo_sort, 1, 100, 50, 260);
+      break;
+    case 1:
+      ac = Algocat::SEARCHING;
+      general_algo_list(NUMBER_OF_SEARCH_ALGO, algo_search, 2, 250, 150, 220);
+      break;
+    case 2:
+      ac = Algocat::DS;
+      general_algo_list(NUMBER_OF_DS_ALGO, algo_ds, 3, 200, 50, 320);
+      break;
+    case 3:
+      ac = Algocat::DYNAMIC;
+      general_algo_list(NUMBER_OF_DYNAMIC_ALGO, algo_dynamic, 4, 300, 100, 230);
+      break;
+    case 4:
+      ac = Algocat::GREEDY;
+      general_algo_list(NUMBER_OF_GREEDY_ALGO, algo_greedy, 5, 390, 140, 210);
+      break;
+    case 5:
+      ac = Algocat::ADVANCEDDS;
+      general_algo_list(NUMBER_OF_ADVANCEDDS_ALGO, algo_advancedds, 6, 400, 100,
+                        210);
+      break;
+    case 6:
+      ac = Algocat::GRAPH;
+      general_algo_list(NUMBER_OF_GRAPH_ALGO, algo_graph, 7, 445, 100, 185);
+      break;
+    case 7:
+      ac = Algocat::NONE;
+      break;
   }
 }
 
@@ -225,10 +228,18 @@ void Visualizer::initialize_algorithms() {
   algorithm_map[{Algocat::SORTING, 1}] = []() {
     std::cout << "Selection Sort\n";
   };
-  algorithm_map[{Algocat::SORTING, 2}] = []() { std::cout << "Merge Sort\n"; };
-  algorithm_map[{Algocat::SORTING, 3}] = []() { std::cout << "Bubble Sort\n"; };
-  algorithm_map[{Algocat::SORTING, 4}] = []() { std::cout << "Heap Sort\n"; };
-  algorithm_map[{Algocat::SORTING, 5}] = []() { std::cout << "Quick Sort\n"; };
+  algorithm_map[{Algocat::SORTING, 2}] = []() {
+    std::cout << "Merge Sort\n";
+  };
+  algorithm_map[{Algocat::SORTING, 3}] = []() {
+    std::cout << "Bubble Sort\n";
+  };
+  algorithm_map[{Algocat::SORTING, 4}] = []() {
+    std::cout << "Heap Sort\n";
+  };
+  algorithm_map[{Algocat::SORTING, 5}] = []() {
+    std::cout << "Quick Sort\n";
+  };
   algorithm_map[{Algocat::SEARCHING, 0}] = []() {
     //------------------------------------------- SEARCHING
     std::cout << "Linear Search\n";
@@ -237,18 +248,34 @@ void Visualizer::initialize_algorithms() {
     std::cout << "Binary Search\n";
   };
   //------------------------------------------- DATA STRUCTURES
-  algorithm_map[{Algocat::DS, 0}] = []() { std::cout << "Stack\n"; };
-  algorithm_map[{Algocat::DS, 1}] = []() { std::cout << "Queue\n"; };
-  algorithm_map[{Algocat::DS, 2}] = []() { std::cout << "Linked List\n"; };
-  algorithm_map[{Algocat::DS, 3}] = []() { std::cout << "Hash Table\n"; };
+  algorithm_map[{Algocat::DS, 0}] = []() {
+    std::cout << "Stack\n";
+  };
+  algorithm_map[{Algocat::DS, 1}] = []() {
+    std::cout << "Queue\n";
+  };
+  algorithm_map[{Algocat::DS, 2}] = []() {
+    std::cout << "Linked List\n";
+  };
+  algorithm_map[{Algocat::DS, 3}] = []() {
+    std::cout << "Hash Table\n";
+  };
   algorithm_map[{Algocat::DS, 4}] = []() {
     std::cout << "Binary Search Tree\n";
   };
-  algorithm_map[{Algocat::DS, 5}] = []() { std::cout << "Red-Black Tree\n"; };
-  algorithm_map[{Algocat::DS, 6}] = []() { std::cout << "AVL Tree\n"; };
-  algorithm_map[{Algocat::DS, 7}] = []() { std::cout << "Treaps\n"; };
+  algorithm_map[{Algocat::DS, 5}] = []() {
+    std::cout << "Red-Black Tree\n";
+  };
+  algorithm_map[{Algocat::DS, 6}] = []() {
+    std::cout << "AVL Tree\n";
+  };
+  algorithm_map[{Algocat::DS, 7}] = []() {
+    std::cout << "Treaps\n";
+  };
   //------------------------------------------- DYNAMIC PROGRAMMING
-  algorithm_map[{Algocat::DYNAMIC, 0}] = []() { std::cout << "Cut Rod\n"; };
+  algorithm_map[{Algocat::DYNAMIC, 0}] = []() {
+    std::cout << "Cut Rod\n";
+  };
   algorithm_map[{Algocat::DYNAMIC, 1}] = []() {
     std::cout << "Cut Rod (Memo)\n";
   };
@@ -266,7 +293,9 @@ void Visualizer::initialize_algorithms() {
     std::cout << "Activity Selector\n";
   };
   //------------------------------------------- ADVANCED DATA STRUCTURES
-  algorithm_map[{Algocat::ADVANCEDDS, 0}] = []() { std::cout << "B-Tree\n"; };
+  algorithm_map[{Algocat::ADVANCEDDS, 0}] = []() {
+    std::cout << "B-Tree\n";
+  };
   algorithm_map[{Algocat::ADVANCEDDS, 1}] = []() {
     std::cout << "Fibonacci Tree\n";
   };
@@ -274,16 +303,22 @@ void Visualizer::initialize_algorithms() {
     std::cout << "Van Emde Boas Tree\n";
   };
   //------------------------------------------- GRAPH
-  algorithm_map[{Algocat::GRAPH, 0}] = []() { std::cout << "1\n"; };
-  algorithm_map[{Algocat::GRAPH, 1}] = []() { std::cout << "2\n"; };
-  algorithm_map[{Algocat::GRAPH, 2}] = []() { std::cout << "3\n"; };
+  algorithm_map[{Algocat::GRAPH, 0}] = []() {
+    std::cout << "1\n";
+  };
+  algorithm_map[{Algocat::GRAPH, 1}] = []() {
+    std::cout << "2\n";
+  };
+  algorithm_map[{Algocat::GRAPH, 2}] = []() {
+    std::cout << "3\n";
+  };
 }
 
 void Visualizer::go_to_algo_screen(int selected) {
   auto it = algorithm_map.find(std::make_pair(ac, selected));
   if (it != algorithm_map.end()) {
-    it->second(); // ALGORITHM STYLES
-    render();     // VISUALIZATION
+    it->second();  // ALGORITHM STYLES
+    render();      // VISUALIZATION
   } else {
     std::cerr << "Algorithm not found" << std::endl;
   }
@@ -294,9 +329,14 @@ void Visualizer::render() {}
 void Visualizer::typed_on(sf::Event input) {}
 //------------------------------------------------------- Sorting
 
-Sorting_Class::Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr)
-    : current_screen(screen_ptr), visualize(viz_ptr), selected_sort_algo(0),
-      selected_sorting_algo_index(0), char_size_text_variants(20) {
+Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
+    : current_screen(screen_ptr),
+      visualize(viz_ptr),
+      selected_sort_algo(0),
+      selected_sorting_algo_index(0),
+      char_size_text_variants(20),
+      possible_input(false),
+      temp_value("") {
 
   std::filesystem::current_path(
       std::filesystem::path(__FILE__).parent_path().parent_path());
@@ -309,7 +349,7 @@ Sorting_Class::Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr)
 
 Sorting_Class::~Sorting_Class() {}
 
-void Sorting_Class::draw(sf::RenderWindow &window) {
+void Sorting_Class::draw(sf::RenderWindow& window) {
   for (int i = 0; i < algorithm_variants.size(); i++)
     window.draw(algorithm_variants[i]);
   for (int i = 0; i < headers.size(); i++)
@@ -382,7 +422,9 @@ void Sorting_Class::move_right() {
   }
 }
 
-int Sorting_Class::pressed() { return selected_sort_algo; }
+int Sorting_Class::pressed() {
+  return selected_sort_algo;
+}
 
 void Sorting_Class::change_option(int selected) {
   if (selected == algorithm_variants.size() - 1 - NUMBER_OF_SORT_OPTIONS) {
@@ -394,7 +436,12 @@ void Sorting_Class::change_option(int selected) {
     *current_screen = visualize;
   } else {
     if (selected == 6) {
-      textbox(20, 3, 0, 150);
+      if (possible_input == true) {
+        possible_input = false;
+      } else {
+        possible_input = true;
+        textbox(20, 3, 0, 150);
+      }
     }
   }
 }
@@ -462,10 +509,11 @@ void Sorting_Class::textbox(int char_size_textbox, int number_of_inputs,
 }
 
 void Sorting_Class::typed_on(sf::Event input) {
-  //  if (selected_input_option >= 0 || selected_input_option < 3) {
-  int char_typed = input.text.unicode;
-  // if (char_typed < 128) {
-  input_logic(char_typed);
-  //}
-  //}
+  if (possible_input) {
+    int char_typed = input.text.unicode;
+    if ((char_typed >= 48 && char_typed <= 57) || char_typed == DELETE_KEY ||
+        char_typed == ENTER_KEY) {
+      input_logic(char_typed);
+    }
+  }
 }

@@ -3,8 +3,6 @@
 #include <sstream>
 #pragma once
 
-#include "main_menu.h"
-#include "main_window.h"
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <functional>
@@ -13,6 +11,8 @@
 #include <string>
 #include <utility>
 #include <vector>
+#include "main_menu.h"
+#include "main_window.h"
 
 // NUMBER OF ALGORITHMS BY CATEGORY
 #define NUMBER_OF_ALGORITHMS 8
@@ -26,6 +26,7 @@
 
 // INPUT KEYS TO SKIP
 #define DELETE_KEY 8
+#define ENTER_KEY 13
 
 // NUMBER OF OPTIONS FOR SORTING ALGORITHMS
 #define NUMBER_OF_SORT_OPTIONS 3
@@ -44,11 +45,11 @@ enum class Algocat {
 
 // COMPARATOR FOR STD::PAIR<ALGOCAT, INT> TO BE USED IN THE MAP
 struct algocat_pair_comparator {
-  bool operator()(const std::pair<Algocat, int> &lhs,
-                  const std::pair<Algocat, int> &rhs) const {
+  bool operator()(const std::pair<Algocat, int>& lhs,
+                  const std::pair<Algocat, int>& rhs) const {
     if (lhs.first != rhs.first)
-      return lhs.first < rhs.first; // Compare categories first
-    return lhs.second < rhs.second; // Then compare the index
+      return lhs.first < rhs.first;  // Compare categories first
+    return lhs.second < rhs.second;  // Then compare the index
   }
 };
 
@@ -61,12 +62,12 @@ extern std::map<std::pair<Algocat, int>, std::function<void()>,
 class Sorting_Class;
 
 class Visualizer : public Screen {
-public:
-  Visualizer(Screen **screen_ptr, Screen *menu);
+ public:
+  Visualizer(Screen** screen_ptr, Screen* menu);
   ~Visualizer();
 
   // RESPOSIBLE FOR DRAWING EVERYTHING
-  void draw(sf::RenderWindow &window) override;
+  void draw(sf::RenderWindow& window) override;
   // MOVE UP/DOWN/RIGHT/LEFT (OPTIONS)
   void move_up() override;
   void move_down() override;
@@ -96,14 +97,14 @@ public:
 
   void typed_on(sf::Event input) override;
 
-private:
+ private:
   // KEEPS THE STATE OF ALGOCAT CURRENTLY SELECTED
   Algocat ac;
 
   // MAIN MENU FOR EVERY CATEGORY OF ALGORITHMS
-  Screen **current_screen;
-  Screen *main_menu;
-  Sorting_Class *sort_class;
+  Screen** current_screen;
+  Screen* main_menu;
+  Sorting_Class* sort_class;
   int selected_algorithm_index;
   sf::Text list_algorithms[NUMBER_OF_ALGORITHMS];
   sf::Font open_sans;
@@ -164,9 +165,9 @@ private:
 };
 
 class Sorting_Class : public Screen {
-public:
+ public:
   // IHERITENCE FROM CLASS SCREEN
-  void draw(sf::RenderWindow &window) override;
+  void draw(sf::RenderWindow& window) override;
   void move_up() override;
   void move_down() override;
   void move_left() override;
@@ -176,8 +177,9 @@ public:
   void drop_down(int option) override;
   void typed_on(sf::Event input) override;
 
-  Sorting_Class(Screen **screen_ptr, Visualizer *viz_ptr); // MENU HAS TO CHANGE
-                                                           // TO VISUALIZER
+  Sorting_Class(Screen** screen_ptr,
+                Visualizer* viz_ptr);  // MENU HAS TO CHANGE
+                                       // TO VISUALIZER
   ~Sorting_Class();
 
   void set_style(std::vector<std::string> variants, int y_pos);
@@ -185,10 +187,10 @@ public:
   void textbox(int char_size_textbox, int number_of_inputs, int selected,
                int pos_y);
 
-private:
+ private:
   // DISPLAYS SCREEN FOR SORTING
-  Screen **current_screen;
-  Visualizer *visualize;
+  Screen** current_screen;
+  Visualizer* visualize;
   int selected_sorting_algo_index;
   sf::Font open_sans;
   int selected_sort_algo;
@@ -202,7 +204,7 @@ private:
   std::vector<sf::Text> headers;
 
   // VISUALIZATION OPTIONS
-  int elements;
+  int number_of_elements;
   int min_range_of_numbers;
   int max_range_of_numbers;
 
@@ -210,6 +212,10 @@ private:
   sf::Text textbox_input_style;
   std::ostringstream text_input;
   int selected_input_option;
+  std::string temp_value;
+
+  // IF THE IMPUT OPTION IS SELECTED
+  bool possible_input;
 
   // INPUT LOGIC
   void input_logic(int char_typed) {
@@ -217,20 +223,24 @@ private:
       if (text_input.str().length() > 0) {
         delete_last_char();
       }
+    } else {
+      text_input << static_cast<char>(char_typed);
+      temp_value.push_back(static_cast<char>(char_typed));
     }
     textbox_input_style.setString(text_input.str() + "_");
   }
 
+  // DELETE INPUT
   void delete_last_char() {
     std::string t = text_input.str();
     std::string newT = "";
     for (int i = 0; i < t.length() - 1; i++) {
       newT += t[i];
     }
-    text_input.str();
+    text_input.str("");
     text_input << newT;
-
     textbox_input_style.setString(text_input.str());
+    temp_value.pop_back();
   }
 };
 
