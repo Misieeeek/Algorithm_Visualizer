@@ -358,71 +358,81 @@ void Sorting_Class::draw(sf::RenderWindow& window) {
 }
 
 void Sorting_Class::move_up() {
-  if (selected_sorting_algo_index - 1 >= 0) {
-    if (selected_sorting_algo_index ==
-        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+  if (!possible_input) {
+    if (selected_sorting_algo_index - 1 >= 0) {
+      if (selected_sorting_algo_index ==
+          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::Red);
+      else
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::White);
+      selected_sorting_algo_index--;
       algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::Red);
-    else
-      algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::White);
-    selected_sorting_algo_index--;
-    algorithm_variants[selected_sorting_algo_index].setFillColor(
-        sf::Color::Green);
-    selected_sort_algo = selected_sorting_algo_index;
+          sf::Color::Green);
+      selected_sort_algo = selected_sorting_algo_index;
+    }
   }
 }
 
 void Sorting_Class::move_down() {
-  if (selected_sorting_algo_index + 1 < algorithm_variants.size()) {
-    if (selected_sorting_algo_index ==
-        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+  if (!possible_input) {
+    if (selected_sorting_algo_index + 1 < algorithm_variants.size()) {
+      if (selected_sorting_algo_index ==
+          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::Red);
+      else
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::White);
+      selected_sorting_algo_index++;
       algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::Red);
-    else
-      algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::White);
-    selected_sorting_algo_index++;
-    algorithm_variants[selected_sorting_algo_index].setFillColor(
-        sf::Color::Green);
-    selected_sort_algo = selected_sorting_algo_index;
+          sf::Color::Green);
+      selected_sort_algo = selected_sorting_algo_index;
+    }
   }
 }
 
 void Sorting_Class::move_left() {
-  if (!(selected_sorting_algo_index + 1 <
-        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS + 1)) {
-    if (selected_sorting_algo_index ==
-        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
-      algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::Red);
-    else
-      algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::White);
-    selected_sorting_algo_index = 0;
-    selected_sort_algo = 0;
-    algorithm_variants[0].setFillColor(sf::Color::Green);
+  if (!possible_input) {
+
+    if (!(selected_sorting_algo_index + 1 <
+          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS + 1)) {
+      if (selected_sorting_algo_index ==
+          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::Red);
+      else
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::White);
+      selected_sorting_algo_index = 0;
+      selected_sort_algo = 0;
+      algorithm_variants[0].setFillColor(sf::Color::Green);
+    }
   }
 }
 
 void Sorting_Class::move_right() {
-  if (!(selected_sorting_algo_index >=
-        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS)) {
-    if (selected_sorting_algo_index ==
-        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
-      algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::Red);
-    else
-      algorithm_variants[selected_sorting_algo_index].setFillColor(
-          sf::Color::White);
-    selected_sorting_algo_index =
-        algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS;
-    selected_sort_algo = selected_sorting_algo_index;
-    algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+  if (!possible_input) {
+    if (!(selected_sorting_algo_index >=
+          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS)) {
+      if (selected_sorting_algo_index ==
+          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::Red);
+      else
+        algorithm_variants[selected_sorting_algo_index].setFillColor(
+            sf::Color::White);
+      selected_sorting_algo_index =
+          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS;
+      selected_sort_algo = selected_sorting_algo_index;
+      algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+    }
   }
 }
 
 int Sorting_Class::pressed() {
+  std::cout << temp_value << std::endl;
   return selected_sort_algo;
 }
 
