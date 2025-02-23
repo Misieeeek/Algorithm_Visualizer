@@ -219,12 +219,13 @@ class Sorting_Class : public Screen {
 
   // INPUT LOGIC
   void input_logic(int char_typed) {
-    if (char_typed == DELETE_KEY) {
-      if (text_input.str().length() > 0)
-        delete_last_char();
-    } else {
+    if (char_typed != DELETE_KEY && char_typed != ENTER_KEY) {
       text_input << static_cast<char>(char_typed);
       temp_value.push_back(static_cast<char>(char_typed));
+
+    } else if (char_typed == DELETE_KEY) {
+      if (text_input.str().length() > 0)
+        delete_last_char();
     }
     textbox_input_style.setString(text_input.str() + "_");
   }
