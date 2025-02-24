@@ -27,6 +27,7 @@
 // INPUT KEYS TO SKIP
 #define DELETE_KEY 8
 #define ENTER_KEY 13
+#define MINUS_KEY 45
 
 // NUMBER OF OPTIONS FOR SORTING ALGORITHMS
 #define NUMBER_OF_SORT_OPTIONS 3
@@ -184,8 +185,7 @@ class Sorting_Class : public Screen {
 
   void set_style(std::vector<std::string> variants, int y_pos);
   void insertion_sort();
-  void textbox(int char_size_textbox, int number_of_inputs, int selected,
-               int pos_y);
+  void textbox(int char_size_textbox, int number_of_inputs, int pos_y);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -204,15 +204,21 @@ class Sorting_Class : public Screen {
   std::vector<sf::Text> headers;
 
   // VISUALIZATION OPTIONS
+  std::vector<int> visualization_options;
   int number_of_elements;
   int min_range_of_numbers;
   int max_range_of_numbers;
 
   // INPUT FOR OPTIONS
-  sf::Text textbox_input_style;
+  std::vector<sf::Text> textbox_input_style;
   std::ostringstream text_input;
   int selected_input_option;
   std::string temp_value;
+
+  // INPUT RESTRICTIONS
+  int max_elements;
+  int upper_bound_value;
+  int lower_bound_value;
 
   // IF THE IMPUT OPTION IS SELECTED
   bool possible_input;
@@ -222,12 +228,15 @@ class Sorting_Class : public Screen {
     if (char_typed != DELETE_KEY && char_typed != ENTER_KEY) {
       text_input << static_cast<char>(char_typed);
       temp_value.push_back(static_cast<char>(char_typed));
-
     } else if (char_typed == DELETE_KEY) {
       if (text_input.str().length() > 0)
         delete_last_char();
     }
-    textbox_input_style.setString(text_input.str() + "_");
+    textbox_input_style[selected_input_option].setString(text_input.str() +
+                                                         "_");
+    /*      textbox_input_style[selected_input_option].setString(
+          std::to_string(visualization_options[selected_input_option]) +
+          text_input.str() + "_");*/
   }
 
   // DELETE INPUT
@@ -239,7 +248,7 @@ class Sorting_Class : public Screen {
     }
     text_input.str("");
     text_input << newT;
-    textbox_input_style.setString(text_input.str());
+    textbox_input_style[selected_input_option].setString(text_input.str());
     temp_value.pop_back();
   }
 };

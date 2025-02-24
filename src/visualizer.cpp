@@ -2,6 +2,10 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
+#include <algorithm>
+#include <charconv>
+#include <cmath>
+#include <cstddef>
 #include <filesystem>
 #include <memory>
 #include <utility>
@@ -336,7 +340,13 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
       selected_sorting_algo_index(0),
       char_size_text_variants(20),
       possible_input(false),
-      temp_value("") {
+      temp_value(""),
+      max_elements(1000000),
+      upper_bound_value(9999999),
+      lower_bound_value(-9999999),
+      number_of_elements(10),
+      min_range_of_numbers(0),
+      max_range_of_numbers(100) {
 
   std::filesystem::current_path(
       std::filesystem::path(__FILE__).parent_path().parent_path());
@@ -344,7 +354,10 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
   if (!open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
     std::cerr << "Failed to load font" << std::endl;
   }
-  textbox(20, 3, 0, 150);
+  visualization_options = {number_of_elements, min_range_of_numbers,
+                           max_range_of_numbers};
+  textbox_input_style.resize(3);
+  textbox(20, 3, 150);
 }
 
 Sorting_Class::~Sorting_Class() {}
@@ -354,7 +367,8 @@ void Sorting_Class::draw(sf::RenderWindow& window) {
     window.draw(algorithm_variants[i]);
   for (int i = 0; i < headers.size(); i++)
     window.draw(headers[i]);
-  window.draw(textbox_input_style);
+  for (int i = 0; i < textbox_input_style.size(); i++)
+    window.draw(textbox_input_style[i]);
 }
 
 void Sorting_Class::move_up() {
@@ -395,7 +409,6 @@ void Sorting_Class::move_down() {
 
 void Sorting_Class::move_left() {
   if (!possible_input) {
-
     if (!(selected_sorting_algo_index + 1 <
           algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS + 1)) {
       if (selected_sorting_algo_index ==
@@ -432,27 +445,60 @@ void Sorting_Class::move_right() {
 }
 
 int Sorting_Class::pressed() {
-  std::cout << temp_value << std::endl;
+  std::cout << "MAX ELEMENST: " << number_of_elements << std::endl;
+  std::cout << "MIN: " << min_range_of_numbers << std::endl;
+  std::cout << "MAX: " << max_range_of_numbers << std::endl;
   return selected_sort_algo;
 }
 
 void Sorting_Class::change_option(int selected) {
-  if (selected == algorithm_variants.size() - 1 - NUMBER_OF_SORT_OPTIONS) {
-    selected_sort_algo = 0;
-    selected_sorting_algo_index = 0;
-    algorithm_variants[0].setFillColor(sf::Color::Green);
-    algorithm_variants[algorithm_variants.size() - 1 - NUMBER_OF_SORT_OPTIONS]
-        .setFillColor(sf::Color::Red);
-    *current_screen = visualize;
-  } else {
-    if (selected == 6) {
+  switch (selected) {
+    case 0:
+      std::cout << "INSERTION SORT\n";
+      break;
+    case 1:
+      std::cout << "Recursive Insertion Sort\n";
+      break;
+    case 2:
+      std::cout << "Shell Sort\n";
+      break;
+    case 3:
+      std::cout << "Binary Insertion Sort\n";
+      break;
+    case 4:
+      std::cout << "Library Sort\n";
+      break;
+    case 5:
+      selected_sort_algo = 0;
+      selected_sorting_algo_index = 0;
+      algorithm_variants[0].setFillColor(sf::Color::Green);
+      algorithm_variants[algorithm_variants.size() - 1 - NUMBER_OF_SORT_OPTIONS]
+          .setFillColor(sf::Color::Red);
+      *current_screen = visualize;
+      break;
+    case 6:
       if (possible_input == true) {
         possible_input = false;
+        std::from_chars(temp_value.data(),
+                        temp_value.data() + temp_value.size(),
+                        number_of_elements);
       } else {
+        selected_input_option = 0;
         possible_input = true;
-        textbox(20, 3, 0, 150);
       }
-    }
+      break;
+    case 7:
+      if (possible_input == true) {
+        possible_input = false;
+        std::from_chars(temp_value.data(),
+                        temp_value.data() + temp_value.size(),
+                        min_range_of_numbers);
+        text_input.clear();
+      } else {
+        selected_input_option = 1;
+        possible_input = true;
+      }
+      break;
   }
 }
 
@@ -504,25 +550,25 @@ void Sorting_Class::insertion_sort() {
 }
 
 void Sorting_Class::textbox(int char_size_textbox, int number_of_inputs,
-                            int selected, int pos_y) {
-  /*for (int i = 0; i < number_of_inputs; i++) {
+                            int pos_y) {
+  for (int i = 0; i < number_of_inputs; i++) {
     textbox_input_style[i].setFont(open_sans);
     textbox_input_style[i].setFillColor(sf::Color::White);
     textbox_input_style[i].setCharacterSize(char_size_text_variants);
-    textbox_input_style[i].setPosition(600, 50 * i + pos_y);
-  }*/
-  textbox_input_style.setFont(open_sans);
+    textbox_input_style[i].setPosition(950, 50 * i + pos_y);
+  }
+  /*textbox_input_style.setFont(open_sans);
   textbox_input_style.setFillColor(sf::Color::White);
   textbox_input_style.setCharacterSize(char_size_text_variants);
-  textbox_input_style.setPosition(950, 50 * 0 + pos_y);
-  selected_input_option = selected;
+  textbox_input_style.setPosition(950, 50 * 0 + pos_y);*/
+  //  selected_input_option = selected;
 }
 
 void Sorting_Class::typed_on(sf::Event input) {
   if (possible_input) {
     int char_typed = input.text.unicode;
     if ((char_typed >= 48 && char_typed <= 57) || char_typed == DELETE_KEY ||
-        char_typed == ENTER_KEY) {
+        char_typed == ENTER_KEY || char_typed == MINUS_KEY) {
       input_logic(char_typed);
     }
   }
