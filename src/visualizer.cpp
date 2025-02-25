@@ -7,7 +7,9 @@
 #include <cmath>
 #include <cstddef>
 #include <filesystem>
+#include <iostream>
 #include <memory>
+#include <string>
 #include <utility>
 #include "main_menu.h"
 #include "main_window.h"
@@ -343,10 +345,7 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
       temp_value(""),
       max_elements(1000000),
       upper_bound_value(9999999),
-      lower_bound_value(-9999999),
-      number_of_elements(10),
-      min_range_of_numbers(0),
-      max_range_of_numbers(100) {
+      lower_bound_value(-9999999) {
 
   std::filesystem::current_path(
       std::filesystem::path(__FILE__).parent_path().parent_path());
@@ -354,8 +353,11 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
   if (!open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
     std::cerr << "Failed to load font" << std::endl;
   }
-  visualization_options = {number_of_elements, min_range_of_numbers,
-                           max_range_of_numbers};
+
+  // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
+  // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
+  visualization_options.resize(3);
+  visualization_options = {10, 0, 100};
   textbox_input_style.resize(3);
   textbox(20, 3, 150);
 }
@@ -445,9 +447,9 @@ void Sorting_Class::move_right() {
 }
 
 int Sorting_Class::pressed() {
-  std::cout << "MAX ELEMENST: " << number_of_elements << std::endl;
-  std::cout << "MIN: " << min_range_of_numbers << std::endl;
-  std::cout << "MAX: " << max_range_of_numbers << std::endl;
+  std::cout << "MAX ELEMENST: " << visualization_options[0] << std::endl;
+  std::cout << "MIN: " << visualization_options[1] << std::endl;
+  std::cout << "MAX: " << visualization_options[2] << std::endl;
   return selected_sort_algo;
 }
 
@@ -477,27 +479,13 @@ void Sorting_Class::change_option(int selected) {
       *current_screen = visualize;
       break;
     case 6:
-      if (possible_input == true) {
-        possible_input = false;
-        std::from_chars(temp_value.data(),
-                        temp_value.data() + temp_value.size(),
-                        number_of_elements);
-      } else {
-        selected_input_option = 0;
-        possible_input = true;
-      }
+      input_box_selected(0);
       break;
     case 7:
-      if (possible_input == true) {
-        possible_input = false;
-        std::from_chars(temp_value.data(),
-                        temp_value.data() + temp_value.size(),
-                        min_range_of_numbers);
-        text_input.clear();
-      } else {
-        selected_input_option = 1;
-        possible_input = true;
-      }
+      input_box_selected(1);
+      break;
+    case 8:
+      input_box_selected(2);
       break;
   }
 }
@@ -556,12 +544,8 @@ void Sorting_Class::textbox(int char_size_textbox, int number_of_inputs,
     textbox_input_style[i].setFillColor(sf::Color::White);
     textbox_input_style[i].setCharacterSize(char_size_text_variants);
     textbox_input_style[i].setPosition(950, 50 * i + pos_y);
+    textbox_input_style[i].setString(std::to_string(visualization_options[i]));
   }
-  /*textbox_input_style.setFont(open_sans);
-  textbox_input_style.setFillColor(sf::Color::White);
-  textbox_input_style.setCharacterSize(char_size_text_variants);
-  textbox_input_style.setPosition(950, 50 * 0 + pos_y);*/
-  //  selected_input_option = selected;
 }
 
 void Sorting_Class::typed_on(sf::Event input) {
@@ -569,7 +553,38 @@ void Sorting_Class::typed_on(sf::Event input) {
     int char_typed = input.text.unicode;
     if ((char_typed >= 48 && char_typed <= 57) || char_typed == DELETE_KEY ||
         char_typed == ENTER_KEY || char_typed == MINUS_KEY) {
-      input_logic(char_typed);
+      if (selected_input_option == 0 && char_typed == MINUS_KEY)
+        std::cerr << "Number of elements, can't have negative value"
+                  << std::endl;
+      else
+        input_logic(char_typed);
     }
+  }
+}
+
+void Sorting_Class::input_box_selected(int item) {
+  if (possible_input == true) {
+    if (text_input.str() == "")
+      textbox_input_style[selected_input_option].setString(
+          std::to_string(visualization_options[selected_input_option]));
+    else
+      textbox_input_style[selected_input_option].setString(temp_value);
+    std::from_chars(temp_value.data(), temp_value.data() + temp_value.size(),
+                    visualization_options[selected_input_option]);
+    if (visualization_options[1] > visualization_options[2]) {
+      std::cerr << "Minimum value of elements can't be greater than maximum "
+                   "value of elements\nSetting default values";
+      visualization_options[1] = 0;
+      visualization_options[2] = 100;
+      textbox_input_style[1].setString("0");
+      textbox_input_style[2].setString("100");
+    }
+    text_input.str("");
+    text_input.clear();
+    possible_input = false;
+    temp_value = "";
+  } else {
+    selected_input_option = item;
+    possible_input = true;
   }
 }

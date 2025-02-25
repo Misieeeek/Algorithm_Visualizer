@@ -1,10 +1,12 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <iostream>
 #include <sstream>
 #pragma once
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <charconv>
 #include <functional>
 #include <map>
 #include <sstream>
@@ -187,6 +189,9 @@ class Sorting_Class : public Screen {
   void insertion_sort();
   void textbox(int char_size_textbox, int number_of_inputs, int pos_y);
 
+  // RESPONSIBLE FOR CHANDELING INPUTBOX
+  void input_box_selected(int item);
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -204,10 +209,8 @@ class Sorting_Class : public Screen {
   std::vector<sf::Text> headers;
 
   // VISUALIZATION OPTIONS
+  // THIS VECTOR KEEPS STATE OF: NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
   std::vector<int> visualization_options;
-  int number_of_elements;
-  int min_range_of_numbers;
-  int max_range_of_numbers;
 
   // INPUT FOR OPTIONS
   std::vector<sf::Text> textbox_input_style;
@@ -226,17 +229,18 @@ class Sorting_Class : public Screen {
   // INPUT LOGIC
   void input_logic(int char_typed) {
     if (char_typed != DELETE_KEY && char_typed != ENTER_KEY) {
-      text_input << static_cast<char>(char_typed);
-      temp_value.push_back(static_cast<char>(char_typed));
+      if (temp_value != "" && char_typed == MINUS_KEY)
+        std::cerr << "Don't use minus sign between numbers" << std::endl;
+      else {
+        text_input << static_cast<char>(char_typed);
+        temp_value.push_back(static_cast<char>(char_typed));
+        textbox_input_style[selected_input_option].setString(text_input.str() +
+                                                             "_");
+      }
     } else if (char_typed == DELETE_KEY) {
       if (text_input.str().length() > 0)
         delete_last_char();
     }
-    textbox_input_style[selected_input_option].setString(text_input.str() +
-                                                         "_");
-    /*      textbox_input_style[selected_input_option].setString(
-          std::to_string(visualization_options[selected_input_option]) +
-          text_input.str() + "_");*/
   }
 
   // DELETE INPUT
