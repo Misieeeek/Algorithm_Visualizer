@@ -342,10 +342,7 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
       selected_sorting_algo_index(0),
       char_size_text_variants(20),
       possible_input(false),
-      temp_value(""),
-      max_elements(1000000),
-      upper_bound_value(9999999),
-      lower_bound_value(-9999999) {
+      temp_value("") {
 
   std::filesystem::current_path(
       std::filesystem::path(__FILE__).parent_path().parent_path());
@@ -354,8 +351,16 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
     std::cerr << "Failed to load font" << std::endl;
   }
 
+  //INITIALIZE VISUALIZATION BUTTONS
+  visualization_buttons_names.resize(3);
+  visualization_buttons_names = {"Start", "Worst case", "Best Case"};
+  visualization_buttons.resize(3);
+  visualization_buttons_style(150);
   // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
   // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
+  visualization_options_names.resize(3);
+  visualization_options_names = {
+      "Number of elemenst:", "Minimum value:", "Maximum value:"};
   visualization_options.resize(3);
   visualization_options = {10, 0, 100};
   textbox_input_style.resize(3);
@@ -371,13 +376,15 @@ void Sorting_Class::draw(sf::RenderWindow& window) {
     window.draw(headers[i]);
   for (int i = 0; i < textbox_input_style.size(); i++)
     window.draw(textbox_input_style[i]);
+  for (int i = 0; i < visualization_buttons.size(); i++)
+    window.draw(visualization_buttons[i]);
 }
 
 void Sorting_Class::move_up() {
   if (!possible_input) {
     if (selected_sorting_algo_index - 1 >= 0) {
       if (selected_sorting_algo_index ==
-          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+          algorithm_variants.size() - visualization_options.size() - 1)
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -395,7 +402,7 @@ void Sorting_Class::move_down() {
   if (!possible_input) {
     if (selected_sorting_algo_index + 1 < algorithm_variants.size()) {
       if (selected_sorting_algo_index ==
-          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+          algorithm_variants.size() - visualization_options.size() - 1)
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -412,9 +419,9 @@ void Sorting_Class::move_down() {
 void Sorting_Class::move_left() {
   if (!possible_input) {
     if (!(selected_sorting_algo_index + 1 <
-          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS + 1)) {
+          algorithm_variants.size() - visualization_options.size() + 1)) {
       if (selected_sorting_algo_index ==
-          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+          algorithm_variants.size() - visualization_options.size() - 1)
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -430,16 +437,16 @@ void Sorting_Class::move_left() {
 void Sorting_Class::move_right() {
   if (!possible_input) {
     if (!(selected_sorting_algo_index >=
-          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS)) {
+          algorithm_variants.size() - visualization_options.size())) {
       if (selected_sorting_algo_index ==
-          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS - 1)
+          algorithm_variants.size() - visualization_options.size() - 1)
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::White);
       selected_sorting_algo_index =
-          algorithm_variants.size() - NUMBER_OF_SORT_OPTIONS;
+          algorithm_variants.size() - visualization_options.size();
       selected_sort_algo = selected_sorting_algo_index;
       algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
     }
@@ -447,9 +454,6 @@ void Sorting_Class::move_right() {
 }
 
 int Sorting_Class::pressed() {
-  std::cout << "MAX ELEMENST: " << visualization_options[0] << std::endl;
-  std::cout << "MIN: " << visualization_options[1] << std::endl;
-  std::cout << "MAX: " << visualization_options[2] << std::endl;
   return selected_sort_algo;
 }
 
@@ -474,7 +478,8 @@ void Sorting_Class::change_option(int selected) {
       selected_sort_algo = 0;
       selected_sorting_algo_index = 0;
       algorithm_variants[0].setFillColor(sf::Color::Green);
-      algorithm_variants[algorithm_variants.size() - 1 - NUMBER_OF_SORT_OPTIONS]
+      algorithm_variants[algorithm_variants.size() - 1 -
+                         visualization_options.size()]
           .setFillColor(sf::Color::Red);
       *current_screen = visualize;
       break;
@@ -493,7 +498,7 @@ void Sorting_Class::change_option(int selected) {
 void Sorting_Class::drop_down(int option) {}
 
 void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
-  for (int i = 0; i < NUMBER_OF_SORT_OPTIONS; i++)
+  for (int i = 0; i < visualization_options.size(); i++)
     algorithm_variants.resize(variants.size());
   for (int i = 0; i < variants.size(); i++) {
     algorithm_variants[i].setFont(open_sans);
@@ -503,37 +508,38 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
     algorithm_variants[i].setPosition(50, 50 * i + pos_y);
     algorithm_variants[i].setString(variants[i]);
   }
-  algorithm_variants[variants.size() - 1 - NUMBER_OF_SORT_OPTIONS].setFillColor(
-      sf::Color::Red);
+  algorithm_variants[variants.size() - 1 - visualization_options.size()]
+      .setFillColor(sf::Color::Red);
   algorithm_variants[0].setFillColor(sf::Color::Green);
   int count = 0;
-  for (int i = variants.size() - NUMBER_OF_SORT_OPTIONS; i < variants.size();
-       i++) {
-    algorithm_variants[i].setPosition(550, 50 * count + pos_y);
+  for (int i = variants.size() - visualization_options.size();
+       i < variants.size(); i++) {
+    algorithm_variants[i].setPosition(460, 50 * count + pos_y);
     count++;
   }
-  headers_text = {"Variants", "Options"};
-  headers_text.resize(2);
-  headers.resize(2);
+  headers_text = {"Variants", "Options", "Visulization"};
+  headers_text.resize(3);
+  headers.resize(3);
   int temp = 0;
   for (int i = 0; i < headers_text.size(); i++) {
     headers[i].setFont(open_sans);
     headers[i].setFillColor(sf::Color::White);
     headers[i].setCharacterSize(40);
     headers[i].setStyle(sf::Text::Bold);
-    headers[i].setPosition(30 + temp, pos_y - 75);
+    headers[i].setPosition(30 + temp * i, pos_y - 75);
     headers[i].setString(headers_text[i]);
-    temp = 500;
+    temp = 400;
   }
 }
 
 void Sorting_Class::insertion_sort() {
   std::vector<std::string> insertion_sort_variants = {
-      "Insertion Sort",      "Recursive Insertion Sort",
-      "Shell Sort",          "Binary Insertion Sort",
-      "Library Sort",        "Back",
-      "Number of elemenst:", "Minimum value:",
-      "Maximum value:"};
+      "Insertion Sort", "Recursive Insertion Sort",
+      "Shell Sort",     "Binary Insertion Sort",
+      "Library Sort",   "Back"};
+  insertion_sort_variants.insert(insertion_sort_variants.end(),
+                                 visualization_options_names.begin(),
+                                 visualization_options_names.end());
   set_style(insertion_sort_variants, 150);
 }
 
@@ -543,7 +549,7 @@ void Sorting_Class::textbox(int char_size_textbox, int number_of_inputs,
     textbox_input_style[i].setFont(open_sans);
     textbox_input_style[i].setFillColor(sf::Color::White);
     textbox_input_style[i].setCharacterSize(char_size_text_variants);
-    textbox_input_style[i].setPosition(950, 50 * i + pos_y);
+    textbox_input_style[i].setPosition(690, 50 * i + pos_y);
     textbox_input_style[i].setString(std::to_string(visualization_options[i]));
   }
 }
@@ -573,7 +579,8 @@ void Sorting_Class::input_box_selected(int item) {
                     visualization_options[selected_input_option]);
     if (visualization_options[1] > visualization_options[2]) {
       std::cerr << "Minimum value of elements can't be greater than maximum "
-                   "value of elements\nSetting default values";
+                   "value of elements\nSetting default values"
+                << std::endl;
       visualization_options[1] = 0;
       visualization_options[2] = 100;
       textbox_input_style[1].setString("0");
@@ -586,5 +593,15 @@ void Sorting_Class::input_box_selected(int item) {
   } else {
     selected_input_option = item;
     possible_input = true;
+  }
+}
+
+void Sorting_Class::visualization_buttons_style(int pos_y) {
+  for (int i = 0; i < visualization_buttons.size(); i++) {
+    visualization_buttons[i].setFont(open_sans);
+    visualization_buttons[i].setFillColor(sf::Color::White);
+    visualization_buttons[i].setCharacterSize(35);
+    visualization_buttons[i].setPosition(890, 150 * i + pos_y);
+    visualization_buttons[i].setString(visualization_buttons_names[i]);
   }
 }

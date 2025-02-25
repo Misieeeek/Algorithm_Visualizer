@@ -1,5 +1,6 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <algorithm>
 #include <iostream>
 #include <sstream>
 #pragma once
@@ -32,7 +33,7 @@
 #define MINUS_KEY 45
 
 // NUMBER OF OPTIONS FOR SORTING ALGORITHMS
-#define NUMBER_OF_SORT_OPTIONS 3
+//#define NUMBER_OF_SORT_OPTIONS 3
 
 // STATE OF PRESSED CATEGORY
 enum class Algocat {
@@ -192,6 +193,9 @@ class Sorting_Class : public Screen {
   // RESPONSIBLE FOR CHANDELING INPUTBOX
   void input_box_selected(int item);
 
+  // SET STYLE FOR VISUALIZATION BUTTONS
+  void visualization_buttons_style(int pos_x);
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -211,17 +215,17 @@ class Sorting_Class : public Screen {
   // VISUALIZATION OPTIONS
   // THIS VECTOR KEEPS STATE OF: NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
   std::vector<int> visualization_options;
+  std::vector<std::string> visualization_options_names;
+
+  // VISUALIZATION BUTTONS
+  std::vector<std::string> visualization_buttons_names;
+  std::vector<sf::Text> visualization_buttons;
 
   // INPUT FOR OPTIONS
   std::vector<sf::Text> textbox_input_style;
   std::ostringstream text_input;
   int selected_input_option;
   std::string temp_value;
-
-  // INPUT RESTRICTIONS
-  int max_elements;
-  int upper_bound_value;
-  int lower_bound_value;
 
   // IF THE IMPUT OPTION IS SELECTED
   bool possible_input;
@@ -232,10 +236,14 @@ class Sorting_Class : public Screen {
       if (temp_value != "" && char_typed == MINUS_KEY)
         std::cerr << "Don't use minus sign between numbers" << std::endl;
       else {
-        text_input << static_cast<char>(char_typed);
-        temp_value.push_back(static_cast<char>(char_typed));
-        textbox_input_style[selected_input_option].setString(text_input.str() +
-                                                             "_");
+        if (temp_value.length() >= 7)
+          std::cerr << "Value is too big/small" << std::endl;
+        else {
+          text_input << static_cast<char>(char_typed);
+          temp_value.push_back(static_cast<char>(char_typed));
+          textbox_input_style[selected_input_option].setString(
+              text_input.str() + "_");
+        }
       }
     } else if (char_typed == DELETE_KEY) {
       if (text_input.str().length() > 0)
