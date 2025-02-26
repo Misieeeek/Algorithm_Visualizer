@@ -1,5 +1,6 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <algorithm>
 #include <iostream>
 #include <sstream>
@@ -219,7 +220,8 @@ class Sorting_Class : public Screen {
 
   // VISUALIZATION BUTTONS
   std::vector<std::string> visualization_buttons_names;
-  std::vector<sf::Text> visualization_buttons;
+  std::vector<sf::Text> visualization_buttons_text;
+  std::vector<sf::RectangleShape> visualization_buttons_shape;
 
   // INPUT FOR OPTIONS
   std::vector<sf::Text> textbox_input_style;

@@ -1,16 +1,19 @@
 #include "visualizer.h"
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <algorithm>
 #include <charconv>
 #include <cmath>
 #include <cstddef>
+#include <cstdlib>
 #include <filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
 #include <utility>
+#include <variant>
 #include "main_menu.h"
 #include "main_window.h"
 
@@ -352,39 +355,45 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
   }
 
   //INITIALIZE VISUALIZATION BUTTONS
-  visualization_buttons_names.resize(3);
-  visualization_buttons_names = {"Start", "Worst case", "Best Case"};
-  visualization_buttons.resize(3);
+  int number_of_buttons = 4;
+  visualization_buttons_names.resize(number_of_buttons);
+  visualization_buttons_names = {"Start", "Example", "Worst case", "Best Case"};
+  visualization_buttons_text.resize(number_of_buttons);
+  visualization_buttons_shape.resize(number_of_buttons);
   visualization_buttons_style(150);
   // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
   // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
-  visualization_options_names.resize(3);
+  int number_of_options = 3;
+  visualization_options_names.resize(number_of_options);
   visualization_options_names = {
       "Number of elemenst:", "Minimum value:", "Maximum value:"};
-  visualization_options.resize(3);
+  visualization_options.resize(number_of_options);
   visualization_options = {10, 0, 100};
-  textbox_input_style.resize(3);
+  textbox_input_style.resize(number_of_options);
   textbox(20, 3, 150);
 }
 
 Sorting_Class::~Sorting_Class() {}
 
 void Sorting_Class::draw(sf::RenderWindow& window) {
+  for (int i = 0; i < visualization_buttons_text.size(); i++) {
+    window.draw(visualization_buttons_shape[i]);
+    //window.draw(visualization_buttons_text[i]);
+  }
   for (int i = 0; i < algorithm_variants.size(); i++)
     window.draw(algorithm_variants[i]);
   for (int i = 0; i < headers.size(); i++)
     window.draw(headers[i]);
   for (int i = 0; i < textbox_input_style.size(); i++)
     window.draw(textbox_input_style[i]);
-  for (int i = 0; i < visualization_buttons.size(); i++)
-    window.draw(visualization_buttons[i]);
 }
 
 void Sorting_Class::move_up() {
   if (!possible_input) {
     if (selected_sorting_algo_index - 1 >= 0) {
       if (selected_sorting_algo_index ==
-          algorithm_variants.size() - visualization_options.size() - 1)
+          algorithm_variants.size() - visualization_options.size() -
+              visualization_options_names.size() - 2)
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -402,7 +411,8 @@ void Sorting_Class::move_down() {
   if (!possible_input) {
     if (selected_sorting_algo_index + 1 < algorithm_variants.size()) {
       if (selected_sorting_algo_index ==
-          algorithm_variants.size() - visualization_options.size() - 1)
+          algorithm_variants.size() - visualization_options.size() -
+              visualization_options_names.size() - 2)
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -418,18 +428,33 @@ void Sorting_Class::move_down() {
 
 void Sorting_Class::move_left() {
   if (!possible_input) {
-    if (!(selected_sorting_algo_index + 1 <
-          algorithm_variants.size() - visualization_options.size() + 1)) {
-      if (selected_sorting_algo_index ==
-          algorithm_variants.size() - visualization_options.size() - 1)
+    if (!(selected_sorting_algo_index <
+          algorithm_variants.size() - visualization_options.size() -
+              visualization_buttons_names.size())) {
+      if (selected_sorting_algo_index == algorithm_variants.size() -
+                                             visualization_options.size() - 1 -
+                                             visualization_buttons_names.size())
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::White);
-      selected_sorting_algo_index = 0;
-      selected_sort_algo = 0;
-      algorithm_variants[0].setFillColor(sf::Color::Green);
+      if (selected_sorting_algo_index >
+              algorithm_variants.size() - visualization_options_names.size() -
+                  visualization_buttons_names.size() - 1 &&
+          selected_sorting_algo_index <=
+              algorithm_variants.size() - visualization_buttons_names.size() -
+                  1) {
+        selected_sorting_algo_index = 0;
+        selected_sort_algo = selected_sorting_algo_index;
+        algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+      } else {
+        selected_sorting_algo_index = algorithm_variants.size() -
+                                      visualization_options.size() -
+                                      visualization_buttons_names.size();
+        selected_sort_algo = selected_sorting_algo_index;
+        algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+      }
     }
   }
 }
@@ -437,18 +462,33 @@ void Sorting_Class::move_left() {
 void Sorting_Class::move_right() {
   if (!possible_input) {
     if (!(selected_sorting_algo_index >=
-          algorithm_variants.size() - visualization_options.size())) {
+          algorithm_variants.size() - visualization_buttons_names.size())) {
       if (selected_sorting_algo_index ==
-          algorithm_variants.size() - visualization_options.size() - 1)
+          algorithm_variants.size() - visualization_options.size() -
+              visualization_buttons_names.size() - 1)
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
         algorithm_variants[selected_sorting_algo_index].setFillColor(
             sf::Color::White);
-      selected_sorting_algo_index =
-          algorithm_variants.size() - visualization_options.size();
-      selected_sort_algo = selected_sorting_algo_index;
-      algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+      if (selected_sorting_algo_index <
+              algorithm_variants.size() - visualization_buttons_names.size() &&
+          !(selected_sorting_algo_index >=
+            algorithm_variants.size() - visualization_buttons_names.size() -
+                visualization_options.size())) {
+        selected_sorting_algo_index = algorithm_variants.size() -
+                                      visualization_options.size() -
+                                      visualization_buttons_names.size();
+        selected_sort_algo = selected_sorting_algo_index;
+        algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+      } else if (selected_sorting_algo_index <
+                 algorithm_variants.size() -
+                     visualization_buttons_names.size()) {
+        selected_sorting_algo_index =
+            algorithm_variants.size() - visualization_buttons_names.size();
+        selected_sort_algo = selected_sorting_algo_index;
+        algorithm_variants[selected_sort_algo].setFillColor(sf::Color::Green);
+      }
     }
   }
 }
@@ -498,8 +538,7 @@ void Sorting_Class::change_option(int selected) {
 void Sorting_Class::drop_down(int option) {}
 
 void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
-  for (int i = 0; i < visualization_options.size(); i++)
-    algorithm_variants.resize(variants.size());
+  algorithm_variants.resize(variants.size());
   for (int i = 0; i < variants.size(); i++) {
     algorithm_variants[i].setFont(open_sans);
     algorithm_variants[i].setFillColor(sf::Color::White);
@@ -508,19 +547,33 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
     algorithm_variants[i].setPosition(50, 50 * i + pos_y);
     algorithm_variants[i].setString(variants[i]);
   }
-  algorithm_variants[variants.size() - 1 - visualization_options.size()]
+  algorithm_variants[variants.size() - 1 - visualization_options.size() -
+                     visualization_buttons_names.size()]
       .setFillColor(sf::Color::Red);
   algorithm_variants[0].setFillColor(sf::Color::Green);
   int count = 0;
-  for (int i = variants.size() - visualization_options.size();
-       i < variants.size(); i++) {
+  for (int i = variants.size() - visualization_options.size() -
+               visualization_buttons_names.size();
+       i < variants.size() - visualization_buttons_names.size(); i++) {
     algorithm_variants[i].setPosition(460, 50 * count + pos_y);
     count++;
   }
-  headers_text = {"Variants", "Options", "Visulization"};
-  headers_text.resize(3);
-  headers.resize(3);
+  count = 0;
   int temp = 0;
+  for (int i = variants.size() - visualization_options_names.size() - 1;
+       i < algorithm_variants.size(); i++) {
+    algorithm_variants[i].setCharacterSize(35);
+    sf::FloatRect text_bounds = algorithm_variants[i].getLocalBounds();
+    algorithm_variants[i].setPosition(890 + (100 - text_bounds.width / 2),
+                                      temp + 60 * count + pos_y);
+    count++;
+    temp = 100;
+  }
+  int number_of_headers = 3;
+  headers_text = {"Variants", "Options", "Visulization"};
+  headers_text.resize(number_of_headers);
+  headers.resize(number_of_headers);
+  temp = 0;
   for (int i = 0; i < headers_text.size(); i++) {
     headers[i].setFont(open_sans);
     headers[i].setFillColor(sf::Color::White);
@@ -540,6 +593,9 @@ void Sorting_Class::insertion_sort() {
   insertion_sort_variants.insert(insertion_sort_variants.end(),
                                  visualization_options_names.begin(),
                                  visualization_options_names.end());
+  insertion_sort_variants.insert(insertion_sort_variants.end(),
+                                 visualization_buttons_names.begin(),
+                                 visualization_buttons_names.end());
   set_style(insertion_sort_variants, 150);
 }
 
@@ -597,11 +653,21 @@ void Sorting_Class::input_box_selected(int item) {
 }
 
 void Sorting_Class::visualization_buttons_style(int pos_y) {
-  for (int i = 0; i < visualization_buttons.size(); i++) {
-    visualization_buttons[i].setFont(open_sans);
-    visualization_buttons[i].setFillColor(sf::Color::White);
-    visualization_buttons[i].setCharacterSize(35);
-    visualization_buttons[i].setPosition(890, 150 * i + pos_y);
-    visualization_buttons[i].setString(visualization_buttons_names[i]);
+  int temp = 0;
+  for (int i = 0; i < visualization_buttons_text.size(); i++) {
+    visualization_buttons_shape[i].setPosition(880, temp + 60 * i + pos_y);
+    visualization_buttons_shape[i].setSize({220, 45});
+    visualization_buttons_shape[i].setOutlineColor(sf::Color::Red);
+    visualization_buttons_shape[i].setOutlineThickness(1.5);
+    visualization_buttons_shape[i].setFillColor(sf::Color::Black);
+    /*visualization_buttons_text[i].setFont(open_sans);
+    visualization_buttons_text[i].setFillColor(sf::Color::White);
+    visualization_buttons_text[i].setCharacterSize(35);
+    visualization_buttons_text[i].setString(visualization_buttons_names[i]);*/
+    //sf::FloatRect text_bounds = algorithm_variants[i].getLocalBounds();
+    visualization_buttons_text[i].setPosition(
+        890 + (100 - (visualization_buttons_names[i].length() * 35) / 2),
+        temp + 60 * i + pos_y);
+    temp = 100;
   }
 }
