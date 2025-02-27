@@ -104,69 +104,69 @@ class Visualizer : public Screen {
 
  private:
   // KEEPS THE STATE OF ALGOCAT CURRENTLY SELECTED
-  Algocat ac;
+  Algocat m_ac;
 
   // MAIN MENU FOR EVERY CATEGORY OF ALGORITHMS
   Screen** current_screen;
   Screen* main_menu;
   Sorting_Class* sort_class;
-  int selected_algorithm_index;
-  sf::Text list_algorithms[NUMBER_OF_ALGORITHMS];
-  sf::Font open_sans;
-  int selected_algorithm;
+  int m_selected_algorithm_index;
+  sf::Text m_list_algorithms[NUMBER_OF_ALGORITHMS];
+  sf::Font m_open_sans;
+  int m_selected_algorithm;
 
   // DROP DOWN MENU ITEMS LIST
-  std::vector<sf::Text> list_algo;
+  std::vector<sf::Text> m_list_algo;
 
   // DROP DOWN MENU FOR SORTING ALGORITHMS
-  sf::Text list_algo_sort[NUMBER_OF_SORT_ALGO];
-  std::vector<std::string> algo_sort = {"Insertion Sort", "Selection Sort",
-                                        "Merge Sort",     "Bubble Sort",
-                                        "Heap Sort",      "Quick Sort"};
+  sf::Text m_list_algo_sort[NUMBER_OF_SORT_ALGO];
+  std::vector<std::string> m_algo_sort = {"Insertion Sort", "Selection Sort",
+                                          "Merge Sort",     "Bubble Sort",
+                                          "Heap Sort",      "Quick Sort"};
 
   // DROP DOWN MENU FOR SEARCH ALGORITHMS
-  sf::Text list_algo_search[NUMBER_OF_SEARCH_ALGO];
-  std::vector<std::string> algo_search = {"Linear Search", "Binary Search"};
+  sf::Text m_list_algo_search[NUMBER_OF_SEARCH_ALGO];
+  std::vector<std::string> m_algo_search = {"Linear Search", "Binary Search"};
 
   // DROP DOWN MENU FOR DS ALGORITHMS
-  sf::Text list_algo_ds[NUMBER_OF_DS_ALGO];
-  std::vector<std::string> algo_ds = {"Stack",
-                                      "Queue",
-                                      "Linked List",
-                                      "Hash Table",
-                                      "Binary Search Tree",
-                                      "Red-Black Tree",
-                                      "AVL Tree",
-                                      "Treaps"};
+  sf::Text m_list_algo_ds[NUMBER_OF_DS_ALGO];
+  std::vector<std::string> m_algo_ds = {"Stack",
+                                        "Queue",
+                                        "Linked List",
+                                        "Hash Table",
+                                        "Binary Search Tree",
+                                        "Red-Black Tree",
+                                        "AVL Tree",
+                                        "Treaps"};
 
   // DROP DOWN MENU FOR DYNAMIC PROGRAMMING ALGORITHMS
-  sf::Text list_algo_dynamic[NUMBER_OF_DYNAMIC_ALGO];
-  std::vector<std::string> algo_dynamic = {"Cut Rod", "Cut Rod (Memoization)",
-                                           "Cut Rod (Tabulation)",
-                                           "Longest Common Subsequence"};
+  sf::Text m_list_algo_dynamic[NUMBER_OF_DYNAMIC_ALGO];
+  std::vector<std::string> m_algo_dynamic = {"Cut Rod", "Cut Rod (Memoization)",
+                                             "Cut Rod (Tabulation)",
+                                             "Longest Common Subsequence"};
 
   // DROP DOWN MENU FOR GREEDY ALGORITHMS
-  sf::Text list_algo_greedy[NUMBER_OF_GREEDY_ALGO];
-  std::vector<std::string> algo_greedy = {"Huffman Coding",
-                                          "Activity Selector"};
+  sf::Text m_list_algo_greedy[NUMBER_OF_GREEDY_ALGO];
+  std::vector<std::string> m_algo_greedy = {"Huffman Coding",
+                                            "Activity Selector"};
 
   // DROP DOWN MENU FOR ADVANCED DATA STRUCTURES ALGORITHMS
-  sf::Text list_algo_advancedds[NUMBER_OF_ADVANCEDDS_ALGO];
-  std::vector<std::string> algo_advancedds = {"B-Tree", "Fibonacci Heap",
-                                              "Van Emde Boas Tree"};
+  sf::Text m_list_algo_advancedds[NUMBER_OF_ADVANCEDDS_ALGO];
+  std::vector<std::string> m_algo_advancedds = {"B-Tree", "Fibonacci Heap",
+                                                "Van Emde Boas Tree"};
 
   // DROP DOWN MENU FOR GRAPH ALGORITHMS
-  sf::Text list_algo_graph[NUMBER_OF_GRAPH_ALGO];
-  std::vector<std::string> algo_graph = {"1", "2", "3"};
+  sf::Text m_list_algo_graph[NUMBER_OF_GRAPH_ALGO];
+  std::vector<std::string> m_algo_graph = {"1", "2", "3"};
 
   // TEXT STYLES
-  int category_font_size = 35;
-  int drop_down_item_font_size = 20;
+  int m_category_font_size;
+  int m_drop_down_item_font_size;
 
   // DROP DOWN MENU COUNTERS AND CHECKER FOR CATEGORY OPTION
-  int dropped_items;
-  int dropped_items_index;
-  bool category_option;
+  int m_dropped_items;
+  int m_dropped_items_index;
+  bool m_category_option;
 };
 
 class Sorting_Class : public Screen {
@@ -201,69 +201,70 @@ class Sorting_Class : public Screen {
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
   Visualizer* visualize;
-  int selected_sorting_algo_index;
-  sf::Font open_sans;
-  int selected_sort_algo;
+  int m_selected_sorting_algo_index;
+  sf::Font m_open_sans;
+  int m_selected_sort_algo;
 
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM
-  std::vector<sf::Text> algorithm_variants;
+  std::vector<sf::Text> m_algorithm_variants;
 
   // TEXT STYLE
-  int char_size_text_variants;
-  std::vector<std::string> headers_text;
-  std::vector<sf::Text> headers;
+  int m_char_size_text_variants;
+  std::vector<std::string> m_headers_text;
+  std::vector<sf::Text> m_headers;
 
   // VISUALIZATION OPTIONS
   // THIS VECTOR KEEPS STATE OF: NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
-  std::vector<int> visualization_options;
-  std::vector<std::string> visualization_options_names;
+  std::vector<int> m_visualization_options;
+  std::vector<std::string> m_visualization_options_names;
 
   // VISUALIZATION BUTTONS
-  std::vector<std::string> visualization_buttons_names;
-  std::vector<sf::Text> visualization_buttons_text;
-  std::vector<sf::RectangleShape> visualization_buttons_shape;
+  std::vector<std::string> m_visualization_buttons_names;
+  std::vector<sf::Text> m_visualization_buttons_text;
+  std::vector<sf::RectangleShape> m_visualization_buttons_shape;
 
   // INPUT FOR OPTIONS
-  std::vector<sf::Text> textbox_input_style;
-  std::ostringstream text_input;
-  int selected_input_option;
-  std::string temp_value;
+  std::vector<sf::Text> m_textbox_input_style;
+  std::ostringstream m_text_input;
+  int m_selected_input_option;
+  std::string m_temp_value;
 
   // IF THE IMPUT OPTION IS SELECTED
-  bool possible_input;
+  bool m_possible_input;
 
   // INPUT LOGIC
   void input_logic(int char_typed) {
     if (char_typed != DELETE_KEY && char_typed != ENTER_KEY) {
-      if (temp_value != "" && char_typed == MINUS_KEY)
+      if (m_temp_value != "" && char_typed == MINUS_KEY)
         std::cerr << "Don't use minus sign between numbers" << std::endl;
       else {
-        if (temp_value.length() >= 7)
+        if (m_temp_value.length() >= 7)
           std::cerr << "Value is too big/small" << std::endl;
         else {
-          text_input << static_cast<char>(char_typed);
-          temp_value.push_back(static_cast<char>(char_typed));
-          textbox_input_style[selected_input_option].setString(
-              text_input.str() + "_");
+          m_text_input << static_cast<char>(char_typed);
+          m_temp_value.push_back(static_cast<char>(char_typed));
+          m_textbox_input_style[m_selected_input_option].setString(
+              m_text_input.str() + "_");
         }
       }
     } else if (char_typed == DELETE_KEY) {
-      if (text_input.str().length() > 0)
+      if (m_text_input.str().length() > 0)
         delete_last_char();
     }
   }
 
   // DELETE INPUT
   void delete_last_char() {
-    std::string t = text_input.str();
+    std::string t = m_text_input.str();
     std::string newT = "";
     for (int i = 0; i < t.length() - 1; i++) {
       newT += t[i];
     }
-    text_input.str("");
-    text_input << newT;
-    textbox_input_style[selected_input_option].setString(text_input.str());
-    temp_value.pop_back();
+    m_text_input.str("");
+    m_text_input << newT;
+    m_textbox_input_style[m_selected_input_option].setString(
+        m_text_input.str());
+    m_temp_value.pop_back();
   }
 };
 

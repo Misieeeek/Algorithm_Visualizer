@@ -3,32 +3,26 @@
 #include <SFML/Window/Event.hpp>
 #pragma once
 
-#include "main_window.h"
 #include <iostream>
+#include "main_window.h"
 
 #define NUMBER_OF_ITEMS 3
 
 class MainMenu : public Screen {
-private:
-  int selected_item_index;
-  sf::Text main_menu_options[NUMBER_OF_ITEMS];
-  sf::Font open_sans;
-  int selected;
-
-public:
+ public:
   MainMenu();
   ~MainMenu();
 
-  void draw(sf::RenderWindow &window) override;
+  void draw(sf::RenderWindow& window) override;
   void move_up() override;
   void move_down() override;
-  void move_left() override;
-  void move_right() override;
-  int pressed() override { return selected; }
-  void change_option(int selected) override;
+  int pressed() override { return m_selected; }
 
-  void drop_down(int option) override;
-  void typed_on(sf::Event input) override;
+ private:
+  int m_selected_item_index;
+  sf::Text m_main_menu_options[NUMBER_OF_ITEMS];
+  sf::Font m_open_sans;
+  int m_selected;
 };
 
 #endif

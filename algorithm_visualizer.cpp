@@ -1,3 +1,5 @@
 #include "main_window.h"
 
-int main() { MainWindow mainWindow; }
+int main() {
+  MainWindow main_window;
+}
