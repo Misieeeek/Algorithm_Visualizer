@@ -42,6 +42,6 @@ void MainMenu::move_down() {
 }
 
 void MainMenu::draw(sf::RenderWindow& window) {
-  for (int i = 0; i < NUMBER_OF_ITEMS; i++)
-    window.draw(m_main_menu_options[i]);
+  for (const auto& x : m_main_menu_options)
+    window.draw(x);
 }

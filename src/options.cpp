@@ -50,8 +50,8 @@ void Options::move_down() {
 }
 
 void Options::draw(sf::RenderWindow& window) {
-  for (int i = 0; i < NUMBER_OF_OPTIONS; i++)
-    window.draw(m_options_options[i]);
+  for (const auto& x : m_options_options)
+    window.draw(x);
 }
 
 void Options::change_option(int selected) {
