@@ -1,15 +1,15 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
-#include <SFML/Graphics/RectangleShape.hpp>
-#include <algorithm>
-#include <iostream>
-#include <sstream>
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <algorithm>
+#include <array>
 #include <charconv>
 #include <functional>
+#include <iostream>
 #include <map>
 #include <sstream>
 #include <string>
@@ -73,11 +73,9 @@ class Visualizer : public Screen {
 
   // RESPOSIBLE FOR DRAWING EVERYTHING
   void draw(sf::RenderWindow& window) override;
-  // MOVE UP/DOWN/RIGHT/LEFT (OPTIONS)
+  // MOVE UP/DOWN (OPTIONS)
   void move_up() override;
   void move_down() override;
-  void move_left() override;
-  void move_right() override;
   // RETURN A NUMBER OF WHICH OPTION WAS PRESSED
   int pressed() override;
   // RESPONSIBLE FOR CHANGING THE OPTION (WHEN SELECTED, DO SOMETHING)
@@ -93,14 +91,10 @@ class Visualizer : public Screen {
   // RESPONSIBLE FOR FINDING THE SELECTED ALGORITHM AND ACTIVATING IT FROM DOWN
   // MENU
   void go_to_algo_screen(int selected);
-  //
-  void render();
   // RESPONSIBLE FOR LOADING ALGORITHM SCREENS (BTW IT LOADS EVERYTHING WHEN
   // CONSTRUCTOR IS ACTIVATED, WOULD BE MUCH MORE EFFICIENT, WHEN IT LOADS ONE,
   // THE NEEDED ONE, AFTERWARDS IF NOT NEEDED ANYMORE DELETING IT).
   void initialize_algorithms();
-
-  void typed_on(sf::Event input) override;
 
  private:
   // KEEPS THE STATE OF ALGOCAT CURRENTLY SELECTED
@@ -197,6 +191,9 @@ class Sorting_Class : public Screen {
   // SET STYLE FOR VISUALIZATION BUTTONS
   void visualization_buttons_style(int pos_x);
 
+  // GET/SET M_SIZES
+  void set_m_sizes(size_t options, size_t variants, size_t buttons, size_t sum);
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -231,6 +228,9 @@ class Sorting_Class : public Screen {
 
   // IF THE IMPUT OPTION IS SELECTED
   bool m_possible_input;
+
+  // ARRAY OF SIZES (VIZ OPTIONS, ALGO VARIANTS, VIZ BUTTONS, SUM OF THEM)
+  std::array<size_t, 4> m_sizes;
 
   // INPUT LOGIC
   void input_logic(int char_typed) {
