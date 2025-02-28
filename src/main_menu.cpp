@@ -3,14 +3,6 @@
 #include <filesystem>
 
 MainMenu::MainMenu() : m_selected_item_index(0) {
-
-  std::filesystem::current_path(
-      std::filesystem::path(__FILE__).parent_path().parent_path());
-
-  if (!m_open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
-    std::cerr << "Failed to load font" << std::endl;
-  }
-
   std::string options[] = {"Visualize", "Options", "Exit"};
 
   for (int i = 0; i < NUMBER_OF_ITEMS; i++) {

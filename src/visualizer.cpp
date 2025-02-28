@@ -8,7 +8,6 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
-#include <filesystem>
 #include <iostream>
 #include <memory>
 #include <string>
@@ -27,13 +26,6 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
       m_category_option(true),
       m_category_font_size(35),
       m_drop_down_item_font_size(20) {
-
-  std::filesystem::current_path(
-      std::filesystem::path(__FILE__).parent_path().parent_path());
-
-  if (!m_open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
-    std::cerr << "Failed to load font" << std::endl;
-  }
 
   current_screen = screen_ptr;
   main_menu = menu;
@@ -350,13 +342,6 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
       m_possible_input(false),
       m_temp_value("") {
 
-  std::filesystem::current_path(
-      std::filesystem::path(__FILE__).parent_path().parent_path());
-
-  if (!m_open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
-    std::cerr << "Failed to load font" << std::endl;
-  }
-
   //INITIALIZE VISUALIZATION BUTTONS
   size_t number_of_buttons = 4;
   m_visualization_buttons_names.resize(number_of_buttons);
@@ -393,9 +378,7 @@ void Sorting_Class::draw(sf::RenderWindow& window) {
 void Sorting_Class::move_up() {
   if (!m_possible_input) {
     if (m_selected_sorting_algo_index - 1 >= 0) {
-      if (m_selected_sorting_algo_index ==
-          m_algorithm_variants.size() - m_visualization_options.size() -
-              m_visualization_options_names.size() - 2)
+      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -411,10 +394,8 @@ void Sorting_Class::move_up() {
 
 void Sorting_Class::move_down() {
   if (!m_possible_input) {
-    if (m_selected_sorting_algo_index + 1 < m_algorithm_variants.size()) {
-      if (m_selected_sorting_algo_index ==
-          m_algorithm_variants.size() - m_visualization_options.size() -
-              m_visualization_options_names.size() - 2)
+    if (m_selected_sorting_algo_index + 1 < m_sizes[3]) {
+      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -430,24 +411,21 @@ void Sorting_Class::move_down() {
 
 void Sorting_Class::move_left() {
   if (!m_possible_input) {
-    if (!(m_selected_sorting_algo_index <
-          m_sizes[1] - m_sizes[0] - m_sizes[2])) {
-      if (m_selected_sorting_algo_index ==
-          m_sizes[1] - m_sizes[0] - m_sizes[2] - 1)
+    if (!(m_selected_sorting_algo_index < m_sizes[1])) {
+      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::White);
-      if (m_selected_sorting_algo_index >
-              m_sizes[1] - m_sizes[0] - m_sizes[2] - 1 &&
-          m_selected_sorting_algo_index <= m_sizes[1] - m_sizes[2] - 1) {
+      if (m_selected_sorting_algo_index > m_sizes[1] - 1 &&
+          m_selected_sorting_algo_index <= m_sizes[3] - m_sizes[2] - 1) {
         m_selected_sorting_algo_index = 0;
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
       } else {
-        m_selected_sorting_algo_index = m_sizes[1] - m_sizes[0] - m_sizes[2];
+        m_selected_sorting_algo_index = m_sizes[1];
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
@@ -458,23 +436,21 @@ void Sorting_Class::move_left() {
 
 void Sorting_Class::move_right() {
   if (!m_possible_input) {
-    if (!(m_selected_sorting_algo_index >= m_sizes[1] - m_sizes[2])) {
-      if (m_selected_sorting_algo_index ==
-          m_sizes[1] - m_sizes[0] - m_sizes[2] - 1)
+    if (!(m_selected_sorting_algo_index >= m_sizes[3] - m_sizes[2])) {
+      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::White);
-      if (m_selected_sorting_algo_index < m_sizes[1] - m_sizes[2] &&
-          !(m_selected_sorting_algo_index >=
-            m_sizes[1] - m_sizes[2] - m_sizes[0])) {
-        m_selected_sorting_algo_index = m_sizes[1] - m_sizes[0] - m_sizes[2];
+      if (m_selected_sorting_algo_index < m_sizes[3] - m_sizes[2] &&
+          !(m_selected_sorting_algo_index >= m_sizes[1])) {
+        m_selected_sorting_algo_index = m_sizes[1];
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
-      } else if (m_selected_sorting_algo_index < m_sizes[1] - m_sizes[2]) {
-        m_selected_sorting_algo_index = m_sizes[1] - m_sizes[2];
+      } else if (m_selected_sorting_algo_index < m_sizes[3] - m_sizes[2]) {
+        m_selected_sorting_algo_index = m_sizes[3] - m_sizes[2];
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
@@ -528,8 +504,12 @@ void Sorting_Class::change_option(int selected) {
 void Sorting_Class::drop_down(int option) {}
 
 void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
-  m_algorithm_variants.resize(variants.size());
-  for (int i = 0; i < m_sizes[1]; i++) {
+  m_algorithm_variants.resize(m_sizes[3]);
+  std::cout << m_sizes[0] << std::endl;
+  std::cout << m_sizes[1] << std::endl;
+  std::cout << m_sizes[2] << std::endl;
+  std::cout << m_sizes[3] << std::endl;
+  for (int i = 0; i < m_sizes[3]; i++) {
     m_algorithm_variants[i].setFont(m_open_sans);
     m_algorithm_variants[i].setFillColor(sf::Color::White);
     m_algorithm_variants[i].setCharacterSize(m_char_size_text_variants);
@@ -537,18 +517,17 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
     m_algorithm_variants[i].setPosition(50, 50 * i + pos_y);
     m_algorithm_variants[i].setString(variants[i]);
   }
-  m_algorithm_variants[m_sizes[1] - m_sizes[0] - m_sizes[2] - 1].setFillColor(
-      sf::Color::Red);
+  m_algorithm_variants[m_sizes[1] - 1].setFillColor(sf::Color::Red);
   m_algorithm_variants[0].setFillColor(sf::Color::Green);
   int count = 0;
-  for (int i = m_sizes[1] - m_sizes[0] - m_sizes[2];
-       i < m_sizes[1] - m_sizes[2]; i++) {
+  for (int i = m_sizes[3] - m_sizes[0] - m_sizes[2];
+       i < m_sizes[3] - m_sizes[2]; i++) {
     m_algorithm_variants[i].setPosition(460, 50 * count + pos_y);
     count++;
   }
   count = 0;
   int temp = 0;
-  for (int i = m_sizes[1] - m_sizes[0] - 1; i < m_sizes[3]; i++) {
+  for (int i = m_sizes[3] - m_sizes[0] - 1; i < m_sizes[3]; i++) {
     m_algorithm_variants[i].setCharacterSize(35);
     sf::FloatRect text_bounds = m_algorithm_variants[i].getLocalBounds();
     m_algorithm_variants[i].setPosition(890 + (100 - text_bounds.width / 2),
@@ -584,10 +563,11 @@ void Sorting_Class::insertion_sort() {
                                  m_visualization_buttons_names.begin(),
                                  m_visualization_buttons_names.end());
 
-  set_m_sizes(m_visualization_options.size(), insertion_sort_variants.size(),
+  set_m_sizes(m_visualization_options.size(),
+              insertion_sort_variants.size() - m_visualization_options.size() -
+                  m_visualization_buttons_names.size(),
               m_visualization_buttons_names.size(),
-              m_visualization_options.size() + insertion_sort_variants.size() +
-                  m_visualization_buttons_names.size());
+              insertion_sort_variants.size());
   set_style(insertion_sort_variants, 150);
 }
 

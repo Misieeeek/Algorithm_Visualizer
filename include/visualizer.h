@@ -106,7 +106,6 @@ class Visualizer : public Screen {
   Sorting_Class* sort_class;
   int m_selected_algorithm_index;
   sf::Text m_list_algorithms[NUMBER_OF_ALGORITHMS];
-  sf::Font m_open_sans;
   int m_selected_algorithm;
 
   // DROP DOWN MENU ITEMS LIST
@@ -199,7 +198,6 @@ class Sorting_Class : public Screen {
   Screen** current_screen;
   Visualizer* visualize;
   int m_selected_sorting_algo_index;
-  sf::Font m_open_sans;
   int m_selected_sort_algo;
 
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM

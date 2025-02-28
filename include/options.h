@@ -1,10 +1,10 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
-#include <SFML/Window/Event.hpp>
 #pragma once
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 #include "main_menu.h"
 #include "main_window.h"
 
@@ -32,7 +32,6 @@ class Options : public Screen {
   MainMenu* main_menu;
   int m_selected_options_index;
   sf::Text m_options_options[NUMBER_OF_OPTIONS];
-  sf::Font m_open_sans;
   int m_selected_option;
 };
 

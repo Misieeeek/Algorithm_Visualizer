@@ -1,13 +1,14 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
-#include <SFML/Window/Event.hpp>
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Window/Event.hpp>
+#include <filesystem>
 
 class Screen {
  public:
-  Screen() : m_opend(false), m_main_active(true) {};
+  Screen() : m_opend(false), m_main_active(true) { set_open_sans(); }
   virtual ~Screen() = default;
   virtual void draw(sf::RenderWindow& window) = 0;
   virtual void move_up() = 0;
@@ -20,10 +21,13 @@ class Screen {
   virtual void move_left();
   virtual void move_right();
 
+  virtual void set_open_sans();
+
  protected:
   bool m_opend;
   bool m_main_active;
   bool m_dropped;
+  sf::Font m_open_sans;
 };
 
 class MainWindow {

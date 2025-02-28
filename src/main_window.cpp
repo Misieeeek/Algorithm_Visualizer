@@ -74,6 +74,15 @@ void MainWindow::is_running(sf::RenderWindow& window) {
   }
 }
 
+void Screen::set_open_sans() {
+  std::filesystem::current_path(
+      std::filesystem::path(__FILE__).parent_path().parent_path());
+
+  if (!m_open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
+    std::cerr << "Failed to load font" << std::endl;
+  }
+}
+
 void Screen::change_option(int selected) {}
 void Screen::drop_down(int option) {}
 void Screen::typed_on(sf::Event input) {}

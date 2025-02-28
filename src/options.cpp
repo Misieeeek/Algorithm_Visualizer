@@ -1,19 +1,11 @@
 #include "options.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
-#include <filesystem>
 #include "main_menu.h"
 #include "main_window.h"
 
 Options::Options(Screen** screen_ptr, MainMenu* menu)
     : m_selected_options_index(0) {
-
-  std::filesystem::current_path(
-      std::filesystem::path(__FILE__).parent_path().parent_path());
-
-  if (!m_open_sans.loadFromFile("assets/fonts/OpenSans-Regular.ttf")) {
-    std::cerr << "Failed to load font" << std::endl;
-  }
 
   current_screen = screen_ptr;
   main_menu = menu;

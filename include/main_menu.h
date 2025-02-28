@@ -1,8 +1,8 @@
 #ifndef MAINMENU_H
 #define MAINMENU_H
-#include <SFML/Window/Event.hpp>
 #pragma once
 
+#include <SFML/Window/Event.hpp>
 #include <iostream>
 #include "main_window.h"
 
@@ -21,7 +21,6 @@ class MainMenu : public Screen {
  private:
   int m_selected_item_index;
   sf::Text m_main_menu_options[NUMBER_OF_ITEMS];
-  sf::Font m_open_sans;
   int m_selected;
 };
 
