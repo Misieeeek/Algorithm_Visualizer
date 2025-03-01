@@ -1,6 +1,8 @@
 #include "options.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
+#include <array>
+#include <string>
 #include "main_menu.h"
 #include "main_window.h"
 
@@ -10,7 +12,8 @@ Options::Options(Screen** screen_ptr, MainMenu* menu)
   current_screen = screen_ptr;
   main_menu = menu;
 
-  std::string options[] = {"Speed", "Window", "Back"};
+  std::array<std::string, NUMBER_OF_OPTIONS> options = {"Speed", "Window",
+                                                        "Back"};
 
   for (int i = 0; i < NUMBER_OF_OPTIONS; i++) {
     m_options_options[i].setFont(m_open_sans);

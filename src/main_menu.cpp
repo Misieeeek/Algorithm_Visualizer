@@ -1,9 +1,11 @@
 #include "main_menu.h"
 #include <SFML/Window/Event.hpp>
+#include <array>
 #include <filesystem>
 
 MainMenu::MainMenu() : m_selected_item_index(0) {
-  std::string options[] = {"Visualize", "Options", "Exit"};
+  std::array<std::string, NUMBER_OF_ITEMS> options = {"Visualize", "Options",
+                                                      "Exit"};
 
   for (int i = 0; i < NUMBER_OF_ITEMS; i++) {
     m_main_menu_options[i].setFont(m_open_sans);

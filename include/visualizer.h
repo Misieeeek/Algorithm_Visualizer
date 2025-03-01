@@ -83,11 +83,12 @@ class Visualizer : public Screen {
   // RESPOSIBLE FOR DROP DOWN MENUS OF EACH CATEGORY OF ALGORITHMS
   void drop_down(int option) override;
   // RESPONSIBLE FOR STYLE OF DROP DOWN MENU
-  void general_algo_list(int number_of_categories,
-                         std::vector<std::string> list_of_algo, int end_iter,
-                         int add_val_pos_x_drop_down,
-                         int add_val_pos_x_categories_before,
-                         int adda_val_pos_x_categories_afer);
+  template <std::size_t N>
+  void general_algo_list(std::size_t number_of_categories,
+                         const std::array<std::string, N>& list_of_algo,
+                         const int end_iter, const int add_val_pos_x_drop_down,
+                         const int add_val_pos_x_categories_before,
+                         const int adda_val_pos_x_categories_afer);
   // RESPONSIBLE FOR FINDING THE SELECTED ALGORITHM AND ACTIVATING IT FROM DOWN
   // MENU
   void go_to_algo_screen(int selected);
@@ -105,52 +106,39 @@ class Visualizer : public Screen {
   Screen* main_menu;
   Sorting_Class* sort_class;
   int m_selected_algorithm_index;
-  sf::Text m_list_algorithms[NUMBER_OF_ALGORITHMS];
+  std::array<sf::Text, NUMBER_OF_ALGORITHMS> m_list_algorithms;
   int m_selected_algorithm;
 
   // DROP DOWN MENU ITEMS LIST
   std::vector<sf::Text> m_list_algo;
 
   // DROP DOWN MENU FOR SORTING ALGORITHMS
-  sf::Text m_list_algo_sort[NUMBER_OF_SORT_ALGO];
-  std::vector<std::string> m_algo_sort = {"Insertion Sort", "Selection Sort",
-                                          "Merge Sort",     "Bubble Sort",
-                                          "Heap Sort",      "Quick Sort"};
+  std::array<sf::Text, NUMBER_OF_SORT_ALGO> m_list_algo_sort;
+  std::array<std::string, NUMBER_OF_SORT_ALGO> m_algo_sort;
 
   // DROP DOWN MENU FOR SEARCH ALGORITHMS
-  sf::Text m_list_algo_search[NUMBER_OF_SEARCH_ALGO];
-  std::vector<std::string> m_algo_search = {"Linear Search", "Binary Search"};
+  std::array<sf::Text, NUMBER_OF_SEARCH_ALGO> m_list_algo_search;
+  std::array<std::string, NUMBER_OF_SEARCH_ALGO> m_algo_search;
 
   // DROP DOWN MENU FOR DS ALGORITHMS
-  sf::Text m_list_algo_ds[NUMBER_OF_DS_ALGO];
-  std::vector<std::string> m_algo_ds = {"Stack",
-                                        "Queue",
-                                        "Linked List",
-                                        "Hash Table",
-                                        "Binary Search Tree",
-                                        "Red-Black Tree",
-                                        "AVL Tree",
-                                        "Treaps"};
+  std::array<sf::Text, NUMBER_OF_DS_ALGO> m_list_algo_ds;
+  std::array<std::string, NUMBER_OF_DS_ALGO> m_algo_ds;
 
   // DROP DOWN MENU FOR DYNAMIC PROGRAMMING ALGORITHMS
-  sf::Text m_list_algo_dynamic[NUMBER_OF_DYNAMIC_ALGO];
-  std::vector<std::string> m_algo_dynamic = {"Cut Rod", "Cut Rod (Memoization)",
-                                             "Cut Rod (Tabulation)",
-                                             "Longest Common Subsequence"};
+  std::array<sf::Text, NUMBER_OF_DYNAMIC_ALGO> m_list_algo_dynamic;
+  std::array<std::string, NUMBER_OF_DYNAMIC_ALGO> m_algo_dynamic;
 
   // DROP DOWN MENU FOR GREEDY ALGORITHMS
-  sf::Text m_list_algo_greedy[NUMBER_OF_GREEDY_ALGO];
-  std::vector<std::string> m_algo_greedy = {"Huffman Coding",
-                                            "Activity Selector"};
+  std::array<sf::Text, NUMBER_OF_GREEDY_ALGO> m_list_algo_greedy;
+  std::array<std::string, NUMBER_OF_GREEDY_ALGO> m_algo_greedy;
 
   // DROP DOWN MENU FOR ADVANCED DATA STRUCTURES ALGORITHMS
-  sf::Text m_list_algo_advancedds[NUMBER_OF_ADVANCEDDS_ALGO];
-  std::vector<std::string> m_algo_advancedds = {"B-Tree", "Fibonacci Heap",
-                                                "Van Emde Boas Tree"};
+  std::array<sf::Text, NUMBER_OF_ADVANCEDDS_ALGO> m_list_algo_advancedds;
+  std::array<std::string, NUMBER_OF_ADVANCEDDS_ALGO> m_algo_advancedds;
 
   // DROP DOWN MENU FOR GRAPH ALGORITHMS
-  sf::Text m_list_algo_graph[NUMBER_OF_GRAPH_ALGO];
-  std::vector<std::string> m_algo_graph = {"1", "2", "3"};
+  std::array<sf::Text, NUMBER_OF_GRAPH_ALGO> m_list_algo_graph;
+  std::array<std::string, NUMBER_OF_GRAPH_ALGO> m_algo_graph;
 
   // TEXT STYLES
   int m_category_font_size;
@@ -204,22 +192,24 @@ class Sorting_Class : public Screen {
   std::vector<sf::Text> m_algorithm_variants;
 
   // TEXT STYLE
+  // TODO - C++20 CHANGE TO std::span
   int m_char_size_text_variants;
-  std::vector<std::string> m_headers_text;
-  std::vector<sf::Text> m_headers;
+  std::array<std::string, 3> m_headers_text;
+  std::array<sf::Text, 3> m_headers;
 
   // VISUALIZATION OPTIONS
-  // THIS VECTOR KEEPS STATE OF: NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
-  std::vector<int> m_visualization_options;
-  std::vector<std::string> m_visualization_options_names;
+  // THIS VECTOR KEEPS STATE OF:
+  // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
+  std::array<int, 3> m_visualization_options;
+  std::array<std::string, 3> m_visualization_options_names;
 
   // VISUALIZATION BUTTONS
-  std::vector<std::string> m_visualization_buttons_names;
-  std::vector<sf::Text> m_visualization_buttons_text;
-  std::vector<sf::RectangleShape> m_visualization_buttons_shape;
+  std::array<std::string, 4> m_visualization_buttons_names;
+  std::array<sf::Text, 4> m_visualization_buttons_text;
+  std::array<sf::RectangleShape, 4> m_visualization_buttons_shape;
 
   // INPUT FOR OPTIONS
-  std::vector<sf::Text> m_textbox_input_style;
+  std::array<sf::Text, 3> m_textbox_input_style;
   std::ostringstream m_text_input;
   int m_selected_input_option;
   std::string m_temp_value;

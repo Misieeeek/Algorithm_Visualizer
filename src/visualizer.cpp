@@ -2,8 +2,10 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/System/String.hpp>
 #include <SFML/Window/Event.hpp>
 #include <algorithm>
+#include <array>
 #include <charconv>
 #include <cmath>
 #include <cstddef>
@@ -46,6 +48,27 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
   m_list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
   m_list_algorithms[0].setFillColor(sf::Color::Green);
   m_dropped = false;
+
+  m_algo_sort = {"Insertion Sort", "Selection Sort", "Merge Sort",
+                 "Bubble Sort",    "Heap Sort",      "Quick Sort"};
+  m_algo_search = {"Linear Search", "Binary Search"};
+  m_algo_ds = {"Stack",
+               "Queue",
+               "Linked List",
+               "Hash Table",
+               "Binary Search Tree",
+               "Red-Black Tree",
+               "AVL Tree",
+               "Treaps"};
+
+  m_algo_dynamic = {"Cut Rod", "Cut Rod (Memoization)", "Cut Rod (Tabulation)",
+                    "Longest Common Subsequence"};
+
+  m_algo_greedy = {"Huffman Coding", "Activity Selector"};
+
+  m_algo_advancedds = {"B-Tree", "Fibonacci Heap", "Van Emde Boas Tree"};
+
+  m_algo_graph = {"1", "2", "3"};
 
   // INITIALIZE MAP FOR ALGORITHMS
   initialize_algorithms();
@@ -195,12 +218,16 @@ void Visualizer::drop_down(int option) {
   }
 }
 
-void Visualizer::general_algo_list(int number_of_categories,
-                                   std::vector<std::string> list_of_algo,
-                                   int end_iter, int add_val_pos_x_drop_down,
-                                   int add_val_pos_x_categories_before,
-                                   int add_val_pos_x_categories_after) {
+//std::span if C++20
+template <std::size_t N>
+void Visualizer::general_algo_list(
+    std::size_t number_of_categories,
+    const std::array<std::string, N>& list_of_algo, const int end_iter,
+    const int add_val_pos_x_drop_down,
+    const int add_val_pos_x_categories_before,
+    const int add_val_pos_x_categories_after) {
   m_list_algo.resize(number_of_categories);
+  std::cout << N << std::endl;
   for (int i = 0; i < number_of_categories; i++) {
     m_list_algo[i].setFont(m_open_sans);
     m_list_algo[i].setFillColor(sf::Color::White);
@@ -344,21 +371,15 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
 
   //INITIALIZE VISUALIZATION BUTTONS
   size_t number_of_buttons = 4;
-  m_visualization_buttons_names.resize(number_of_buttons);
   m_visualization_buttons_names = {"Start", "Example", "Worst case",
                                    "Best Case"};
-  m_visualization_buttons_text.resize(number_of_buttons);
-  m_visualization_buttons_shape.resize(number_of_buttons);
   visualization_buttons_style(150);
   // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
   // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
   size_t number_of_options = 3;
-  m_visualization_options_names.resize(number_of_options);
   m_visualization_options_names = {
       "Number of elemenst:", "Minimum value:", "Maximum value:"};
-  m_visualization_options.resize(number_of_options);
   m_visualization_options = {10, 0, 100};
-  m_textbox_input_style.resize(number_of_options);
   textbox(20, 3, 150);
 }
 
@@ -537,8 +558,6 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
   }
   int number_of_headers = 3;
   m_headers_text = {"Variants", "Options", "Visulization"};
-  m_headers_text.resize(number_of_headers);
-  m_headers.resize(number_of_headers);
   temp = 0;
   for (int i = 0; i < m_headers_text.size(); i++) {
     m_headers[i].setFont(m_open_sans);

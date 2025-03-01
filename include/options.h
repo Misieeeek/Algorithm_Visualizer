@@ -1,10 +1,12 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
+#include <SFML/Graphics/Text.hpp>
 #pragma once
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
+#include <array>
 #include "main_menu.h"
 #include "main_window.h"
 
@@ -31,7 +33,7 @@ class Options : public Screen {
   Screen** current_screen;
   MainMenu* main_menu;
   int m_selected_options_index;
-  sf::Text m_options_options[NUMBER_OF_OPTIONS];
+  std::array<sf::Text, NUMBER_OF_OPTIONS> m_options_options;
   int m_selected_option;
 };
 

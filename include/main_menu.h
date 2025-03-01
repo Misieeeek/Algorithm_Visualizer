@@ -3,6 +3,7 @@
 #pragma once
 
 #include <SFML/Window/Event.hpp>
+#include <array>
 #include <iostream>
 #include "main_window.h"
 
@@ -20,7 +21,7 @@ class MainMenu : public Screen {
 
  private:
   int m_selected_item_index;
-  sf::Text m_main_menu_options[NUMBER_OF_ITEMS];
+  std::array<sf::Text, NUMBER_OF_ITEMS> m_main_menu_options;
   int m_selected;
 };
 
