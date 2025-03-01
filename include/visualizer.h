@@ -11,6 +11,7 @@
 #include <functional>
 #include <iostream>
 #include <map>
+#include <span>
 #include <sstream>
 #include <string>
 #include <utility>
@@ -83,9 +84,8 @@ class Visualizer : public Screen {
   // RESPOSIBLE FOR DROP DOWN MENUS OF EACH CATEGORY OF ALGORITHMS
   void drop_down(int option) override;
   // RESPONSIBLE FOR STYLE OF DROP DOWN MENU
-  template <std::size_t N>
-  void general_algo_list(std::size_t number_of_categories,
-                         const std::array<std::string, N>& list_of_algo,
+  void general_algo_list(const std::size_t number_of_categories,
+                         const std::span<std::string> list_of_algo,
                          const int end_iter, const int add_val_pos_x_drop_down,
                          const int add_val_pos_x_categories_before,
                          const int adda_val_pos_x_categories_afer);
@@ -170,7 +170,7 @@ class Sorting_Class : public Screen {
 
   void set_style(std::vector<std::string> variants, int y_pos);
   void insertion_sort();
-  void textbox(int char_size_textbox, int number_of_inputs, int pos_y);
+  void textbox(int char_size_textbox, std::size_t number_of_inputs, int pos_y);
 
   // RESPONSIBLE FOR CHANDELING INPUTBOX
   void input_box_selected(int item);

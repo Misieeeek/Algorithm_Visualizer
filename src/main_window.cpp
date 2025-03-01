@@ -1,4 +1,5 @@
 #include "main_window.h"
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
@@ -74,6 +75,12 @@ void MainWindow::is_running(sf::RenderWindow& window) {
   }
 }
 
+void Screen::change_option(int selected) {}
+void Screen::drop_down(int option) {}
+void Screen::typed_on(sf::Event input) {}
+void Screen::move_left() {}
+void Screen::move_right() {}
+
 void Screen::set_open_sans() {
   std::filesystem::current_path(
       std::filesystem::path(__FILE__).parent_path().parent_path());
@@ -83,8 +90,29 @@ void Screen::set_open_sans() {
   }
 }
 
-void Screen::change_option(int selected) {}
-void Screen::drop_down(int option) {}
-void Screen::typed_on(sf::Event input) {}
-void Screen::move_left() {}
-void Screen::move_right() {}
+//IF STATEMENT CLOUD BE OUTSIDE OF LOOP, BUT IT THEN LACKS READABILITY
+void Screen::set_sf_text_style(std::span<sf::Text> arr_list,
+                               std::span<std::string> arr_text, int char_size,
+                               int x_offset, int y_offset, bool x_multiplier,
+                               bool y_multiplier, int x_text_multiplier,
+                               int y_text_multiplier) {
+
+  int count = 0;
+  for (auto& x : arr_list) {
+    x.setFont(m_open_sans);
+    x.setFillColor(sf::Color::White);
+    x.setCharacterSize(char_size);
+    x.setStyle(sf::Text::Bold);
+    if (x_multiplier && y_multiplier)
+      x.setPosition(x_text_multiplier * count + x_offset,
+                    y_text_multiplier * count + y_offset);
+    else if (x_multiplier && !y_multiplier)
+      x.setPosition(x_text_multiplier * count + x_offset, y_offset);
+    else if (!x_multiplier && y_multiplier)
+      x.setPosition(x_offset, y_text_multiplier * count + y_offset);
+    else
+      x.setPosition(x_offset, y_offset);
+    x.setString(arr_text[count]);
+    count++;
+  }
+}

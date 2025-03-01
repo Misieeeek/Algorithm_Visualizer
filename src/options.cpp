@@ -14,15 +14,8 @@ Options::Options(Screen** screen_ptr, MainMenu* menu)
 
   std::array<std::string, NUMBER_OF_OPTIONS> options = {"Speed", "Window",
                                                         "Back"};
-
-  for (int i = 0; i < NUMBER_OF_OPTIONS; i++) {
-    m_options_options[i].setFont(m_open_sans);
-    m_options_options[i].setFillColor(sf::Color::White);
-    m_options_options[i].setCharacterSize(70);
-    m_options_options[i].setStyle(sf::Text::Bold);
-    m_options_options[i].setPosition(50, 100 * i + 150);
-    m_options_options[i].setString(options[i]);
-  }
+  Screen::set_sf_text_style(m_options_options, options, 70, 50, 150, false,
+                            true, 0, 100);
   m_options_options[NUMBER_OF_OPTIONS - 1].setFillColor(sf::Color::Red);
   m_options_options[0].setFillColor(sf::Color::Green);
   m_selected_option = 0;

@@ -3,8 +3,11 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
+#include <array>
 #include <filesystem>
+#include <span>
 
 class Screen {
  public:
@@ -22,6 +25,11 @@ class Screen {
   virtual void move_right();
 
   virtual void set_open_sans();
+  virtual void set_sf_text_style(std::span<sf::Text> arr_list,
+                                 std::span<std::string> arr_text, int char_size,
+                                 int x_offset, int y_offset, bool x_multiplier,
+                                 bool y_multiplier, int x_text_multiplier = 0,
+                                 int y_text_multiplier = 0);
 
  protected:
   bool m_opend;

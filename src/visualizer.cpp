@@ -32,19 +32,14 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
   current_screen = screen_ptr;
   main_menu = menu;
   sort_class = new Sorting_Class(screen_ptr, this);
-  std::string algo[] = {"Sorting Algorithms", "Searching Algorithms",
-                        "Data Structures",    "Dynamic Programming",
-                        "Greedy Algorithms",  "Advanced Data Structures",
-                        "Graph Algorithms",   "Back"};
+  std::array<std::string, NUMBER_OF_ALGORITHMS> algo = {
+      "Sorting Algorithms", "Searching Algorithms",
+      "Data Structures",    "Dynamic Programming",
+      "Greedy Algorithms",  "Advanced Data Structures",
+      "Graph Algorithms",   "Back"};
 
-  for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
-    m_list_algorithms[i].setFont(m_open_sans);
-    m_list_algorithms[i].setFillColor(sf::Color::White);
-    m_list_algorithms[i].setCharacterSize(m_category_font_size);
-    m_list_algorithms[i].setStyle(sf::Text::Bold);
-    m_list_algorithms[i].setPosition(50, 50 * i + 150);
-    m_list_algorithms[i].setString(algo[i]);
-  }
+  Screen::set_sf_text_style(m_list_algorithms, algo, m_category_font_size, 50,
+                            150, false, true, 0, 50);
   m_list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
   m_list_algorithms[0].setFillColor(sf::Color::Green);
   m_dropped = false;
@@ -218,24 +213,15 @@ void Visualizer::drop_down(int option) {
   }
 }
 
-//std::span if C++20
-template <std::size_t N>
-void Visualizer::general_algo_list(
-    std::size_t number_of_categories,
-    const std::array<std::string, N>& list_of_algo, const int end_iter,
-    const int add_val_pos_x_drop_down,
-    const int add_val_pos_x_categories_before,
-    const int add_val_pos_x_categories_after) {
+void Visualizer::general_algo_list(std::size_t number_of_categories,
+                                   std::span<std::string> list_of_algo,
+                                   int end_iter, int add_val_pos_x_drop_down,
+                                   int add_val_pos_x_categories_before,
+                                   int add_val_pos_x_categories_after) {
   m_list_algo.resize(number_of_categories);
-  std::cout << N << std::endl;
-  for (int i = 0; i < number_of_categories; i++) {
-    m_list_algo[i].setFont(m_open_sans);
-    m_list_algo[i].setFillColor(sf::Color::White);
-    m_list_algo[i].setCharacterSize(m_drop_down_item_font_size);
-    m_list_algo[i].setStyle(sf::Text::Bold);
-    m_list_algo[i].setPosition(100, 35 * i + add_val_pos_x_drop_down);
-    m_list_algo[i].setString(list_of_algo[i]);
-  }
+  Screen::set_sf_text_style(m_list_algo, list_of_algo,
+                            m_drop_down_item_font_size, 100,
+                            add_val_pos_x_drop_down, false, true, 0, 35);
 
   for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
     if (!(i >= end_iter))
@@ -350,7 +336,7 @@ void Visualizer::initialize_algorithms() {
   };
 }
 
-void Visualizer::go_to_algo_screen(int selected) {
+void Visualizer::go_to_algo_screen(const int selected) {
   auto it = algorithm_map.find(std::make_pair(m_ac, selected));
   if (it != algorithm_map.end()) {
     it->second();  // ALGORITHM STYLES
@@ -370,13 +356,13 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
       m_temp_value("") {
 
   //INITIALIZE VISUALIZATION BUTTONS
-  size_t number_of_buttons = 4;
+  std::size_t number_of_buttons = 4;
   m_visualization_buttons_names = {"Start", "Example", "Worst case",
                                    "Best Case"};
   visualization_buttons_style(150);
   // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
   // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
-  size_t number_of_options = 3;
+  std::size_t number_of_options = 3;
   m_visualization_options_names = {
       "Number of elemenst:", "Minimum value:", "Maximum value:"};
   m_visualization_options = {10, 0, 100};
@@ -526,18 +512,9 @@ void Sorting_Class::drop_down(int option) {}
 
 void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
   m_algorithm_variants.resize(m_sizes[3]);
-  std::cout << m_sizes[0] << std::endl;
-  std::cout << m_sizes[1] << std::endl;
-  std::cout << m_sizes[2] << std::endl;
-  std::cout << m_sizes[3] << std::endl;
-  for (int i = 0; i < m_sizes[3]; i++) {
-    m_algorithm_variants[i].setFont(m_open_sans);
-    m_algorithm_variants[i].setFillColor(sf::Color::White);
-    m_algorithm_variants[i].setCharacterSize(m_char_size_text_variants);
-    m_algorithm_variants[i].setStyle(sf::Text::Bold);
-    m_algorithm_variants[i].setPosition(50, 50 * i + pos_y);
-    m_algorithm_variants[i].setString(variants[i]);
-  }
+  Screen::set_sf_text_style(m_algorithm_variants, variants,
+                            m_char_size_text_variants, 50, pos_y, false, true,
+                            0, 50);
   m_algorithm_variants[m_sizes[1] - 1].setFillColor(sf::Color::Red);
   m_algorithm_variants[0].setFillColor(sf::Color::Green);
   int count = 0;
@@ -556,7 +533,6 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
     count++;
     temp = 100;
   }
-  int number_of_headers = 3;
   m_headers_text = {"Variants", "Options", "Visulization"};
   temp = 0;
   for (int i = 0; i < m_headers_text.size(); i++) {
@@ -590,16 +566,14 @@ void Sorting_Class::insertion_sort() {
   set_style(insertion_sort_variants, 150);
 }
 
-void Sorting_Class::textbox(int char_size_textbox, int number_of_inputs,
+void Sorting_Class::textbox(int char_size_textbox, std::size_t number_of_inputs,
                             int pos_y) {
-  for (int i = 0; i < number_of_inputs; i++) {
-    m_textbox_input_style[i].setFont(m_open_sans);
-    m_textbox_input_style[i].setFillColor(sf::Color::White);
-    m_textbox_input_style[i].setCharacterSize(m_char_size_text_variants);
-    m_textbox_input_style[i].setPosition(690, 50 * i + pos_y);
-    m_textbox_input_style[i].setString(
-        std::to_string(m_visualization_options[i]));
-  }
+  std::vector<std::string> temp(number_of_inputs);
+  for (int i = 0; i < number_of_inputs; i++)
+    temp[i] = std::to_string(m_visualization_options[i]);
+  Screen::set_sf_text_style(m_textbox_input_style, temp,
+                            m_char_size_text_variants, 690, pos_y, false, true,
+                            0, 50);
 }
 
 void Sorting_Class::typed_on(sf::Event input) {
@@ -660,7 +634,9 @@ void Sorting_Class::visualization_buttons_style(int pos_y) {
   }
 }
 
-void Sorting_Class::set_m_sizes(size_t options, size_t variants, size_t buttons,
-                                size_t sum) {
+void Sorting_Class::set_m_sizes(const std::size_t options,
+                                const std::size_t variants,
+                                const std::size_t buttons,
+                                const std::size_t sum) {
   m_sizes = {options, variants, buttons, sum};
 }
