@@ -18,7 +18,7 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-std::map<std::pair<Algocat, int>, std::function<void()>,
+std::map<std::pair<algo_cat, int>, std::function<void()>,
          algocat_pair_comparator>
     algorithm_map;
 
@@ -32,7 +32,7 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
   current_screen = screen_ptr;
   main_menu = menu;
   sort_class = new Sorting_Class(screen_ptr, this);
-  std::array<std::string, NUMBER_OF_ALGORITHMS> algo = {
+  std::array<std::string, c_num_algos> algo = {
       "Sorting Algorithms", "Searching Algorithms",
       "Data Structures",    "Dynamic Programming",
       "Greedy Algorithms",  "Advanced Data Structures",
@@ -40,7 +40,7 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
 
   Screen::set_sf_text_style(m_list_algorithms, algo, m_category_font_size, 50,
                             150, false, true, 0, 50);
-  m_list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
+  m_list_algorithms[c_num_algos - 1].setFillColor(sf::Color::Red);
   m_list_algorithms[0].setFillColor(sf::Color::Green);
   m_dropped = false;
 
@@ -88,7 +88,7 @@ void Visualizer::move_up() {
     }
   } else {
     if (m_selected_algorithm_index - 1 >= 0) {
-      if (m_selected_algorithm_index == NUMBER_OF_ALGORITHMS - 1)
+      if (m_selected_algorithm_index == c_num_algos - 1)
         m_list_algorithms[m_selected_algorithm_index].setFillColor(
             sf::Color::Red);
       else
@@ -118,7 +118,7 @@ void Visualizer::move_down() {
       }
     }
   } else {
-    if (m_selected_algorithm_index + 1 < NUMBER_OF_ALGORITHMS) {
+    if (m_selected_algorithm_index + 1 < c_num_algos) {
       m_list_algorithms[m_selected_algorithm_index].setFillColor(
           sf::Color::White);
       m_selected_algorithm_index++;
@@ -137,7 +137,7 @@ void Visualizer::draw(sf::RenderWindow& window) {
     for (const auto& x : m_list_algorithms)
       window.draw(x);
   } else {
-    for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
+    for (int i = 0; i < c_num_algos; i++) {
       m_list_algorithms[i].setPosition(50, 50 * i + 150);
       window.draw(m_list_algorithms[i]);
     }
@@ -151,7 +151,7 @@ void Visualizer::change_option(int selected) {
       m_selected_algorithm = 0;
       m_selected_algorithm_index = 0;
       m_list_algorithms[0].setFillColor(sf::Color::Green);
-      m_list_algorithms[NUMBER_OF_ALGORITHMS - 1].setFillColor(sf::Color::Red);
+      m_list_algorithms[c_num_algos - 1].setFillColor(sf::Color::Red);
       m_dropped = true;
       *current_screen = main_menu;
     } else {          // Every other option than EXIT
@@ -178,37 +178,35 @@ void Visualizer::change_option(int selected) {
 void Visualizer::drop_down(int option) {
   switch (option) {
     case 0:
-      m_ac = Algocat::SORTING;
-      general_algo_list(NUMBER_OF_SORT_ALGO, m_algo_sort, 1, 100, 50, 260);
+      m_ac = algo_cat::sorting;
+      general_algo_list(c_num_sort, m_algo_sort, 1, 100, 50, 260);
       break;
     case 1:
-      m_ac = Algocat::SEARCHING;
-      general_algo_list(NUMBER_OF_SEARCH_ALGO, m_algo_search, 2, 250, 150, 220);
+      m_ac = algo_cat::searching;
+      general_algo_list(c_num_search, m_algo_search, 2, 250, 150, 220);
       break;
     case 2:
-      m_ac = Algocat::DS;
-      general_algo_list(NUMBER_OF_DS_ALGO, m_algo_ds, 3, 200, 50, 320);
+      m_ac = algo_cat::ds;
+      general_algo_list(c_num_ds, m_algo_ds, 3, 200, 50, 320);
       break;
     case 3:
-      m_ac = Algocat::DYNAMIC;
-      general_algo_list(NUMBER_OF_DYNAMIC_ALGO, m_algo_dynamic, 4, 300, 100,
-                        230);
+      m_ac = algo_cat::dynamic;
+      general_algo_list(c_num_dynamic, m_algo_dynamic, 4, 300, 100, 230);
       break;
     case 4:
-      m_ac = Algocat::GREEDY;
-      general_algo_list(NUMBER_OF_GREEDY_ALGO, m_algo_greedy, 5, 390, 140, 210);
+      m_ac = algo_cat::greedy;
+      general_algo_list(c_num_greedy, m_algo_greedy, 5, 390, 140, 210);
       break;
     case 5:
-      m_ac = Algocat::ADVANCEDDS;
-      general_algo_list(NUMBER_OF_ADVANCEDDS_ALGO, m_algo_advancedds, 6, 400,
-                        100, 210);
+      m_ac = algo_cat::advancedds;
+      general_algo_list(c_num_advancedds, m_algo_advancedds, 6, 400, 100, 210);
       break;
     case 6:
-      m_ac = Algocat::GRAPH;
-      general_algo_list(NUMBER_OF_GRAPH_ALGO, m_algo_graph, 7, 445, 100, 185);
+      m_ac = algo_cat::graph;
+      general_algo_list(c_num_graph, m_algo_graph, 7, 445, 100, 185);
       break;
     case 7:
-      m_ac = Algocat::NONE;
+      m_ac = algo_cat::none;
       break;
   }
 }
@@ -223,7 +221,7 @@ void Visualizer::general_algo_list(std::size_t number_of_categories,
                             m_drop_down_item_font_size, 100,
                             add_val_pos_x_drop_down, false, true, 0, 35);
 
-  for (int i = 0; i < NUMBER_OF_ALGORITHMS; i++) {
+  for (int i = 0; i < static_cast<int>(c_num_algos); i++) {
     if (!(i >= end_iter))
       m_list_algorithms[i].setPosition(
           50, 50 * i + add_val_pos_x_categories_before);
@@ -233,7 +231,7 @@ void Visualizer::general_algo_list(std::size_t number_of_categories,
   }
 }
 
-int Visualizer::pressed() {
+int Visualizer::pressed() const {
   if (m_category_option)
     return m_selected_algorithm;
   else
@@ -243,95 +241,95 @@ int Visualizer::pressed() {
 //-----------------------TODO: CODE METHOD IS TOO LONG, NEED TO BE SHORTER----------------------
 void Visualizer::initialize_algorithms() {
   //------------------------------------------- SORTING
-  algorithm_map[{Algocat::SORTING, 0}] = [this]() {
+  algorithm_map[{algo_cat::sorting, 0}] = [this]() {
     *current_screen = sort_class;
     sort_class->insertion_sort();
   };
-  algorithm_map[{Algocat::SORTING, 1}] = []() {
+  algorithm_map[{algo_cat::sorting, 1}] = []() {
     std::cout << "Selection Sort\n";
   };
-  algorithm_map[{Algocat::SORTING, 2}] = []() {
+  algorithm_map[{algo_cat::sorting, 2}] = []() {
     std::cout << "Merge Sort\n";
   };
-  algorithm_map[{Algocat::SORTING, 3}] = []() {
+  algorithm_map[{algo_cat::sorting, 3}] = []() {
     std::cout << "Bubble Sort\n";
   };
-  algorithm_map[{Algocat::SORTING, 4}] = []() {
+  algorithm_map[{algo_cat::sorting, 4}] = []() {
     std::cout << "Heap Sort\n";
   };
-  algorithm_map[{Algocat::SORTING, 5}] = []() {
+  algorithm_map[{algo_cat::sorting, 5}] = []() {
     std::cout << "Quick Sort\n";
   };
-  algorithm_map[{Algocat::SEARCHING, 0}] = []() {
+  algorithm_map[{algo_cat::searching, 0}] = []() {
     //------------------------------------------- SEARCHING
     std::cout << "Linear Search\n";
   };
-  algorithm_map[{Algocat::SEARCHING, 1}] = []() {
+  algorithm_map[{algo_cat::searching, 1}] = []() {
     std::cout << "Binary Search\n";
   };
   //------------------------------------------- DATA STRUCTURES
-  algorithm_map[{Algocat::DS, 0}] = []() {
+  algorithm_map[{algo_cat::ds, 0}] = []() {
     std::cout << "Stack\n";
   };
-  algorithm_map[{Algocat::DS, 1}] = []() {
+  algorithm_map[{algo_cat::ds, 1}] = []() {
     std::cout << "Queue\n";
   };
-  algorithm_map[{Algocat::DS, 2}] = []() {
+  algorithm_map[{algo_cat::ds, 2}] = []() {
     std::cout << "Linked List\n";
   };
-  algorithm_map[{Algocat::DS, 3}] = []() {
+  algorithm_map[{algo_cat::ds, 3}] = []() {
     std::cout << "Hash Table\n";
   };
-  algorithm_map[{Algocat::DS, 4}] = []() {
+  algorithm_map[{algo_cat::ds, 4}] = []() {
     std::cout << "Binary Search Tree\n";
   };
-  algorithm_map[{Algocat::DS, 5}] = []() {
+  algorithm_map[{algo_cat::ds, 5}] = []() {
     std::cout << "Red-Black Tree\n";
   };
-  algorithm_map[{Algocat::DS, 6}] = []() {
+  algorithm_map[{algo_cat::ds, 6}] = []() {
     std::cout << "AVL Tree\n";
   };
-  algorithm_map[{Algocat::DS, 7}] = []() {
+  algorithm_map[{algo_cat::ds, 7}] = []() {
     std::cout << "Treaps\n";
   };
   //------------------------------------------- DYNAMIC PROGRAMMING
-  algorithm_map[{Algocat::DYNAMIC, 0}] = []() {
+  algorithm_map[{algo_cat::dynamic, 0}] = []() {
     std::cout << "Cut Rod\n";
   };
-  algorithm_map[{Algocat::DYNAMIC, 1}] = []() {
+  algorithm_map[{algo_cat::dynamic, 1}] = []() {
     std::cout << "Cut Rod (Memo)\n";
   };
-  algorithm_map[{Algocat::DYNAMIC, 2}] = []() {
+  algorithm_map[{algo_cat::dynamic, 2}] = []() {
     std::cout << "Cut Rod (Tab)\n";
   };
-  algorithm_map[{Algocat::DYNAMIC, 3}] = []() {
+  algorithm_map[{algo_cat::dynamic, 3}] = []() {
     std::cout << "Longest Common Subsequence\n";
   };
   //------------------------------------------- GREEDY
-  algorithm_map[{Algocat::GREEDY, 0}] = []() {
+  algorithm_map[{algo_cat::greedy, 0}] = []() {
     std::cout << "Huffman Codign\n";
   };
-  algorithm_map[{Algocat::GREEDY, 1}] = []() {
+  algorithm_map[{algo_cat::greedy, 1}] = []() {
     std::cout << "Activity Selector\n";
   };
   //------------------------------------------- ADVANCED DATA STRUCTURES
-  algorithm_map[{Algocat::ADVANCEDDS, 0}] = []() {
+  algorithm_map[{algo_cat::advancedds, 0}] = []() {
     std::cout << "B-Tree\n";
   };
-  algorithm_map[{Algocat::ADVANCEDDS, 1}] = []() {
+  algorithm_map[{algo_cat::advancedds, 1}] = []() {
     std::cout << "Fibonacci Tree\n";
   };
-  algorithm_map[{Algocat::ADVANCEDDS, 2}] = []() {
+  algorithm_map[{algo_cat::advancedds, 2}] = []() {
     std::cout << "Van Emde Boas Tree\n";
   };
   //------------------------------------------- GRAPH
-  algorithm_map[{Algocat::GRAPH, 0}] = []() {
+  algorithm_map[{algo_cat::graph, 0}] = []() {
     std::cout << "1\n";
   };
-  algorithm_map[{Algocat::GRAPH, 1}] = []() {
+  algorithm_map[{algo_cat::graph, 1}] = []() {
     std::cout << "2\n";
   };
-  algorithm_map[{Algocat::GRAPH, 2}] = []() {
+  algorithm_map[{algo_cat::graph, 2}] = []() {
     std::cout << "3\n";
   };
 }
@@ -385,7 +383,7 @@ void Sorting_Class::draw(sf::RenderWindow& window) {
 void Sorting_Class::move_up() {
   if (!m_possible_input) {
     if (m_selected_sorting_algo_index - 1 >= 0) {
-      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
+      if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -401,8 +399,9 @@ void Sorting_Class::move_up() {
 
 void Sorting_Class::move_down() {
   if (!m_possible_input) {
-    if (m_selected_sorting_algo_index + 1 < m_sizes[3]) {
-      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
+    if (m_selected_sorting_algo_index + 1 <
+        c_options + m_variants_size + c_buttons) {
+      if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
@@ -418,21 +417,21 @@ void Sorting_Class::move_down() {
 
 void Sorting_Class::move_left() {
   if (!m_possible_input) {
-    if (!(m_selected_sorting_algo_index < m_sizes[1])) {
-      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
+    if (!(m_selected_sorting_algo_index < m_variants_size)) {
+      if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::White);
-      if (m_selected_sorting_algo_index > m_sizes[1] - 1 &&
-          m_selected_sorting_algo_index <= m_sizes[3] - m_sizes[2] - 1) {
+      if (m_selected_sorting_algo_index > m_variants_size - 1 &&
+          m_selected_sorting_algo_index <= c_options + m_variants_size - 1) {
         m_selected_sorting_algo_index = 0;
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
       } else {
-        m_selected_sorting_algo_index = m_sizes[1];
+        m_selected_sorting_algo_index = m_variants_size;
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
@@ -443,21 +442,21 @@ void Sorting_Class::move_left() {
 
 void Sorting_Class::move_right() {
   if (!m_possible_input) {
-    if (!(m_selected_sorting_algo_index >= m_sizes[3] - m_sizes[2])) {
-      if (m_selected_sorting_algo_index == m_sizes[1] - 1)
+    if (!(m_selected_sorting_algo_index >= c_options + m_variants_size)) {
+      if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
       else
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::White);
-      if (m_selected_sorting_algo_index < m_sizes[3] - m_sizes[2] &&
-          !(m_selected_sorting_algo_index >= m_sizes[1])) {
-        m_selected_sorting_algo_index = m_sizes[1];
+      if (m_selected_sorting_algo_index < c_options + m_variants_size &&
+          !(m_selected_sorting_algo_index >= m_variants_size)) {
+        m_selected_sorting_algo_index = m_variants_size;
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
-      } else if (m_selected_sorting_algo_index < m_sizes[3] - m_sizes[2]) {
-        m_selected_sorting_algo_index = m_sizes[3] - m_sizes[2];
+      } else if (m_selected_sorting_algo_index < c_options + m_variants_size) {
+        m_selected_sorting_algo_index = c_options + m_variants_size;
         m_selected_sort_algo = m_selected_sorting_algo_index;
         m_algorithm_variants[m_selected_sort_algo].setFillColor(
             sf::Color::Green);
@@ -466,7 +465,7 @@ void Sorting_Class::move_right() {
   }
 }
 
-int Sorting_Class::pressed() {
+int Sorting_Class::pressed() const {
   return m_selected_sort_algo;
 }
 
@@ -511,21 +510,21 @@ void Sorting_Class::change_option(int selected) {
 void Sorting_Class::drop_down(int option) {}
 
 void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
-  m_algorithm_variants.resize(m_sizes[3]);
+  m_algorithm_variants.resize(variants.size());
   Screen::set_sf_text_style(m_algorithm_variants, variants,
                             m_char_size_text_variants, 50, pos_y, false, true,
                             0, 50);
-  m_algorithm_variants[m_sizes[1] - 1].setFillColor(sf::Color::Red);
+  m_algorithm_variants[m_variants_size - 1].setFillColor(sf::Color::Red);
   m_algorithm_variants[0].setFillColor(sf::Color::Green);
   int count = 0;
-  for (int i = m_sizes[3] - m_sizes[0] - m_sizes[2];
-       i < m_sizes[3] - m_sizes[2]; i++) {
+  for (int i = m_variants_size; i < c_options + m_variants_size; i++) {
     m_algorithm_variants[i].setPosition(460, 50 * count + pos_y);
     count++;
   }
   count = 0;
   int temp = 0;
-  for (int i = m_sizes[3] - m_sizes[0] - 1; i < m_sizes[3]; i++) {
+  for (int i = c_buttons + m_variants_size - 1;
+       i < c_buttons + c_options + m_variants_size; i++) {
     m_algorithm_variants[i].setCharacterSize(35);
     sf::FloatRect text_bounds = m_algorithm_variants[i].getLocalBounds();
     m_algorithm_variants[i].setPosition(890 + (100 - text_bounds.width / 2),
@@ -551,18 +550,14 @@ void Sorting_Class::insertion_sort() {
       "Insertion Sort", "Recursive Insertion Sort",
       "Shell Sort",     "Binary Insertion Sort",
       "Library Sort",   "Back"};
+
+  m_variants_size = insertion_sort_variants.size();
   insertion_sort_variants.insert(insertion_sort_variants.end(),
                                  m_visualization_options_names.begin(),
                                  m_visualization_options_names.end());
   insertion_sort_variants.insert(insertion_sort_variants.end(),
                                  m_visualization_buttons_names.begin(),
                                  m_visualization_buttons_names.end());
-
-  set_m_sizes(m_visualization_options.size(),
-              insertion_sort_variants.size() - m_visualization_options.size() -
-                  m_visualization_buttons_names.size(),
-              m_visualization_buttons_names.size(),
-              insertion_sort_variants.size());
   set_style(insertion_sort_variants, 150);
 }
 
@@ -579,9 +574,9 @@ void Sorting_Class::textbox(int char_size_textbox, std::size_t number_of_inputs,
 void Sorting_Class::typed_on(sf::Event input) {
   if (m_possible_input) {
     int char_typed = input.text.unicode;
-    if ((char_typed >= 48 && char_typed <= 57) || char_typed == DELETE_KEY ||
-        char_typed == ENTER_KEY || char_typed == MINUS_KEY) {
-      if (m_selected_input_option == 0 && char_typed == MINUS_KEY)
+    if ((char_typed >= 48 && char_typed <= 57) || char_typed == c_delete_key ||
+        char_typed == c_enter_key || char_typed == c_minus_key) {
+      if (m_selected_input_option == 0 && char_typed == c_minus_key)
         std::cerr << "Number of elements, can't have negative value"
                   << std::endl;
       else
@@ -632,11 +627,4 @@ void Sorting_Class::visualization_buttons_style(int pos_y) {
         temp + 60 * i + pos_y);
     temp = 100;
   }
-}
-
-void Sorting_Class::set_m_sizes(const std::size_t options,
-                                const std::size_t variants,
-                                const std::size_t buttons,
-                                const std::size_t sum) {
-  m_sizes = {options, variants, buttons, sum};
 }

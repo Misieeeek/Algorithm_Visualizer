@@ -17,7 +17,7 @@ class MainMenu : public Screen {
   void draw(sf::RenderWindow& window) override;
   void move_up() override;
   void move_down() override;
-  int pressed() override { return m_selected; }
+  int pressed() const override { return m_selected; }
 
  private:
   int m_selected_item_index;

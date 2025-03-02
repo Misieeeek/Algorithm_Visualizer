@@ -16,7 +16,7 @@ class Screen {
   virtual void draw(sf::RenderWindow& window) = 0;
   virtual void move_up() = 0;
   virtual void move_down() = 0;
-  virtual int pressed() = 0;
+  virtual int pressed() const = 0;
 
   virtual void change_option(int selected);
   virtual void drop_down(int option);

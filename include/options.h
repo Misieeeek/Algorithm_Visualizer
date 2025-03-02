@@ -20,7 +20,7 @@ class Options : public Screen {
   void draw(sf::RenderWindow& window) override;
   void move_up() override;
   void move_down() override;
-  int pressed() override { return m_selected_option; }
+  int pressed() const override { return m_selected_option; }
   void change_option(int selected) override;
 
   // CURRENTLY NOT USED, BUT CERTAINLY WILL BE USED IN THE FUTURE

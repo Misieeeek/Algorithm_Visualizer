@@ -19,40 +19,22 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-// NUMBER OF ALGORITHMS BY CATEGORY
-#define NUMBER_OF_ALGORITHMS 8
-#define NUMBER_OF_SORT_ALGO 6
-#define NUMBER_OF_SEARCH_ALGO 2
-#define NUMBER_OF_DS_ALGO 8
-#define NUMBER_OF_DYNAMIC_ALGO 4
-#define NUMBER_OF_GREEDY_ALGO 2
-#define NUMBER_OF_ADVANCEDDS_ALGO 3
-#define NUMBER_OF_GRAPH_ALGO 3
-
-// INPUT KEYS TO SKIP
-#define DELETE_KEY 8
-#define ENTER_KEY 13
-#define MINUS_KEY 45
-
-// NUMBER OF OPTIONS FOR SORTING ALGORITHMS
-//#define NUMBER_OF_SORT_OPTIONS 3
-
 // STATE OF PRESSED CATEGORY
-enum class Algocat {
-  SORTING,
-  SEARCHING,
-  DS,
-  DYNAMIC,
-  GREEDY,
-  ADVANCEDDS,
-  GRAPH,
-  NONE
+enum class algo_cat {
+  sorting,
+  searching,
+  ds,
+  dynamic,
+  greedy,
+  advancedds,
+  graph,
+  none
 };
 
 // COMPARATOR FOR STD::PAIR<ALGOCAT, INT> TO BE USED IN THE MAP
 struct algocat_pair_comparator {
-  bool operator()(const std::pair<Algocat, int>& lhs,
-                  const std::pair<Algocat, int>& rhs) const {
+  bool operator()(const std::pair<algo_cat, int>& lhs,
+                  const std::pair<algo_cat, int>& rhs) const {
     if (lhs.first != rhs.first)
       return lhs.first < rhs.first;  // Compare categories first
     return lhs.second < rhs.second;  // Then compare the index
@@ -60,7 +42,7 @@ struct algocat_pair_comparator {
 };
 
 // GLOBAL DECLARATION OF ALGORITHM MAP
-extern std::map<std::pair<Algocat, int>, std::function<void()>,
+extern std::map<std::pair<algo_cat, int>, std::function<void()>,
                 algocat_pair_comparator>
     algorithm_map;
 
@@ -78,17 +60,17 @@ class Visualizer : public Screen {
   void move_up() override;
   void move_down() override;
   // RETURN A NUMBER OF WHICH OPTION WAS PRESSED
-  int pressed() override;
+  int pressed() const override;
   // RESPONSIBLE FOR CHANGING THE OPTION (WHEN SELECTED, DO SOMETHING)
   void change_option(int selected) override;
   // RESPOSIBLE FOR DROP DOWN MENUS OF EACH CATEGORY OF ALGORITHMS
   void drop_down(int option) override;
   // RESPONSIBLE FOR STYLE OF DROP DOWN MENU
-  void general_algo_list(const std::size_t number_of_categories,
-                         const std::span<std::string> list_of_algo,
-                         const int end_iter, const int add_val_pos_x_drop_down,
-                         const int add_val_pos_x_categories_before,
-                         const int adda_val_pos_x_categories_afer);
+  void general_algo_list(std::size_t number_of_categories,
+                         std::span<std::string> list_of_algo, int end_iter,
+                         int add_val_pos_x_drop_down,
+                         int add_val_pos_x_categories_before,
+                         int adda_val_pos_x_categories_afer);
   // RESPONSIBLE FOR FINDING THE SELECTED ALGORITHM AND ACTIVATING IT FROM DOWN
   // MENU
   void go_to_algo_screen(int selected);
@@ -99,50 +81,60 @@ class Visualizer : public Screen {
 
  private:
   // KEEPS THE STATE OF ALGOCAT CURRENTLY SELECTED
-  Algocat m_ac;
+  algo_cat m_ac;
 
   // MAIN MENU FOR EVERY CATEGORY OF ALGORITHMS
   Screen** current_screen;
   Screen* main_menu;
   Sorting_Class* sort_class;
   int m_selected_algorithm_index;
-  std::array<sf::Text, NUMBER_OF_ALGORITHMS> m_list_algorithms;
+  static constexpr std::size_t c_num_algos = 8;
+  std::array<sf::Text, c_num_algos> m_list_algorithms;
   int m_selected_algorithm;
 
   // DROP DOWN MENU ITEMS LIST
   std::vector<sf::Text> m_list_algo;
 
+  // CONSTANTS FOR NUMBER OF ALGORITHMS IN DIFFERENT CATEGORIES
+  static constexpr std::size_t c_num_sort = 6;
+  static constexpr std::size_t c_num_search = 2;
+  static constexpr std::size_t c_num_ds = 8;
+  static constexpr std::size_t c_num_dynamic = 4;
+  static constexpr std::size_t c_num_greedy = 2;
+  static constexpr std::size_t c_num_advancedds = 3;
+  static constexpr std::size_t c_num_graph = 3;
+
   // DROP DOWN MENU FOR SORTING ALGORITHMS
-  std::array<sf::Text, NUMBER_OF_SORT_ALGO> m_list_algo_sort;
-  std::array<std::string, NUMBER_OF_SORT_ALGO> m_algo_sort;
+  std::array<sf::Text, c_num_sort> m_list_algo_sort;
+  std::array<std::string, c_num_sort> m_algo_sort;
 
   // DROP DOWN MENU FOR SEARCH ALGORITHMS
-  std::array<sf::Text, NUMBER_OF_SEARCH_ALGO> m_list_algo_search;
-  std::array<std::string, NUMBER_OF_SEARCH_ALGO> m_algo_search;
+  std::array<sf::Text, c_num_search> m_list_algo_search;
+  std::array<std::string, c_num_search> m_algo_search;
 
   // DROP DOWN MENU FOR DS ALGORITHMS
-  std::array<sf::Text, NUMBER_OF_DS_ALGO> m_list_algo_ds;
-  std::array<std::string, NUMBER_OF_DS_ALGO> m_algo_ds;
+  std::array<sf::Text, c_num_ds> m_list_algo_ds;
+  std::array<std::string, c_num_ds> m_algo_ds;
 
   // DROP DOWN MENU FOR DYNAMIC PROGRAMMING ALGORITHMS
-  std::array<sf::Text, NUMBER_OF_DYNAMIC_ALGO> m_list_algo_dynamic;
-  std::array<std::string, NUMBER_OF_DYNAMIC_ALGO> m_algo_dynamic;
+  std::array<sf::Text, c_num_dynamic> m_list_algo_dynamic;
+  std::array<std::string, c_num_dynamic> m_algo_dynamic;
 
   // DROP DOWN MENU FOR GREEDY ALGORITHMS
-  std::array<sf::Text, NUMBER_OF_GREEDY_ALGO> m_list_algo_greedy;
-  std::array<std::string, NUMBER_OF_GREEDY_ALGO> m_algo_greedy;
+  std::array<sf::Text, c_num_greedy> m_list_algo_greedy;
+  std::array<std::string, c_num_greedy> m_algo_greedy;
 
   // DROP DOWN MENU FOR ADVANCED DATA STRUCTURES ALGORITHMS
-  std::array<sf::Text, NUMBER_OF_ADVANCEDDS_ALGO> m_list_algo_advancedds;
-  std::array<std::string, NUMBER_OF_ADVANCEDDS_ALGO> m_algo_advancedds;
+  std::array<sf::Text, c_num_advancedds> m_list_algo_advancedds;
+  std::array<std::string, c_num_advancedds> m_algo_advancedds;
 
   // DROP DOWN MENU FOR GRAPH ALGORITHMS
-  std::array<sf::Text, NUMBER_OF_GRAPH_ALGO> m_list_algo_graph;
-  std::array<std::string, NUMBER_OF_GRAPH_ALGO> m_algo_graph;
+  std::array<sf::Text, c_num_graph> m_list_algo_graph;
+  std::array<std::string, c_num_graph> m_algo_graph;
 
   // TEXT STYLES
-  int m_category_font_size;
-  int m_drop_down_item_font_size;
+  const int m_category_font_size;
+  const int m_drop_down_item_font_size;
 
   // DROP DOWN MENU COUNTERS AND CHECKER FOR CATEGORY OPTION
   int m_dropped_items;
@@ -158,7 +150,7 @@ class Sorting_Class : public Screen {
   void move_down() override;
   void move_left() override;
   void move_right() override;
-  int pressed() override;
+  int pressed() const override;
   void change_option(int selected) override;
   void drop_down(int option) override;
   void typed_on(sf::Event input) override;
@@ -188,28 +180,38 @@ class Sorting_Class : public Screen {
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
 
+  // CONSTANT
+  // LISTED IMPORTANT KEYS
+  static constexpr int c_delete_key = 8;
+  static constexpr int c_enter_key = 13;
+  static constexpr int c_minus_key = 45;
+  // HOLDING THE SIZE OF CERTAIN ELEMENTS
+  static constexpr int c_headers = 3;
+  static constexpr int c_options = 3;
+  static constexpr int c_buttons = 4;
+
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM
   std::vector<sf::Text> m_algorithm_variants;
+  std::size_t m_variants_size;
 
   // TEXT STYLE
-  // TODO - C++20 CHANGE TO std::span
   int m_char_size_text_variants;
-  std::array<std::string, 3> m_headers_text;
-  std::array<sf::Text, 3> m_headers;
+  std::array<std::string, c_headers> m_headers_text;
+  std::array<sf::Text, c_headers> m_headers;
 
   // VISUALIZATION OPTIONS
   // THIS VECTOR KEEPS STATE OF:
   // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
-  std::array<int, 3> m_visualization_options;
-  std::array<std::string, 3> m_visualization_options_names;
+  std::array<int, c_options> m_visualization_options;
+  std::array<std::string, c_options> m_visualization_options_names;
 
   // VISUALIZATION BUTTONS
-  std::array<std::string, 4> m_visualization_buttons_names;
-  std::array<sf::Text, 4> m_visualization_buttons_text;
-  std::array<sf::RectangleShape, 4> m_visualization_buttons_shape;
+  std::array<std::string, c_buttons> m_visualization_buttons_names;
+  std::array<sf::Text, c_buttons> m_visualization_buttons_text;
+  std::array<sf::RectangleShape, c_buttons> m_visualization_buttons_shape;
 
   // INPUT FOR OPTIONS
-  std::array<sf::Text, 3> m_textbox_input_style;
+  std::array<sf::Text, c_options> m_textbox_input_style;
   std::ostringstream m_text_input;
   int m_selected_input_option;
   std::string m_temp_value;
@@ -217,13 +219,10 @@ class Sorting_Class : public Screen {
   // IF THE IMPUT OPTION IS SELECTED
   bool m_possible_input;
 
-  // ARRAY OF SIZES (VIZ OPTIONS, ALGO VARIANTS, VIZ BUTTONS, SUM OF THEM)
-  std::array<size_t, 4> m_sizes;
-
   // INPUT LOGIC
   void input_logic(int char_typed) {
-    if (char_typed != DELETE_KEY && char_typed != ENTER_KEY) {
-      if (m_temp_value != "" && char_typed == MINUS_KEY)
+    if (char_typed != c_delete_key && char_typed != c_enter_key) {
+      if (m_temp_value != "" && char_typed == c_minus_key)
         std::cerr << "Don't use minus sign between numbers" << std::endl;
       else {
         if (m_temp_value.length() >= 7)
@@ -235,7 +234,7 @@ class Sorting_Class : public Screen {
               m_text_input.str() + "_");
         }
       }
-    } else if (char_typed == DELETE_KEY) {
+    } else if (char_typed == c_delete_key) {
       if (m_text_input.str().length() > 0)
         delete_last_char();
     }
