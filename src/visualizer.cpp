@@ -18,9 +18,9 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-std::map<std::pair<algo_cat, int>, std::function<void()>,
+/*std::map<std::pair<algo_cat, int>, std::function<void()>,
          algocat_pair_comparator>
-    algorithm_map;
+    algorithm_map;*/
 
 Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
     : m_selected_algorithm_index(0),
@@ -43,7 +43,7 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
   m_list_algorithms[c_num_algos - 1].setFillColor(sf::Color::Red);
   m_list_algorithms[0].setFillColor(sf::Color::Green);
   m_dropped = false;
-
+  // SETTING NAMES FOR DIFFERENT ALGO CATEGORIES
   m_algo_sort = {"Insertion Sort", "Selection Sort", "Merge Sort",
                  "Bubble Sort",    "Heap Sort",      "Quick Sort"};
   m_algo_search = {"Linear Search", "Binary Search"};
@@ -55,16 +55,11 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
                "Red-Black Tree",
                "AVL Tree",
                "Treaps"};
-
   m_algo_dynamic = {"Cut Rod", "Cut Rod (Memoization)", "Cut Rod (Tabulation)",
                     "Longest Common Subsequence"};
-
   m_algo_greedy = {"Huffman Coding", "Activity Selector"};
-
   m_algo_advancedds = {"B-Tree", "Fibonacci Heap", "Van Emde Boas Tree"};
-
   m_algo_graph = {"1", "2", "3"};
-
   // INITIALIZE MAP FOR ALGORITHMS
   initialize_algorithms();
 }
@@ -238,15 +233,13 @@ int Visualizer::pressed() const {
     return m_dropped_items;
 }
 
-//-----------------------TODO: CODE METHOD IS TOO LONG, NEED TO BE SHORTER----------------------
-void Visualizer::initialize_algorithms() {
-  //------------------------------------------- SORTING
+void Visualizer::initialize_sorting() {
   algorithm_map[{algo_cat::sorting, 0}] = [this]() {
     *current_screen = sort_class;
     sort_class->insertion_sort();
   };
   algorithm_map[{algo_cat::sorting, 1}] = []() {
-    std::cout << "Selection Sort\n";
+    std::cout << "Selection --------------------Sort\n";
   };
   algorithm_map[{algo_cat::sorting, 2}] = []() {
     std::cout << "Merge Sort\n";
@@ -260,14 +253,17 @@ void Visualizer::initialize_algorithms() {
   algorithm_map[{algo_cat::sorting, 5}] = []() {
     std::cout << "Quick Sort\n";
   };
+}
+void Visualizer::initialize_searching() {
   algorithm_map[{algo_cat::searching, 0}] = []() {
-    //------------------------------------------- SEARCHING
     std::cout << "Linear Search\n";
   };
   algorithm_map[{algo_cat::searching, 1}] = []() {
     std::cout << "Binary Search\n";
   };
-  //------------------------------------------- DATA STRUCTURES
+}
+
+void Visualizer::initialize_ds() {
   algorithm_map[{algo_cat::ds, 0}] = []() {
     std::cout << "Stack\n";
   };
@@ -292,7 +288,9 @@ void Visualizer::initialize_algorithms() {
   algorithm_map[{algo_cat::ds, 7}] = []() {
     std::cout << "Treaps\n";
   };
-  //------------------------------------------- DYNAMIC PROGRAMMING
+}
+
+void Visualizer::initialize_dynamic() {
   algorithm_map[{algo_cat::dynamic, 0}] = []() {
     std::cout << "Cut Rod\n";
   };
@@ -305,14 +303,18 @@ void Visualizer::initialize_algorithms() {
   algorithm_map[{algo_cat::dynamic, 3}] = []() {
     std::cout << "Longest Common Subsequence\n";
   };
-  //------------------------------------------- GREEDY
+}
+
+void Visualizer::initialize_greedy() {
   algorithm_map[{algo_cat::greedy, 0}] = []() {
     std::cout << "Huffman Codign\n";
   };
   algorithm_map[{algo_cat::greedy, 1}] = []() {
     std::cout << "Activity Selector\n";
   };
-  //------------------------------------------- ADVANCED DATA STRUCTURES
+}
+
+void Visualizer::initialize_advancedds() {
   algorithm_map[{algo_cat::advancedds, 0}] = []() {
     std::cout << "B-Tree\n";
   };
@@ -322,7 +324,9 @@ void Visualizer::initialize_algorithms() {
   algorithm_map[{algo_cat::advancedds, 2}] = []() {
     std::cout << "Van Emde Boas Tree\n";
   };
-  //------------------------------------------- GRAPH
+}
+
+void Visualizer::initialize_graph() {
   algorithm_map[{algo_cat::graph, 0}] = []() {
     std::cout << "1\n";
   };
@@ -334,7 +338,17 @@ void Visualizer::initialize_algorithms() {
   };
 }
 
-void Visualizer::go_to_algo_screen(const int selected) {
+void Visualizer::initialize_algorithms() {
+  initialize_sorting();
+  initialize_searching();
+  initialize_ds();
+  initialize_dynamic();
+  initialize_greedy();
+  initialize_advancedds();
+  initialize_graph();
+}
+
+void Visualizer::go_to_algo_screen(int selected) {
   auto it = algorithm_map.find(std::make_pair(m_ac, selected));
   if (it != algorithm_map.end()) {
     it->second();  // ALGORITHM STYLES

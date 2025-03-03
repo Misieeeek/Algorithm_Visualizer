@@ -19,33 +19,6 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-// STATE OF PRESSED CATEGORY
-enum class algo_cat {
-  sorting,
-  searching,
-  ds,
-  dynamic,
-  greedy,
-  advancedds,
-  graph,
-  none
-};
-
-// COMPARATOR FOR STD::PAIR<ALGOCAT, INT> TO BE USED IN THE MAP
-struct algocat_pair_comparator {
-  bool operator()(const std::pair<algo_cat, int>& lhs,
-                  const std::pair<algo_cat, int>& rhs) const {
-    if (lhs.first != rhs.first)
-      return lhs.first < rhs.first;  // Compare categories first
-    return lhs.second < rhs.second;  // Then compare the index
-  }
-};
-
-// GLOBAL DECLARATION OF ALGORITHM MAP
-extern std::map<std::pair<algo_cat, int>, std::function<void()>,
-                algocat_pair_comparator>
-    algorithm_map;
-
 // FORWARD DECLARATION OF CLASS Sorting_Class
 class Sorting_Class;
 
@@ -74,10 +47,31 @@ class Visualizer : public Screen {
   // RESPONSIBLE FOR FINDING THE SELECTED ALGORITHM AND ACTIVATING IT FROM DOWN
   // MENU
   void go_to_algo_screen(int selected);
-  // RESPONSIBLE FOR LOADING ALGORITHM SCREENS (BTW IT LOADS EVERYTHING WHEN
-  // CONSTRUCTOR IS ACTIVATED, WOULD BE MUCH MORE EFFICIENT, WHEN IT LOADS ONE,
-  // THE NEEDED ONE, AFTERWARDS IF NOT NEEDED ANYMORE DELETING IT).
+
+  // RESPONSIBLE FOR LOADING ALGORITHM SCREENS
   void initialize_algorithms();
+
+  // STATE OF PRESSED CATEGORY
+  enum class algo_cat {
+    sorting,
+    searching,
+    ds,
+    dynamic,
+    greedy,
+    advancedds,
+    graph,
+    none
+  };
+
+  // COMPARATOR FOR STD::PAIR<ALGOCAT, INT> TO BE USED IN THE MAP
+  struct algocat_pair_comparator {
+    bool operator()(const std::pair<algo_cat, int>& lhs,
+                    const std::pair<algo_cat, int>& rhs) const {
+      if (lhs.first != rhs.first)
+        return lhs.first < rhs.first;  // Compare categories first
+      return lhs.second < rhs.second;  // Then compare the index
+    }
+  };
 
  private:
   // KEEPS THE STATE OF ALGOCAT CURRENTLY SELECTED
@@ -140,6 +134,20 @@ class Visualizer : public Screen {
   int m_dropped_items;
   int m_dropped_items_index;
   bool m_category_option;
+
+  // INITIALIZE ALGORITHM MAP, DIVIDED PER CATEGORY
+  void initialize_sorting();
+  void initialize_searching();
+  void initialize_ds();
+  void initialize_dynamic();
+  void initialize_greedy();
+  void initialize_advancedds();
+  void initialize_graph();
+
+  // ALGORITHM MAP(CATEGORY, INDEX)
+  std::map<std::pair<algo_cat, int>, std::function<void()>,
+           algocat_pair_comparator>
+      algorithm_map;
 };
 
 class Sorting_Class : public Screen {
