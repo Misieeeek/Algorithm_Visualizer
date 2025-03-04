@@ -18,10 +18,6 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-/*std::map<std::pair<algo_cat, int>, std::function<void()>,
-         algocat_pair_comparator>
-    algorithm_map;*/
-
 Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
     : m_selected_algorithm_index(0),
       m_selected_algorithm(0),
@@ -226,7 +222,7 @@ void Visualizer::general_algo_list(std::size_t number_of_categories,
   }
 }
 
-int Visualizer::pressed() const {
+int Visualizer::pressed() {
   if (m_category_option)
     return m_selected_algorithm;
   else
@@ -379,6 +375,7 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
       "Number of elemenst:", "Minimum value:", "Maximum value:"};
   m_visualization_options = {10, 0, 100};
   textbox(20, 3, 150);
+  m_choosed_algo = 0;
 }
 
 Sorting_Class::~Sorting_Class() {}
@@ -400,9 +397,13 @@ void Sorting_Class::move_up() {
       if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
-      else
-        m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
-            sf::Color::White);
+      else {
+        if (m_selected_sorting_algo_index == m_choosed_algo)
+          m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Blue);
+        else
+          m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
+              sf::Color::White);
+      }
       m_selected_sorting_algo_index--;
       m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
           sf::Color::Green);
@@ -418,9 +419,13 @@ void Sorting_Class::move_down() {
       if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
-      else
-        m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
-            sf::Color::White);
+      else {
+        if (m_selected_sorting_algo_index == m_choosed_algo)
+          m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Blue);
+        else
+          m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
+              sf::Color::White);
+      }
       m_selected_sorting_algo_index++;
       m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
           sf::Color::Green);
@@ -435,9 +440,14 @@ void Sorting_Class::move_left() {
       if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
-      else
-        m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
-            sf::Color::White);
+      else {
+        if (m_choosed_algo == m_selected_sorting_algo_index)
+          m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
+              sf::Color::Blue);
+        else
+          m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
+              sf::Color::White);
+      }
       if (m_selected_sorting_algo_index > m_variants_size - 1 &&
           m_selected_sorting_algo_index <= c_options + m_variants_size - 1) {
         m_selected_sorting_algo_index = 0;
@@ -460,9 +470,14 @@ void Sorting_Class::move_right() {
       if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
             sf::Color::Red);
-      else
-        m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
-            sf::Color::White);
+      else {
+        if (m_choosed_algo == m_selected_sorting_algo_index)
+          m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
+              sf::Color::Blue);
+        else
+          m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
+              sf::Color::White);
+      }
       if (m_selected_sorting_algo_index < c_options + m_variants_size &&
           !(m_selected_sorting_algo_index >= m_variants_size)) {
         m_selected_sorting_algo_index = m_variants_size;
@@ -479,28 +494,41 @@ void Sorting_Class::move_right() {
   }
 }
 
-int Sorting_Class::pressed() const {
+int Sorting_Class::pressed() {
+  if (m_selected_sort_algo < 6 && m_selected_sort_algo != 0)
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::White);
+  else if (m_selected_sort_algo == 0) {
+    m_algorithm_variants[m_selected_sort_algo].setFillColor(sf::Color::Green);
+    for (int i = 1; i < m_variants_size - 1; i++)
+      m_algorithm_variants[i].setFillColor(sf::Color::White);
+  }
   return m_selected_sort_algo;
 }
 
 void Sorting_Class::change_option(int selected) {
   switch (selected) {
     case 0:
+      m_choosed_algo = 0;
       std::cout << "INSERTION SORT\n";
       break;
     case 1:
+      m_choosed_algo = 1;
       std::cout << "Recursive Insertion Sort\n";
       break;
     case 2:
+      m_choosed_algo = 2;
       std::cout << "Shell Sort\n";
       break;
     case 3:
+      m_choosed_algo = 3;
       std::cout << "Binary Insertion Sort\n";
       break;
     case 4:
+      m_choosed_algo = 4;
       std::cout << "Library Sort\n";
       break;
     case 5:
+      m_choosed_algo = 0;
       m_selected_sort_algo = 0;
       m_selected_sorting_algo_index = 0;
       m_algorithm_variants[0].setFillColor(sf::Color::Green);
@@ -517,6 +545,18 @@ void Sorting_Class::change_option(int selected) {
       break;
     case 8:
       input_box_selected(2);
+      break;
+    case 9:
+      std::cout << "Start\n";
+      break;
+    case 10:
+      std::cout << "Example\n";
+      break;
+    case 11:
+      std::cout << "Worst\n";
+      break;
+    case 12:
+      std::cout << "Best\n";
       break;
   }
 }

@@ -33,7 +33,7 @@ class Visualizer : public Screen {
   void move_up() override;
   void move_down() override;
   // RETURN A NUMBER OF WHICH OPTION WAS PRESSED
-  int pressed() const override;
+  int pressed() override;
   // RESPONSIBLE FOR CHANGING THE OPTION (WHEN SELECTED, DO SOMETHING)
   void change_option(int selected) override;
   // RESPOSIBLE FOR DROP DOWN MENUS OF EACH CATEGORY OF ALGORITHMS
@@ -148,6 +148,8 @@ class Visualizer : public Screen {
   std::map<std::pair<algo_cat, int>, std::function<void()>,
            algocat_pair_comparator>
       algorithm_map;
+
+  //void generate_visualization() {};
 };
 
 class Sorting_Class : public Screen {
@@ -158,7 +160,7 @@ class Sorting_Class : public Screen {
   void move_down() override;
   void move_left() override;
   void move_right() override;
-  int pressed() const override;
+  int pressed() override;
   void change_option(int selected) override;
   void drop_down(int option) override;
   void typed_on(sf::Event input) override;
@@ -178,8 +180,8 @@ class Sorting_Class : public Screen {
   // SET STYLE FOR VISUALIZATION BUTTONS
   void visualization_buttons_style(int pos_x);
 
-  // GET/SET M_SIZES
-  void set_m_sizes(size_t options, size_t variants, size_t buttons, size_t sum);
+  //
+  void algo_viz(int m_choosed_algo);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -187,7 +189,7 @@ class Sorting_Class : public Screen {
   Visualizer* visualize;
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
-
+  int m_choosed_algo;
   // CONSTANT
   // LISTED IMPORTANT KEYS
   static constexpr int c_delete_key = 8;
