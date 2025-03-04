@@ -693,17 +693,39 @@ void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
                              bool bw_case) {}
 
 Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr)
-    : current_screen(screen_ptr), sort_class(sort_class_ptr) {}
+    : current_screen(screen_ptr), sort_class(sort_class_ptr) {
+  set_styles();
+}
 
 Visualization::~Visualization() {}
 
-void Visualization::draw(sf::RenderWindow& window) {}
+void Visualization::draw(sf::RenderWindow& window) {
+  for (const auto& x : m_buttons_shape)
+    window.draw(x);
+  for (const auto& x : m_buttons_text)
+    window.draw(x);
+}
 void Visualization::move_left() {}
 void Visualization::move_right() {}
 int Visualization::pressed() {
-  return 0;
+  return 1;
 }
 void Visualization::change_option(int selected) {}
 void Visualization::visual() {}
 
-void Visualization::set_styles() {}
+void Visualization::set_styles() {
+  m_buttons_names = {"Back", "Start"};
+  Screen::set_sf_text_style(m_buttons_text, m_buttons_names, 35, 50, 50, false,
+                            false);
+  int temp = 0;
+  for (int i = 0; i < c_buttons; i++) {
+    m_buttons_shape[i].setPosition(50 + temp, 50);
+    m_buttons_shape[i].setSize({220, 45});
+    m_buttons_shape[i].setOutlineColor(sf::Color::Red);
+    m_buttons_shape[i].setOutlineThickness(1.5);
+    m_buttons_shape[i].setFillColor(sf::Color::Black);
+    m_buttons_text[i].setPosition(
+        50 + temp + (140 - (m_buttons_names[i].length() * 35) / 2), 50);
+    temp = 930;
+  }
+}

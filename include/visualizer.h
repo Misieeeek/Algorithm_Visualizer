@@ -296,7 +296,8 @@ class Visualization : public Screen {
   static constexpr int c_info = 1;
 
   std::array<sf::Text, c_buttons> m_buttons_text;
-  std::array<sf::Text, c_buttons> m_buttons_shape;
+  std::array<std::string, c_buttons> m_buttons_names;
+  std::array<sf::RectangleShape, c_buttons> m_buttons_shape;
 
   std::array<sf::Text, c_info> m_info_text;
 };
