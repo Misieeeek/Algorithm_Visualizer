@@ -19,13 +19,14 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-// FORWARD DECLARATION OF CLASS Sorting_Class
+// FORWARD DECLARATION OF CLASS Sorting_Class and Visualization
 class Sorting_Class;
+class Visualization;
 
 class Visualizer : public Screen {
  public:
   Visualizer(Screen** screen_ptr, Screen* menu);
-  ~Visualizer();
+  virtual ~Visualizer();
 
   // RESPOSIBLE FOR DRAWING EVERYTHING
   void draw(sf::RenderWindow& window) override;
@@ -168,7 +169,7 @@ class Sorting_Class : public Screen {
   Sorting_Class(Screen** screen_ptr,
                 Visualizer* viz_ptr);  // MENU HAS TO CHANGE
                                        // TO VISUALIZER
-  ~Sorting_Class();
+  virtual ~Sorting_Class();
 
   void set_style(std::vector<std::string> variants, int y_pos);
   void insertion_sort();
@@ -181,7 +182,10 @@ class Sorting_Class : public Screen {
   void visualization_buttons_style(int pos_x);
 
   //
-  void algo_viz(int m_choosed_algo);
+  void algo_viz();
+  void algo_viz(std::size_t n_elements, int min_val, int max_val);
+  // OVERLOAD algo_viz() FUNCTION, ADDITIONAL PARAMETER case, WHERE false = WORST CASE
+  void algo_viz(std::size_t n_elements, int min_val, int max_val, bool bw_case);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -190,7 +194,7 @@ class Sorting_Class : public Screen {
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
   int m_choosed_algo;
-  // CONSTANT
+  // CONSTANTS
   // LISTED IMPORTANT KEYS
   static constexpr int c_delete_key = 8;
   static constexpr int c_enter_key = 13;
@@ -263,6 +267,25 @@ class Sorting_Class : public Screen {
         m_text_input.str());
     m_temp_value.pop_back();
   }
+};
+
+class Visualization : public Screen {
+ public:
+  void draw(sf::RenderWindow& window) override;
+  void move_left() override;
+  void move_right() override;
+  int pressed() override;
+  void change_option(int selected) override;
+
+  Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr);
+  ~Visualization();
+
+ private:
+  // DISPLAYS SCREEN FOR SORTING
+  Screen** current_screen;
+  Sorting_Class* sort_class;
+  int m_selected_sorting_algo_index;
+  int m_selected_sort_algo;
 };
 
 #endif

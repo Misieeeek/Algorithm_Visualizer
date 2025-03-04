@@ -507,25 +507,20 @@ int Sorting_Class::pressed() {
 
 void Sorting_Class::change_option(int selected) {
   switch (selected) {
-    case 0:
+    case 0:  // BASIC INSERTION SORT
       m_choosed_algo = 0;
-      std::cout << "INSERTION SORT\n";
       break;
-    case 1:
+    case 1:  // RECURSIVE INSERTION SORT
       m_choosed_algo = 1;
-      std::cout << "Recursive Insertion Sort\n";
       break;
-    case 2:
+    case 2:  // SHELL SORT
       m_choosed_algo = 2;
-      std::cout << "Shell Sort\n";
       break;
-    case 3:
+    case 3:  // BINARY INSERTION SORT
       m_choosed_algo = 3;
-      std::cout << "Binary Insertion Sort\n";
       break;
-    case 4:
+    case 4:  // LIBRARY SORT
       m_choosed_algo = 4;
-      std::cout << "Library Sort\n";
       break;
     case 5:
       m_choosed_algo = 0;
@@ -547,16 +542,16 @@ void Sorting_Class::change_option(int selected) {
       input_box_selected(2);
       break;
     case 9:
-      std::cout << "Start\n";
+      algo_viz();
       break;
     case 10:
-      std::cout << "Example\n";
+      algo_viz(10, 0, 10);
       break;
     case 11:
-      std::cout << "Worst\n";
+      algo_viz(100, 0, 100, false);
       break;
     case 12:
-      std::cout << "Best\n";
+      algo_viz(100, 0, 100, true);
       break;
   }
 }
@@ -682,3 +677,11 @@ void Sorting_Class::visualization_buttons_style(int pos_y) {
     temp = 100;
   }
 }
+
+void Sorting_Class::algo_viz() {}
+
+void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
+}
+
+void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
+                             bool bw_case) {}
