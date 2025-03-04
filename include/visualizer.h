@@ -191,6 +191,7 @@ class Sorting_Class : public Screen {
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
   Visualizer* visualize;
+  Visualization* final_visual;
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
   int m_choosed_algo;
@@ -271,14 +272,17 @@ class Sorting_Class : public Screen {
 
 class Visualization : public Screen {
  public:
+  Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr);
+  ~Visualization();
+
   void draw(sf::RenderWindow& window) override;
   void move_left() override;
   void move_right() override;
   int pressed() override;
   void change_option(int selected) override;
 
-  Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr);
-  ~Visualization();
+  void visual();
+  void set_styles();
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -286,6 +290,15 @@ class Visualization : public Screen {
   Sorting_Class* sort_class;
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
+
+  // CONSTANTS
+  static constexpr int c_buttons = 2;
+  static constexpr int c_info = 1;
+
+  std::array<sf::Text, c_buttons> m_buttons_text;
+  std::array<sf::Text, c_buttons> m_buttons_shape;
+
+  std::array<sf::Text, c_info> m_info_text;
 };
 
 #endif

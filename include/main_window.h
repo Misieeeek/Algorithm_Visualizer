@@ -14,8 +14,6 @@ class Screen {
   Screen() : m_opend(false), m_main_active(true) { set_open_sans(); }
   virtual ~Screen() = default;
   virtual void draw(sf::RenderWindow& window) = 0;
-  virtual void move_up() = 0;
-  virtual void move_down() = 0;
   virtual int pressed() = 0;
 
   virtual void change_option(int selected);
@@ -23,6 +21,8 @@ class Screen {
   virtual void typed_on(sf::Event input);
   virtual void move_left();
   virtual void move_right();
+  virtual void move_up();
+  virtual void move_down();
 
   virtual void set_open_sans();
   virtual void set_sf_text_style(std::span<sf::Text> arr_list,

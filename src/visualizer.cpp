@@ -363,6 +363,7 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
       m_possible_input(false),
       m_temp_value("") {
 
+  final_visual = new Visualization(screen_ptr, this);
   //INITIALIZE VISUALIZATION BUTTONS
   std::size_t number_of_buttons = 4;
   m_visualization_buttons_names = {"Start", "Example", "Worst case",
@@ -378,7 +379,9 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
   m_choosed_algo = 0;
 }
 
-Sorting_Class::~Sorting_Class() {}
+Sorting_Class::~Sorting_Class() {
+  delete final_visual;
+}
 
 void Sorting_Class::draw(sf::RenderWindow& window) {
   for (const auto& x : m_visualization_buttons_shape)
@@ -678,10 +681,29 @@ void Sorting_Class::visualization_buttons_style(int pos_y) {
   }
 }
 
-void Sorting_Class::algo_viz() {}
+void Sorting_Class::algo_viz() {
+  *current_screen = final_visual;
+  final_visual->visual();
+}
 
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
 }
 
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
                              bool bw_case) {}
+
+Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr)
+    : current_screen(screen_ptr), sort_class(sort_class_ptr) {}
+
+Visualization::~Visualization() {}
+
+void Visualization::draw(sf::RenderWindow& window) {}
+void Visualization::move_left() {}
+void Visualization::move_right() {}
+int Visualization::pressed() {
+  return 0;
+}
+void Visualization::change_option(int selected) {}
+void Visualization::visual() {}
+
+void Visualization::set_styles() {}

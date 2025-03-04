@@ -80,6 +80,8 @@ void Screen::drop_down(int option) {}
 void Screen::typed_on(sf::Event input) {}
 void Screen::move_left() {}
 void Screen::move_right() {}
+void Screen::move_up() {}
+void Screen::move_down() {}
 
 void Screen::set_open_sans() {
   std::filesystem::current_path(
