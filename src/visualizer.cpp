@@ -694,7 +694,10 @@ void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
 
 Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr)
     : current_screen(screen_ptr), sort_class(sort_class_ptr) {
+  m_visualizaing = false;
   set_styles();
+  m_selected_button_index = 1;
+  m_selected_button = 1;
 }
 
 Visualization::~Visualization() {}
@@ -705,12 +708,47 @@ void Visualization::draw(sf::RenderWindow& window) {
   for (const auto& x : m_buttons_text)
     window.draw(x);
 }
-void Visualization::move_left() {}
-void Visualization::move_right() {}
-int Visualization::pressed() {
-  return 1;
+void Visualization::move_left() {
+  if (m_visualizaing) {
+
+  } else {
+    if (m_selected_button != 0) {
+      m_buttons_shape[m_selected_button_index].setOutlineColor(sf::Color::Red);
+      m_selected_button_index--;
+      m_selected_button = m_selected_button_index;
+      m_buttons_shape[m_selected_button].setOutlineColor(sf::Color::Green);
+    }
+  }
 }
-void Visualization::change_option(int selected) {}
+
+void Visualization::move_right() {
+  if (m_visualizaing) {
+
+  } else {
+    if (m_selected_button != c_buttons - 1) {
+      m_buttons_shape[m_selected_button_index].setOutlineColor(sf::Color::Red);
+      m_selected_button_index++;
+      m_selected_button = m_selected_button_index;
+      m_buttons_shape[m_selected_button].setOutlineColor(sf::Color::Green);
+    }
+  }
+}
+int Visualization::pressed() {
+  return m_selected_button;
+}
+void Visualization::change_option(int selected) {
+  if (m_visualizaing) {
+  } else {
+    if (selected == 0) {
+      m_selected_button_index = 1;
+      m_selected_button = 1;
+      m_buttons_shape[1].setOutlineColor(sf::Color::Green);
+      m_buttons_shape[0].setOutlineColor(sf::Color::Red);
+      *current_screen = sort_class;
+    }
+    if (selected == 1) {}
+  }
+}
 void Visualization::visual() {}
 
 void Visualization::set_styles() {
@@ -728,4 +766,5 @@ void Visualization::set_styles() {
         50 + temp + (140 - (m_buttons_names[i].length() * 35) / 2), 50);
     temp = 930;
   }
+  m_buttons_shape[c_buttons - 1].setOutlineColor(sf::Color::Green);
 }

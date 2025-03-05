@@ -288,18 +288,23 @@ class Visualization : public Screen {
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
   Sorting_Class* sort_class;
-  int m_selected_sorting_algo_index;
-  int m_selected_sort_algo;
+  int m_selected_button_index;
+  int m_selected_button;
 
   // CONSTANTS
   static constexpr int c_buttons = 2;
   static constexpr int c_info = 1;
 
+  // BUTTONS SHAPE, TEXT, NAMES
   std::array<sf::Text, c_buttons> m_buttons_text;
   std::array<std::string, c_buttons> m_buttons_names;
   std::array<sf::RectangleShape, c_buttons> m_buttons_shape;
 
+  // INFORMATION ABOUT VISUALIZATION
   std::array<sf::Text, c_info> m_info_text;
+
+  // STATE OF VISUALIZING (FALSE - NOT VISUALIZING, TRUE - VISUALIZING RIGHT NOW)
+  bool m_visualizaing;
 };
 
 #endif
