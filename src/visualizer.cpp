@@ -1,8 +1,11 @@
 #include "visualizer.h"
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/Graphics/Rect.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/System/String.hpp>
+#include <SFML/System/Vector2.hpp>
 #include <SFML/Window/Event.hpp>
 #include <algorithm>
 #include <array>
@@ -682,15 +685,11 @@ void Sorting_Class::visualization_buttons_style(int pos_y) {
   }
 }
 
-void Sorting_Class::algo_viz() {
-  /*current_screen = final_visual;
-  final_visual->visual();*/
-}
-
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
   *current_screen = final_visual;
+  final_visual->set_options(n_elements, min_val, max_val,
+                            m_algorithm_variants[m_choosed_algo].getString());
   final_visual->visual();
-  final_visual->set_options(n_elements, min_val, max_val);
 }
 
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
@@ -711,7 +710,11 @@ void Visualization::draw(sf::RenderWindow& window) {
     window.draw(x);
   for (const auto& x : m_buttons_text)
     window.draw(x);
+  for (const auto& x : m_info_text)
+    window.draw(x);
+  window.draw(m_viz_box, 5, sf::LineStrip);
 }
+
 void Visualization::move_left() {
   if (!m_visualizaing) {
     if (m_selected_button != 0) {
@@ -757,8 +760,13 @@ void Visualization::visual() {}
 
 void Visualization::set_styles() {
   m_buttons_names = {"Back", "Start"};
+  m_info_names = {""};
   Screen::set_sf_text_style(m_buttons_text, m_buttons_names, 35, 50, 50, false,
                             false);
+  Screen::set_sf_text_style(m_info_text, m_info_names, 10, 300, 50, true, false,
+                            250, 0, 0, 3);
+  Screen::set_sf_text_style(m_info_text, m_info_names, 10, 300, 75, true, false,
+                            250, 0, 3, c_info);
   int temp = 0;
   for (int i = 0; i < c_buttons; i++) {
     m_buttons_shape[i].setPosition(50 + temp, 50);
@@ -771,11 +779,21 @@ void Visualization::set_styles() {
     temp = 930;
   }
   m_buttons_shape[c_buttons - 1].setOutlineColor(sf::Color::Green);
+  m_viz_box[0] = sf::Vertex(sf::Vector2f(50, 125), sf::Color::White);
+  m_viz_box[1] = sf::Vertex(sf::Vector2f(1200, 125), sf::Color::White);
+  m_viz_box[2] = sf::Vertex(sf::Vector2f(1200, 700), sf::Color::White);
+  m_viz_box[3] = sf::Vertex(sf::Vector2f(50, 700), sf::Color::White);
+  m_viz_box[4] = sf::Vertex(sf::Vector2f(50, 125), sf::Color::White);
 }
 
 void Visualization::set_options(std::size_t n_elements, int min_val,
-                                int max_val) {
+                                int max_val, std::string algo_name) {
   m_options[0] = n_elements;
   m_options[1] = min_val;
   m_options[2] = max_val;
+  m_algorithm_name = algo_name;
+  m_info_text[0].setString("Algorithm: " + m_algorithm_name);
+  m_info_text[1].setString("Number of elements: " + std::to_string(n_elements));
+  m_info_text[2].setString("Min range: " + std::to_string(min_val));
+  m_info_text[3].setString("Max range: " + std::to_string(max_val));
 }

@@ -118,3 +118,29 @@ void Screen::set_sf_text_style(std::span<sf::Text> arr_list,
     count++;
   }
 }
+
+void Screen::set_sf_text_style(std::span<sf::Text> arr_list,
+                               std::span<std::string> arr_text, int char_size,
+                               int x_offset, int y_offset, bool x_multiplier,
+                               bool y_multiplier, int x_text_multiplier,
+                               int y_text_multiplier, int begin_from,
+                               int end_at) {
+  int count = 0;
+  for (int i = begin_from; i < end_at; i++) {
+    arr_list[i].setFont(m_open_sans);
+    arr_list[i].setFillColor(sf::Color::White);
+    arr_list[i].setCharacterSize(char_size);
+    arr_list[i].setStyle(sf::Text::Bold);
+    if (x_multiplier && y_multiplier)
+      arr_list[i].setPosition(x_text_multiplier * count + x_offset,
+                              y_text_multiplier * count + y_offset);
+    else if (x_multiplier && !y_multiplier)
+      arr_list[i].setPosition(x_text_multiplier * count + x_offset, y_offset);
+    else if (!x_multiplier && y_multiplier)
+      arr_list[i].setPosition(x_offset, y_text_multiplier * count + y_offset);
+    else
+      arr_list[i].setPosition(x_offset, y_offset);
+    arr_list[i].setString(arr_text[i]);
+    count++;
+  }
+}

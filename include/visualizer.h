@@ -1,5 +1,7 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <SFML/Graphics/PrimitiveType.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -181,10 +183,9 @@ class Sorting_Class : public Screen {
   // SET STYLE FOR VISUALIZATION BUTTONS
   void visualization_buttons_style(int pos_x);
 
-  //
-  void algo_viz();
+  // VISUALIZE ALGORITHM WITH GIVEN ELEMENTS, MIN VALUE AND MAX VALUE
   void algo_viz(std::size_t n_elements, int min_val, int max_val);
-  // OVERLOAD algo_viz() FUNCTION, ADDITIONAL PARAMETER case, WHERE false = WORST CASE
+  // OVERLOAD algo_viz(...) FUNCTION, ADDITIONAL PARAMETER case, WHERE false = WORST CASE
   void algo_viz(std::size_t n_elements, int min_val, int max_val, bool bw_case);
 
  private:
@@ -287,7 +288,8 @@ class Visualization : public Screen {
   void set_styles();
 
   // SET PREVIOUSLY CHOOSED OPTIONS
-  void set_options(std::size_t n_elements, int min_val, int max_val);
+  void set_options(std::size_t n_elements, int min_val, int max_val,
+                   std::string algo_name);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -298,7 +300,7 @@ class Visualization : public Screen {
 
   // CONSTANTS
   static constexpr std::size_t c_buttons = 2;
-  static constexpr std::size_t c_info = 1;
+  static constexpr std::size_t c_info = 4;
   static constexpr std::size_t c_options = 3;
 
   // BUTTONS SHAPE, TEXT, NAMES
@@ -308,12 +310,17 @@ class Visualization : public Screen {
 
   // INFORMATION ABOUT VISUALIZATION
   std::array<sf::Text, c_info> m_info_text;
-
+  std::array<std::string, c_info> m_info_names;
   // STATE OF VISUALIZING (FALSE - NOT VISUALIZING, TRUE - VISUALIZING RIGHT NOW)
   bool m_visualizaing;
 
   // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
   std::array<int, c_options> m_options;
+
+  // CHOOSED ALGORITHM
+  std::string m_algorithm_name;
+
+  sf::Vertex m_viz_box[5];
 };
 
 #endif

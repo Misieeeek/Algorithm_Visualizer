@@ -31,6 +31,13 @@ class Screen {
                                  bool y_multiplier, int x_text_multiplier = 0,
                                  int y_text_multiplier = 0);
 
+  virtual void set_sf_text_style(std::span<sf::Text> arr_list,
+                                 std::span<std::string> arr_text, int char_size,
+                                 int x_offset, int y_offset, bool x_multiplier,
+                                 bool y_multiplier, int x_text_multiplier,
+                                 int y_text_multiplier, int begin_from,
+                                 int end_at);
+
  protected:
   bool m_opend;
   bool m_main_active;
