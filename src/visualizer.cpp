@@ -545,7 +545,8 @@ void Sorting_Class::change_option(int selected) {
       input_box_selected(2);
       break;
     case 9:
-      algo_viz();
+      algo_viz(m_visualization_options[0], m_visualization_options[1],
+               m_visualization_options[2]);
       break;
     case 10:
       algo_viz(10, 0, 10);
@@ -682,11 +683,14 @@ void Sorting_Class::visualization_buttons_style(int pos_y) {
 }
 
 void Sorting_Class::algo_viz() {
-  *current_screen = final_visual;
-  final_visual->visual();
+  /*current_screen = final_visual;
+  final_visual->visual();*/
 }
 
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
+  *current_screen = final_visual;
+  final_visual->visual();
+  final_visual->set_options(n_elements, min_val, max_val);
 }
 
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
@@ -709,9 +713,7 @@ void Visualization::draw(sf::RenderWindow& window) {
     window.draw(x);
 }
 void Visualization::move_left() {
-  if (m_visualizaing) {
-
-  } else {
+  if (!m_visualizaing) {
     if (m_selected_button != 0) {
       m_buttons_shape[m_selected_button_index].setOutlineColor(sf::Color::Red);
       m_selected_button_index--;
@@ -722,9 +724,7 @@ void Visualization::move_left() {
 }
 
 void Visualization::move_right() {
-  if (m_visualizaing) {
-
-  } else {
+  if (!m_visualizaing) {
     if (m_selected_button != c_buttons - 1) {
       m_buttons_shape[m_selected_button_index].setOutlineColor(sf::Color::Red);
       m_selected_button_index++;
@@ -737,16 +737,20 @@ int Visualization::pressed() {
   return m_selected_button;
 }
 void Visualization::change_option(int selected) {
-  if (m_visualizaing) {
+  if (selected == 0) {
+    m_selected_button_index = 1;
+    m_selected_button = 1;
+    m_buttons_shape[1].setOutlineColor(sf::Color::Green);
+    m_buttons_shape[0].setOutlineColor(sf::Color::Red);
+    *current_screen = sort_class;
   } else {
-    if (selected == 0) {
-      m_selected_button_index = 1;
-      m_selected_button = 1;
-      m_buttons_shape[1].setOutlineColor(sf::Color::Green);
-      m_buttons_shape[0].setOutlineColor(sf::Color::Red);
-      *current_screen = sort_class;
+    if (m_visualizaing == true) {
+      m_buttons_text[1].setString("Start");
+      m_visualizaing = false;
+    } else {
+      m_buttons_text[1].setString("Stop");
+      m_visualizaing = true;
     }
-    if (selected == 1) {}
   }
 }
 void Visualization::visual() {}
@@ -767,4 +771,11 @@ void Visualization::set_styles() {
     temp = 930;
   }
   m_buttons_shape[c_buttons - 1].setOutlineColor(sf::Color::Green);
+}
+
+void Visualization::set_options(std::size_t n_elements, int min_val,
+                                int max_val) {
+  m_options[0] = n_elements;
+  m_options[1] = min_val;
+  m_options[2] = max_val;
 }

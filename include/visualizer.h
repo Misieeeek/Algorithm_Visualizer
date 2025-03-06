@@ -282,7 +282,12 @@ class Visualization : public Screen {
   void change_option(int selected) override;
 
   void visual();
+
+  // SET STYLES FOR SCREEN
   void set_styles();
+
+  // SET PREVIOUSLY CHOOSED OPTIONS
+  void set_options(std::size_t n_elements, int min_val, int max_val);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -292,8 +297,9 @@ class Visualization : public Screen {
   int m_selected_button;
 
   // CONSTANTS
-  static constexpr int c_buttons = 2;
-  static constexpr int c_info = 1;
+  static constexpr std::size_t c_buttons = 2;
+  static constexpr std::size_t c_info = 1;
+  static constexpr std::size_t c_options = 3;
 
   // BUTTONS SHAPE, TEXT, NAMES
   std::array<sf::Text, c_buttons> m_buttons_text;
@@ -305,6 +311,9 @@ class Visualization : public Screen {
 
   // STATE OF VISUALIZING (FALSE - NOT VISUALIZING, TRUE - VISUALIZING RIGHT NOW)
   bool m_visualizaing;
+
+  // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
+  std::array<int, c_options> m_options;
 };
 
 #endif
