@@ -2,6 +2,7 @@
 #define VISUALIZER_H
 #include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+#include <random>
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -291,6 +292,9 @@ class Visualization : public Screen {
   void set_options(std::size_t n_elements, int min_val, int max_val,
                    std::string algo_name);
 
+  // RANDOM NUMBER GENERATOR
+  int random_number_gen(int min_val, int max_val);
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -302,6 +306,7 @@ class Visualization : public Screen {
   static constexpr std::size_t c_buttons = 2;
   static constexpr std::size_t c_info = 4;
   static constexpr std::size_t c_options = 3;
+  static constexpr std::size_t c_box_vertices = 5;
 
   // BUTTONS SHAPE, TEXT, NAMES
   std::array<sf::Text, c_buttons> m_buttons_text;
@@ -320,7 +325,16 @@ class Visualization : public Screen {
   // CHOOSED ALGORITHM
   std::string m_algorithm_name;
 
-  sf::Vertex m_viz_box[5];
+  // VISUALIZATION BOX
+  std::array<sf::Vertex, c_box_vertices> m_viz_box;
+  std::array<int, c_box_vertices - 1> m_box_pos;
+
+  // SORTING ELEMENTS
+  std::vector<int> m_element_number;
+  std::vector<sf::Vertex> m_element_shape;
+
+  std::random_device m_rd;
+  std::mt19937 gen;
 };
 
 #endif

@@ -15,6 +15,7 @@
 #include <cstdlib>
 #include <iostream>
 #include <memory>
+#include <random>
 #include <string>
 #include <utility>
 #include <variant>
@@ -696,7 +697,7 @@ void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
                              bool bw_case) {}
 
 Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr)
-    : current_screen(screen_ptr), sort_class(sort_class_ptr) {
+    : current_screen(screen_ptr), sort_class(sort_class_ptr), gen(m_rd()) {
   m_visualizaing = false;
   set_styles();
   m_selected_button_index = 1;
@@ -712,7 +713,8 @@ void Visualization::draw(sf::RenderWindow& window) {
     window.draw(x);
   for (const auto& x : m_info_text)
     window.draw(x);
-  window.draw(m_viz_box, 5, sf::LineStrip);
+  window.draw(m_viz_box.data(), m_viz_box.size(), sf::LineStrip);
+  window.draw(m_element_shape.data(), m_element_shape.size(), sf::Quads);
 }
 
 void Visualization::move_left() {
@@ -756,9 +758,29 @@ void Visualization::change_option(int selected) {
     }
   }
 }
-void Visualization::visual() {}
+void Visualization::visual() {
+  m_element_shape.resize(m_options[0]);
+  m_element_number.resize(m_options[0]);
+  for (auto& x : m_element_number)
+    x = random_number_gen(m_options[1], m_options[2]);
+  for (int i = 0; i < m_options[0]; i++) {
+   /* m_element_shape[0] =
+        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[0]), color);
+       m_element_shape[0] =
+        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[1]), sf::Color::White);
+    m_element_shape[1] =
+        sf::Vertex(sf::Vector2f(m_box_pos[2], m_box_pos[1]), sf::Color::White);
+    m_element_shape[2] =
+        sf::Vertex(sf::Vector2f(m_box_pos[2], m_box_pos[3]), sf::Color::White);
+    m_element_shape[3] =
+        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[3]), sf::Color::White);
+    m_element_shape[4] =
+        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[1]), sf::Color::White);
+  */}
+}
 
 void Visualization::set_styles() {
+  m_box_pos = {50, 125, 1200, 700};
   m_buttons_names = {"Back", "Start"};
   m_info_names = {""};
   Screen::set_sf_text_style(m_buttons_text, m_buttons_names, 35, 50, 50, false,
@@ -779,11 +801,16 @@ void Visualization::set_styles() {
     temp = 930;
   }
   m_buttons_shape[c_buttons - 1].setOutlineColor(sf::Color::Green);
-  m_viz_box[0] = sf::Vertex(sf::Vector2f(50, 125), sf::Color::White);
-  m_viz_box[1] = sf::Vertex(sf::Vector2f(1200, 125), sf::Color::White);
-  m_viz_box[2] = sf::Vertex(sf::Vector2f(1200, 700), sf::Color::White);
-  m_viz_box[3] = sf::Vertex(sf::Vector2f(50, 700), sf::Color::White);
-  m_viz_box[4] = sf::Vertex(sf::Vector2f(50, 125), sf::Color::White);
+  m_viz_box[0] =
+      sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[1]), sf::Color::White);
+  m_viz_box[1] =
+      sf::Vertex(sf::Vector2f(m_box_pos[2], m_box_pos[1]), sf::Color::White);
+  m_viz_box[2] =
+      sf::Vertex(sf::Vector2f(m_box_pos[2], m_box_pos[3]), sf::Color::White);
+  m_viz_box[3] =
+      sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[3]), sf::Color::White);
+  m_viz_box[4] =
+      sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[1]), sf::Color::White);
 }
 
 void Visualization::set_options(std::size_t n_elements, int min_val,
@@ -796,4 +823,9 @@ void Visualization::set_options(std::size_t n_elements, int min_val,
   m_info_text[1].setString("Number of elements: " + std::to_string(n_elements));
   m_info_text[2].setString("Min range: " + std::to_string(min_val));
   m_info_text[3].setString("Max range: " + std::to_string(max_val));
+}
+
+int Visualization::random_number_gen(int min_val, int max_val) {
+  std::uniform_int_distribution<> distrib(min_val, max_val);
+  return distrib(gen);
 }
