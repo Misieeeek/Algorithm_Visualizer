@@ -295,6 +295,9 @@ class Visualization : public Screen {
   // RANDOM NUMBER GENERATOR
   int random_number_gen(int min_val, int max_val);
 
+  //
+  void standardize(std::vector<double>& box_pos, int number, int i);
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -327,7 +330,8 @@ class Visualization : public Screen {
 
   // VISUALIZATION BOX
   std::array<sf::Vertex, c_box_vertices> m_viz_box;
-  std::array<int, c_box_vertices - 1> m_box_pos;
+  // X_LEFT, Y_TOP, X_RIGHT, Y_BOTTOM, WIDTH, HEIGHT
+  std::array<int, c_box_vertices + 1> m_box_pos;
 
   // SORTING ELEMENTS
   std::vector<int> m_element_number;

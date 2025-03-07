@@ -759,28 +759,27 @@ void Visualization::change_option(int selected) {
   }
 }
 void Visualization::visual() {
-  m_element_shape.resize(m_options[0]);
+  m_element_shape.resize(m_options[0] * 4);
   m_element_number.resize(m_options[0]);
-  for (auto& x : m_element_number)
-    x = random_number_gen(m_options[1], m_options[2]);
+  std::vector<double> boxes_pos;  // x_left, y_top, x_right
+  boxes_pos.resize(3);
   for (int i = 0; i < m_options[0]; i++) {
-   /* m_element_shape[0] =
-        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[0]), color);
-       m_element_shape[0] =
-        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[1]), sf::Color::White);
-    m_element_shape[1] =
-        sf::Vertex(sf::Vector2f(m_box_pos[2], m_box_pos[1]), sf::Color::White);
-    m_element_shape[2] =
-        sf::Vertex(sf::Vector2f(m_box_pos[2], m_box_pos[3]), sf::Color::White);
-    m_element_shape[3] =
-        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[3]), sf::Color::White);
-    m_element_shape[4] =
-        sf::Vertex(sf::Vector2f(m_box_pos[0], m_box_pos[1]), sf::Color::White);
-  */}
+    int base = i * 4;
+    m_element_number[i] = random_number_gen(m_options[1], m_options[2]);
+    standardize(boxes_pos, m_element_number[i], i);
+    m_element_shape[base + 0] =
+        sf::Vertex(sf::Vector2f(boxes_pos[0], boxes_pos[1]), sf::Color::White);
+    m_element_shape[base + 1] =
+        sf::Vertex(sf::Vector2f(boxes_pos[2], boxes_pos[1]), sf::Color::White);
+    m_element_shape[base + 2] =
+        sf::Vertex(sf::Vector2f(boxes_pos[2], m_box_pos[3]), sf::Color::White);
+    m_element_shape[base + 3] =
+        sf::Vertex(sf::Vector2f(boxes_pos[0], m_box_pos[3]), sf::Color::White);
+  }
 }
 
 void Visualization::set_styles() {
-  m_box_pos = {50, 125, 1200, 700};
+  m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
   m_buttons_names = {"Back", "Start"};
   m_info_names = {""};
   Screen::set_sf_text_style(m_buttons_text, m_buttons_names, 35, 50, 50, false,
@@ -797,7 +796,9 @@ void Visualization::set_styles() {
     m_buttons_shape[i].setOutlineThickness(1.5);
     m_buttons_shape[i].setFillColor(sf::Color::Black);
     m_buttons_text[i].setPosition(
-        50 + temp + (140 - (m_buttons_names[i].length() * 35) / 2), 50);
+        50 + temp +
+            (140 - (static_cast<double>(m_buttons_names[i].length()) * 35) / 2),
+        50);
     temp = 930;
   }
   m_buttons_shape[c_buttons - 1].setOutlineColor(sf::Color::Green);
@@ -828,4 +829,20 @@ void Visualization::set_options(std::size_t n_elements, int min_val,
 int Visualization::random_number_gen(int min_val, int max_val) {
   std::uniform_int_distribution<> distrib(min_val, max_val);
   return distrib(gen);
+}
+
+void Visualization::standardize(std::vector<double>& box_pos, int number,
+                                int i) {
+  box_pos.erase(box_pos.begin(), box_pos.end());
+  double t_i = ((static_cast<double>(number) - m_options[1]) /
+                (m_options[2] - m_options[1]));
+  double H_i = t_i * m_box_pos[5];
+  double y_rectangle_top = m_box_pos[3] - H_i;
+  double w = static_cast<double>(m_box_pos[4]) / m_options[0];
+  double x_rectangle_left = m_box_pos[0] + i * w;
+  double x_rectangle_right = x_rectangle_left + w;
+
+  box_pos.push_back(x_rectangle_left);
+  box_pos.push_back(y_rectangle_top);
+  box_pos.push_back(x_rectangle_right);
 }
