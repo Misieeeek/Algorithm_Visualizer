@@ -21,7 +21,7 @@ void MainWindow::is_running(sf::RenderWindow& window) {
   MainMenu main_menu;
   Screen* current_screen = &main_menu;
   Options options(&current_screen, &main_menu);
-  Visualizer visualize(&current_screen, &main_menu);
+  Visualizer visualize(&current_screen, &main_menu, &window);
 
   int selected;
 

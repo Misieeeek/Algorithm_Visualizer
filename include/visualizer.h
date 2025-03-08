@@ -28,7 +28,7 @@ class Visualization;
 
 class Visualizer : public Screen {
  public:
-  Visualizer(Screen** screen_ptr, Screen* menu);
+  Visualizer(Screen** screen_ptr, Screen* menu, sf::RenderWindow* window);
   virtual ~Visualizer();
 
   // RESPOSIBLE FOR DRAWING EVERYTHING
@@ -85,6 +85,7 @@ class Visualizer : public Screen {
   Screen** current_screen;
   Screen* main_menu;
   Sorting_Class* sort_class;
+  sf::RenderWindow* window_ptr;
   int m_selected_algorithm_index;
   static constexpr std::size_t c_num_algos = 8;
   std::array<sf::Text, c_num_algos> m_list_algorithms;
@@ -169,9 +170,9 @@ class Sorting_Class : public Screen {
   void drop_down(int option) override;
   void typed_on(sf::Event input) override;
 
-  Sorting_Class(Screen** screen_ptr,
-                Visualizer* viz_ptr);  // MENU HAS TO CHANGE
-                                       // TO VISUALIZER
+  Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
+                sf::RenderWindow* window);  // MENU HAS TO CHANGE
+                                            // TO VISUALIZER
   virtual ~Sorting_Class();
 
   void set_style(std::vector<std::string> variants, int y_pos);
@@ -194,6 +195,7 @@ class Sorting_Class : public Screen {
   Screen** current_screen;
   Visualizer* visualize;
   Visualization* final_visual;
+  sf::RenderWindow* window_ptr;
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
   int m_choosed_algo;
@@ -274,7 +276,8 @@ class Sorting_Class : public Screen {
 
 class Visualization : public Screen {
  public:
-  Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr);
+  Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
+                sf::RenderWindow* window);
   ~Visualization();
 
   void draw(sf::RenderWindow& window) override;
@@ -298,10 +301,16 @@ class Visualization : public Screen {
   //
   void standardize(std::vector<double>& box_pos, int number, int i);
 
+  void insertion_sort();
+  void update_rectangle_pos(int i, int number);
+
+  void update_rectangle_color(int i, sf::Color c);
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
   Sorting_Class* sort_class;
+  sf::RenderWindow* window_ptr;
   int m_selected_button_index;
   int m_selected_button;
 

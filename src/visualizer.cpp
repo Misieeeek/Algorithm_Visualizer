@@ -22,16 +22,18 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-Visualizer::Visualizer(Screen** screen_ptr, Screen* menu)
-    : m_selected_algorithm_index(0),
+Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
+                       sf::RenderWindow* window)
+    : current_screen(screen_ptr),
+      main_menu(menu),
+      window_ptr(window),
+      m_selected_algorithm_index(0),
       m_selected_algorithm(0),
       m_category_option(true),
       m_category_font_size(35),
       m_drop_down_item_font_size(20) {
 
-  current_screen = screen_ptr;
-  main_menu = menu;
-  sort_class = new Sorting_Class(screen_ptr, this);
+  sort_class = new Sorting_Class(screen_ptr, this, window_ptr);
   std::array<std::string, c_num_algos> algo = {
       "Sorting Algorithms", "Searching Algorithms",
       "Data Structures",    "Dynamic Programming",
@@ -358,16 +360,18 @@ void Visualizer::go_to_algo_screen(int selected) {
 }
 
 //------------------------------------------------------- Sorting
-Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr)
+Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
+                             sf::RenderWindow* window)
     : current_screen(screen_ptr),
       visualize(viz_ptr),
+      window_ptr(window),
       m_selected_sort_algo(0),
       m_selected_sorting_algo_index(0),
       m_char_size_text_variants(20),
       m_possible_input(false),
       m_temp_value("") {
 
-  final_visual = new Visualization(screen_ptr, this);
+  final_visual = new Visualization(screen_ptr, this, window_ptr);
   //INITIALIZE VISUALIZATION BUTTONS
   std::size_t number_of_buttons = 4;
   m_visualization_buttons_names = {"Start", "Example", "Worst case",
@@ -696,8 +700,12 @@ void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
                              bool bw_case) {}
 
-Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr)
-    : current_screen(screen_ptr), sort_class(sort_class_ptr), gen(m_rd()) {
+Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
+                             sf::RenderWindow* window)
+    : current_screen(screen_ptr),
+      sort_class(sort_class_ptr),
+      window_ptr(window),
+      gen(m_rd()) {
   m_visualizaing = false;
   set_styles();
   m_selected_button_index = 1;
@@ -754,6 +762,7 @@ void Visualization::change_option(int selected) {
       m_visualizaing = false;
     } else {
       m_buttons_text[1].setString("Stop");
+      insertion_sort();
       m_visualizaing = true;
     }
   }
