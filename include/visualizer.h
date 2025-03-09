@@ -344,7 +344,7 @@ class Visualization : public Screen {
 
   // SORTING ELEMENTS
   std::vector<int> m_element_number;
-  std::vector<sf::Vertex> m_element_shape;
+  sf::VertexArray m_element_shape;
 
   std::random_device m_rd;
   std::mt19937 gen;

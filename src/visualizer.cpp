@@ -17,6 +17,7 @@
 #include <memory>
 #include <random>
 #include <string>
+#include <thread>
 #include <utility>
 #include <variant>
 #include "main_menu.h"
@@ -710,6 +711,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   set_styles();
   m_selected_button_index = 1;
   m_selected_button = 1;
+  m_element_shape.setPrimitiveType(sf::Quads);
 }
 
 Visualization::~Visualization() {}
@@ -722,7 +724,7 @@ void Visualization::draw(sf::RenderWindow& window) {
   for (const auto& x : m_info_text)
     window.draw(x);
   window.draw(m_viz_box.data(), m_viz_box.size(), sf::LineStrip);
-  window.draw(m_element_shape.data(), m_element_shape.size(), sf::Quads);
+  window.draw(m_element_shape);
 }
 
 void Visualization::move_left() {
@@ -762,7 +764,8 @@ void Visualization::change_option(int selected) {
       m_visualizaing = false;
     } else {
       m_buttons_text[1].setString("Stop");
-      insertion_sort();
+      std::thread worker_algo(&Visualization::insertion_sort, this);
+      worker_algo.detach();
       m_visualizaing = true;
     }
   }

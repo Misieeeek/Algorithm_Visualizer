@@ -1,4 +1,6 @@
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Sleep.hpp>
+#include <SFML/System/Time.hpp>
 #include "visualizer.h"
 
 void Visualization::update_rectangle_pos(int i, int number) {
@@ -29,28 +31,24 @@ void Visualization::update_rectangle_color(int i, sf::Color c) {
   for (int j = 0; j < 4; j++)
     m_element_shape[base + j].color = c;
 }
-
 void Visualization::insertion_sort() {
   for (int i = 1; i < m_element_number.size(); ++i) {
     int key = m_element_number[i];
     update_rectangle_color(i, sf::Color::Green);
+    //sf::sleep(sf::microseconds(1));
     int j = i - 1;
     while (j >= 0 && m_element_number[j] > key) {
       update_rectangle_color(j, sf::Color::Red);
-      sf::sleep(sf::milliseconds(20));
-      window_ptr->clear();
-      draw(*window_ptr);
-      window_ptr->display();
       m_element_number[j + 1] = m_element_number[j];
+      //sf::sleep(sf::microseconds(1));
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
       update_rectangle_color(j, sf::Color::White);
       j = j - 1;
+      // sf::sleep(sf::microseconds(1));
     }
     m_element_number[j + 1] = key;
     update_rectangle_color(i, sf::Color::White);
     update_rectangle_pos(j + 1, m_element_number[j + 1]);
-    //  window_ptr->clear();
-    // draw(*window_ptr);
-    //window_ptr->display();
+    //sf::sleep(sf::microseconds(1));
   }
 }
