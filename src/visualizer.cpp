@@ -706,7 +706,8 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
     : current_screen(screen_ptr),
       sort_class(sort_class_ptr),
       window_ptr(window),
-      gen(m_rd()) {
+      gen(m_rd()),
+      m_stop_visualizing(false) {
   m_visualizaing = false;
   set_styles();
   m_selected_button_index = 1;
@@ -761,9 +762,11 @@ void Visualization::change_option(int selected) {
   } else {
     if (m_visualizaing == true) {
       m_buttons_text[1].setString("Start");
+      m_stop_visualizing.store(true);
       m_visualizaing = false;
     } else {
       m_buttons_text[1].setString("Stop");
+      m_stop_visualizing.store(false);
       std::thread worker_algo(&Visualization::insertion_sort, this);
       worker_algo.detach();
       m_visualizaing = true;

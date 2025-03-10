@@ -33,11 +33,15 @@ void Visualization::update_rectangle_color(int i, sf::Color c) {
 }
 void Visualization::insertion_sort() {
   for (int i = 1; i < m_element_number.size(); ++i) {
+    if (m_stop_visualizing.load())
+      break;
     int key = m_element_number[i];
     update_rectangle_color(i, sf::Color::Green);
     //sf::sleep(sf::microseconds(1));
     int j = i - 1;
     while (j >= 0 && m_element_number[j] > key) {
+      if (m_stop_visualizing.load())
+        break;
       update_rectangle_color(j, sf::Color::Red);
       m_element_number[j + 1] = m_element_number[j];
       //sf::sleep(sf::microseconds(1));
@@ -46,6 +50,8 @@ void Visualization::insertion_sort() {
       j = j - 1;
       // sf::sleep(sf::microseconds(1));
     }
+    if (m_stop_visualizing.load())
+      break;
     m_element_number[j + 1] = key;
     update_rectangle_color(i, sf::Color::White);
     update_rectangle_pos(j + 1, m_element_number[j + 1]);

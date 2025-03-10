@@ -10,6 +10,7 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <algorithm>
 #include <array>
+#include <atomic>
 #include <charconv>
 #include <functional>
 #include <iostream>
@@ -348,6 +349,9 @@ class Visualization : public Screen {
 
   std::random_device m_rd;
   std::mt19937 gen;
+
+  // STOP THREAD FLAG
+  std::atomic<bool> m_stop_visualizing;
 };
 
 #endif
