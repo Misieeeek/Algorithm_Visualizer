@@ -849,13 +849,24 @@ int Visualization::random_number_gen(int min_val, int max_val) {
 void Visualization::standardize(std::vector<double>& box_pos, int number,
                                 int i) {
   box_pos.erase(box_pos.begin(), box_pos.end());
-  double t_i = ((static_cast<double>(number) - m_options[1]) /
-                (m_options[2] - m_options[1]));
+  double t_i = (static_cast<double>(number) - m_options[1]) /
+               (m_options[2] - m_options[1]);
   double H_i = t_i * m_box_pos[5];
   double y_rectangle_top = m_box_pos[3] - H_i;
-  double w = static_cast<double>(m_box_pos[4]) / m_options[0];
-  double x_rectangle_left = m_box_pos[0] + i * w;
-  double x_rectangle_right = x_rectangle_left + w;
+  double total_width = m_box_pos[4];
+  int n = m_options[0];
+  double maxSpacing = 20.0;
+  int n_threshold = 50;
+  double spacing = 0.0;
+
+  if (n > 1 && n < n_threshold) {
+    spacing =
+        maxSpacing * (static_cast<double>(n_threshold - n) / (n_threshold - 2));
+  } else
+    spacing = 0.0;
+  double effectiveWidth = (total_width - (n - 1) * spacing) / n;
+  double x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
+  double x_rectangle_right = x_rectangle_left + effectiveWidth;
 
   box_pos.push_back(x_rectangle_left);
   box_pos.push_back(y_rectangle_top);
