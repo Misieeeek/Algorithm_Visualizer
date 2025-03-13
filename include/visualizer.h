@@ -2,6 +2,7 @@
 #define VISUALIZER_H
 #include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/Graphics/VertexArray.hpp>
+#include <mutex>
 #include <random>
 #pragma once
 
@@ -352,6 +353,7 @@ class Visualization : public Screen {
 
   // STOP THREAD FLAG
   std::atomic<bool> m_stop_visualizing;
+  std::mutex m_mutex;
 };
 
 #endif

@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
+#include <mutex>
 #include "visualizer.h"
 
 void Visualization::update_rectangle_pos(int i, int number) {
@@ -45,25 +46,33 @@ void Visualization::insertion_sort() {
     if (m_stop_visualizing.load())
       break;
     int key = m_element_number[i];
-    update_rectangle_color(i, sf::Color::Green);
-    //sf::sleep(sf::microseconds(1));
+    {
+      std::lock_guard<std::mutex> lock(m_mutex);
+      update_rectangle_color(i, sf::Color::Green);
+    }
     int j = i - 1;
     while (j >= 0 && m_element_number[j] > key) {
       if (m_stop_visualizing.load())
         break;
-      update_rectangle_color(j, sf::Color::Red);
+      {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        update_rectangle_color(j, sf::Color::Red);
+      }
       m_element_number[j + 1] = m_element_number[j];
-      //sf::sleep(sf::microseconds(500000));
-      update_rectangle_pos(j + 1, m_element_number[j + 1]);
-      update_rectangle_color(j, sf::Color::White);
-      j = j - 1;
-      // sf::sleep(sf::microseconds(1));
+      {
+        std::lock_guard<std::mutex> lock(m_mutex);
+        update_rectangle_pos(j + 1, m_element_number[j + 1]);
+        update_rectangle_color(j, sf::Color::White);
+      }
+      j--;
     }
     if (m_stop_visualizing.load())
       break;
     m_element_number[j + 1] = key;
-    update_rectangle_color(i, sf::Color::White);
-    update_rectangle_pos(j + 1, m_element_number[j + 1]);
-    //sf::sleep(sf::microseconds(1));
+    {
+      std::lock_guard<std::mutex> lock(m_mutex);
+      update_rectangle_color(i, sf::Color::White);
+      update_rectangle_pos(j + 1, m_element_number[j + 1]);
+    }
   }
 }

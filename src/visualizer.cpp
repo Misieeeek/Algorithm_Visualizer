@@ -10,6 +10,7 @@
 #include <algorithm>
 #include <array>
 #include <charconv>
+#include <chrono>
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
@@ -22,7 +23,6 @@
 #include <variant>
 #include "main_menu.h"
 #include "main_window.h"
-
 Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
                        sf::RenderWindow* window)
     : current_screen(screen_ptr),
@@ -718,6 +718,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
 Visualization::~Visualization() {}
 
 void Visualization::draw(sf::RenderWindow& window) {
+  std::lock_guard<std::mutex> lock(m_mutex);
   for (const auto& x : m_buttons_shape)
     window.draw(x);
   for (const auto& x : m_buttons_text)
