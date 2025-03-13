@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
+#include <chrono>
 #include <mutex>
 #include "visualizer.h"
 
@@ -75,4 +76,7 @@ void Visualization::insertion_sort() {
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
     }
   }
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
 }
