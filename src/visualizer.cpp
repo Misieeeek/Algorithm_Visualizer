@@ -14,6 +14,7 @@
 #include <cmath>
 #include <cstddef>
 #include <cstdlib>
+#include <functional>
 #include <iostream>
 #include <memory>
 #include <random>
@@ -612,7 +613,6 @@ void Sorting_Class::insertion_sort() {
       "Insertion Sort", "Recursive Insertion Sort",
       "Shell Sort",     "Binary Insertion Sort",
       "Library Sort",   "Back"};
-
   m_variants_size = insertion_sort_variants.size();
   insertion_sort_variants.insert(insertion_sort_variants.end(),
                                  m_visualization_options_names.begin(),
@@ -713,6 +713,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   m_selected_button_index = 1;
   m_selected_button = 1;
   m_element_shape.setPrimitiveType(sf::Quads);
+  initialize_algorithms();
 }
 
 Visualization::~Visualization() {}
@@ -768,7 +769,11 @@ void Visualization::change_option(int selected) {
     } else {
       m_buttons_text[1].setString("Stop");
       m_stop_visualizing.store(false);
-      std::thread worker_algo(&Visualization::insertion_sort, this);
+
+      std::thread worker_algo(m_algo_func[m_algorithm_name]);
+      /*std::thread worker_algo(&Visualization::recur_insertion_sort, this,
+                              m_element_number.size());*/
+      //std::thread worker_algo(&Visualization::insertion_sort, this);
       worker_algo.detach();
       m_visualizaing = true;
     }
@@ -872,4 +877,16 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
   box_pos.push_back(x_rectangle_left);
   box_pos.push_back(y_rectangle_top);
   box_pos.push_back(x_rectangle_right);
+}
+
+void Visualization::initialize_algorithms() {
+  /*"", "",
+      "Shell Sort",     "Binary Insertion Sort",
+      "Library Sort"*/
+  m_algo_func["Insertion Sort"] = [this]() {
+    insertion_sort();
+  };
+  m_algo_func["Recursive Insertion Sort"] = [this]() {
+    recur_insertion_sort(m_options[0]);
+  };
 }

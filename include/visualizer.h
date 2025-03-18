@@ -1,14 +1,12 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
-#include <SFML/Graphics/PrimitiveType.hpp>
-#include <SFML/Graphics/VertexArray.hpp>
-#include <mutex>
-#include <random>
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/PrimitiveType.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 #include <algorithm>
 #include <array>
 #include <atomic>
@@ -16,10 +14,13 @@
 #include <functional>
 #include <iostream>
 #include <map>
+#include <mutex>
+#include <random>
 #include <span>
 #include <sstream>
 #include <string>
 #include <utility>
+#include <variant>
 #include <vector>
 #include "main_menu.h"
 #include "main_window.h"
@@ -307,6 +308,10 @@ class Visualization : public Screen {
   void update_rectangle_pos(int i, int number);
 
   void update_rectangle_color(int i, sf::Color c);
+  void recur_insertion_sort(int n);
+
+  void initialize_algorithms();
+  void execute_algorithm(const std::string& name);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -353,7 +358,11 @@ class Visualization : public Screen {
 
   // STOP THREAD FLAG
   std::atomic<bool> m_stop_visualizing;
+  //SYNC THREADS
   std::mutex m_mutex;
+
+  //
+  std::unordered_map<std::string, std::function<void()>> m_algo_func;
 };
 
 #endif
