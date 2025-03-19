@@ -64,7 +64,6 @@ void Visualization::check_mutex_type() {
 }
 
 void Visualization::insertion_sort() {
-  std::cout << "INSERTION SORT\n";
   for (int i = 1; i < m_element_number.size(); ++i) {
     if (m_stop_visualizing.load())
       break;
@@ -103,7 +102,6 @@ void Visualization::insertion_sort() {
   m_visualizaing = false;
 }
 void Visualization::recur_insertion_sort(int n) {
-  std::cout << n << ": RECURSIVE INSERTION SORT\n";
   if (m_stop_visualizing.load()) {
     for (int i = 0; i < n; i++)
       update_rectangle_color(i, sf::Color::White);

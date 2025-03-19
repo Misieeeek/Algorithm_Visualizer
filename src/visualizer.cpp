@@ -769,13 +769,16 @@ void Visualization::change_option(int selected) {
     } else {
       m_buttons_text[1].setString("Stop");
       m_stop_visualizing.store(false);
-
-      std::thread worker_algo(m_algo_func[m_algorithm_name]);
-      /*std::thread worker_algo(&Visualization::recur_insertion_sort, this,
-                              m_element_number.size());*/
-      //std::thread worker_algo(&Visualization::insertion_sort, this);
-      worker_algo.detach();
-      m_visualizaing = true;
+      try {
+        std::thread worker_algo(m_algo_func.at(m_algorithm_name));
+        worker_algo.detach();
+        m_visualizaing = true;
+      } catch (const std::out_of_range& e) {
+        std::cerr << "Algorithm not found: " << m_algorithm_name << std::endl;
+        m_buttons_text[1].setString("Start");
+        m_stop_visualizing.store(true);
+        m_visualizaing = false;
+      }
     }
   }
 }
