@@ -3,6 +3,7 @@
 #include <SFML/System/Time.hpp>
 #include <chrono>
 #include <mutex>
+#include <variant>
 #include "visualizer.h"
 
 void Visualization::update_rectangle_pos(int i, int number) {
@@ -38,10 +39,30 @@ void Visualization::update_rectangle_pos(int i, int number) {
 }
 
 void Visualization::update_rectangle_color(int i, sf::Color c) {
+  if (i < 0 || i >= m_element_number.size()) {
+    std::cerr << "Error: update_rectangle_color index out of range: " << i
+              << std::endl;
+    return;
+  }
   int base = i * 4;
-  for (int j = 0; j < 4; j++)
-    m_element_shape[base + j].color = c;
+  if (base + 3 >= m_element_shape.getVertexCount()) {
+    std::cerr << "Error: base out of range: " << base << std::endl;
+    return;
+  }
+
+  for (int k = 0; k < 4; k++) {
+    m_element_shape[base + k].color = c;
+  }
 }
+
+void Visualization::check_mutex_type() {
+  if (std::holds_alternative<std::recursive_mutex>(m_mutex))
+    std::lock_guard<std::recursive_mutex> lock(
+        std::get<std::recursive_mutex>(m_mutex));
+  else if (std::holds_alternative<std::mutex>(m_mutex))
+    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+}
+
 void Visualization::insertion_sort() {
   std::cout << "INSERTION SORT\n";
   for (int i = 1; i < m_element_number.size(); ++i) {
@@ -49,7 +70,7 @@ void Visualization::insertion_sort() {
       break;
     int key = m_element_number[i];
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
       update_rectangle_color(i, sf::Color::Green);
     }
     int j = i - 1;
@@ -57,12 +78,12 @@ void Visualization::insertion_sort() {
       if (m_stop_visualizing.load())
         break;
       {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
         update_rectangle_color(j, sf::Color::Red);
       }
       m_element_number[j + 1] = m_element_number[j];
       {
-        std::lock_guard<std::mutex> lock(m_mutex);
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
         update_rectangle_pos(j + 1, m_element_number[j + 1]);
         update_rectangle_color(j, sf::Color::White);
       }
@@ -72,7 +93,7 @@ void Visualization::insertion_sort() {
       break;
     m_element_number[j + 1] = key;
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
       update_rectangle_color(i, sf::Color::White);
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
     }
@@ -82,25 +103,35 @@ void Visualization::insertion_sort() {
   m_visualizaing = false;
 }
 void Visualization::recur_insertion_sort(int n) {
-
-  std::cout << "RECURSIVE INSERTION SORT\n";
+  std::cout << n << ": RECURSIVE INSERTION SORT\n";
+  if (m_stop_visualizing.load()) {
+    for (int i = 0; i < n; i++)
+      update_rectangle_color(i, sf::Color::White);
+    return;
+  }
   if (n <= 1)
     return;
+
   recur_insertion_sort(n - 1);
   int last = m_element_number[n - 1];
   int j = n - 2;
   {
-    std::lock_guard<std::mutex> lock(m_mutex);
+    check_mutex_type();
     update_rectangle_color(j, sf::Color::Green);
   }
   while (j >= 0 && m_element_number[j] > last) {
+    if (m_stop_visualizing.load()) {
+      for (int i = 0; i < n; i++)
+        update_rectangle_color(i, sf::Color::White);
+      return;
+    }
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
+      check_mutex_type();
       update_rectangle_color(j, sf::Color::Red);
     }
     m_element_number[j + 1] = m_element_number[j];
     {
-      std::lock_guard<std::mutex> lock(m_mutex);
+      check_mutex_type();
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
       update_rectangle_color(j, sf::Color::White);
     }
@@ -108,8 +139,14 @@ void Visualization::recur_insertion_sort(int n) {
   }
   m_element_number[j + 1] = last;
   {
-    std::lock_guard<std::mutex> lock(m_mutex);
-    update_rectangle_color(j, sf::Color::White);
+    check_mutex_type();
+    int indexToUpdate = (j < 0) ? 0 : j;
+    update_rectangle_color(indexToUpdate, sf::Color::White);
     update_rectangle_pos(j + 1, m_element_number[j + 1]);
+  }
+  if (n == m_element_number.size()) {
+    m_buttons_text[1].setString("Start");
+    m_stop_visualizing.store(true);
+    m_visualizaing = false;
   }
 }

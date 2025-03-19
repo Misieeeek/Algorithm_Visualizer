@@ -313,6 +313,8 @@ class Visualization : public Screen {
   void initialize_algorithms();
   void execute_algorithm(const std::string& name);
 
+  void check_mutex_type();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -359,7 +361,7 @@ class Visualization : public Screen {
   // STOP THREAD FLAG
   std::atomic<bool> m_stop_visualizing;
   //SYNC THREADS
-  std::mutex m_mutex;
+  std::variant<std::mutex, std::recursive_mutex> m_mutex;
 
   //
   std::unordered_map<std::string, std::function<void()>> m_algo_func;
