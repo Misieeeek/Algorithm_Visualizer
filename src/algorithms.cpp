@@ -1,6 +1,7 @@
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
+#include <algorithm>
 #include <chrono>
 #include <cmath>
 #include <mutex>
@@ -98,7 +99,7 @@ void Visualization::insertion_sort() {
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
     }
   }
-
+  shell_gap_is();
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
@@ -196,8 +197,18 @@ void Visualization::shell_gap_knuth() {
     m_gaps.push_back(((std::pow(3, i) - 1) / 2));
 }
 
-void Visualization::shell_gap_is() {}
-
+void Visualization::shell_gap_is() {
+  std::vector<int> temp = {1,     3,      7,      21,     48,    112,
+                           336,   861,    1968,   4592,   13776, 33936,
+                           86961, 198768, 463792, 1391376};
+  int i = 0;
+  while (temp[i] < m_element_number.size()) {
+    m_gaps.push_back(temp[i]);
+    i++;
+  }
+  for (auto x : m_gaps)
+    std::cout << x << "\n";
+}
 void Visualization::shell_gap_sedgewick_1() {
   m_gaps.push_back(1);
   for (int i = 1;
