@@ -2,6 +2,7 @@
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
 #include <chrono>
+#include <cmath>
 #include <mutex>
 #include <variant>
 #include "visualizer.h"
@@ -97,6 +98,7 @@ void Visualization::insertion_sort() {
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
     }
   }
+
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
@@ -147,4 +149,157 @@ void Visualization::recur_insertion_sort(int n) {
     m_stop_visualizing.store(true);
     m_visualizaing = false;
   }
+}
+
+void Visualization::shell_gap_shell() {
+  for (int i = floor(m_element_number.size() / 2); i > 0; i /= 2)
+    m_gaps.push_back(i);
+}
+
+void Visualization::shell_gap_fl() {
+  for (int i = 2 * floor(m_element_number.size() / (2 * 2)) + 1; i > 0; i /= 2)
+    m_gaps.push_back(i);
+}
+
+void Visualization::shell_gap_hibbard() {
+  for (int i = 0; std::pow(2, i) - 1 < m_element_number.size(); i++)
+    m_gaps.push_back(i);
+}
+
+void Visualization::shell_gap_ps() {
+  m_gaps.push_back(1);
+  for (int i = 1; std::pow(2, i) + 1 < m_element_number.size(); i++)
+    m_gaps.push_back(i);
+}
+
+void Visualization::shell_gap_pratt() {
+  m_gaps.push_back(1);
+  {
+    int i2 = 0, i3 = 0;
+    while (m_gaps.back() < m_element_number.size()) {
+      int n2 = 2 * m_gaps[i2];
+      int n3 = 3 * m_gaps[i3];
+      int next_val = std::min(n2, n3);
+      if (next_val >= m_element_number.size())
+        break;
+      m_gaps.push_back(next_val);
+      if (next_val == n2)
+        i2++;
+      if (next_val == n3)
+        i3++;
+    }
+  }
+}
+void Visualization::shell_gap_knuth() {
+  for (int i = 1;
+       ((std::pow(3, i) - 1) / 2) < ceil(m_element_number.size() / 3); i++)
+    m_gaps.push_back(((std::pow(3, i) - 1) / 2));
+}
+
+void Visualization::shell_gap_is() {}
+
+void Visualization::shell_gap_sedgewick_1() {
+  m_gaps.push_back(1);
+  for (int i = 1;
+       (std::pow(4, i) + 3 * std::pow(2, i - 1) + 1) < m_element_number.size();
+       i++)
+    m_gaps.push_back(std::pow(4, i) + 3 * std::pow(2, i - 1) + 1);
+}
+
+void Visualization::shell_gap_sedgewick_2() {
+  m_gaps.push_back(1);
+  for (int i = 1; m_gaps.back() < m_element_number.size(); i++) {
+    int candidate = 0;
+    if (i % 2 == 0)
+      candidate =
+          static_cast<int>(9 * (std::pow(2, i) - std::pow(2, i / 2)) + 1);
+    else
+      candidate = static_cast<int>(8 * std::pow(2, i) -
+                                   6 * std::pow(2, ((i + 1) / 2)) + 1);
+    if (candidate < m_element_number.size())
+      m_gaps.push_back(candidate);
+    else
+      break;
+  }
+}
+void Visualization::shell_gap_gby() {
+  int gap = (5 * m_element_number.size() - 1) / 11;
+  while (gap > 0) {
+    m_gaps.push_back(gap);
+    gap = (5 * gap - 1) / 11;
+  }
+}
+void Visualization::shell_gap_tokuda() {
+  for (int i = 1; std::ceil((1.0 / 5) * (9 * std::pow(9.0 / 4, i - 1) - 4)) <
+                  m_element_number.size();
+       i++)
+    m_gaps.push_back(std::ceil((1.0 / 5) * (9 * std::pow(9.0 / 4, i - 1) - 4)));
+}
+void Visualization::shell_gap_lee() {
+  double y = 2.243609061420001;
+  for (int i = 1;
+       std::ceil((std::pow(y, i) - 1) / (y - 1)) < m_element_number.size(); i++)
+    m_gaps.push_back(std::ceil((std::pow(y, i) - 1) / (y - 1)));
+}
+void Visualization::shell_gap_sej() {
+  m_gaps.push_back(1);
+  for (int i = 0; std::floor(4.0816 * std::pow(8.5714, (i / 2.2449))) <
+                  m_element_number.size();
+       i++)
+    m_gaps.push_back(std::floor(4.0816 * std::pow(8.5714, (i / 2.2449))));
+}
+void Visualization::set_shell_gaps() {
+  m_gaps.clear();
+  switch (m_selected_shell_gap) {
+    case 0:  //SHELL
+      shell_gap_shell();
+      break;
+    case 1:  // FRANK & LAZARUS
+      shell_gap_fl();
+      break;
+    case 2:  // HIBBARD
+      shell_gap_hibbard();
+      break;
+    case 3:  // PAPERNOV & STASEVICH
+      shell_gap_ps();
+      break;
+    case 4:  // PRATT
+      shell_gap_pratt();
+      break;
+    case 5:  // KNUTH
+      shell_gap_knuth();
+      break;
+    case 6:  // INCERPI & SEDGEWICK
+      shell_gap_is();
+      break;
+    case 7:  // SEDGEWICK (1)
+      shell_gap_sedgewick_1();
+      break;
+    case 8:  // SEDGEWICK (2)
+      shell_gap_sedgewick_2();
+      break;
+    case 9:  // GONNET & BAEZA-YATES
+      shell_gap_gby();
+      break;
+    case 10:  // TOKUDA
+      shell_gap_tokuda();
+      break;
+    case 11:  // CIURA
+      m_gaps.insert(m_gaps.end(), {1, 4, 10, 23, 57, 132, 301, 701});
+      break;
+    case 12:  // LEE
+      shell_gap_lee();
+      break;
+    case 13:  // SKEAN & EHRENBORG & JAROMCZYK
+      shell_gap_sej();
+      break;
+    default:
+      std::cerr << "Error: selected shell gap not found: "
+                << m_selected_shell_gap << std::endl;
+      break;
+  }
+}
+
+void Visualization::shell_sort() {
+  set_shell_gaps();
 }

@@ -304,16 +304,34 @@ class Visualization : public Screen {
   //
   void standardize(std::vector<double>& box_pos, int number, int i);
 
-  void insertion_sort();
   void update_rectangle_pos(int i, int number);
 
   void update_rectangle_color(int i, sf::Color c);
-  void recur_insertion_sort(int n);
 
   void initialize_algorithms();
   void execute_algorithm(const std::string& name);
 
   void check_mutex_type();
+
+  //SHELL SORT GAPS GENERATORS
+  void set_shell_gaps();         //GO TO SELECTED GAP GENERATOR FUNCTION
+  void shell_gap_shell();        // ORIGINAL SHELL GAP
+  void shell_gap_fl();           // FRANK & LAZARUS GAP
+  void shell_gap_hibbard();      // HIBBARD GAP
+  void shell_gap_ps();           // PAPERNOV & STASEVICH GAP
+  void shell_gap_pratt();        // PRATT GAP
+  void shell_gap_knuth();        // KNUTH GAP
+  void shell_gap_is();           // INCERPI & SEDGEWICK GAP
+  void shell_gap_sedgewick_1();  // SEDGEWICK GAP 1
+  void shell_gap_sedgewick_2();  // SEDGEWICK GAP 2
+  void shell_gap_gby();          // GONNET & BAEZA-YATES GAP
+  void shell_gap_tokuda();       // TOKUDA GAP
+  void shell_gap_lee();          // LEE GAP
+  void shell_gap_sej();          // SKEAN & EHRENBORG & JAROMCZYK GAP
+
+  void insertion_sort();
+  void recur_insertion_sort(int n);
+  void shell_sort();
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -365,6 +383,13 @@ class Visualization : public Screen {
 
   //
   std::unordered_map<std::string, std::function<void()>> m_algo_func;
+
+  //SHELL SORT GAPS
+  //0 - SHELL, 1 - FRANK & LAZARUS, 2 - HIBBARD, 3 - PAPERNOV & STASEVICH
+  //4 - PRATT, 5 - KNUTH, 6 - INCERPI & SADGEWICK, 7 - SEDGEWICK(1), 8 - SEDGEWICK(2)
+  //9 - GONNET & BAEZA-YATES, 10 -TOKUDA, 11 - CIURA, 12 - LEE, 13 - SKEAN & EHRENBORG & JAROMCZYK
+  int m_selected_shell_gap;
+  std::vector<int> m_gaps;
 };
 
 #endif

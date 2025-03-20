@@ -522,18 +522,23 @@ void Sorting_Class::change_option(int selected) {
   switch (selected) {
     case 0:  // BASIC INSERTION SORT
       m_choosed_algo = 0;
+      m_algorithm_variants[selected].setFillColor(sf::Color::Green);
       break;
     case 1:  // RECURSIVE INSERTION SORT
       m_choosed_algo = 1;
+      m_algorithm_variants[selected].setFillColor(sf::Color::Green);
       break;
     case 2:  // SHELL SORT
       m_choosed_algo = 2;
+      m_algorithm_variants[selected].setFillColor(sf::Color::Green);
       break;
     case 3:  // BINARY INSERTION SORT
       m_choosed_algo = 3;
+      m_algorithm_variants[selected].setFillColor(sf::Color::Green);
       break;
     case 4:  // LIBRARY SORT
       m_choosed_algo = 4;
+      m_algorithm_variants[selected].setFillColor(sf::Color::Green);
       break;
     case 5:
       m_choosed_algo = 0;
