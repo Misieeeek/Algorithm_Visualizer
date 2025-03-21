@@ -1,3 +1,4 @@
+#include <unistd.h>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
@@ -5,6 +6,7 @@
 #include <chrono>
 #include <cmath>
 #include <mutex>
+#include <string>
 #include <variant>
 #include "visualizer.h"
 
@@ -97,8 +99,11 @@ void Visualization::insertion_sort() {
       std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
       update_rectangle_color(i, sf::Color::White);
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
+      m_info_text[4].setString("Duration: " +
+                               std::to_string(get_elapsed_time().count()));
     }
   }
+  restart_timer();
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
@@ -143,8 +148,11 @@ void Visualization::recur_insertion_sort(int n) {
     int indexToUpdate = (j < 0) ? 0 : j;
     update_rectangle_color(indexToUpdate, sf::Color::White);
     update_rectangle_pos(j + 1, m_element_number[j + 1]);
+    m_info_text[4].setString("Duration: " +
+                             std::to_string(get_elapsed_time().count()));
   }
   if (n == m_element_number.size()) {
+    restart_timer();
     m_buttons_text[1].setString("Start");
     m_stop_visualizing.store(true);
     m_visualizaing = false;
@@ -355,10 +363,13 @@ void Visualization::shell_sort() {
         std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
         update_rectangle_pos(j, m_element_number[j]);
         update_rectangle_color(j, sf::Color::White);
+        m_info_text[4].setString("Duration: " +
+                                 std::to_string(get_elapsed_time().count()));
       }
       //      sf::sleep(sf::milliseconds(50));
     }
   }
+  restart_timer();
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;

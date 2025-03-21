@@ -1,5 +1,6 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <chrono>
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -329,9 +330,15 @@ class Visualization : public Screen {
   void shell_gap_lee();          // LEE GAP
   void shell_gap_sej();          // SKEAN & EHRENBORG & JAROMCZYK GAP
 
+  //SORTING ALGOS
   void insertion_sort();
   void recur_insertion_sort(int n);
   void shell_sort();
+
+  //TIMER FUNCTIONS
+  std::chrono::milliseconds get_elapsed_time() const;
+  void restart_timer();
+  void pause_timer();
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -343,7 +350,7 @@ class Visualization : public Screen {
 
   // CONSTANTS
   static constexpr std::size_t c_buttons = 2;
-  static constexpr std::size_t c_info = 4;
+  static constexpr std::size_t c_info = 5;
   static constexpr std::size_t c_options = 3;
   static constexpr std::size_t c_box_vertices = 5;
 
@@ -390,6 +397,12 @@ class Visualization : public Screen {
   //9 - GONNET & BAEZA-YATES, 10 -TOKUDA, 11 - CIURA, 12 - LEE, 13 - SKEAN & EHRENBORG & JAROMCZYK
   int m_selected_shell_gap;
   std::vector<int> m_gaps;
+
+  //TIMER
+  std::chrono::milliseconds m_offset{0};  // Sumaryczny czas działania algorytmu
+  std::chrono::high_resolution_clock::time_point
+      m_last_resume_time;     // Ostatni moment wznowienia
+  bool m_is_running = false;  // Czy algorytm jest aktywny
 };
 
 #endif

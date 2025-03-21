@@ -712,7 +712,8 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
       sort_class(sort_class_ptr),
       window_ptr(window),
       gen(m_rd()),
-      m_stop_visualizing(false) {
+      m_stop_visualizing(false),
+      m_offset(std::chrono::milliseconds(0)) {
   m_visualizaing = false;
   set_styles();
   m_selected_button_index = 1;
@@ -720,10 +721,32 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   m_element_shape.setPrimitiveType(sf::Quads);
   initialize_algorithms();
   m_selected_shell_gap = 0;
+  pause_timer();
 }
 
 Visualization::~Visualization() {}
 
+void Visualization::restart_timer() {
+  m_offset = std::chrono::milliseconds(0);
+  m_last_resume_time = std::chrono::high_resolution_clock::now();
+  m_is_running = true;
+}
+std::chrono::milliseconds Visualization::get_elapsed_time() const {
+  if (m_is_running) {
+    auto now = std::chrono::high_resolution_clock::now();
+    return m_offset + std::chrono::duration_cast<std::chrono::milliseconds>(
+                          now - m_last_resume_time);
+  }
+  return m_offset;
+}
+void Visualization::pause_timer() {
+  if (m_is_running) {
+    auto now = std::chrono::high_resolution_clock::now();
+    m_offset += std::chrono::duration_cast<std::chrono::milliseconds>(
+        now - m_last_resume_time);
+    m_is_running = false;
+  }
+}
 void Visualization::draw(sf::RenderWindow& window) {
   std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
   for (const auto& x : m_buttons_shape)
@@ -766,16 +789,20 @@ void Visualization::change_option(int selected) {
     m_selected_button = 1;
     m_buttons_shape[1].setOutlineColor(sf::Color::Green);
     m_buttons_shape[0].setOutlineColor(sf::Color::Red);
+    restart_timer();
+    pause_timer();
     *current_screen = sort_class;
   } else {
     if (m_visualizaing == true) {
       m_buttons_text[1].setString("Start");
       m_stop_visualizing.store(true);
       m_visualizaing = false;
+      pause_timer();
     } else {
       m_buttons_text[1].setString("Stop");
       m_stop_visualizing.store(false);
       try {
+        restart_timer();
         std::thread worker_algo(m_algo_func.at(m_algorithm_name));
         worker_algo.detach();
         m_visualizaing = true;
@@ -854,6 +881,8 @@ void Visualization::set_options(std::size_t n_elements, int min_val,
   m_info_text[1].setString("Number of elements: " + std::to_string(n_elements));
   m_info_text[2].setString("Min range: " + std::to_string(min_val));
   m_info_text[3].setString("Max range: " + std::to_string(max_val));
+  m_info_text[4].setString("Duration: " +
+                           std::to_string(get_elapsed_time().count()));
 }
 
 int Visualization::random_number_gen(int min_val, int max_val) {
@@ -886,6 +915,7 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
   box_pos.push_back(x_rectangle_left);
   box_pos.push_back(y_rectangle_top);
   box_pos.push_back(x_rectangle_right);
+  restart_timer();
 }
 
 void Visualization::initialize_algorithms() {
