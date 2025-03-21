@@ -99,7 +99,6 @@ void Visualization::insertion_sort() {
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
     }
   }
-  shell_gap_is();
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
@@ -163,14 +162,14 @@ void Visualization::shell_gap_fl() {
 }
 
 void Visualization::shell_gap_hibbard() {
-  for (int i = 0; std::pow(2, i) - 1 < m_element_number.size(); i++)
-    m_gaps.push_back(i);
+  for (int i = 1; std::pow(2, i) - 1 < m_element_number.size(); i++)
+    m_gaps.push_back(std::pow(2, i) - 1);
 }
 
 void Visualization::shell_gap_ps() {
   m_gaps.push_back(1);
   for (int i = 1; std::pow(2, i) + 1 < m_element_number.size(); i++)
-    m_gaps.push_back(i);
+    m_gaps.push_back(std::pow(2, i) + 1);
 }
 
 void Visualization::shell_gap_pratt() {
@@ -206,8 +205,6 @@ void Visualization::shell_gap_is() {
     m_gaps.push_back(temp[i]);
     i++;
   }
-  for (auto x : m_gaps)
-    std::cout << x << "\n";
 }
 void Visualization::shell_gap_sedgewick_1() {
   m_gaps.push_back(1);
@@ -270,39 +267,49 @@ void Visualization::set_shell_gaps() {
       break;
     case 2:  // HIBBARD
       shell_gap_hibbard();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 3:  // PAPERNOV & STASEVICH
       shell_gap_ps();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 4:  // PRATT
       shell_gap_pratt();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 5:  // KNUTH
       shell_gap_knuth();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 6:  // INCERPI & SEDGEWICK
       shell_gap_is();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 7:  // SEDGEWICK (1)
       shell_gap_sedgewick_1();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 8:  // SEDGEWICK (2)
       shell_gap_sedgewick_2();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 9:  // GONNET & BAEZA-YATES
       shell_gap_gby();
       break;
     case 10:  // TOKUDA
       shell_gap_tokuda();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 11:  // CIURA
-      m_gaps.insert(m_gaps.end(), {1, 4, 10, 23, 57, 132, 301, 701});
+      m_gaps.insert(m_gaps.end(), {701, 301, 132, 57, 23, 10, 4, 1});
       break;
     case 12:  // LEE
       shell_gap_lee();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     case 13:  // SKEAN & EHRENBORG & JAROMCZYK
       shell_gap_sej();
+      std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     default:
       std::cerr << "Error: selected shell gap not found: "
@@ -313,4 +320,46 @@ void Visualization::set_shell_gaps() {
 
 void Visualization::shell_sort() {
   set_shell_gaps();
+  for (auto gap : m_gaps) {
+    if (m_stop_visualizing.load())
+      break;
+    for (int i = gap; i < m_element_number.size(); i++) {
+      if (m_stop_visualizing.load())
+        break;
+      int temp = m_element_number[i];
+      int j;
+      {
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+        update_rectangle_color(i, sf::Color::Green);
+      }
+      //   sf::sleep(sf::milliseconds(50));
+      for (j = i; j >= gap && m_element_number[j - gap] > temp; j -= gap) {
+        if (m_stop_visualizing.load())
+          break;
+        {
+          std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+          update_rectangle_pos(j - gap, m_element_number[j - gap]);
+          update_rectangle_color(j, sf::Color::Red);
+        }
+        m_element_number[j] = m_element_number[j - gap];
+        //      sf::sleep(sf::milliseconds(50));
+        {
+          std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+          update_rectangle_pos(j, m_element_number[j]);
+          update_rectangle_color(j, sf::Color::White);
+        }
+      }
+      //     sf::sleep(sf::milliseconds(50));
+      m_element_number[j] = temp;
+      {
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+        update_rectangle_pos(j, m_element_number[j]);
+        update_rectangle_color(j, sf::Color::White);
+      }
+      //      sf::sleep(sf::milliseconds(50));
+    }
+  }
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
 }

@@ -719,6 +719,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   m_selected_button = 1;
   m_element_shape.setPrimitiveType(sf::Quads);
   initialize_algorithms();
+  m_selected_shell_gap = 0;
 }
 
 Visualization::~Visualization() {}
@@ -896,5 +897,8 @@ void Visualization::initialize_algorithms() {
   };
   m_algo_func["Recursive Insertion Sort"] = [this]() {
     recur_insertion_sort(m_options[0]);
+  };
+  m_algo_func["Shell Sort"] = [this]() {
+    shell_sort();
   };
 }
