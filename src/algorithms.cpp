@@ -1,4 +1,4 @@
-#include <unistd.h>
+/*#include <unistd.h>
 #include <SFML/Graphics/Color.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
@@ -7,8 +7,8 @@
 #include <cmath>
 #include <mutex>
 #include <string>
-#include <variant>
-#include "visualizer.h"
+#include <variant>*/
+#include "visualization.h"
 
 void Visualization::update_rectangle_pos(int i, int number) {
   int base = i * 4;

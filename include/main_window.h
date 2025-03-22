@@ -3,11 +3,28 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
+#include <SFML/Graphics/PrimitiveType.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <SFML/Graphics/VertexArray.hpp>
 #include <SFML/Window/Event.hpp>
+#include <algorithm>
 #include <array>
+#include <atomic>
+#include <charconv>
 #include <filesystem>
+#include <functional>
+#include <iostream>
+#include <map>
+#include <mutex>
+#include <random>
 #include <span>
+#include <sstream>
+#include <string>
+#include <utility>
+#include <variant>
+#include <vector>
 
 class Screen {
  public:
