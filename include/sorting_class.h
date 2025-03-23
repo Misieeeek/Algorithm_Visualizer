@@ -37,9 +37,10 @@ class Sorting_Class : public Screen {
   // OVERLOAD algo_viz(...) FUNCTION, ADDITIONAL PARAMETER case, WHERE false = WORST CASE
   void algo_viz(std::size_t n_elements, int min_val, int max_val, bool bw_case);
 
-  //SET SHELL SORT PARAMS
-
-  void set_shell_sort(int selected);
+  void drop_down_list(std::size_t number_of_categories,
+                      std::span<std::string> list_of_algo, int end_iter,
+                      int add_val_pos_x_drop_down, int add_val_pos_y_before_ddm,
+                      int add_val_pos_y_after_ddm);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -62,6 +63,7 @@ class Sorting_Class : public Screen {
 
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM
   std::vector<sf::Text> m_algorithm_variants;
+  std::vector<std::string> m_algorithm_variants_names;
   std::size_t m_variants_size;
 
   // TEXT STYLE & HEADERS
@@ -89,6 +91,8 @@ class Sorting_Class : public Screen {
   // IF THE IMPUT OPTION IS SELECTED
   bool m_possible_input;
 
+  std::vector<sf::Text> m_list_of_elements;
+  int m_drop_down_item_font_size;
   // INPUT LOGIC
   void input_logic(int char_typed) {
     if (char_typed != c_delete_key && char_typed != c_enter_key) {

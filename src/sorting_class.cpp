@@ -1,3 +1,4 @@
+#include "sorting_class.h"
 #include "visualization.h"
 
 Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
@@ -9,7 +10,8 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
       m_selected_sorting_algo_index(0),
       m_char_size_text_variants(20),
       m_possible_input(false),
-      m_temp_value("") {
+      m_temp_value(""),
+      m_drop_down_item_font_size(15) {
 
   final_visual = new Visualization(screen_ptr, this, window_ptr);
   //INITIALIZE VISUALIZATION BUTTONS
@@ -39,6 +41,8 @@ void Sorting_Class::draw(sf::RenderWindow& window) {
   for (const auto& x : m_headers)
     window.draw(x);
   for (const auto& x : m_textbox_input_style)
+    window.draw(x);
+  for (const auto& x : m_list_of_elements)
     window.draw(x);
 }
 
@@ -86,7 +90,7 @@ void Sorting_Class::move_down() {
 }
 
 void Sorting_Class::move_left() {
-  if (!m_possible_input) {
+  if (!m_possible_input && !m_dropped) {
     if (!(m_selected_sorting_algo_index < m_variants_size)) {
       if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
@@ -116,7 +120,7 @@ void Sorting_Class::move_left() {
 }
 
 void Sorting_Class::move_right() {
-  if (!m_possible_input) {
+  if (!m_possible_input && !m_dropped) {
     if (!(m_selected_sorting_algo_index >= c_options + m_variants_size)) {
       if (m_selected_sorting_algo_index == m_variants_size - 1)
         m_algorithm_variants[m_selected_sorting_algo_index].setFillColor(
@@ -156,12 +160,47 @@ int Sorting_Class::pressed() {
   return m_selected_sort_algo;
 }
 
-void Sorting_Class::set_shell_sort(int selected) {
-  m_choosed_algo = 2;
-  m_algorithm_variants[selected].setFillColor(sf::Color::Green);
-  m_visualization_options_names[3] = "Gap sequence: ";
+void Sorting_Class::drop_down(int option) {
+  switch (option) {
+    case 2:
+      m_choosed_algo = 2;
+      std::vector<std::string> temp = {"Original Shell Sort",
+                                       "Frank & Lazarus Gap",
+                                       "Hibbard Gap",
+                                       "Papernov & Stasevich Gap",
+                                       "Pratt Gap",
+                                       "Knuth Gap",
+                                       "Incerpi & Sedgewick Gap",
+                                       "Sedgewick Gap 1",
+                                       "Sedgewick Gap 2",
+                                       "Gonnet & Baeza-Yates Gap",
+                                       "Tokuda Gap",
+                                       "Lee Gap",
+                                       "Skean & Ehrenborg & Jaromczyk Gap"};
+      drop_down_list(temp.size(), temp, 2, 75, 150, 400);
+      m_algorithm_variants[option].setFillColor(sf::Color::Green);
+      break;
+  }
 }
 
+void Sorting_Class::drop_down_list(std::size_t number_of_elements,
+                                   std::span<std::string> list_of_algo,
+                                   int end_iter, int add_val_pos_x_drop_down,
+                                   int add_val_pos_y_before_ddm,
+                                   int add_val_pos_y_after_ddm) {
+  m_dropped = true;
+  m_list_of_elements.resize(number_of_elements);
+  Screen::set_sf_text_style(m_list_of_elements, list_of_algo,
+                            m_drop_down_item_font_size, add_val_pos_x_drop_down,
+                            275, false, true, 0, 20);
+  for (int i = 0; i < m_variants_size; i++) {
+    if (!(i > end_iter))
+      m_algorithm_variants[i].setPosition(50,
+                                          50 * i + add_val_pos_y_before_ddm);
+    else
+      m_algorithm_variants[i].setPosition(50, 50 * i + add_val_pos_y_after_ddm);
+  }
+}
 void Sorting_Class::change_option(int selected) {
   switch (selected) {
     case 0:  // BASIC INSERTION SORT
@@ -173,7 +212,7 @@ void Sorting_Class::change_option(int selected) {
       m_algorithm_variants[selected].setFillColor(sf::Color::Green);
       break;
     case 2:  // SHELL SORT
-      set_shell_sort(selected);
+      drop_down(selected);
       break;
     case 3:  // BINARY INSERTION SORT
       m_choosed_algo = 3;
@@ -218,8 +257,6 @@ void Sorting_Class::change_option(int selected) {
   }
 }
 
-void Sorting_Class::drop_down(int option) {}
-
 void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
   m_algorithm_variants.resize(variants.size());
   Screen::set_sf_text_style(m_algorithm_variants, variants,
@@ -261,6 +298,10 @@ void Sorting_Class::insertion_sort() {
       "Insertion Sort", "Recursive Insertion Sort",
       "Shell Sort",     "Binary Insertion Sort",
       "Library Sort",   "Back"};
+  m_algorithm_variants_names.clear();
+  m_algorithm_variants_names.insert(m_algorithm_variants_names.end(),
+                                    insertion_sort_variants.begin(),
+                                    insertion_sort_variants.end());
   m_variants_size = insertion_sort_variants.size();
   insertion_sort_variants.insert(insertion_sort_variants.end(),
                                  m_visualization_options_names.begin(),
