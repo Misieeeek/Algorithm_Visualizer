@@ -41,6 +41,28 @@ class Sorting_Class : public Screen {
 
   void set_shell_sort(int selected);
 
+  // STATE OF PRESSED SORTING ALGORITHM CATEGORY
+  enum class sort_cat { insertion, selection, merge, bubble, heap, quick };
+
+  // COMPARATOR FOR STD::PAIR<SORT_CAT, INT> TO BE USED IN THE MAP
+  struct sort_cat_pair_comparator {
+    bool operator()(const std::pair<sort_cat, int>& lhs,
+                    const std::pair<sort_cat, int>& rhs) const {
+      if (lhs.first != rhs.first)
+        return lhs.first < rhs.first;  // Compare categories first
+      return lhs.second < rhs.second;  // Then compare the index
+    }
+  };
+
+  //FIND ALGO IN M_SORT_MAP
+  void find_algo(int selected);
+
+  //FIND OPTION IN M_SORT_CLASS_MAP
+  void find_option(int selected);
+
+  // INITALIZE SORTING OPTION SELECTOR
+  void initalize_sorting_algos();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -50,6 +72,22 @@ class Sorting_Class : public Screen {
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
   int m_choosed_algo;
+
+  //STATE OF PRESSED SORTING ALGO CATEGORY
+  sort_cat m_sc;
+  //INITALIZE DIFFERENCT SORTING ALGOS LIST
+  void initialize_insertion();
+  void initialize_selection();
+  void initialize_merge();
+  void initialize_bubble();
+  void initialize_heap();
+  void initialize_quick();
+  // SORTING MAP(CATEGORY, INDEX)
+  std::map<std::pair<sort_cat, int>, std::function<void()>,
+           sort_cat_pair_comparator>
+      m_sort_map;
+  // SORTING CLASS MAP(M_SORT_MAP, OPTIONS, BUTTONS)
+  std::unordered_map<int, std::function<void()>> m_sort_class_map;
   // CONSTANTS
   // LISTED IMPORTANT KEYS
   static constexpr int c_delete_key = 8;
@@ -57,12 +95,13 @@ class Sorting_Class : public Screen {
   static constexpr int c_minus_key = 45;
   // HOLDING THE SIZE OF CERTAIN ELEMENTS
   static constexpr int c_headers = 3;
-  static constexpr int c_options = 3;
+  static constexpr int c_input = 3;
   static constexpr int c_buttons = 4;
 
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM
+  // //STORES VARIANTS, OPTIONS, BUTTONS
   std::vector<sf::Text> m_algorithm_variants;
-  std::size_t m_variants_size;
+  std::size_t m_variants_size;  //STORES SIZE OF VARIANTS
 
   // TEXT STYLE & HEADERS
   int m_char_size_text_variants;
@@ -72,8 +111,9 @@ class Sorting_Class : public Screen {
   // VISUALIZATION OPTIONS
   // THIS VECTOR KEEPS STATE OF:
   // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS, OPTIONAL PARAMETER
-  std::array<int, c_options> m_visualization_options;
-  std::array<std::string, c_options> m_visualization_options_names;
+  std::vector<int> m_visualization_options;
+  std::vector<std::string> m_visualization_options_names;
+  std::size_t m_option_size;
 
   // VISUALIZATION BUTTONS
   std::array<std::string, c_buttons> m_visualization_buttons_names;
@@ -81,7 +121,7 @@ class Sorting_Class : public Screen {
   std::array<sf::RectangleShape, c_buttons> m_visualization_buttons_shape;
 
   // INPUT FOR OPTIONS
-  std::array<sf::Text, c_options> m_textbox_input_style;
+  std::array<sf::Text, c_input> m_textbox_input_style;
   std::ostringstream m_text_input;
   int m_selected_input_option;
   std::string m_temp_value;

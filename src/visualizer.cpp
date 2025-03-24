@@ -216,6 +216,7 @@ int Visualizer::pressed() {
 void Visualizer::initialize_sorting() {
   algorithm_map[{algo_cat::sorting, 0}] = [this]() {
     *current_screen = sort_class;
+    sort_class->initalize_sorting_algos();
     sort_class->insertion_sort();
   };
   algorithm_map[{algo_cat::sorting, 1}] = []() {
