@@ -8,6 +8,7 @@
 #include <mutex>
 #include <string>
 #include <variant>*/
+#include "sorting_class.h"
 #include "visualization.h"
 
 void Visualization::update_rectangle_pos(int i, int number) {
@@ -327,6 +328,7 @@ void Visualization::set_shell_gaps() {
 }
 
 void Visualization::shell_sort() {
+  m_selected_shell_gap = sort_class->get_shell_gap();
   set_shell_gaps();
   for (auto gap : m_gaps) {
     if (m_stop_visualizing.load())

@@ -14,7 +14,6 @@ class Sorting_Class : public Screen {
   void move_right() override;
   int pressed() override;
   void change_option(int selected) override;
-  void drop_down(int option) override;
   void typed_on(sf::Event input) override;
 
   Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
@@ -22,6 +21,7 @@ class Sorting_Class : public Screen {
                                             // TO VISUALIZER
   virtual ~Sorting_Class();
 
+  //SET STYLE FOR SORT ALGO
   void set_style(std::vector<std::string> variants, int y_pos);
   void insertion_sort();
   void textbox(int char_size_textbox, std::size_t number_of_inputs, int pos_y);
@@ -38,7 +38,6 @@ class Sorting_Class : public Screen {
   void algo_viz(std::size_t n_elements, int min_val, int max_val, bool bw_case);
 
   //SET SHELL SORT PARAMS
-
   void set_shell_sort(int selected);
 
   // STATE OF PRESSED SORTING ALGORITHM CATEGORY
@@ -63,14 +62,30 @@ class Sorting_Class : public Screen {
   // INITALIZE SORTING OPTION SELECTOR
   void initalize_sorting_algos();
 
+  // CHANGE OPTION PLACEMENT IN THE ARRAY
+  void additional_option(bool additional);
+
+  // SET DEFAULT OPTIONS SETTINGS
+  void set_default_options();
+
+  // SET LEFT/RIGHT BUTTONS
+  void display_lr_buttons(bool display);
+
+  // GET SELECTED SHELL GAP
+  int get_shell_gap();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
   Visualizer* visualize;
   Visualization* final_visual;
   sf::RenderWindow* window_ptr;
+
+  // RESPONSIBLE FOR KEYBOARD MOVEMENT
   int m_selected_sorting_algo_index;
   int m_selected_sort_algo;
+
+  // CHOOSED ALGO, HOLDS VALUE OF SELECTED ALGO
   int m_choosed_algo;
 
   //STATE OF PRESSED SORTING ALGO CATEGORY
@@ -129,6 +144,18 @@ class Sorting_Class : public Screen {
   // IF THE IMPUT OPTION IS SELECTED
   bool m_possible_input;
 
+  // KEEPS STATE IF ADDITIONAL PARAMETER IS OPEN
+  bool m_additional_param;
+
+  // LIST OF DIFFERENT SHELL SEQUENCE GAPS
+  sf::Text m_gaps_seq;
+  std::vector<std::string> m_gaps_seq_names;
+  // KEEPS THE STATE OF CURRENT GAP INDEX
+  int m_gaps_index;
+
+  // SHAPE OF LEFT/RIGHT BUTTONS
+  std::vector<sf::RectangleShape> m_lr_btn_shape;
+  std::vector<sf::ConvexShape> m_triangle_arrow;
   // INPUT LOGIC
   void input_logic(int char_typed) {
     if (char_typed != c_delete_key && char_typed != c_enter_key) {
