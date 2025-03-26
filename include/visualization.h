@@ -66,6 +66,12 @@ class Visualization : public Screen {
   void restart_timer();
   void pause_timer();
 
+  // BINARY SEARCH
+  int binary_search(int item, int low, int high);
+
+  // BINARY INSERTION SORT
+  void binary_insertion_sort();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;

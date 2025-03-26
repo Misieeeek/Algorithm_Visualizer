@@ -376,3 +376,87 @@ void Visualization::shell_sort() {
   m_stop_visualizing.store(true);
   m_visualizaing = false;
 }
+
+int Visualization::binary_search(int item, int low, int high) {
+  if (high <= low) {
+    if (item > m_element_number[low]) {
+      {
+        check_mutex_type();
+        update_rectangle_color(low + 1, sf::Color::Green);
+      }
+      sf::sleep(sf::milliseconds(2000));
+
+      return low + 1;
+    } else {
+      {
+        check_mutex_type();
+        update_rectangle_color(low, sf::Color::Green);
+      }
+      sf::sleep(sf::milliseconds(2000));
+
+      return low;
+    }
+  }
+  int mid = (low + high) / 2;
+  {
+    check_mutex_type();
+    update_rectangle_color(mid, sf::Color::Red);
+  }
+  sf::sleep(sf::milliseconds(2000));
+
+  if (item == m_element_number[mid]) {
+    {
+      check_mutex_type();
+      update_rectangle_color(mid + 1, sf::Color::Green);
+    }
+    sf::sleep(sf::milliseconds(2000));
+
+    return mid + 1;
+  }
+  if (item > m_element_number[mid])
+    return binary_search(item, mid + 1, high);
+  return binary_search(item, low, mid - 1);
+}
+
+void Visualization::binary_insertion_sort() {
+  int i, loc, j, k, selected;
+  for (i = 1; i < m_element_number.size(); ++i) {
+    j = i - 1;
+    selected = m_element_number[i];
+    {
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+      update_rectangle_color(i, sf::Color::Green);
+    }
+    sf::sleep(sf::milliseconds(2000));
+
+    loc = binary_search(selected, 0, j);
+    {
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+      for (int x = 0; x < m_element_number.size(); x++)
+        update_rectangle_color(x, sf::Color::White);
+      update_rectangle_color(loc, sf::Color::Green);
+    }
+    sf::sleep(sf::milliseconds(2000));
+
+    while (j >= loc) {
+      m_element_number[j + 1] = m_element_number[j];
+      {
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+        update_rectangle_pos(j + 1, m_element_number[j + 1]);
+      }
+      sf::sleep(sf::milliseconds(2000));
+
+      j--;
+    }
+    m_element_number[j + 1] = selected;
+    {
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+      update_rectangle_pos(j + 1, m_element_number[j + 1]);
+    }
+    sf::sleep(sf::milliseconds(2000));
+  }
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}

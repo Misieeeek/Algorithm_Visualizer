@@ -338,6 +338,14 @@ void Sorting_Class::initialize_insertion() {
   m_sort_map[{sort_cat::insertion, 2}] = [this]() {
     set_shell_sort(2);
   };
+  m_sort_map[{sort_cat::insertion, 3}] = [this]() {
+    m_choosed_algo = 3;
+    set_default_options();
+    additional_option(false);
+    insertion_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+  };
   additional_option(false);
 }
 void Sorting_Class::initialize_selection() {}

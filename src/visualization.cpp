@@ -215,9 +215,7 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
 }
 
 void Visualization::initialize_algorithms() {
-  /*"", "",
-      "Shell Sort",     "Binary Insertion Sort",
-      "Library Sort"*/
+  /*"Library Sort"*/
   m_algo_func["Insertion Sort"] = [this]() {
     insertion_sort();
   };
@@ -226,5 +224,8 @@ void Visualization::initialize_algorithms() {
   };
   m_algo_func["Shell Sort"] = [this]() {
     shell_sort();
+  };
+  m_algo_func["Binary Insertion Sort"] = [this]() {
+    binary_insertion_sort();
   };
 }
