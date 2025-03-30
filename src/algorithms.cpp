@@ -1,13 +1,4 @@
-/*#include <unistd.h>
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
-#include <algorithm>
-#include <chrono>
-#include <cmath>
-#include <mutex>
-#include <string>
-#include <variant>*/
 #include "sorting_class.h"
 #include "visualization.h"
 
@@ -21,12 +12,12 @@ void Visualization::update_rectangle_pos(int i, int number) {
 
   int n = m_options[0];
   double total_width = m_box_pos[4];
-  double maxSpacing = 20.0;
+  double max_spacing = 20.0;
   int n_threshold = 50;
   double spacing = 0.0;
   if (n > 1 && n < n_threshold) {
-    spacing =
-        maxSpacing * ((n_threshold - n) / static_cast<double>(n_threshold - 1));
+    spacing = max_spacing *
+              ((n_threshold - n) / static_cast<double>(n_threshold - 1));
   } else {
     spacing = 0.0;
   }
@@ -42,6 +33,40 @@ void Visualization::update_rectangle_pos(int i, int number) {
   m_element_shape[base + 3] = sf::Vertex(
       sf::Vector2f(x_rectangle_left, m_box_pos[3]), sf::Color::White);
 }
+void Visualization::update_rectangle_pos_aux(int i, int number) {
+  int base = i * 4 + 4;
+  if (is_lb_empty(number))
+    return;
+  if (base + 3 >= m_auxiliary_shape.getVertexCount())
+    return;
+  double t_i = (static_cast<double>(number) - m_options[1]) /
+               (m_options[2] - m_options[1]);
+  double H_i = t_i * m_box_pos[5];
+  double y_rectangle_top = (m_box_pos[3] - H_i) / 2;
+
+  int n = m_options[0];
+  double total_width = m_box_pos[4];
+  double max_spacing = 20.0;
+  int n_threshold = 50;
+  double spacing = 0.0;
+  if (n > 1 && n < n_threshold) {
+    spacing = max_spacing *
+              ((n_threshold - n) / static_cast<double>(n_threshold - 1));
+  } else {
+    spacing = 0.0;
+  }
+  double effectiveWidth = (total_width - (n - 1) * spacing) / n;
+  double x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
+  double x_rectangle_right = x_rectangle_left + effectiveWidth;
+  m_auxiliary_shape[base + 0] = sf::Vertex(
+      sf::Vector2f(x_rectangle_left, y_rectangle_top), sf::Color::White);
+  m_auxiliary_shape[base + 1] = sf::Vertex(
+      sf::Vector2f(x_rectangle_right, y_rectangle_top), sf::Color::White);
+  m_auxiliary_shape[base + 2] = sf::Vertex(
+      sf::Vector2f(x_rectangle_right, m_box_pos[3] / 2), sf::Color::White);
+  m_auxiliary_shape[base + 3] = sf::Vertex(
+      sf::Vector2f(x_rectangle_left, m_box_pos[3] / 2), sf::Color::White);
+}
 
 void Visualization::update_rectangle_color(int i, sf::Color c) {
   if (i < 0 || i >= m_element_number.size()) {
@@ -51,6 +76,23 @@ void Visualization::update_rectangle_color(int i, sf::Color c) {
   }
   int base = i * 4;
   if (base + 3 >= m_element_shape.getVertexCount()) {
+    std::cerr << "Error: base out of range: " << base << std::endl;
+    return;
+  }
+
+  for (int k = 0; k < 4; k++) {
+    m_element_shape[base + k].color = c;
+  }
+}
+
+void Visualization::update_rectangle_color_aux(int i, sf::Color c) {
+  if (i < 0 || i >= m_element_number.size()) {
+    std::cerr << "Error: update_rectangle_color index out of range: " << i
+              << std::endl;
+    return;
+  }
+  int base = i * 4;
+  if (base + 3 >= m_auxiliary_shape.getVertexCount()) {
     std::cerr << "Error: base out of range: " << base << std::endl;
     return;
   }
@@ -384,7 +426,7 @@ int Visualization::binary_search(int item, int low, int high) {
         check_mutex_type();
         update_rectangle_color(low + 1, sf::Color::Green);
       }
-      sf::sleep(sf::milliseconds(2000));
+      //sf::sleep(sf::milliseconds(1200));
 
       return low + 1;
     } else {
@@ -392,7 +434,7 @@ int Visualization::binary_search(int item, int low, int high) {
         check_mutex_type();
         update_rectangle_color(low, sf::Color::Green);
       }
-      sf::sleep(sf::milliseconds(2000));
+      //sf::sleep(sf::milliseconds(1200));
 
       return low;
     }
@@ -402,14 +444,14 @@ int Visualization::binary_search(int item, int low, int high) {
     check_mutex_type();
     update_rectangle_color(mid, sf::Color::Red);
   }
-  sf::sleep(sf::milliseconds(2000));
+  //sf::sleep(sf::milliseconds(1200));
 
   if (item == m_element_number[mid]) {
     {
       check_mutex_type();
       update_rectangle_color(mid + 1, sf::Color::Green);
     }
-    sf::sleep(sf::milliseconds(2000));
+    //sf::sleep(sf::milliseconds(1200));
 
     return mid + 1;
   }
@@ -421,13 +463,15 @@ int Visualization::binary_search(int item, int low, int high) {
 void Visualization::binary_insertion_sort() {
   int i, loc, j, k, selected;
   for (i = 1; i < m_element_number.size(); ++i) {
+    if (m_stop_visualizing.load())
+      break;
     j = i - 1;
     selected = m_element_number[i];
     {
       std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
       update_rectangle_color(i, sf::Color::Green);
     }
-    sf::sleep(sf::milliseconds(2000));
+    //sf::sleep(sf::milliseconds(1200));
 
     loc = binary_search(selected, 0, j);
     {
@@ -436,27 +480,231 @@ void Visualization::binary_insertion_sort() {
         update_rectangle_color(x, sf::Color::White);
       update_rectangle_color(loc, sf::Color::Green);
     }
-    sf::sleep(sf::milliseconds(2000));
+    //sf::sleep(sf::milliseconds(1200));
 
     while (j >= loc) {
+      if (m_stop_visualizing.load())
+        break;
       m_element_number[j + 1] = m_element_number[j];
       {
         std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
         update_rectangle_pos(j + 1, m_element_number[j + 1]);
       }
-      sf::sleep(sf::milliseconds(2000));
+      //sf::sleep(sf::milliseconds(1200));
 
       j--;
     }
+    if (m_stop_visualizing.load())
+      break;
     m_element_number[j + 1] = selected;
     {
       std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
       update_rectangle_pos(j + 1, m_element_number[j + 1]);
+      m_info_text[4].setString("Duration: " +
+                               std::to_string(get_elapsed_time().count()));
     }
-    sf::sleep(sf::milliseconds(2000));
+    //sf::sleep(sf::milliseconds(1200));
   }
   restart_timer();
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
+}
+
+bool Visualization::is_lb_empty(int x) {
+  return x == m_empty_value;
+}
+
+std::vector<int> Visualization::initialize_array(int n) {
+  std::vector<int> S(n * 2, m_empty_value);
+  for (int i = 0; i < n; i++) {
+    S[2 * i + 1] = m_element_number[i];
+    {
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+      update_rectangle_pos(i, m_options[1]);
+      update_rectangle_pos_aux(2 * i + 1, S[2 * i + 1]);
+    }
+  }
+  return S;
+}
+
+void Visualization::insert_element(std::vector<int>& S, int p) {
+  int s = S[p];
+  int x = 0, y = p;
+  std::pair<int, int> insertion_range = find_insertion_range(S, s, x, y);
+  x = insertion_range.first;
+  y = insertion_range.second;
+  if (y - x > 1) {
+    insert_with_space(S, x, y, s);
+  } else {
+    insert_with_shift(S, x, y, s);
+  }
+  S[p] = m_empty_value;
+  {
+    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+    update_rectangle_pos_aux(p, m_empty_value);
+  }
+}
+
+std::pair<int, int> Visualization::find_insertion_range(
+    const std::vector<int>& S, int s, int x, int y) {
+  while (y - x > 1) {
+    int c = (x + y) >> 1;
+    if (!is_lb_empty(S[c])) {
+      if (S[c] < s)
+        x = c;
+      else
+        y = c;
+    } else {
+      int e = c - 1, f = c + 1;
+      while (e >= 0 && is_lb_empty(S[e]))
+        e -= 1;
+      while (f < S.size() && is_lb_empty(S[f]))
+        f += 1;
+
+      if (e >= 0 && !is_lb_empty(S[e]) && S[e] > s)
+        y = e;
+      else if (f < S.size() && !is_lb_empty(S[f]) && S[f] < s)
+        x = f;
+      else {
+        x = e;
+        y = f;
+        break;
+      }
+    }
+  }
+  return {x, y};
+}
+
+void Visualization::insert_with_space(std::vector<int>& S, int x, int y,
+                                      int s) {
+  S[(x + y) >> 1] = s;
+  {
+    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+    update_rectangle_pos_aux((x + y) >> 1, s);
+  }
+}
+
+void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
+                                      int s) {
+  if (!is_lb_empty(S[x])) {
+    if (S[x] > s)
+      y = x;
+    int temp = s;
+    int lastIdx = -1;
+    while (temp != m_empty_value && y < S.size()) {
+      std::swap(S[y], temp);
+      lastIdx = y;
+      {
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+        update_rectangle_pos_aux(y, S[y]);
+      }
+      y += 1;
+    }
+
+    if (temp != m_empty_value) {
+      handle_overflow(S, temp);
+    }
+  } else {
+    S[x] = s;
+    {
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+      update_rectangle_pos_aux(x, S[x]);
+    }
+  }
+}
+
+void Visualization::handle_overflow(std::vector<int>& S, int value) {
+  for (int k = 0; k < S.size(); k++) {
+    if (is_lb_empty(S[k])) {
+      S[k] = value;
+      {
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+        update_rectangle_pos_aux(k, S[k]);
+      }
+      break;
+    }
+  }
+}
+
+void Visualization::redistribute_elements(std::vector<int>& S, int max_p) {
+  int p = std::min(max_p, static_cast<int>(S.size() - 1));
+  int dest_p = p;
+  std::vector<int> temp_values;
+  for (int s = 0; s <= p; s++) {
+    if (!is_lb_empty(S[s])) {
+      temp_values.push_back(S[s]);
+      S[s] = m_empty_value;
+      {
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+        update_rectangle_pos_aux(s, m_empty_value);
+      }
+    }
+  }
+  for (int idx = temp_values.size() - 1; idx >= 0; idx--) {
+    if (dest_p >= 0 && dest_p < S.size()) {
+      S[dest_p] = temp_values[idx];
+      {
+        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+        update_rectangle_pos_aux(dest_p, S[dest_p]);
+      }
+      dest_p -= 2;
+    }
+  }
+}
+
+void Visualization::finalize_sort(const std::vector<int>& S) {
+  m_element_number.clear();
+  std::vector<int> sorted_elements;
+  for (const auto& item : S) {
+    if (!is_lb_empty(item)) {
+      sorted_elements.push_back(item);
+    }
+  }
+  m_element_number = sorted_elements;
+  m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
+  for (int i = 0; i < m_element_number.size(); i++) {
+    {
+      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+      update_rectangle_pos(i, m_element_number[i]);
+    }
+  }
+  m_auxiliary_shape.clear();
+}
+
+int Visualization::process_iteration(std::vector<int>& S, int n, int a, int b) {
+  int max_p = 0;
+  {
+    m_info_text[4].setString("Duration: " +
+                             std::to_string(get_elapsed_time().count()));
+    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+  }
+  for (int j = a; j < std::min(b, n + 1); j++) {
+    int p = 2 * j - 1;
+    max_p = std::max(max_p, p);
+    if (p >= S.size() || is_lb_empty(S[p]))
+      continue;
+    insert_element(S, p);
+  }
+  return max_p;
+}
+
+void Visualization::library_sort() {
+  int n = m_element_number.size();
+  std::vector<int> S = initialize_array(n);
+  int m = std::floor(std::log2(n) + 1);
+  for (int i = 0; i < m; i++) {
+    int a = 1 << (i + 1);
+    int b = 1 << (i + 2);
+    int max_p = process_iteration(S, n, a, b);
+
+    if (b > n)
+      break;
+
+    if (i < m - 1) {
+      redistribute_elements(S, max_p);
+    }
+  }
+
+  finalize_sort(S);
 }

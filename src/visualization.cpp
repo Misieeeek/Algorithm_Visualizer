@@ -7,7 +7,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
     : current_screen(screen_ptr),
       sort_class(sort_class_ptr),
       window_ptr(window),
-      gen(m_rd()),
+      m_gen(m_rd()),
       m_stop_visualizing(false),
       m_offset(std::chrono::milliseconds(0)) {
   m_visualizaing = false;
@@ -15,8 +15,10 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   m_selected_button_index = 1;
   m_selected_button = 1;
   m_element_shape.setPrimitiveType(sf::Quads);
+  m_auxiliary_shape.setPrimitiveType(sf::Quads);
   initialize_algorithms();
   m_selected_shell_gap = 0;
+  m_empty_value = m_options[1] - 1;
   pause_timer();
 }
 
@@ -53,6 +55,7 @@ void Visualization::draw(sf::RenderWindow& window) {
     window.draw(x);
   window.draw(m_viz_box.data(), m_viz_box.size(), sf::LineStrip);
   window.draw(m_element_shape);
+  window.draw(m_auxiliary_shape);
 }
 
 void Visualization::move_left() {
@@ -116,6 +119,23 @@ void Visualization::visual() {
   m_element_number.resize(m_options[0]);
   std::vector<double> boxes_pos;  // x_left, y_top, x_right
   boxes_pos.resize(3);
+  if (m_algorithm_name == "Library Sort") {
+    m_empty_value = m_options[1] - 1;
+    m_auxiliary_shape.resize(4 + m_options[0] * 4);
+    m_box_pos = {50, 125, 1200, 700, 1200 - 50, (700 - 125) / 2};
+    m_auxiliary_shape[0] =
+        sf::Vertex(sf::Vector2f(50, 700 / 2), sf::Color::White);
+    m_auxiliary_shape[1] =
+        sf::Vertex(sf::Vector2f(1200, 700 / 2), sf::Color::White);
+    m_auxiliary_shape[2] =
+        sf::Vertex(sf::Vector2f(1200, 700 / 2 + 1), sf::Color::White);
+    m_auxiliary_shape[3] =
+        sf::Vertex(sf::Vector2f(50, 700 / 2 + 1), sf::Color::White);
+
+  } else {
+    m_auxiliary_shape.resize(0);
+    m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
+  }
   for (int i = 0; i < m_options[0]; i++) {
     int base = i * 4;
     m_element_number[i] = random_number_gen(m_options[1], m_options[2]);
@@ -183,7 +203,7 @@ void Visualization::set_options(std::size_t n_elements, int min_val,
 
 int Visualization::random_number_gen(int min_val, int max_val) {
   std::uniform_int_distribution<> distrib(min_val, max_val);
-  return distrib(gen);
+  return distrib(m_gen);
 }
 
 void Visualization::standardize(std::vector<double>& box_pos, int number,
@@ -215,7 +235,7 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
 }
 
 void Visualization::initialize_algorithms() {
-  /*"Library Sort"*/
+  /*""*/
   m_algo_func["Insertion Sort"] = [this]() {
     insertion_sort();
   };
@@ -227,5 +247,8 @@ void Visualization::initialize_algorithms() {
   };
   m_algo_func["Binary Insertion Sort"] = [this]() {
     binary_insertion_sort();
+  };
+  m_algo_func["Library Sort"] = [this]() {
+    library_sort();
   };
 }

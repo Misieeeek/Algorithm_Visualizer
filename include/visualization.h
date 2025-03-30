@@ -2,6 +2,7 @@
 #define VISUALIZATION_H
 #pragma once
 
+#include <optional>
 #include "sorting_class.h"
 
 class Visualization : public Screen {
@@ -32,8 +33,10 @@ class Visualization : public Screen {
   void standardize(std::vector<double>& box_pos, int number, int i);
 
   void update_rectangle_pos(int i, int number);
+  void update_rectangle_pos_aux(int i, int number);
 
   void update_rectangle_color(int i, sf::Color c);
+  void update_rectangle_color_aux(int i, sf::Color c);
 
   void initialize_algorithms();
   void execute_algorithm(const std::string& name);
@@ -71,6 +74,20 @@ class Visualization : public Screen {
 
   // BINARY INSERTION SORT
   void binary_insertion_sort();
+
+  // LIBRARY SORT
+  bool is_lb_empty(int x);
+  std::vector<int> initialize_array(int n);
+  int process_iteration(std::vector<int>& S, int n, int a, int b);
+  void insert_element(std::vector<int>& S, int p);
+  std::pair<int, int> find_insertion_range(const std::vector<int>& S, int s,
+                                           int x, int y);
+  void insert_with_space(std::vector<int>& S, int x, int y, int s);
+  void insert_with_shift(std::vector<int>& S, int x, int y, int s);
+  void handle_overflow(std::vector<int>& S, int value);
+  void redistribute_elements(std::vector<int>& S, int max_p);
+  void finalize_sort(const std::vector<int>& S);
+  void library_sort();
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -111,9 +128,10 @@ class Visualization : public Screen {
   // SORTING ELEMENTS
   std::vector<int> m_element_number;
   sf::VertexArray m_element_shape;
+  sf::VertexArray m_auxiliary_shape;
 
   std::random_device m_rd;
-  std::mt19937 gen;
+  std::mt19937 m_gen;
 
   // STOP THREAD FLAG
   std::atomic<bool> m_stop_visualizing;
@@ -131,10 +149,12 @@ class Visualization : public Screen {
   std::vector<int> m_gaps;
 
   //TIMER
-  std::chrono::milliseconds m_offset{0};  // Sumaryczny czas działania algorytmu
-  std::chrono::high_resolution_clock::time_point
-      m_last_resume_time;     // Ostatni moment wznowienia
-  bool m_is_running = false;  // Czy algorytm jest aktywny
+  std::chrono::milliseconds m_offset{0};
+  std::chrono::high_resolution_clock::time_point m_last_resume_time;
+  bool m_is_running = false;
+
+  //EMPTY VALUE FOR LIBRARY SORT
+  int m_empty_value;
 };
 
 #endif

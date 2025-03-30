@@ -346,6 +346,14 @@ void Sorting_Class::initialize_insertion() {
     m_algorithm_variants[0].setFillColor(sf::Color::White);
     m_algorithm_variants[3].setFillColor(sf::Color::Green);
   };
+  m_sort_map[{sort_cat::insertion, 4}] = [this]() {
+    m_choosed_algo = 4;
+    set_default_options();
+    additional_option(false);
+    insertion_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+  };
   additional_option(false);
 }
 void Sorting_Class::initialize_selection() {}
