@@ -1,5 +1,6 @@
 #ifndef VISUALIZATION_H
 #define VISUALIZATION_H
+#include <SFML/Graphics/VertexArray.hpp>
 #pragma once
 
 #include <optional>
@@ -29,13 +30,18 @@ class Visualization : public Screen {
   // RANDOM NUMBER GENERATOR
   int random_number_gen(int min_val, int max_val);
 
-  //
+  //STANDARIZE ITEMS TO FIT INSIDE THE SELECTED AREA
   void standardize(std::vector<double>& box_pos, int number, int i);
 
-  void update_rectangle_pos(int i, int number);
+  //SYNC UPDATE STYLE OF RECTANGLE
+  void update_rec_style(sf::VertexArray& arr, bool update_pos,
+                        bool update_color, int index, int number, sf::Color c,
+                        bool update_time = false);
+
+  void update_rectangle_pos(sf::VertexArray& arr, int i, int number);
   void update_rectangle_pos_aux(int i, int number);
 
-  void update_rectangle_color(int i, sf::Color c);
+  void update_rectangle_color(sf::VertexArray& arr, int i, sf::Color c);
   void update_rectangle_color_aux(int i, sf::Color c);
 
   void initialize_algorithms();

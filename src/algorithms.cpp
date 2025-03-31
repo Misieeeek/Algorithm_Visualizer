@@ -2,7 +2,20 @@
 #include "sorting_class.h"
 #include "visualization.h"
 
-void Visualization::update_rectangle_pos(int i, int number) {
+void Visualization::update_rec_style(sf::VertexArray& arr, bool update_pos,
+                                     bool update_color, int index, int number,
+                                     sf::Color c, bool update_time) {
+  check_mutex_type();
+  if (update_time)
+    m_info_text[4].setString("Duration: " +
+                             std::to_string(get_elapsed_time().count()));
+  if (update_pos)
+    update_rectangle_pos(arr, index, number);
+  if (update_color)
+    update_rectangle_color(arr, index, c);
+}
+void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
+                                         int number) {
   int base = i * 4;
 
   double t_i = (static_cast<double>(number) - m_options[1]) /
@@ -24,14 +37,14 @@ void Visualization::update_rectangle_pos(int i, int number) {
   double effectiveWidth = (total_width - (n - 1) * spacing) / n;
   double x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
   double x_rectangle_right = x_rectangle_left + effectiveWidth;
-  m_element_shape[base + 0] = sf::Vertex(
-      sf::Vector2f(x_rectangle_left, y_rectangle_top), sf::Color::White);
-  m_element_shape[base + 1] = sf::Vertex(
-      sf::Vector2f(x_rectangle_right, y_rectangle_top), sf::Color::White);
-  m_element_shape[base + 2] = sf::Vertex(
-      sf::Vector2f(x_rectangle_right, m_box_pos[3]), sf::Color::White);
-  m_element_shape[base + 3] = sf::Vertex(
-      sf::Vector2f(x_rectangle_left, m_box_pos[3]), sf::Color::White);
+  arr[base + 0] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_top),
+                             sf::Color::White);
+  arr[base + 1] = sf::Vertex(sf::Vector2f(x_rectangle_right, y_rectangle_top),
+                             sf::Color::White);
+  arr[base + 2] = sf::Vertex(sf::Vector2f(x_rectangle_right, m_box_pos[3]),
+                             sf::Color::White);
+  arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, m_box_pos[3]),
+                             sf::Color::White);
 }
 void Visualization::update_rectangle_pos_aux(int i, int number) {
   int base = i * 4 + 4;
@@ -68,20 +81,21 @@ void Visualization::update_rectangle_pos_aux(int i, int number) {
       sf::Vector2f(x_rectangle_left, m_box_pos[3] / 2), sf::Color::White);
 }
 
-void Visualization::update_rectangle_color(int i, sf::Color c) {
+void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
+                                           sf::Color c) {
   if (i < 0 || i >= m_element_number.size()) {
     std::cerr << "Error: update_rectangle_color index out of range: " << i
               << std::endl;
     return;
   }
   int base = i * 4;
-  if (base + 3 >= m_element_shape.getVertexCount()) {
+  if (base + 3 >= arr.getVertexCount()) {
     std::cerr << "Error: base out of range: " << base << std::endl;
     return;
   }
 
   for (int k = 0; k < 4; k++) {
-    m_element_shape[base + k].color = c;
+    arr[base + k].color = c;
   }
 }
 
@@ -115,36 +129,24 @@ void Visualization::insertion_sort() {
     if (m_stop_visualizing.load())
       break;
     int key = m_element_number[i];
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      update_rectangle_color(i, sf::Color::Green);
-    }
+    update_rec_style(m_element_shape, false, true, i, 0, sf::Color::Green);
     int j = i - 1;
     while (j >= 0 && m_element_number[j] > key) {
       if (m_stop_visualizing.load())
         break;
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_color(j, sf::Color::Red);
-      }
+      update_rec_style(m_element_shape, false, true, j, 0, sf::Color::Red);
       m_element_number[j + 1] = m_element_number[j];
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_pos(j + 1, m_element_number[j + 1]);
-        update_rectangle_color(j, sf::Color::White);
-      }
+      update_rec_style(m_element_shape, true, false, j + 1,
+                       m_element_number[j + 1], sf::Color::White);
+      update_rec_style(m_element_shape, false, true, j, 0, sf::Color::White);
       j--;
     }
     if (m_stop_visualizing.load())
       break;
     m_element_number[j + 1] = key;
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      update_rectangle_color(i, sf::Color::White);
-      update_rectangle_pos(j + 1, m_element_number[j + 1]);
-      m_info_text[4].setString("Duration: " +
-                               std::to_string(get_elapsed_time().count()));
-    }
+    update_rec_style(m_element_shape, false, true, i, 0, sf::Color::White);
+    update_rec_style(m_element_shape, true, false, j + 1,
+                     m_element_number[j + 1], sf::Color::White, true);
   }
   restart_timer();
   m_buttons_text[1].setString("Start");
@@ -154,7 +156,7 @@ void Visualization::insertion_sort() {
 void Visualization::recur_insertion_sort(int n) {
   if (m_stop_visualizing.load()) {
     for (int i = 0; i < n; i++)
-      update_rectangle_color(i, sf::Color::White);
+      update_rec_style(m_element_shape, false, true, i, 0, sf::Color::White);
     return;
   }
   if (n <= 1)
@@ -163,37 +165,26 @@ void Visualization::recur_insertion_sort(int n) {
   recur_insertion_sort(n - 1);
   int last = m_element_number[n - 1];
   int j = n - 2;
-  {
-    check_mutex_type();
-    update_rectangle_color(j, sf::Color::Green);
-  }
+  update_rec_style(m_element_shape, false, true, j, 0, sf::Color::Green);
   while (j >= 0 && m_element_number[j] > last) {
     if (m_stop_visualizing.load()) {
       for (int i = 0; i < n; i++)
-        update_rectangle_color(i, sf::Color::White);
+        update_rec_style(m_element_shape, false, true, i, 0, sf::Color::White);
       return;
     }
-    {
-      check_mutex_type();
-      update_rectangle_color(j, sf::Color::Red);
-    }
+    update_rec_style(m_element_shape, false, true, j, 0, sf::Color::Red);
     m_element_number[j + 1] = m_element_number[j];
-    {
-      check_mutex_type();
-      update_rectangle_pos(j + 1, m_element_number[j + 1]);
-      update_rectangle_color(j, sf::Color::White);
-    }
+    update_rec_style(m_element_shape, true, false, j + 1,
+                     m_element_number[j + 1], sf::Color::Red);
+    update_rec_style(m_element_shape, false, true, j, 0, sf::Color::White);
     j--;
   }
   m_element_number[j + 1] = last;
-  {
-    check_mutex_type();
-    int indexToUpdate = (j < 0) ? 0 : j;
-    update_rectangle_color(indexToUpdate, sf::Color::White);
-    update_rectangle_pos(j + 1, m_element_number[j + 1]);
-    m_info_text[4].setString("Duration: " +
-                             std::to_string(get_elapsed_time().count()));
-  }
+  int index_to_update = (j < 0) ? 0 : j;
+  update_rec_style(m_element_shape, true, false, j + 1, m_element_number[j + 1],
+                   sf::Color::White);
+  update_rec_style(m_element_shape, false, true, index_to_update, 0,
+                   sf::Color::White, true);
   if (n == m_element_number.size()) {
     restart_timer();
     m_buttons_text[1].setString("Start");
@@ -380,36 +371,23 @@ void Visualization::shell_sort() {
         break;
       int temp = m_element_number[i];
       int j;
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_color(i, sf::Color::Green);
-      }
+      update_rec_style(m_element_shape, false, true, i, 0, sf::Color::Green);
       //   sf::sleep(sf::milliseconds(50));
       for (j = i; j >= gap && m_element_number[j - gap] > temp; j -= gap) {
         if (m_stop_visualizing.load())
           break;
-        {
-          std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-          update_rectangle_pos(j - gap, m_element_number[j - gap]);
-          update_rectangle_color(j, sf::Color::Red);
-        }
+        update_rec_style(m_element_shape, true, false, j - gap,
+                         m_element_number[j - gap], sf::Color::White);
+        update_rec_style(m_element_shape, false, true, j, 0, sf::Color::Red);
         m_element_number[j] = m_element_number[j - gap];
         //      sf::sleep(sf::milliseconds(50));
-        {
-          std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-          update_rectangle_pos(j, m_element_number[j]);
-          update_rectangle_color(j, sf::Color::White);
-        }
+        update_rec_style(m_element_shape, true, true, j, m_element_number[j],
+                         sf::Color::White);
       }
       //     sf::sleep(sf::milliseconds(50));
       m_element_number[j] = temp;
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_pos(j, m_element_number[j]);
-        update_rectangle_color(j, sf::Color::White);
-        m_info_text[4].setString("Duration: " +
-                                 std::to_string(get_elapsed_time().count()));
-      }
+      update_rec_style(m_element_shape, true, true, j, m_element_number[j],
+                       sf::Color::White, true);
       //      sf::sleep(sf::milliseconds(50));
     }
   }
@@ -422,35 +400,25 @@ void Visualization::shell_sort() {
 int Visualization::binary_search(int item, int low, int high) {
   if (high <= low) {
     if (item > m_element_number[low]) {
-      {
-        check_mutex_type();
-        update_rectangle_color(low + 1, sf::Color::Green);
-      }
+      update_rec_style(m_element_shape, false, true, low + 1, 0,
+                       sf::Color::Green);
       //sf::sleep(sf::milliseconds(1200));
 
       return low + 1;
     } else {
-      {
-        check_mutex_type();
-        update_rectangle_color(low, sf::Color::Green);
-      }
+      update_rec_style(m_element_shape, false, true, low, 0, sf::Color::Green);
       //sf::sleep(sf::milliseconds(1200));
 
       return low;
     }
   }
   int mid = (low + high) / 2;
-  {
-    check_mutex_type();
-    update_rectangle_color(mid, sf::Color::Red);
-  }
+  update_rec_style(m_element_shape, false, true, mid, 0, sf::Color::Red);
   //sf::sleep(sf::milliseconds(1200));
 
   if (item == m_element_number[mid]) {
-    {
-      check_mutex_type();
-      update_rectangle_color(mid + 1, sf::Color::Green);
-    }
+    update_rec_style(m_element_shape, false, true, mid + 1, 0,
+                     sf::Color::Green);
     //sf::sleep(sf::milliseconds(1200));
 
     return mid + 1;
@@ -467,42 +435,29 @@ void Visualization::binary_insertion_sort() {
       break;
     j = i - 1;
     selected = m_element_number[i];
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      update_rectangle_color(i, sf::Color::Green);
-    }
+    update_rec_style(m_element_shape, false, true, i, 0, sf::Color::Green);
     //sf::sleep(sf::milliseconds(1200));
 
     loc = binary_search(selected, 0, j);
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      for (int x = 0; x < m_element_number.size(); x++)
-        update_rectangle_color(x, sf::Color::White);
-      update_rectangle_color(loc, sf::Color::Green);
-    }
+    for (int x = 0; x < m_element_number.size(); x++)
+      update_rec_style(m_element_shape, false, true, x, 0, sf::Color::White);
+    update_rec_style(m_element_shape, false, true, loc, 0, sf::Color::Green);
     //sf::sleep(sf::milliseconds(1200));
 
     while (j >= loc) {
       if (m_stop_visualizing.load())
         break;
       m_element_number[j + 1] = m_element_number[j];
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_pos(j + 1, m_element_number[j + 1]);
-      }
+      update_rec_style(m_element_shape, true, false, j + 1,
+                       m_element_number[j + 1], sf::Color::Green);
       //sf::sleep(sf::milliseconds(1200));
-
       j--;
     }
     if (m_stop_visualizing.load())
       break;
     m_element_number[j + 1] = selected;
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      update_rectangle_pos(j + 1, m_element_number[j + 1]);
-      m_info_text[4].setString("Duration: " +
-                               std::to_string(get_elapsed_time().count()));
-    }
+    update_rec_style(m_element_shape, true, false, j + 1,
+                     m_element_number[j + 1], sf::Color::Green, true);
     //sf::sleep(sf::milliseconds(1200));
   }
   restart_timer();
@@ -519,13 +474,12 @@ std::vector<int> Visualization::initialize_array(int n) {
   std::vector<int> S(n * 2, m_empty_value);
   for (int i = 0; i < n; i++) {
     S[2 * i + 1] = m_element_number[i];
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      update_rectangle_pos(i, m_options[1]);
-      update_rectangle_pos_aux(2 * i + 1, S[2 * i + 1]);
-    }
-  }
-  return S;
+ /*   update_rec_style(m_element_shape, true, false, i, m_options[1],
+                     sf::Color::Green);
+    update_rec_style(m_auxiliary_shape, true, false, 2 * i + 1, S[2 * i + 1],
+                     sf::Color::Green);
+  */}
+ return S;
 }
 
 void Visualization::insert_element(std::vector<int>& S, int p) {
@@ -540,10 +494,7 @@ void Visualization::insert_element(std::vector<int>& S, int p) {
     insert_with_shift(S, x, y, s);
   }
   S[p] = m_empty_value;
-  {
-    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-    update_rectangle_pos_aux(p, m_empty_value);
-  }
+  //  update_rec_style(m_auxiliary_shape, true, false, p, m_empty_value,sf::Color::Green);
 }
 
 std::pair<int, int> Visualization::find_insertion_range(
@@ -561,7 +512,6 @@ std::pair<int, int> Visualization::find_insertion_range(
         e -= 1;
       while (f < S.size() && is_lb_empty(S[f]))
         f += 1;
-
       if (e >= 0 && !is_lb_empty(S[e]) && S[e] > s)
         y = e;
       else if (f < S.size() && !is_lb_empty(S[f]) && S[f] < s)
@@ -579,10 +529,7 @@ std::pair<int, int> Visualization::find_insertion_range(
 void Visualization::insert_with_space(std::vector<int>& S, int x, int y,
                                       int s) {
   S[(x + y) >> 1] = s;
-  {
-    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-    update_rectangle_pos_aux((x + y) >> 1, s);
-  }
+  //  update_rec_style(m_auxiliary_shape, true, false, (x + y) >> 1, s,sf::Color::Green);
 }
 
 void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
@@ -595,10 +542,7 @@ void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
     while (temp != m_empty_value && y < S.size()) {
       std::swap(S[y], temp);
       lastIdx = y;
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_pos_aux(y, S[y]);
-      }
+      //      update_rec_style(m_auxiliary_shape, true, false, y, S[y],sf::Color::Green);
       y += 1;
     }
 
@@ -607,10 +551,7 @@ void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
     }
   } else {
     S[x] = s;
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      update_rectangle_pos_aux(x, S[x]);
-    }
+    //   update_rec_style(m_auxiliary_shape, true, false, x, S[x], sf::Color::Green);
   }
 }
 
@@ -618,10 +559,7 @@ void Visualization::handle_overflow(std::vector<int>& S, int value) {
   for (int k = 0; k < S.size(); k++) {
     if (is_lb_empty(S[k])) {
       S[k] = value;
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_pos_aux(k, S[k]);
-      }
+      //      update_rec_style(m_auxiliary_shape, true, false, k, S[k],sf::Color::Green);
       break;
     }
   }
@@ -635,19 +573,13 @@ void Visualization::redistribute_elements(std::vector<int>& S, int max_p) {
     if (!is_lb_empty(S[s])) {
       temp_values.push_back(S[s]);
       S[s] = m_empty_value;
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_pos_aux(s, m_empty_value);
-      }
+      //      update_rec_style(m_auxiliary_shape, true, false, s, m_empty_value,sf::Color::Green);
     }
   }
   for (int idx = temp_values.size() - 1; idx >= 0; idx--) {
     if (dest_p >= 0 && dest_p < S.size()) {
       S[dest_p] = temp_values[idx];
-      {
-        std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-        update_rectangle_pos_aux(dest_p, S[dest_p]);
-      }
+      //     update_rec_style(m_auxiliary_shape, true, false, dest_p, S[dest_p],sf::Color::Green);
       dest_p -= 2;
     }
   }
@@ -663,22 +595,14 @@ void Visualization::finalize_sort(const std::vector<int>& S) {
   }
   m_element_number = sorted_elements;
   m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
-  for (int i = 0; i < m_element_number.size(); i++) {
-    {
-      std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-      update_rectangle_pos(i, m_element_number[i]);
-    }
-  }
-  m_auxiliary_shape.clear();
+  for (int i = 0; i < m_element_number.size(); i++)
+    //    update_rec_style(m_element_shape, true, false, i, m_element_number[i], sf::Color::Green);
+    m_auxiliary_shape.clear();
 }
 
 int Visualization::process_iteration(std::vector<int>& S, int n, int a, int b) {
   int max_p = 0;
-  {
-    m_info_text[4].setString("Duration: " +
-                             std::to_string(get_elapsed_time().count()));
-    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-  }
+  //update_rec_style(m_element_shape, false, false, 0, 0, sf::Color::Green, true);
   for (int j = a; j < std::min(b, n + 1); j++) {
     int p = 2 * j - 1;
     max_p = std::max(max_p, p);
@@ -697,10 +621,8 @@ void Visualization::library_sort() {
     int a = 1 << (i + 1);
     int b = 1 << (i + 2);
     int max_p = process_iteration(S, n, a, b);
-
     if (b > n)
       break;
-
     if (i < m - 1) {
       redistribute_elements(S, max_p);
     }
