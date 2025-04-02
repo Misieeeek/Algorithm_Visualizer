@@ -47,8 +47,6 @@ class Visualization : public Screen {
   void initialize_algorithms();
   void execute_algorithm(const std::string& name);
 
-  void check_mutex_type();
-
   //SHELL SORT GAPS GENERATORS
   void set_shell_gaps();         //GO TO SELECTED GAP GENERATOR FUNCTION
   void shell_gap_shell();        // ORIGINAL SHELL GAP
@@ -67,7 +65,7 @@ class Visualization : public Screen {
 
   //SORTING ALGOS
   void insertion_sort();
-  void recur_insertion_sort(int n);
+  bool recur_insertion_sort(int n);
   void shell_sort();
 
   //TIMER FUNCTIONS
@@ -142,7 +140,7 @@ class Visualization : public Screen {
   // STOP THREAD FLAG
   std::atomic<bool> m_stop_visualizing;
   //SYNC THREADS
-  std::variant<std::mutex, std::recursive_mutex> m_mutex;
+  std::mutex m_mutex;
 
   //
   std::unordered_map<std::string, std::function<void()>> m_algo_func;

@@ -46,7 +46,7 @@ void Visualization::pause_timer() {
   }
 }
 void Visualization::draw(sf::RenderWindow& window) {
-  std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
+  std::lock_guard lock(m_mutex);
   for (const auto& x : m_buttons_shape)
     window.draw(x);
   for (const auto& x : m_buttons_text)

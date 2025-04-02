@@ -5,14 +5,16 @@
 void Visualization::update_rec_style(sf::VertexArray& arr, bool update_pos,
                                      bool update_color, int index, int number,
                                      sf::Color c, bool update_time) {
-  check_mutex_type();
-  if (update_time)
-    m_info_text[4].setString("Duration: " +
-                             std::to_string(get_elapsed_time().count()));
+
+  std::lock_guard lock(m_mutex);
   if (update_pos)
     update_rectangle_pos(arr, index, number);
   if (update_color)
     update_rectangle_color(arr, index, c);
+  if (update_time) {
+    m_info_text[4].setString("Duration: " +
+                             std::to_string(get_elapsed_time().count()));
+  }
 }
 void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
                                          int number) {
@@ -76,9 +78,9 @@ void Visualization::update_rectangle_pos_aux(int i, int number) {
   m_auxiliary_shape[base + 1] = sf::Vertex(
       sf::Vector2f(x_rectangle_right, y_rectangle_top), sf::Color::White);
   m_auxiliary_shape[base + 2] = sf::Vertex(
-      sf::Vector2f(x_rectangle_right, m_box_pos[3] / 2), sf::Color::White);
+      sf::Vector2f(x_rectangle_right, m_box_pos[3] / 2.0), sf::Color::White);
   m_auxiliary_shape[base + 3] = sf::Vertex(
-      sf::Vector2f(x_rectangle_left, m_box_pos[3] / 2), sf::Color::White);
+      sf::Vector2f(x_rectangle_left, m_box_pos[3] / 2.0), sf::Color::White);
 }
 
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
@@ -116,14 +118,6 @@ void Visualization::update_rectangle_color_aux(int i, sf::Color c) {
   }
 }
 
-void Visualization::check_mutex_type() {
-  if (std::holds_alternative<std::recursive_mutex>(m_mutex))
-    std::lock_guard<std::recursive_mutex> lock(
-        std::get<std::recursive_mutex>(m_mutex));
-  else if (std::holds_alternative<std::mutex>(m_mutex))
-    std::lock_guard<std::mutex> lock(std::get<std::mutex>(m_mutex));
-}
-
 void Visualization::insertion_sort() {
   for (int i = 1; i < m_element_number.size(); ++i) {
     if (m_stop_visualizing.load())
@@ -153,16 +147,17 @@ void Visualization::insertion_sort() {
   m_stop_visualizing.store(true);
   m_visualizaing = false;
 }
-void Visualization::recur_insertion_sort(int n) {
+
+bool Visualization::recur_insertion_sort(int n) {
   if (m_stop_visualizing.load()) {
     for (int i = 0; i < n; i++)
       update_rec_style(m_element_shape, false, true, i, 0, sf::Color::White);
-    return;
+    return true;
   }
   if (n <= 1)
-    return;
-
-  recur_insertion_sort(n - 1);
+    return false;
+  if (recur_insertion_sort(n - 1))
+    return true;
   int last = m_element_number[n - 1];
   int j = n - 2;
   update_rec_style(m_element_shape, false, true, j, 0, sf::Color::Green);
@@ -170,7 +165,7 @@ void Visualization::recur_insertion_sort(int n) {
     if (m_stop_visualizing.load()) {
       for (int i = 0; i < n; i++)
         update_rec_style(m_element_shape, false, true, i, 0, sf::Color::White);
-      return;
+      return true;
     }
     update_rec_style(m_element_shape, false, true, j, 0, sf::Color::Red);
     m_element_number[j + 1] = m_element_number[j];
@@ -179,6 +174,7 @@ void Visualization::recur_insertion_sort(int n) {
     update_rec_style(m_element_shape, false, true, j, 0, sf::Color::White);
     j--;
   }
+
   m_element_number[j + 1] = last;
   int index_to_update = (j < 0) ? 0 : j;
   update_rec_style(m_element_shape, true, false, j + 1, m_element_number[j + 1],
@@ -191,15 +187,17 @@ void Visualization::recur_insertion_sort(int n) {
     m_stop_visualizing.store(true);
     m_visualizaing = false;
   }
-}
 
+  return false;
+}
 void Visualization::shell_gap_shell() {
-  for (int i = floor(m_element_number.size() / 2); i > 0; i /= 2)
+  for (int i = floor(m_element_number.size() / 2.0); i > 0; i /= 2)
     m_gaps.push_back(i);
 }
 
 void Visualization::shell_gap_fl() {
-  for (int i = 2 * floor(m_element_number.size() / (2 * 2)) + 1; i > 0; i /= 2)
+  for (int i = 2 * floor(m_element_number.size() / (2.0 * 2.0)) + 1; i > 0;
+       i /= 2)
     m_gaps.push_back(i);
 }
 
@@ -234,7 +232,7 @@ void Visualization::shell_gap_pratt() {
 }
 void Visualization::shell_gap_knuth() {
   for (int i = 1;
-       ((std::pow(3, i) - 1) / 2) < ceil(m_element_number.size() / 3); i++)
+       ((std::pow(3, i) - 1) / 2.0) < ceil(m_element_number.size() / 3.0); i++)
     m_gaps.push_back(((std::pow(3, i) - 1) / 2));
 }
 
