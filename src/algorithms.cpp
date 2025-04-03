@@ -19,23 +19,35 @@ void Visualization::update_rec_style(sf::VertexArray& arr, bool update_pos,
 void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
                                          int number) {
   int base = i * 4;
-
+  if (&arr == &m_auxiliary_shape) {
+    base += 4;
+    if (is_lb_empty(number))
+      return;
+    if (base + 3 >= m_auxiliary_shape.getVertexCount())
+      return;
+  }
   double t_i = (static_cast<double>(number) - m_options[1]) /
                (m_options[2] - m_options[1]);
   double H_i = t_i * m_box_pos[5];
-  double y_rectangle_top = m_box_pos[3] - H_i;
-
+  double y_rectangle_top;
+  double y_rectangle_bottom;
+  if (&arr == &m_auxiliary_shape) {
+    y_rectangle_top = (m_box_pos[3] - H_i) / 2;
+    y_rectangle_bottom = m_box_pos[3] / 2.0;
+  } else {
+    y_rectangle_top = m_box_pos[3] - H_i;
+    y_rectangle_bottom = m_box_pos[3];
+  }
   int n = m_options[0];
   double total_width = m_box_pos[4];
   double max_spacing = 20.0;
   int n_threshold = 50;
   double spacing = 0.0;
-  if (n > 1 && n < n_threshold) {
+  if (n > 1 && n < n_threshold)
     spacing = max_spacing *
               ((n_threshold - n) / static_cast<double>(n_threshold - 1));
-  } else {
+  else
     spacing = 0.0;
-  }
   double effectiveWidth = (total_width - (n - 1) * spacing) / n;
   double x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
   double x_rectangle_right = x_rectangle_left + effectiveWidth;
@@ -43,81 +55,42 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
                              sf::Color::White);
   arr[base + 1] = sf::Vertex(sf::Vector2f(x_rectangle_right, y_rectangle_top),
                              sf::Color::White);
-  arr[base + 2] = sf::Vertex(sf::Vector2f(x_rectangle_right, m_box_pos[3]),
+  arr[base + 2] = sf::Vertex(
+      sf::Vector2f(x_rectangle_right, y_rectangle_bottom), sf::Color::White);
+  arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_bottom),
                              sf::Color::White);
-  arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, m_box_pos[3]),
-                             sf::Color::White);
-}
-void Visualization::update_rectangle_pos_aux(int i, int number) {
-  int base = i * 4 + 4;
-  if (is_lb_empty(number))
-    return;
-  if (base + 3 >= m_auxiliary_shape.getVertexCount())
-    return;
-  double t_i = (static_cast<double>(number) - m_options[1]) /
-               (m_options[2] - m_options[1]);
-  double H_i = t_i * m_box_pos[5];
-  double y_rectangle_top = (m_box_pos[3] - H_i) / 2;
-
-  int n = m_options[0];
-  double total_width = m_box_pos[4];
-  double max_spacing = 20.0;
-  int n_threshold = 50;
-  double spacing = 0.0;
-  if (n > 1 && n < n_threshold) {
-    spacing = max_spacing *
-              ((n_threshold - n) / static_cast<double>(n_threshold - 1));
-  } else {
-    spacing = 0.0;
-  }
-  double effectiveWidth = (total_width - (n - 1) * spacing) / n;
-  double x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
-  double x_rectangle_right = x_rectangle_left + effectiveWidth;
-  m_auxiliary_shape[base + 0] = sf::Vertex(
-      sf::Vector2f(x_rectangle_left, y_rectangle_top), sf::Color::White);
-  m_auxiliary_shape[base + 1] = sf::Vertex(
-      sf::Vector2f(x_rectangle_right, y_rectangle_top), sf::Color::White);
-  m_auxiliary_shape[base + 2] = sf::Vertex(
-      sf::Vector2f(x_rectangle_right, m_box_pos[3] / 2.0), sf::Color::White);
-  m_auxiliary_shape[base + 3] = sf::Vertex(
-      sf::Vector2f(x_rectangle_left, m_box_pos[3] / 2.0), sf::Color::White);
 }
 
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
-  if (i < 0 || i >= m_element_number.size()) {
-    std::cerr << "Error: update_rectangle_color index out of range: " << i
-              << std::endl;
-    return;
+  if (&arr == &m_auxiliary_shape) {
+    if (i < 0 || 2 * i + 1 >= m_auxiliary_shape.getVertexCount() / 4) {
+      std::cerr
+          << "Error: update_rectangle_color auxiliary index out of range: " << i
+          << " (position " << 2 * i + 1 << ")" << std::endl;
+      return;
+    }
+  } else {
+    if (i < 0 || i >= m_element_number.size()) {
+      std::cerr << "Error: update_rectangle_color index out of range: " << i
+                << std::endl;
+      return;
+    }
   }
-  int base = i * 4;
+  int base;
+  if (&arr == &m_auxiliary_shape) {
+    base = (2 * i + 1) * 4;
+  } else {
+    base = i * 4;
+  }
   if (base + 3 >= arr.getVertexCount()) {
     std::cerr << "Error: base out of range: " << base << std::endl;
     return;
   }
-
   for (int k = 0; k < 4; k++) {
     arr[base + k].color = c;
   }
 }
-
-void Visualization::update_rectangle_color_aux(int i, sf::Color c) {
-  if (i < 0 || i >= m_element_number.size()) {
-    std::cerr << "Error: update_rectangle_color index out of range: " << i
-              << std::endl;
-    return;
-  }
-  int base = i * 4;
-  if (base + 3 >= m_auxiliary_shape.getVertexCount()) {
-    std::cerr << "Error: base out of range: " << base << std::endl;
-    return;
-  }
-
-  for (int k = 0; k < 4; k++) {
-    m_element_shape[base + k].color = c;
-  }
-}
-
 void Visualization::insertion_sort() {
   for (int i = 1; i < m_element_number.size(); ++i) {
     if (m_stop_visualizing.load())
@@ -472,12 +445,12 @@ std::vector<int> Visualization::initialize_array(int n) {
   std::vector<int> S(n * 2, m_empty_value);
   for (int i = 0; i < n; i++) {
     S[2 * i + 1] = m_element_number[i];
- /*   update_rec_style(m_element_shape, true, false, i, m_options[1],
+    update_rec_style(m_element_shape, true, false, i, m_options[1],
                      sf::Color::Green);
     update_rec_style(m_auxiliary_shape, true, false, 2 * i + 1, S[2 * i + 1],
                      sf::Color::Green);
-  */}
- return S;
+  }
+  return S;
 }
 
 void Visualization::insert_element(std::vector<int>& S, int p) {
@@ -486,13 +459,13 @@ void Visualization::insert_element(std::vector<int>& S, int p) {
   std::pair<int, int> insertion_range = find_insertion_range(S, s, x, y);
   x = insertion_range.first;
   y = insertion_range.second;
-  if (y - x > 1) {
+  if (y - x > 1)
     insert_with_space(S, x, y, s);
-  } else {
+  else
     insert_with_shift(S, x, y, s);
-  }
   S[p] = m_empty_value;
-  //  update_rec_style(m_auxiliary_shape, true, false, p, m_empty_value,sf::Color::Green);
+  update_rec_style(m_auxiliary_shape, true, false, p, m_empty_value,
+                   sf::Color::Green);
 }
 
 std::pair<int, int> Visualization::find_insertion_range(
@@ -527,7 +500,8 @@ std::pair<int, int> Visualization::find_insertion_range(
 void Visualization::insert_with_space(std::vector<int>& S, int x, int y,
                                       int s) {
   S[(x + y) >> 1] = s;
-  //  update_rec_style(m_auxiliary_shape, true, false, (x + y) >> 1, s,sf::Color::Green);
+  update_rec_style(m_auxiliary_shape, true, false, (x + y) >> 1, s,
+                   sf::Color::Green);
 }
 
 void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
@@ -540,7 +514,8 @@ void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
     while (temp != m_empty_value && y < S.size()) {
       std::swap(S[y], temp);
       lastIdx = y;
-      //      update_rec_style(m_auxiliary_shape, true, false, y, S[y],sf::Color::Green);
+      update_rec_style(m_auxiliary_shape, true, false, y, S[y],
+                       sf::Color::Green);
       y += 1;
     }
 
@@ -549,7 +524,7 @@ void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
     }
   } else {
     S[x] = s;
-    //   update_rec_style(m_auxiliary_shape, true, false, x, S[x], sf::Color::Green);
+    update_rec_style(m_auxiliary_shape, true, false, x, S[x], sf::Color::Green);
   }
 }
 
@@ -557,7 +532,8 @@ void Visualization::handle_overflow(std::vector<int>& S, int value) {
   for (int k = 0; k < S.size(); k++) {
     if (is_lb_empty(S[k])) {
       S[k] = value;
-      //      update_rec_style(m_auxiliary_shape, true, false, k, S[k],sf::Color::Green);
+      update_rec_style(m_auxiliary_shape, true, false, k, S[k],
+                       sf::Color::Green);
       break;
     }
   }
@@ -571,13 +547,15 @@ void Visualization::redistribute_elements(std::vector<int>& S, int max_p) {
     if (!is_lb_empty(S[s])) {
       temp_values.push_back(S[s]);
       S[s] = m_empty_value;
-      //      update_rec_style(m_auxiliary_shape, true, false, s, m_empty_value,sf::Color::Green);
+      update_rec_style(m_auxiliary_shape, true, false, s, m_empty_value,
+                       sf::Color::Green);
     }
   }
   for (int idx = temp_values.size() - 1; idx >= 0; idx--) {
     if (dest_p >= 0 && dest_p < S.size()) {
       S[dest_p] = temp_values[idx];
-      //     update_rec_style(m_auxiliary_shape, true, false, dest_p, S[dest_p],sf::Color::Green);
+      update_rec_style(m_auxiliary_shape, true, false, dest_p, S[dest_p],
+                       sf::Color::Green);
       dest_p -= 2;
     }
   }
@@ -594,13 +572,14 @@ void Visualization::finalize_sort(const std::vector<int>& S) {
   m_element_number = sorted_elements;
   m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
   for (int i = 0; i < m_element_number.size(); i++)
-    //    update_rec_style(m_element_shape, true, false, i, m_element_number[i], sf::Color::Green);
-    m_auxiliary_shape.clear();
+    update_rec_style(m_element_shape, true, false, i, m_element_number[i],
+                     sf::Color::Green);
+  m_auxiliary_shape.clear();
 }
 
 int Visualization::process_iteration(std::vector<int>& S, int n, int a, int b) {
   int max_p = 0;
-  //update_rec_style(m_element_shape, false, false, 0, 0, sf::Color::Green, true);
+  update_rec_style(m_element_shape, false, false, 0, 0, sf::Color::Green, true);
   for (int j = a; j < std::min(b, n + 1); j++) {
     int p = 2 * j - 1;
     max_p = std::max(max_p, p);
