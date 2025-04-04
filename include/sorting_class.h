@@ -24,6 +24,7 @@ class Sorting_Class : public Screen {
   //SET STYLE FOR SORT ALGO
   void set_style(std::vector<std::string> variants, int y_pos);
   void insertion_sort();
+  void selection_sort();
   void textbox(int char_size_textbox, std::size_t number_of_inputs, int pos_y);
 
   // RESPONSIBLE FOR CHANDELING INPUTBOX

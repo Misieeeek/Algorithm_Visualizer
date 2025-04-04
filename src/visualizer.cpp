@@ -219,8 +219,10 @@ void Visualizer::initialize_sorting() {
     sort_class->initalize_sorting_algos();
     sort_class->insertion_sort();
   };
-  algorithm_map[{algo_cat::sorting, 1}] = []() {
-    std::cout << "Selection --------------------Sort\n";
+  algorithm_map[{algo_cat::sorting, 1}] = [this]() {
+    *current_screen = sort_class;
+    sort_class->initalize_sorting_algos();
+    sort_class->selection_sort();
   };
   algorithm_map[{algo_cat::sorting, 2}] = []() {
     std::cout << "Merge Sort\n";

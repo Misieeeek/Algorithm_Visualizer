@@ -356,7 +356,47 @@ void Sorting_Class::initialize_insertion() {
   };
   additional_option(false);
 }
-void Sorting_Class::initialize_selection() {}
+void Sorting_Class::initialize_selection() {
+  m_sort_map[{sort_cat::selection, 0}] = [this]() {
+    m_choosed_algo = 0;
+    set_default_options();
+    additional_option(false);
+    selection_sort();
+  };
+  m_sort_map[{sort_cat::selection, 1}] = [this]() {
+    m_choosed_algo = 1;
+    set_default_options();
+    additional_option(false);
+    selection_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::selection, 2}] = [this]() {
+    m_choosed_algo = 2;
+    set_default_options();
+    additional_option(false);
+    selection_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::selection, 3}] = [this]() {
+    m_choosed_algo = 3;
+    set_default_options();
+    additional_option(false);
+    selection_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::selection, 4}] = [this]() {
+    m_choosed_algo = 4;
+    set_default_options();
+    additional_option(false);
+    selection_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+  };
+  additional_option(false);
+}
 void Sorting_Class::initialize_merge() {}
 void Sorting_Class::initialize_bubble() {}
 void Sorting_Class::initialize_heap() {}
@@ -446,6 +486,21 @@ void Sorting_Class::insertion_sort() {
                                  m_visualization_buttons_names.end());
   set_style(insertion_sort_variants, 150);
   m_sc = sort_cat::insertion;
+}
+
+void Sorting_Class::selection_sort() {
+  std::vector<std::string> selection_sort_variants = {
+      "Selection Sort",  "Heapsort",   "Smoothsort",     "Cartesian Tree Sort",
+      "Tournament Sort", "Cycle Sort", "Weak-Heap Sort", "Back"};
+  m_variants_size = selection_sort_variants.size();
+  selection_sort_variants.insert(selection_sort_variants.end(),
+                                 m_visualization_options_names.begin(),
+                                 m_visualization_options_names.end());
+  selection_sort_variants.insert(selection_sort_variants.end(),
+                                 m_visualization_buttons_names.begin(),
+                                 m_visualization_buttons_names.end());
+  set_style(selection_sort_variants, 150);
+  m_sc = sort_cat::selection;
 }
 
 void Sorting_Class::textbox(int char_size_textbox, std::size_t number_of_inputs,

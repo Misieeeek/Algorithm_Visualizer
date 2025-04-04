@@ -61,6 +61,7 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
                              sf::Color::White);
 }
 
+//BUG: m_auxiliary_shape GOES OUT OF RANGE
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
   if (&arr == &m_auxiliary_shape) {
@@ -590,6 +591,7 @@ int Visualization::process_iteration(std::vector<int>& S, int n, int a, int b) {
   return max_p;
 }
 
+//TODO: ADD COLORING
 void Visualization::library_sort() {
   int n = m_element_number.size();
   std::vector<int> S = initialize_array(n);

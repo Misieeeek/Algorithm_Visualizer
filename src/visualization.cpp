@@ -9,7 +9,8 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
       window_ptr(window),
       m_gen(m_rd()),
       m_stop_visualizing(false),
-      m_offset(std::chrono::milliseconds(0)) {
+      m_offset(std::chrono::milliseconds(0)),
+      m_distribution(2) {
   m_visualizaing = false;
   set_styles();
   m_selected_button_index = 1;
@@ -202,8 +203,30 @@ void Visualization::set_options(std::size_t n_elements, int min_val,
 }
 
 int Visualization::random_number_gen(int min_val, int max_val) {
+  /*switch (m_distribution) {
+    case 0: {
+      std::uniform_int_distribution<> distrib(min_val, max_val);
+      return distrib(m_gen);
+    }
+    case 1: {
+      std::binomial_distribution<> distrib(max_val, 0.5);
+      return distrib(m_gen);
+    }
+    case 2: {
+      std::negative_binomial_distribution<> distrib(5, 0.75);
+      return distrib(m_gen);
+      std::poisson_distribution<> d(4);
+    }
+    case 3: {
+      std::poisson_distribution<> distrib(5);
+      return distrib(m_gen);
+    }
+    default:
+      throw std::invalid_argument("Invalid distribution type");
+  }*/
   std::uniform_int_distribution<> distrib(min_val, max_val);
   return distrib(m_gen);
+  //return 0;
 }
 
 void Visualization::standardize(std::vector<double>& box_pos, int number,
@@ -235,7 +258,6 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
 }
 
 void Visualization::initialize_algorithms() {
-  /*""*/
   m_algo_func["Insertion Sort"] = [this]() {
     insertion_sort();
   };

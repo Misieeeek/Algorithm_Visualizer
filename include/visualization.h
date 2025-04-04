@@ -134,8 +134,12 @@ class Visualization : public Screen {
   sf::VertexArray m_element_shape;
   sf::VertexArray m_auxiliary_shape;
 
+  // RANDOM NUMBER GENERATOR
   std::random_device m_rd;
   std::mt19937 m_gen;
+
+  // DISTRIBUTION OF ELEMENTS
+  int m_distribution;
 
   // STOP THREAD FLAG
   std::atomic<bool> m_stop_visualizing;
