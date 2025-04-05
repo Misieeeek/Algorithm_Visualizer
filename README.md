@@ -12,6 +12,15 @@ I have divided the algorithms into 7 groups:
 - Advanced data structures
 - Graph algorithms
 
+## Table of Contents
+
+- [Installation Guide](#installation-guide)
+  - [Prerequisites](#prerequisites)
+  - [Linux](#linux)
+  - [Windows (using Visual Studio)](#windows-using-visual-studio)
+  - [Windows (using MinGW)](#windows-using-mingw)
+- [How To Use](#how-to-use)
+
 ## Installation Guide
 
 ### Prerequisites
@@ -71,3 +80,8 @@ I have divided the algorithms into 7 groups:
    ```cmd
    mingw32-make
    ```
+
+## How To Use
+
+1. Run the executable file `Algorithm_Visualizer.exe` located in the `build` directory.
+2. Move using the arrow keys and select using the Enter key.
