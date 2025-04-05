@@ -24,8 +24,8 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
   m_list_algorithms[0].setFillColor(sf::Color::Green);
   m_dropped = false;
   // SETTING NAMES FOR DIFFERENT ALGO CATEGORIES
-  m_algo_sort = {"Insertion Sort", "Selection Sort", "Merge Sort",
-                 "Bubble Sort",    "Heap Sort",      "Quick Sort"};
+  m_algo_sort = {"Insertion Sorts", "Selection Sorts",    "Merge Sorts",
+                 "Exchange Sorts",  "Distribution Sorts", "Concurrent Sorts"};
   m_algo_search = {"Linear Search", "Binary Search"};
   m_algo_ds = {"Stack",
                "Queue",
@@ -225,16 +225,16 @@ void Visualizer::initialize_sorting() {
     sort_class->selection_sort();
   };
   algorithm_map[{algo_cat::sorting, 2}] = []() {
-    std::cout << "Merge Sort\n";
+    std::cout << "Merge Sorts\n";
   };
   algorithm_map[{algo_cat::sorting, 3}] = []() {
-    std::cout << "Bubble Sort\n";
+    std::cout << "Exchange sorts\n";
   };
   algorithm_map[{algo_cat::sorting, 4}] = []() {
-    std::cout << "Heap Sort\n";
+    std::cout << "Distribution Sorts\n";
   };
   algorithm_map[{algo_cat::sorting, 5}] = []() {
-    std::cout << "Quick Sort\n";
+    std::cout << "Concurrent Sorts\n";
   };
 }
 void Visualizer::initialize_searching() {
