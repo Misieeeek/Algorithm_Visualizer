@@ -273,6 +273,9 @@ void Visualization::initialize_algorithms() {
   m_algo_func["Library Sort"] = [this]() {
     library_sort();
   };
+  m_algo_func["Selection Sort"] = [this]() {
+    selection_sort();
+  };
 }
 
 void Visualization::update_rec_style(sf::VertexArray& arr, bool update_pos,

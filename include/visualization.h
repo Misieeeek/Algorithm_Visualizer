@@ -93,6 +93,9 @@ class Visualization : public Screen {
   void finalize_sort(const std::vector<int>& S);
   void library_sort();
 
+  //SELECTION SORT
+  void selection_sort();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;

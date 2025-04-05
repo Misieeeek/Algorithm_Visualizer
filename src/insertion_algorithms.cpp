@@ -1,4 +1,3 @@
-#include <SFML/System/Time.hpp>
 #include "sorting_class.h"
 #include "visualization.h"
 
