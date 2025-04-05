@@ -219,19 +219,19 @@ void Sorting_Class::set_default_options() {
 void Sorting_Class::additional_option(bool additional) {
   m_gaps_seq.setString("");
   display_lr_buttons(false);
-  m_sort_class_map[6] = [this]() {
+  m_sort_class_map[m_variants_size] = [this]() {
     input_box_selected(0);
   };
-  m_sort_class_map[7] = [this]() {
+  m_sort_class_map[m_variants_size + 1] = [this]() {
     input_box_selected(1);
   };
-  m_sort_class_map[8] = [this]() {
+  m_sort_class_map[m_variants_size + 2] = [this]() {
     input_box_selected(2);
   };
   int i = (additional) ? 1 : 0;
   if (additional) {
     m_gaps_seq.setString(m_gaps_seq_names[m_gaps_index]);
-    m_sort_class_map[9] = [this]() {
+    m_sort_class_map[m_variants_size + 3] = [this]() {
       if (m_additional_param) {
         m_additional_param = false;
         display_lr_buttons(false);
@@ -241,17 +241,17 @@ void Sorting_Class::additional_option(bool additional) {
       }
     };
   }
-  m_sort_class_map[9 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 3 + i] = [this]() {
     algo_viz(m_visualization_options[0], m_visualization_options[1],
              m_visualization_options[2]);
   };
-  m_sort_class_map[10 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 4 + i] = [this]() {
     algo_viz(10, 0, 10);
   };
-  m_sort_class_map[11 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 5 + i] = [this]() {
     algo_viz(100, 0, 100, false);
   };
-  m_sort_class_map[12 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 6 + i] = [this]() {
     algo_viz(100, 0, 100, true);
   };
 }
@@ -315,9 +315,9 @@ void Sorting_Class::initalize_sorting_algos() {
   initialize_insertion();
   initialize_selection();
   initialize_merge();
-  initialize_bubble();
-  initialize_heap();
-  initialize_quick();
+  initialize_exchange();
+  initialize_distribution();
+  initialize_concurrent();
 }
 
 void Sorting_Class::initialize_insertion() {
@@ -395,12 +395,236 @@ void Sorting_Class::initialize_selection() {
     m_algorithm_variants[0].setFillColor(sf::Color::White);
     m_algorithm_variants[4].setFillColor(sf::Color::Green);
   };
+  m_sort_map[{sort_cat::selection, 5}] = [this]() {
+    m_choosed_algo = 5;
+    set_default_options();
+    additional_option(false);
+    selection_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[5].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::selection, 6}] = [this]() {
+    m_choosed_algo = 6;
+    set_default_options();
+    additional_option(false);
+    selection_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[6].setFillColor(sf::Color::Green);
+  };
   additional_option(false);
 }
-void Sorting_Class::initialize_merge() {}
-void Sorting_Class::initialize_bubble() {}
-void Sorting_Class::initialize_heap() {}
-void Sorting_Class::initialize_quick() {}
+void Sorting_Class::initialize_merge() {
+  m_sort_map[{sort_cat::merge, 0}] = [this]() {
+    m_choosed_algo = 0;
+    set_default_options();
+    additional_option(false);
+    merge_sort();
+  };
+  m_sort_map[{sort_cat::merge, 1}] = [this]() {
+    m_choosed_algo = 1;
+    set_default_options();
+    additional_option(false);
+    merge_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::merge, 2}] = [this]() {
+    m_choosed_algo = 2;
+    set_default_options();
+    additional_option(false);
+    merge_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::merge, 3}] = [this]() {
+    m_choosed_algo = 3;
+    set_default_options();
+    additional_option(false);
+    merge_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::merge, 4}] = [this]() {
+    m_choosed_algo = 4;
+    set_default_options();
+    additional_option(false);
+    merge_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+  };
+  additional_option(false);
+}
+void Sorting_Class::initialize_exchange() {
+  m_sort_map[{sort_cat::exchange, 0}] = [this]() {
+    m_choosed_algo = 0;
+    set_default_options();
+    additional_option(false);
+    exchange_sort();
+  };
+  m_sort_map[{sort_cat::exchange, 1}] = [this]() {
+    m_choosed_algo = 1;
+    set_default_options();
+    additional_option(false);
+    exchange_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::exchange, 2}] = [this]() {
+    m_choosed_algo = 2;
+    set_default_options();
+    additional_option(false);
+    exchange_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::exchange, 3}] = [this]() {
+    m_choosed_algo = 3;
+    set_default_options();
+    additional_option(false);
+    exchange_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::exchange, 4}] = [this]() {
+    m_choosed_algo = 4;
+    set_default_options();
+    additional_option(false);
+    exchange_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::exchange, 5}] = [this]() {
+    m_choosed_algo = 5;
+    set_default_options();
+    additional_option(false);
+    exchange_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[5].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::exchange, 6}] = [this]() {
+    m_choosed_algo = 6;
+    set_default_options();
+    additional_option(false);
+    exchange_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[6].setFillColor(sf::Color::Green);
+  };
+  additional_option(false);
+}
+void Sorting_Class::initialize_distribution() {
+  m_sort_map[{sort_cat::distribution, 0}] = [this]() {
+    m_choosed_algo = 0;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+  };
+  m_sort_map[{sort_cat::distribution, 1}] = [this]() {
+    m_choosed_algo = 1;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 2}] = [this]() {
+    m_choosed_algo = 2;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 3}] = [this]() {
+    m_choosed_algo = 3;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 4}] = [this]() {
+    m_choosed_algo = 4;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 5}] = [this]() {
+    m_choosed_algo = 5;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 6}] = [this]() {
+    m_choosed_algo = 6;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 7}] = [this]() {
+    m_choosed_algo = 7;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 8}] = [this]() {
+    m_choosed_algo = 8;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::distribution, 9}] = [this]() {
+    m_choosed_algo = 9;
+    set_default_options();
+    additional_option(false);
+    distribution_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+  };
+  additional_option(false);
+}
+void Sorting_Class::initialize_concurrent() {
+  m_sort_map[{sort_cat::concurrent, 0}] = [this]() {
+    m_choosed_algo = 0;
+    set_default_options();
+    additional_option(false);
+    concurrent_sort();
+  };
+  m_sort_map[{sort_cat::concurrent, 1}] = [this]() {
+    m_choosed_algo = 1;
+    set_default_options();
+    additional_option(false);
+    concurrent_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::concurrent, 2}] = [this]() {
+    m_choosed_algo = 2;
+    set_default_options();
+    additional_option(false);
+    concurrent_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+  };
+  m_sort_map[{sort_cat::concurrent, 3}] = [this]() {
+    m_choosed_algo = 3;
+    set_default_options();
+    additional_option(false);
+    concurrent_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+  };
+  additional_option(false);
+}
 
 void Sorting_Class::find_algo(int selected) {
   auto it = m_sort_map.find(std::make_pair(m_sc, selected));
@@ -427,6 +651,7 @@ void Sorting_Class::change_option(int selected) {
     m_selected_sorting_algo_index = 0;
     m_algorithm_variants[0].setFillColor(sf::Color::Green);
     m_algorithm_variants[m_variants_size].setFillColor(sf::Color::Red);
+    set_default_options();
     *current_screen = visualize;
   } else if (selected > m_variants_size - 1) {
     find_option(selected);
@@ -501,6 +726,68 @@ void Sorting_Class::selection_sort() {
                                  m_visualization_buttons_names.end());
   set_style(selection_sort_variants, 150);
   m_sc = sort_cat::selection;
+}
+
+void Sorting_Class::merge_sort() {
+  std::vector<std::string> merge_sort_variants = {
+      "Merge Sort", "Cascade Merge Sort", "Oscillating Merge Sort",
+      "Polyphase Merge Sort", "Back"};
+  m_variants_size = merge_sort_variants.size();
+  merge_sort_variants.insert(merge_sort_variants.end(),
+                             m_visualization_options_names.begin(),
+                             m_visualization_options_names.end());
+  merge_sort_variants.insert(merge_sort_variants.end(),
+                             m_visualization_buttons_names.begin(),
+                             m_visualization_buttons_names.end());
+  set_style(merge_sort_variants, 150);
+  m_sc = sort_cat::merge;
+}
+
+void Sorting_Class::exchange_sort() {
+  std::vector<std::string> exchange_sort_variants = {
+      "Bubble Sort", "Cocktail Sort",          "Odd-Even Sort", "Comb Sort",
+      "Gnome Sort",  "Proportion Extend Sort", "Quicksort",     "Back"};
+  m_variants_size = exchange_sort_variants.size();
+  exchange_sort_variants.insert(exchange_sort_variants.end(),
+                                m_visualization_options_names.begin(),
+                                m_visualization_options_names.end());
+  exchange_sort_variants.insert(exchange_sort_variants.end(),
+                                m_visualization_buttons_names.begin(),
+                                m_visualization_buttons_names.end());
+  set_style(exchange_sort_variants, 150);
+  m_sc = sort_cat::exchange;
+}
+
+void Sorting_Class::distribution_sort() {
+  std::vector<std::string> distribution_sort_variants = {
+      "American Flag Sort", "Bead Sort",     "Bucket Sort",
+      "Burstsort",          "Counting Sort", "Interpolation Sort",
+      "Pigeonhole Sort",    "Proxmap Sort",  "Radix Sort",
+      "Flashsort",          "Back"};
+  m_variants_size = distribution_sort_variants.size();
+  distribution_sort_variants.insert(distribution_sort_variants.end(),
+                                    m_visualization_options_names.begin(),
+                                    m_visualization_options_names.end());
+  distribution_sort_variants.insert(distribution_sort_variants.end(),
+                                    m_visualization_buttons_names.begin(),
+                                    m_visualization_buttons_names.end());
+  set_style(distribution_sort_variants, 150);
+  m_sc = sort_cat::distribution;
+}
+
+void Sorting_Class::concurrent_sort() {
+  std::vector<std::string> concurrent_sort_variants = {
+      "Bitonic Sorter", "Batcher Odd-Even Mergesort",
+      "Pairwise Sorting Netowrk", "Samplesort", "Back"};
+  m_variants_size = concurrent_sort_variants.size();
+  concurrent_sort_variants.insert(concurrent_sort_variants.end(),
+                                  m_visualization_options_names.begin(),
+                                  m_visualization_options_names.end());
+  concurrent_sort_variants.insert(concurrent_sort_variants.end(),
+                                  m_visualization_buttons_names.begin(),
+                                  m_visualization_buttons_names.end());
+  set_style(concurrent_sort_variants, 150);
+  m_sc = sort_cat::concurrent;
 }
 
 void Sorting_Class::textbox(int char_size_textbox, std::size_t number_of_inputs,

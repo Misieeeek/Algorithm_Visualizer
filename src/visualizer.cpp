@@ -216,25 +216,33 @@ int Visualizer::pressed() {
 void Visualizer::initialize_sorting() {
   algorithm_map[{algo_cat::sorting, 0}] = [this]() {
     *current_screen = sort_class;
-    sort_class->initalize_sorting_algos();
     sort_class->insertion_sort();
+    sort_class->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 1}] = [this]() {
     *current_screen = sort_class;
-    sort_class->initalize_sorting_algos();
     sort_class->selection_sort();
+    sort_class->initalize_sorting_algos();
   };
-  algorithm_map[{algo_cat::sorting, 2}] = []() {
-    std::cout << "Merge Sorts\n";
+  algorithm_map[{algo_cat::sorting, 2}] = [this]() {
+    *current_screen = sort_class;
+    sort_class->merge_sort();
+    sort_class->initalize_sorting_algos();
   };
-  algorithm_map[{algo_cat::sorting, 3}] = []() {
-    std::cout << "Exchange sorts\n";
+  algorithm_map[{algo_cat::sorting, 3}] = [this]() {
+    *current_screen = sort_class;
+    sort_class->exchange_sort();
+    sort_class->initalize_sorting_algos();
   };
-  algorithm_map[{algo_cat::sorting, 4}] = []() {
-    std::cout << "Distribution Sorts\n";
+  algorithm_map[{algo_cat::sorting, 4}] = [this]() {
+    *current_screen = sort_class;
+    sort_class->distribution_sort();
+    sort_class->initalize_sorting_algos();
   };
-  algorithm_map[{algo_cat::sorting, 5}] = []() {
-    std::cout << "Concurrent Sorts\n";
+  algorithm_map[{algo_cat::sorting, 5}] = [this]() {
+    *current_screen = sort_class;
+    sort_class->concurrent_sort();
+    sort_class->initalize_sorting_algos();
   };
 }
 void Visualizer::initialize_searching() {

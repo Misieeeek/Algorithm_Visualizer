@@ -25,6 +25,10 @@ class Sorting_Class : public Screen {
   void set_style(std::vector<std::string> variants, int y_pos);
   void insertion_sort();
   void selection_sort();
+  void merge_sort();
+  void exchange_sort();
+  void distribution_sort();
+  void concurrent_sort();
   void textbox(int char_size_textbox, std::size_t number_of_inputs, int pos_y);
 
   // RESPONSIBLE FOR CHANDELING INPUTBOX
@@ -42,7 +46,14 @@ class Sorting_Class : public Screen {
   void set_shell_sort(int selected);
 
   // STATE OF PRESSED SORTING ALGORITHM CATEGORY
-  enum class sort_cat { insertion, selection, merge, bubble, heap, quick };
+  enum class sort_cat {
+    insertion,
+    selection,
+    merge,
+    exchange,
+    distribution,
+    concurrent
+  };
 
   // COMPARATOR FOR STD::PAIR<SORT_CAT, INT> TO BE USED IN THE MAP
   struct sort_cat_pair_comparator {
@@ -95,9 +106,9 @@ class Sorting_Class : public Screen {
   void initialize_insertion();
   void initialize_selection();
   void initialize_merge();
-  void initialize_bubble();
-  void initialize_heap();
-  void initialize_quick();
+  void initialize_exchange();
+  void initialize_distribution();
+  void initialize_concurrent();
   // SORTING MAP(CATEGORY, INDEX)
   std::map<std::pair<sort_cat, int>, std::function<void()>,
            sort_cat_pair_comparator>
