@@ -1,5 +1,6 @@
 #include "sorting_class.h"
 #include <SFML/Graphics/PrimitiveType.hpp>
+#include <utility>
 #include "visualization.h"
 
 Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
@@ -13,7 +14,8 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
       m_possible_input(false),
       m_temp_value(""),
       m_option_size(3),
-      m_additional_param(false) {
+      m_additional_param(false),
+      m_additional_exists(true) {
 
   final_visual = new Visualization(screen_ptr, this, window_ptr);
   //INITIALIZE VISUALIZATION BUTTONS
@@ -29,21 +31,8 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
   m_choosed_algo = 0;
   m_lr_btn_shape.resize(0);
   m_triangle_arrow.resize(0);
-  m_gaps_index = 0;
-  m_gaps_seq_names = {"Original",
-                      "Frank & Lazarus",
-                      "Hibbard",
-                      "Papernov & Stasevich",
-                      "Pratt",
-                      "Knuth",
-                      "Incerpi & Sedgewick",
-                      "Sedgewick 1",
-                      "Sedgewick 2",
-                      "Gonnt & Baeza-Yates",
-                      "Tokuda",
-                      "Ciura",
-                      "Lee",
-                      "S & E & J"};
+  //  m_gaps_index = 0;
+  m_additional_option_index = 0;
 }
 
 Sorting_Class::~Sorting_Class() {
@@ -63,7 +52,7 @@ void Sorting_Class::draw(sf::RenderWindow& window) {
     window.draw(x);
   for (const auto& x : m_triangle_arrow)
     window.draw(x);
-  window.draw(m_gaps_seq);
+  window.draw(m_additional_option);
 }
 
 void Sorting_Class::move_up() {
@@ -112,14 +101,16 @@ void Sorting_Class::move_down() {
 void Sorting_Class::move_left() {
   if (!m_possible_input) {
     if (m_additional_param) {
-      if (m_gaps_index > 0) {
-        m_gaps_index--;
-        float text_width = m_gaps_seq_names[m_gaps_index].length() * 5;
+      if (m_additional_option_index > 0) {
+        m_additional_option_index--;
+        float text_width =
+            m_additional_option_names[m_additional_option_index].length() * 5;
         float min_x = 630;
         float max_x = 780;
         float center_x = (min_x + max_x) / 2;
-        m_gaps_seq.setPosition(center_x - text_width / 2, 310);
-        m_gaps_seq.setString(m_gaps_seq_names[m_gaps_index]);
+        m_additional_option.setPosition(center_x - text_width / 2, 310);
+        m_additional_option.setString(
+            m_additional_option_names[m_additional_option_index]);
       }
     } else {
       if (!(m_selected_sorting_algo_index < m_variants_size)) {
@@ -155,14 +146,16 @@ void Sorting_Class::move_left() {
 void Sorting_Class::move_right() {
   if (!m_possible_input) {
     if (m_additional_param) {
-      if (m_gaps_index < m_gaps_seq_names.size() - 1) {
-        m_gaps_index++;
-        float text_width = m_gaps_seq_names[m_gaps_index].length() * 5;
+      if (m_additional_option_index < m_additional_option_names.size() - 1) {
+        m_additional_option_index++;
+        float text_width =
+            m_additional_option_names[m_additional_option_index].length() * 5;
         float min_x = 630;
         float max_x = 780;
         float center_x = (min_x + max_x) / 2;
-        m_gaps_seq.setPosition(center_x - text_width / 2, 310);
-        m_gaps_seq.setString(m_gaps_seq_names[m_gaps_index]);
+        m_additional_option.setPosition(center_x - text_width / 2, 310);
+        m_additional_option.setString(
+            m_additional_option_names[m_additional_option_index]);
       }
     } else {
       if (!(m_selected_sorting_algo_index >=
@@ -217,7 +210,7 @@ void Sorting_Class::set_default_options() {
 }
 
 void Sorting_Class::additional_option(bool additional) {
-  m_gaps_seq.setString("");
+  m_additional_option.setString("");
   display_lr_buttons(false);
   m_sort_class_map[m_variants_size] = [this]() {
     input_box_selected(0);
@@ -230,7 +223,8 @@ void Sorting_Class::additional_option(bool additional) {
   };
   int i = (additional) ? 1 : 0;
   if (additional) {
-    m_gaps_seq.setString(m_gaps_seq_names[m_gaps_index]);
+    m_additional_option.setString(
+        m_additional_option_names[m_additional_option_index]);
     m_sort_class_map[m_variants_size + 3] = [this]() {
       if (m_additional_param) {
         m_additional_param = false;
@@ -284,31 +278,39 @@ void Sorting_Class::display_lr_buttons(bool display) {
   }
 }
 
-int Sorting_Class::get_shell_gap() {
-  return m_gaps_index;
+int Sorting_Class::get_additional_option_index() {
+  return m_additional_option_index;
 }
 
-void Sorting_Class::set_shell_sort(int selected) {
-  m_choosed_algo = 2;
+void Sorting_Class::set_selected_sort_variants(
+    int selected, std::function<void()> category_func,
+    std::vector<std::string>& names, std::string name_of_input) {
+  m_additional_option_index = 0;
+  m_choosed_algo = selected;
   m_option_size = 4;
   m_visualization_options_names.resize(m_option_size);
-  m_visualization_options_names[3] = "Gap sequence: ";
-  insertion_sort();
+  m_visualization_options_names[3] = name_of_input;
+  m_additional_option_names.clear();
+  for (auto& x : names)
+    m_additional_option_names.push_back(x);
+  category_func();
   for (auto& x : m_algorithm_variants)
     x.setFillColor(sf::Color::White);
   m_algorithm_variants[m_variants_size - 1].setFillColor(sf::Color::Red);
   m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
   additional_option(true);
-  m_gaps_seq.setFont(m_open_sans);
-  m_gaps_seq.setFillColor(sf::Color::White);
-  m_gaps_seq.setCharacterSize(10);
-  m_gaps_seq.setStyle(sf::Text::Bold);
-  float text_width = m_gaps_seq_names[m_gaps_index].length() * 5;
+  m_additional_option.setFont(m_open_sans);
+  m_additional_option.setFillColor(sf::Color::White);
+  m_additional_option.setCharacterSize(10);
+  m_additional_option.setStyle(sf::Text::Bold);
+  float text_width =
+      m_additional_option_names[m_additional_option_index].length() * 5;
   float min_x = 630;
   float max_x = 780;
   float center_x = (min_x + max_x) / 2;
-  m_gaps_seq.setPosition(center_x - text_width / 2, 310);
-  m_gaps_seq.setString(m_gaps_seq_names[m_gaps_index]);
+  m_additional_option.setPosition(center_x - text_width / 2, 310);
+  m_additional_option.setString(
+      m_additional_option_names[m_additional_option_index]);
 }
 
 void Sorting_Class::initalize_sorting_algos() {
@@ -321,38 +323,55 @@ void Sorting_Class::initalize_sorting_algos() {
 }
 
 void Sorting_Class::initialize_insertion() {
-  m_sort_map[{sort_cat::insertion, 0}] = [this]() {
-    m_choosed_algo = 0;
-    set_default_options();
-    additional_option(false);
-    insertion_sort();
+  m_sort_map[{sort_cat::insertion, 0}] = [this]() {  // INSERTION SORT
+    m_additional_exists = true;
+    std::vector<std::string> names = {"Normal", "Recursive", "Binary"};
+    set_selected_sort_variants(
+        0, [this]() { insertion_sort(); }, names, "Variations: ");
   };
-  m_sort_map[{sort_cat::insertion, 1}] = [this]() {
+  /*m_sort_map[{sort_cat::insertion, 1}] = [this]() {
     m_choosed_algo = 1;
     set_default_options();
     additional_option(false);
     insertion_sort();
     m_algorithm_variants[0].setFillColor(sf::Color::White);
     m_algorithm_variants[1].setFillColor(sf::Color::Green);
+  };*/
+  m_sort_map[{sort_cat::insertion, 1}] = [this]() {  // SHELL SORT
+    m_additional_exists = true;
+    std::vector<std::string> names = {"Original",
+                                      "Frank & Lazarus",
+                                      "Hibbard",
+                                      "Papernov & Stasevich",
+                                      "Pratt",
+                                      "Knuth",
+                                      "Incerpi & Sedgewick",
+                                      "Sedgewick 1",
+                                      "Sedgewick 2",
+                                      "Gonnt & Baeza-Yates",
+                                      "Tokuda",
+                                      "Ciura",
+                                      "Lee",
+                                      "S & E & J"};
+    set_selected_sort_variants(
+        1, [this]() { insertion_sort(); }, names, "Gap: ");
   };
+  /*m_sort_map[{sort_cat::insertion, 2}] = [this]() {
+    m_choosed_algo = 2;
+    set_default_options();
+    additional_option(false);
+    insertion_sort();
+    m_algorithm_variants[0].setFillColor(sf::Color::White);
+    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+  };*/
   m_sort_map[{sort_cat::insertion, 2}] = [this]() {
-    set_shell_sort(2);
-  };
-  m_sort_map[{sort_cat::insertion, 3}] = [this]() {
-    m_choosed_algo = 3;
+    m_additional_exists = false;
+    m_choosed_algo = 2;
     set_default_options();
     additional_option(false);
     insertion_sort();
     m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[3].setFillColor(sf::Color::Green);
-  };
-  m_sort_map[{sort_cat::insertion, 4}] = [this]() {
-    m_choosed_algo = 4;
-    set_default_options();
-    additional_option(false);
-    insertion_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+    m_algorithm_variants[2].setFillColor(sf::Color::Green);
   };
   additional_option(false);
 }
@@ -699,9 +718,7 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
 
 void Sorting_Class::insertion_sort() {
   std::vector<std::string> insertion_sort_variants = {
-      "Insertion Sort", "Recursive Insertion Sort",
-      "Shell Sort",     "Binary Insertion Sort",
-      "Library Sort",   "Back"};
+      "Insertion Sort", "Shell Sort", "Library Sort", "Back"};
   m_variants_size = insertion_sort_variants.size();
   insertion_sort_variants.insert(insertion_sort_variants.end(),
                                  m_visualization_options_names.begin(),
@@ -778,7 +795,7 @@ void Sorting_Class::distribution_sort() {
 void Sorting_Class::concurrent_sort() {
   std::vector<std::string> concurrent_sort_variants = {
       "Bitonic Sorter", "Batcher Odd-Even Mergesort",
-      "Pairwise Sorting Netowrk", "Samplesort", "Back"};
+      "Pairwise Sorting Network", "Samplesort", "Back"};
   m_variants_size = concurrent_sort_variants.size();
   concurrent_sort_variants.insert(concurrent_sort_variants.end(),
                                   m_visualization_options_names.begin(),
@@ -852,16 +869,67 @@ void Sorting_Class::visualization_buttons_style(int pos_y) {
     m_visualization_buttons_shape[i].setOutlineThickness(1.5);
     m_visualization_buttons_shape[i].setFillColor(sf::Color::Black);
     m_visualization_buttons_text[i].setPosition(
-        890 + (100 - (m_visualization_buttons_names[i].length() * 35) / 2),
+        890 + (100 - (m_visualization_buttons_names[i].length() * 35) / 2.0),
         temp + 60 * i + pos_y);
     temp = 100;
   }
 }
 
+std::string Sorting_Class::get_display_name() {
+  m_display_name[std::make_pair(std::string("Insertion Sort"), 0)] =
+      "Insertion Sort";
+  m_display_name[std::make_pair(std::string("Insertion Sort"), 1)] =
+      "Recursive Insertion Sort";
+  m_display_name[std::make_pair(std::string("Insertion Sort"), 2)] =
+      "Binary Insertion Sort";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 0)] = "Shell Sort";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 1)] =
+      "Shell Sort Frank & Lazarus";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 2)] =
+      "Shell Sort Hibbard";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 3)] =
+      "Shell Sort Papernov & Stasevich";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 4)] =
+      "Shell Sort Pratt";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 5)] =
+      "Shell Sort Knuth";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 6)] =
+      "Shell Sort Incerpi & Sedgewick";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 7)] =
+      "Shell Sort Sedgewick (1)";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 8)] =
+      "Shell Sort Sedgewick (2)";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 9)] =
+      "Shell Sort Gonnet & Baeza-Yates";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 10)] =
+      "Shell Sort Tokuda";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 11)] =
+      "Shell Sort Ciura";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 12)] =
+      "Shell Sort Lee";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 13)] =
+      "Shell Sort SEJ";
+
+  if (auto search = m_display_name.find(
+          std::make_pair(m_algorithm_variants[m_choosed_algo].getString(),
+                         m_additional_option_index));
+      search != m_display_name.end())
+    return search->second;
+  else {
+    std::cerr << "Name not found" << std::endl;
+    return "Unknown Algorithm";
+  }
+}
+
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
   *current_screen = final_visual;
-  final_visual->set_options(n_elements, min_val, max_val,
-                            m_algorithm_variants[m_choosed_algo].getString());
+  std::string algo_name;
+  if (m_additional_exists == true)
+    algo_name = get_display_name();
+  else
+    algo_name = m_algorithm_variants[m_choosed_algo].getString();
+  std::cout << algo_name << '\n';
+  final_visual->set_options(n_elements, min_val, max_val, algo_name);
   final_visual->visual();
 }
 

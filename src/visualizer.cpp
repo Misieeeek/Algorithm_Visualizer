@@ -218,6 +218,9 @@ void Visualizer::initialize_sorting() {
     *current_screen = sort_class;
     sort_class->insertion_sort();
     sort_class->initalize_sorting_algos();
+    std::vector<std::string> names = {"Normal", "Recursive", "Binary"};
+    sort_class->set_selected_sort_variants(
+        0, [this]() { sort_class->insertion_sort(); }, names, "Variations: ");
   };
   algorithm_map[{algo_cat::sorting, 1}] = [this]() {
     *current_screen = sort_class;

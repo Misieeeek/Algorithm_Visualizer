@@ -48,7 +48,8 @@ class Visualization : public Screen {
   void execute_algorithm(const std::string& name);
 
   //SHELL SORT GAPS GENERATORS
-  void set_shell_gaps();         //GO TO SELECTED GAP GENERATOR FUNCTION
+  void set_shell_gaps(
+      int selected_shell_gap);   //GO TO SELECTED GAP GENERATOR FUNCTION
   void shell_gap_shell();        // ORIGINAL SHELL GAP
   void shell_gap_fl();           // FRANK & LAZARUS GAP
   void shell_gap_hibbard();      // HIBBARD GAP
@@ -63,7 +64,8 @@ class Visualization : public Screen {
   void shell_gap_lee();          // LEE GAP
   void shell_gap_sej();          // SKEAN & EHRENBORG & JAROMCZYK GAP
 
-  //SORTING ALGOS
+  //INSERTION SORT
+  void is_algos();
   void insertion_sort();
   bool recur_insertion_sort(int n);
   void shell_sort();
@@ -156,7 +158,6 @@ class Visualization : public Screen {
   //0 - SHELL, 1 - FRANK & LAZARUS, 2 - HIBBARD, 3 - PAPERNOV & STASEVICH
   //4 - PRATT, 5 - KNUTH, 6 - INCERPI & SADGEWICK, 7 - SEDGEWICK(1), 8 - SEDGEWICK(2)
   //9 - GONNET & BAEZA-YATES, 10 -TOKUDA, 11 - CIURA, 12 - LEE, 13 - SKEAN & EHRENBORG & JAROMCZYK
-  int m_selected_shell_gap;
   std::vector<int> m_gaps;
 
   //TIMER

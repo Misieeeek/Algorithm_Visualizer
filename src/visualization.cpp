@@ -18,7 +18,6 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   m_element_shape.setPrimitiveType(sf::Quads);
   m_auxiliary_shape.setPrimitiveType(sf::Quads);
   initialize_algorithms();
-  m_selected_shell_gap = 0;
   m_empty_value = m_options[1] - 1;
   pause_timer();
 }
@@ -125,13 +124,13 @@ void Visualization::visual() {
     m_auxiliary_shape.resize(4 + m_options[0] * 4);
     m_box_pos = {50, 125, 1200, 700, 1200 - 50, (700 - 125) / 2};
     m_auxiliary_shape[0] =
-        sf::Vertex(sf::Vector2f(50, 700 / 2), sf::Color::White);
+        sf::Vertex(sf::Vector2f(50, 700 / 2.0), sf::Color::White);
     m_auxiliary_shape[1] =
-        sf::Vertex(sf::Vector2f(1200, 700 / 2), sf::Color::White);
+        sf::Vertex(sf::Vector2f(1200, 700 / 2.0), sf::Color::White);
     m_auxiliary_shape[2] =
-        sf::Vertex(sf::Vector2f(1200, 700 / 2 + 1), sf::Color::White);
+        sf::Vertex(sf::Vector2f(1200, 700 / 2.0 + 1), sf::Color::White);
     m_auxiliary_shape[3] =
-        sf::Vertex(sf::Vector2f(50, 700 / 2 + 1), sf::Color::White);
+        sf::Vertex(sf::Vector2f(50, 700 / 2.0 + 1), sf::Color::White);
 
   } else {
     m_auxiliary_shape.resize(0);
@@ -264,9 +263,26 @@ void Visualization::initialize_algorithms() {
   m_algo_func["Recursive Insertion Sort"] = [this]() {
     recur_insertion_sort(m_options[0]);
   };
-  m_algo_func["Shell Sort"] = [this]() {
-    shell_sort();
-  };
+  std::vector<std::string> shell_variants = {"Shell Sort",
+                                             "Shell Sort Frank & Lazarus",
+                                             "Shell Sort Hibbard",
+                                             "Shell Sort Papernov & Stasevich",
+                                             "Shell Sort Pratt",
+                                             "Shell Sort Knuth",
+                                             "Shell Sort Incerpi & Sedgewick",
+                                             "Shell Sort Sedgewick (1)",
+                                             "Shell Sort Sedgewick (2)",
+                                             "Shell Sort Gonnet & Baeza-Yates",
+                                             "Shell Sort Tokuda",
+                                             "Shell Sort Ciura",
+                                             "Shell Sort Lee",
+                                             "Shell Sort SEJ"};
+
+  for (const auto& name : shell_variants) {
+    m_algo_func[name] = [this]() {
+      shell_sort();
+    };
+  }
   m_algo_func["Binary Insertion Sort"] = [this]() {
     binary_insertion_sort();
   };

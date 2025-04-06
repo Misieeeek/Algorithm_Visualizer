@@ -83,5 +83,5 @@ I have divided the algorithms into 7 groups:
 
 ## How To Use
 
-1. Run the executable file `Algorithm_Visualizer.exe` located in the `build` directory.
+1. Run the executable file `Algorithm_Visualizer` located in the `build` directory.
 2. Move using the arrow keys and select using the Enter key.

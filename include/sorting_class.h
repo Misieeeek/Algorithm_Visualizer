@@ -1,5 +1,6 @@
 #ifndef SORTCLASS_H
 #define SORTCLASS_H
+#include <unordered_map>
 #pragma once
 
 #include "visualizer.h"
@@ -42,8 +43,11 @@ class Sorting_Class : public Screen {
   // OVERLOAD algo_viz(...) FUNCTION, ADDITIONAL PARAMETER case, WHERE false = WORST CASE
   void algo_viz(std::size_t n_elements, int min_val, int max_val, bool bw_case);
 
-  //SET SHELL SORT PARAMS
-  void set_shell_sort(int selected);
+  // SET INSERTION SORT PARAMS
+  void set_selected_sort_variants(int selected,
+                                  std::function<void()> category_func,
+                                  std::vector<std::string>& names,
+                                  std::string name_of_input);
 
   // STATE OF PRESSED SORTING ALGORITHM CATEGORY
   enum class sort_cat {
@@ -65,6 +69,15 @@ class Sorting_Class : public Screen {
     }
   };
 
+  // Custom hash function for std::pair<std::string, int>
+  struct pair_hash {
+    std::size_t operator()(const std::pair<std::string, int>& pair) const {
+      auto hash1 = std::hash<std::string>{}(pair.first);
+      auto hash2 = std::hash<int>{}(pair.second);
+      return hash1 ^ (hash2 << 1);  // Combine the two hashes
+    }
+  };
+
   //FIND ALGO IN M_SORT_MAP
   void find_algo(int selected);
 
@@ -83,8 +96,15 @@ class Sorting_Class : public Screen {
   // SET LEFT/RIGHT BUTTONS
   void display_lr_buttons(bool display);
 
-  // GET SELECTED SHELL GAP
-  int get_shell_gap();
+  // GET SELECTED ADDITIONAL OPTION INDEX
+  int get_additional_option_index();
+
+  // GET FULL NAME OF SELECTED ALGO
+  std::string get_display_name();
+
+  // HASH MAP FOR FULL ALGORITHMS NAMES WITH ITS VARIANTS
+  std::unordered_map<std::pair<std::string, int>, std::string, pair_hash>
+      m_display_name;
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -159,11 +179,15 @@ class Sorting_Class : public Screen {
   // KEEPS STATE IF ADDITIONAL PARAMETER IS OPEN
   bool m_additional_param;
 
+  // KEEPS STATE IF ADDIOTIONAL PARAMETER EXISTS
+  bool m_additional_exists;
+
   // LIST OF DIFFERENT SHELL SEQUENCE GAPS
-  sf::Text m_gaps_seq;
-  std::vector<std::string> m_gaps_seq_names;
-  // KEEPS THE STATE OF CURRENT GAP INDEX
-  int m_gaps_index;
+  sf::Text m_additional_option;
+  std::vector<std::string> m_additional_option_names;
+
+  // KEEPS THE STATE OF CURRENT ADDITIONAL OPTION INDEX
+  int m_additional_option_index;
 
   // SHAPE OF LEFT/RIGHT BUTTONS
   std::vector<sf::RectangleShape> m_lr_btn_shape;

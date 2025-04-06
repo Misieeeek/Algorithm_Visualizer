@@ -1,6 +1,31 @@
 #include "sorting_class.h"
 #include "visualization.h"
 
+void Visualization::is_algos() {
+  int selected_is_variant = sort_class->get_additional_option_index();
+  switch (selected_is_variant) {
+    case 0: {
+      m_info_text[0].setString("Algorithm: Insertion Sort");
+      insertion_sort();
+      break;
+    }
+    case 1: {
+      m_info_text[0].setString("Algorithm: Recursive Insertion Sort");
+      recur_insertion_sort(m_options[0]);
+      break;
+    }
+    case 2: {
+      m_info_text[0].setString("Algorithm: Binary Insertion Sort");
+      binary_insertion_sort();
+      break;
+    }
+    default: {
+      std::cerr << "Invalid Insertion Sort variant selected" << std::endl;
+      break;
+    }
+  }
+}
+
 void Visualization::insertion_sort() {
   for (int i = 1; i < m_element_number.size(); ++i) {
     if (m_stop_visualizing.load())
@@ -179,9 +204,9 @@ void Visualization::shell_gap_sej() {
        i++)
     m_gaps.push_back(std::floor(4.0816 * std::pow(8.5714, (i / 2.2449))));
 }
-void Visualization::set_shell_gaps() {
+void Visualization::set_shell_gaps(int selected_shell_gap) {
   m_gaps.clear();
-  switch (m_selected_shell_gap) {
+  switch (selected_shell_gap) {
     case 0:  //SHELL
       shell_gap_shell();
       break;
@@ -235,15 +260,15 @@ void Visualization::set_shell_gaps() {
       std::reverse(m_gaps.begin(), m_gaps.end());
       break;
     default:
-      std::cerr << "Error: selected shell gap not found: "
-                << m_selected_shell_gap << std::endl;
+      std::cerr << "Error: selected shell gap not found: " << selected_shell_gap
+                << std::endl;
       break;
   }
 }
 
 void Visualization::shell_sort() {
-  m_selected_shell_gap = sort_class->get_shell_gap();
-  set_shell_gaps();
+  int selected_shell_gap = sort_class->get_additional_option_index();
+  set_shell_gaps(selected_shell_gap);
   for (auto gap : m_gaps) {
     if (m_stop_visualizing.load())
       break;
