@@ -84,6 +84,9 @@ class Sorting_Class : public Screen {
   //FIND OPTION IN M_SORT_CLASS_MAP
   void find_option(int selected);
 
+  // SETS SETTINGS FOR SELECTED ALGO, PREPARATION FOR VISUALIZATIO
+  void set_setting_selected_algo(int selected, std::function<void()> func);
+
   // INITALIZE SORTING OPTION SELECTOR
   void initalize_sorting_algos();
 

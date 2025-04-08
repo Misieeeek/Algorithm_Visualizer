@@ -1,5 +1,6 @@
 #include "sorting_class.h"
 #include <SFML/Graphics/PrimitiveType.hpp>
+#include <functional>
 #include <utility>
 #include "visualization.h"
 
@@ -313,6 +314,17 @@ void Sorting_Class::set_selected_sort_variants(
       m_additional_option_names[m_additional_option_index]);
 }
 
+void Sorting_Class::set_setting_selected_algo(int selected,
+                                              std::function<void()> func) {
+  m_additional_exists = false;
+  m_choosed_algo = selected;
+  set_default_options();
+  additional_option(false);
+  func();
+  m_algorithm_variants[0].setFillColor(sf::Color::White);
+  m_algorithm_variants[selected].setFillColor(sf::Color::Green);
+}
+
 void Sorting_Class::initalize_sorting_algos() {
   initialize_insertion();
   initialize_selection();
@@ -329,14 +341,6 @@ void Sorting_Class::initialize_insertion() {
     set_selected_sort_variants(
         0, [this]() { insertion_sort(); }, names, "Variations: ");
   };
-  /*m_sort_map[{sort_cat::insertion, 1}] = [this]() {
-    m_choosed_algo = 1;
-    set_default_options();
-    additional_option(false);
-    insertion_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[1].setFillColor(sf::Color::Green);
-  };*/
   m_sort_map[{sort_cat::insertion, 1}] = [this]() {  // SHELL SORT
     m_additional_exists = true;
     std::vector<std::string> names = {"Original",
@@ -356,22 +360,17 @@ void Sorting_Class::initialize_insertion() {
     set_selected_sort_variants(
         1, [this]() { insertion_sort(); }, names, "Gap: ");
   };
-  /*m_sort_map[{sort_cat::insertion, 2}] = [this]() {
-    m_choosed_algo = 2;
-    set_default_options();
-    additional_option(false);
-    insertion_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[2].setFillColor(sf::Color::Green);
-  };*/
-  m_sort_map[{sort_cat::insertion, 2}] = [this]() {
-    m_additional_exists = false;
-    m_choosed_algo = 2;
-    set_default_options();
-    additional_option(false);
-    insertion_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+  m_sort_map[{sort_cat::insertion, 2}] = [this]() {  // SPLAYSORT
+    set_setting_selected_algo(2, [this]() { insertion_sort(); });
+  };
+  m_sort_map[{sort_cat::insertion, 3}] = [this]() {  // TREE SORT
+    set_setting_selected_algo(3, [this]() { insertion_sort(); });
+  };
+  m_sort_map[{sort_cat::insertion, 4}] = [this]() {  // LIBRARY SORT
+    set_setting_selected_algo(4, [this]() { insertion_sort(); });
+  };
+  m_sort_map[{sort_cat::insertion, 5}] = [this]() {  // PATIENCE SORT
+    set_setting_selected_algo(5, [this]() { insertion_sort(); });
   };
   additional_option(false);
 }
@@ -383,52 +382,22 @@ void Sorting_Class::initialize_selection() {
     selection_sort();
   };
   m_sort_map[{sort_cat::selection, 1}] = [this]() {
-    m_choosed_algo = 1;
-    set_default_options();
-    additional_option(false);
-    selection_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(1, [this]() { selection_sort(); });
   };
   m_sort_map[{sort_cat::selection, 2}] = [this]() {
-    m_choosed_algo = 2;
-    set_default_options();
-    additional_option(false);
-    selection_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(2, [this]() { selection_sort(); });
   };
   m_sort_map[{sort_cat::selection, 3}] = [this]() {
-    m_choosed_algo = 3;
-    set_default_options();
-    additional_option(false);
-    selection_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(3, [this]() { selection_sort(); });
   };
   m_sort_map[{sort_cat::selection, 4}] = [this]() {
-    m_choosed_algo = 4;
-    set_default_options();
-    additional_option(false);
-    selection_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(4, [this]() { selection_sort(); });
   };
   m_sort_map[{sort_cat::selection, 5}] = [this]() {
-    m_choosed_algo = 5;
-    set_default_options();
-    additional_option(false);
-    selection_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[5].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(5, [this]() { selection_sort(); });
   };
   m_sort_map[{sort_cat::selection, 6}] = [this]() {
-    m_choosed_algo = 6;
-    set_default_options();
-    additional_option(false);
-    selection_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[6].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(6, [this]() { selection_sort(); });
   };
   additional_option(false);
 }
@@ -440,36 +409,16 @@ void Sorting_Class::initialize_merge() {
     merge_sort();
   };
   m_sort_map[{sort_cat::merge, 1}] = [this]() {
-    m_choosed_algo = 1;
-    set_default_options();
-    additional_option(false);
-    merge_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(1, [this]() { merge_sort(); });
   };
   m_sort_map[{sort_cat::merge, 2}] = [this]() {
-    m_choosed_algo = 2;
-    set_default_options();
-    additional_option(false);
-    merge_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(2, [this]() { merge_sort(); });
   };
   m_sort_map[{sort_cat::merge, 3}] = [this]() {
-    m_choosed_algo = 3;
-    set_default_options();
-    additional_option(false);
-    merge_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(3, [this]() { merge_sort(); });
   };
   m_sort_map[{sort_cat::merge, 4}] = [this]() {
-    m_choosed_algo = 4;
-    set_default_options();
-    additional_option(false);
-    merge_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(4, [this]() { merge_sort(); });
   };
   additional_option(false);
 }
@@ -481,52 +430,22 @@ void Sorting_Class::initialize_exchange() {
     exchange_sort();
   };
   m_sort_map[{sort_cat::exchange, 1}] = [this]() {
-    m_choosed_algo = 1;
-    set_default_options();
-    additional_option(false);
-    exchange_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(1, [this]() { exchange_sort(); });
   };
   m_sort_map[{sort_cat::exchange, 2}] = [this]() {
-    m_choosed_algo = 2;
-    set_default_options();
-    additional_option(false);
-    exchange_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(2, [this]() { exchange_sort(); });
   };
   m_sort_map[{sort_cat::exchange, 3}] = [this]() {
-    m_choosed_algo = 3;
-    set_default_options();
-    additional_option(false);
-    exchange_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(3, [this]() { exchange_sort(); });
   };
   m_sort_map[{sort_cat::exchange, 4}] = [this]() {
-    m_choosed_algo = 4;
-    set_default_options();
-    additional_option(false);
-    exchange_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[4].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(4, [this]() { exchange_sort(); });
   };
   m_sort_map[{sort_cat::exchange, 5}] = [this]() {
-    m_choosed_algo = 5;
-    set_default_options();
-    additional_option(false);
-    exchange_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[5].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(5, [this]() { exchange_sort(); });
   };
   m_sort_map[{sort_cat::exchange, 6}] = [this]() {
-    m_choosed_algo = 6;
-    set_default_options();
-    additional_option(false);
-    exchange_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[6].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(6, [this]() { exchange_sort(); });
   };
   additional_option(false);
 }
@@ -538,76 +457,31 @@ void Sorting_Class::initialize_distribution() {
     distribution_sort();
   };
   m_sort_map[{sort_cat::distribution, 1}] = [this]() {
-    m_choosed_algo = 1;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(1, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 2}] = [this]() {
-    m_choosed_algo = 2;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(2, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 3}] = [this]() {
-    m_choosed_algo = 3;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(3, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 4}] = [this]() {
-    m_choosed_algo = 4;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(4, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 5}] = [this]() {
-    m_choosed_algo = 5;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(5, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 6}] = [this]() {
-    m_choosed_algo = 6;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(6, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 7}] = [this]() {
-    m_choosed_algo = 7;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(7, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 8}] = [this]() {
-    m_choosed_algo = 8;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(8, [this]() { distribution_sort(); });
   };
   m_sort_map[{sort_cat::distribution, 9}] = [this]() {
-    m_choosed_algo = 9;
-    set_default_options();
-    additional_option(false);
-    distribution_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(9, [this]() { distribution_sort(); });
   };
   additional_option(false);
 }
@@ -619,28 +493,13 @@ void Sorting_Class::initialize_concurrent() {
     concurrent_sort();
   };
   m_sort_map[{sort_cat::concurrent, 1}] = [this]() {
-    m_choosed_algo = 1;
-    set_default_options();
-    additional_option(false);
-    concurrent_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[1].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(1, [this]() { concurrent_sort(); });
   };
   m_sort_map[{sort_cat::concurrent, 2}] = [this]() {
-    m_choosed_algo = 2;
-    set_default_options();
-    additional_option(false);
-    concurrent_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[2].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(2, [this]() { concurrent_sort(); });
   };
   m_sort_map[{sort_cat::concurrent, 3}] = [this]() {
-    m_choosed_algo = 3;
-    set_default_options();
-    additional_option(false);
-    concurrent_sort();
-    m_algorithm_variants[0].setFillColor(sf::Color::White);
-    m_algorithm_variants[3].setFillColor(sf::Color::Green);
+    set_setting_selected_algo(3, [this]() { concurrent_sort(); });
   };
   additional_option(false);
 }
@@ -718,7 +577,8 @@ void Sorting_Class::set_style(std::vector<std::string> variants, int pos_y) {
 
 void Sorting_Class::insertion_sort() {
   std::vector<std::string> insertion_sort_variants = {
-      "Insertion Sort", "Shell Sort", "Library Sort", "Back"};
+      "Insertion Sort", "Shell Sort",       "Splaysort", "Tree Sort",
+      "Library Sort",   "Patience Sorting", "Back"};
   m_variants_size = insertion_sort_variants.size();
   insertion_sort_variants.insert(insertion_sort_variants.end(),
                                  m_visualization_options_names.begin(),
