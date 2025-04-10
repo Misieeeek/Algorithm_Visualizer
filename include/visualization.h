@@ -1,10 +1,11 @@
 #ifndef VISUALIZATION_H
 #define VISUALIZATION_H
-#include <SFML/Graphics/VertexArray.hpp>
 #pragma once
 
-#include <optional>
+#include <SFML/Graphics/VertexArray.hpp>
 #include "sorting_class.h"
+
+class Splay_Tree;
 
 class Visualization : public Screen {
  public:
@@ -37,15 +38,21 @@ class Visualization : public Screen {
   void update_rec_style(sf::VertexArray& arr, bool update_pos,
                         bool update_color, int index, int number, sf::Color c,
                         bool update_time = false);
-
+  // UPDATE RECTANGLE POSITION
   void update_rectangle_pos(sf::VertexArray& arr, int i, int number);
-  void update_rectangle_pos_aux(int i, int number);
 
+  // UPDATE RECTANGLE COLOR
   void update_rectangle_color(sf::VertexArray& arr, int i, sf::Color c);
-  void update_rectangle_color_aux(int i, sf::Color c);
 
+  // INITALIZE ALGORITHMS
   void initialize_algorithms();
-  void execute_algorithm(const std::string& name);
+  // INITIALIZATION OF SORTING ALGORITHMS
+  void initialize_insertion_sort();
+  void initialize_selection_sort();
+  void initialize_merge_sort();
+  void initialize_exchange_sort();
+  void initialize_distribution_sort();
+  void initialize_concurrent_sort();
 
   //SHELL SORT GAPS GENERATORS
   void set_shell_gaps(
@@ -65,7 +72,6 @@ class Visualization : public Screen {
   void shell_gap_sej();          // SKEAN & EHRENBORG & JAROMCZYK GAP
 
   //INSERTION SORT
-  void is_algos();
   void insertion_sort();
   bool recur_insertion_sort(int n);
   void shell_sort();
@@ -95,6 +101,9 @@ class Visualization : public Screen {
   void finalize_sort(const std::vector<int>& S);
   void library_sort();
 
+  // SPLAY SORT
+  void splay_sort();
+
   //SELECTION SORT
   void selection_sort();
 
@@ -111,6 +120,7 @@ class Visualization : public Screen {
   static constexpr std::size_t c_info = 5;
   static constexpr std::size_t c_options = 3;
   static constexpr std::size_t c_box_vertices = 5;
+  static constexpr std::size_t c_arr_add_space = 2;
 
   // BUTTONS SHAPE, TEXT, NAMES
   std::array<sf::Text, c_buttons> m_buttons_text;
@@ -167,6 +177,9 @@ class Visualization : public Screen {
 
   //EMPTY VALUE FOR LIBRARY SORT
   int m_empty_value;
+
+  // LIST OF ARRAYS WITH ADDITIONAL SPACE
+  std::array<std::string, c_arr_add_space> m_arr_w_add_space;
 };
 
 #endif

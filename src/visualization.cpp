@@ -20,6 +20,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   initialize_algorithms();
   m_empty_value = m_options[1] - 1;
   pause_timer();
+  m_arr_w_add_space = {"Splaysort", "Library Sort"};
 }
 
 Visualization::~Visualization() {}
@@ -119,7 +120,8 @@ void Visualization::visual() {
   m_element_number.resize(m_options[0]);
   std::vector<double> boxes_pos;  // x_left, y_top, x_right
   boxes_pos.resize(3);
-  if (m_algorithm_name == "Library Sort") {
+  if (std::find(m_arr_w_add_space.begin(), m_arr_w_add_space.end(),
+                m_algorithm_name) != m_arr_w_add_space.end()) {
     m_empty_value = m_options[1] - 1;
     m_auxiliary_shape.resize(4 + m_options[0] * 4);
     m_box_pos = {50, 125, 1200, 700, 1200 - 50, (700 - 125) / 2};
@@ -256,12 +258,15 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
   restart_timer();
 }
 
-void Visualization::initialize_algorithms() {
+void Visualization::initialize_insertion_sort() {
   m_algo_func["Insertion Sort"] = [this]() {
     insertion_sort();
   };
   m_algo_func["Recursive Insertion Sort"] = [this]() {
     recur_insertion_sort(m_options[0]);
+  };
+  m_algo_func["Binary Insertion Sort"] = [this]() {
+    binary_insertion_sort();
   };
   std::vector<std::string> shell_variants = {"Shell Sort",
                                              "Shell Sort Frank & Lazarus",
@@ -283,15 +288,36 @@ void Visualization::initialize_algorithms() {
       shell_sort();
     };
   }
-  m_algo_func["Binary Insertion Sort"] = [this]() {
-    binary_insertion_sort();
+  m_algo_func["Splaysort"] = [this]() {
+    splay_sort();
+  };
+  m_algo_func["Tree Sort"] = [this]() {
+    library_sort();
   };
   m_algo_func["Library Sort"] = [this]() {
     library_sort();
   };
+  m_algo_func["Patience Sorting"] = [this]() {
+    library_sort();
+  };
+}
+void Visualization::initialize_selection_sort() {
   m_algo_func["Selection Sort"] = [this]() {
     selection_sort();
   };
+}
+void Visualization::initialize_merge_sort() {}
+void Visualization::initialize_exchange_sort() {}
+void Visualization::initialize_distribution_sort() {}
+void Visualization::initialize_concurrent_sort() {}
+
+void Visualization::initialize_algorithms() {
+  initialize_insertion_sort();
+  initialize_selection_sort();
+  initialize_merge_sort();
+  initialize_exchange_sort();
+  initialize_distribution_sort();
+  initialize_concurrent_sort();
 }
 
 void Visualization::update_rec_style(sf::VertexArray& arr, bool update_pos,
