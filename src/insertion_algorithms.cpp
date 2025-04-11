@@ -1,3 +1,6 @@
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/System/Sleep.hpp>
+#include <SFML/System/Time.hpp>
 #include "sorting_class.h"
 #include "splay_tree.h"
 #include "visualization.h"
@@ -480,7 +483,7 @@ void Visualization::finalize_sort(const std::vector<int>& S) {
       sorted_elements.push_back(item);
     }
   }
-  m_element_number = sorted_elements;
+  m_element_number = std::move(sorted_elements);
   m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
   for (int i = 0; i < m_element_number.size(); i++)
     update_rec_style(m_element_shape, true, false, i, m_element_number[i],
@@ -516,12 +519,23 @@ void Visualization::library_sort() {
       redistribute_elements(S, max_p);
     }
   }
-
   finalize_sort(S);
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}
+
+void Splay_Tree::update_visual_indices(Node* node, int& current_index) {
+  if (node == nullptr)
+    return;
+  update_visual_indices(node->m_left.get(), current_index);
+  node->m_visual_index = current_index++;
+  update_visual_indices(node->m_right.get(), current_index);
 }
 
 std::unique_ptr<Splay_Tree::Node> Splay_Tree::right_rotate(
-    std::unique_ptr<Node> x, int index) {
+    std::unique_ptr<Node> x) {
   std::unique_ptr<Node> y = std::move(x->m_left);
   x->m_left = std::move(y->m_right);
   y->m_right = std::move(x);
@@ -529,63 +543,70 @@ std::unique_ptr<Splay_Tree::Node> Splay_Tree::right_rotate(
 }
 
 std::unique_ptr<Splay_Tree::Node> Splay_Tree::left_rotate(
-    std::unique_ptr<Node> x, int index) {
+    std::unique_ptr<Node> x) {
   std::unique_ptr<Node> y = std::move(x->m_right);
   x->m_right = std::move(y->m_left);
   y->m_left = std::move(x);
   return y;
 }
-
 std::unique_ptr<Splay_Tree::Node> Splay_Tree::splay(std::unique_ptr<Node> root,
-                                                    int key, int index) {
-  if (root == nullptr || root->m_key == key)
+                                                    int key) {
+  if (!root || root->m_key == key)
     return root;
-  if (root->m_key > key) {
-    if (root->m_left == nullptr)
+
+  if (key < root->m_key) {
+    if (!root->m_left)
       return root;
-    if (root->m_left->m_key > key) {
-      root->m_left->m_left =
-          std::move(splay(std::move(root->m_left->m_left), key, index));
-      root = right_rotate(std::move(root), index);
-    } else if (root->m_left->m_key < key) {
-      root->m_left->m_right =
-          std::move(splay(std::move(root->m_left->m_right), key, index));
-      if (root->m_left->m_right != nullptr)
-        root->m_left = left_rotate(std::move(root->m_left), index);
+    if (key < root->m_left->m_key) {
+      root->m_left->m_left = splay(std::move(root->m_left->m_left), key);
+      root = right_rotate(std::move(root));
+    } else if (key > root->m_left->m_key) {
+      root->m_left->m_right = splay(std::move(root->m_left->m_right), key);
+      if (root->m_left->m_right)
+        root->m_left = left_rotate(std::move(root->m_left));
     }
-    return (root->m_left == nullptr) ? std::move(root)
-                                     : right_rotate(std::move(root), index);
+    return root->m_left ? right_rotate(std::move(root)) : std::move(root);
   } else {
-    if (root->m_right == nullptr)
-      return std::move(root);
-    if (root->m_right->m_key > key) {
-      root->m_right->m_left =
-          std::move(splay(std::move(root->m_right->m_left), key, index));
-      if (root->m_right->m_left != nullptr)
-        root->m_right = right_rotate(std::move(root->m_right), index);
-    } else if (root->m_right->m_key < key) {
-      root->m_right->m_right =
-          std::move(splay(std::move(root->m_right->m_right), key, index));
-      root = left_rotate(std::move(root), index);
+    if (!root->m_right)
+      return root;
+    if (key < root->m_right->m_key) {
+      root->m_right->m_left = splay(std::move(root->m_right->m_left), key);
+      if (root->m_right->m_left)
+        root->m_right = right_rotate(std::move(root->m_right));
+    } else if (key > root->m_right->m_key) {
+      root->m_right->m_right = splay(std::move(root->m_right->m_right), key);
+      root = left_rotate(std::move(root));
     }
-    return (root->m_right == nullptr) ? std::move(root)
-                                      : left_rotate(std::move(root), index);
+    return root->m_right ? left_rotate(std::move(root)) : std::move(root);
   }
+}
+void Splay_Tree::update_all_visual_indices() {
+  int current_index = 0;
+  update_visual_indices(m_root.get(), current_index);
+}
+
+std::vector<std::pair<int, int>>
+Splay_Tree::get_sorted_elements_with_visual_index() {
+  std::vector<std::pair<int, int>> result;
+  int current_index = 0;
+  get_sorted_elements_with_visual_index(m_root.get(), current_index, result);
+  return result;
 }
 
 void Splay_Tree::insert(int key, int index) {
-  m_help_vec.push_back(key);
   if (!m_root) {
-    m_root = std::make_unique<Node>(key);
+    m_root = std::make_unique<Node>(key, index);
     return;
   }
-  m_root = std::move(splay(std::move(m_root), key, index));
+
+  m_root = splay(std::move(m_root), key);
+
   if (m_root->m_key == key) {
     m_root->m_count++;
     return;
   }
 
-  auto new_node = std::make_unique<Node>(key);
+  auto new_node = std::make_unique<Node>(key, index);
   if (key < m_root->m_key) {
     new_node->m_right = std::move(m_root);
     new_node->m_left = std::move(new_node->m_right->m_left);
@@ -597,30 +618,42 @@ void Splay_Tree::insert(int key, int index) {
   }
   m_root = std::move(new_node);
 }
-
-std::vector<int> Splay_Tree::get_sorted_elements() {
-  std::vector<int> result;
-  inorder_traversal(m_root.get(), result);
-  return result;
-}
-
-void Splay_Tree::inorder_traversal(Node* node, std::vector<int>& result) {
+void Splay_Tree::get_sorted_elements_with_visual_index(
+    Node* node, int& current_index, std::vector<std::pair<int, int>>& result) {
   if (node == nullptr)
     return;
-  inorder_traversal(node->m_left.get(), result);
-  for (int i = 0; i < node->m_count; i++)
-    result.push_back(node->m_key);
-  inorder_traversal(node->m_right.get(), result);
+  get_sorted_elements_with_visual_index(node->m_left.get(), current_index,
+                                        result);
+  for (int i = 0; i < node->m_count; i++) {
+    result.emplace_back(current_index, node->m_key);
+    current_index++;
+  }
+  get_sorted_elements_with_visual_index(node->m_right.get(), current_index,
+                                        result);
 }
+//TODO: ADD COLORING
 void Visualization::splay_sort() {
   Splay_Tree tree;
   for (int i = 0; i < m_element_number.size(); i++) {
     tree.insert(m_element_number[i], i);
+    tree.update_all_visual_indices();
+    auto current_state = tree.get_sorted_elements_with_visual_index();
+    for (const auto& [visual_index, key] : current_state) {
+      update_rec_style(m_auxiliary_shape, true, false, visual_index, key,
+                       sf::Color::White);
+    }
+    update_rec_style(m_auxiliary_shape, false, false, 0, 0, sf::Color::White,
+                     true);
   }
-  std::vector<int> sorted_result = tree.get_sorted_elements();
-  for (int i = 0; i < m_element_number.size(); i++) {
-    m_element_number[i] = sorted_result[i];
-    update_rec_style(m_element_shape, true, false, i, m_element_number[i],
-                     sf::Color::White);
+  auto sorted_result = tree.get_sorted_elements_with_visual_index();
+  m_auxiliary_shape.clear();
+  m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
+  for (const auto& [pos, key] : sorted_result) {
+    m_element_number[pos] = key;
+    update_rec_style(m_element_shape, true, false, pos, key, sf::Color::White);
   }
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
 }
