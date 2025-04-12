@@ -107,6 +107,10 @@ class Visualization : public Screen {
   //SELECTION SORT
   void selection_sort();
 
+  //PATIENCE SORT
+  void patience_sort();
+  std::vector<int> merge_piles(std::vector<std::vector<int>>& v);
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
@@ -120,7 +124,7 @@ class Visualization : public Screen {
   static constexpr std::size_t c_info = 5;
   static constexpr std::size_t c_options = 3;
   static constexpr std::size_t c_box_vertices = 5;
-  static constexpr std::size_t c_arr_add_space = 2;
+  static constexpr std::size_t c_arr_add_space = 3;
 
   // BUTTONS SHAPE, TEXT, NAMES
   std::array<sf::Text, c_buttons> m_buttons_text;

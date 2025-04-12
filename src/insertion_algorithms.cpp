@@ -657,3 +657,111 @@ void Visualization::splay_sort() {
   m_stop_visualizing.store(true);
   m_visualizaing = false;
 }
+
+//TODO: ADD COLORING
+std::vector<int> Visualization::merge_piles(std::vector<std::vector<int>>& v) {
+  std::vector<int> ans;
+  int max_pile_size = 0;
+  for (const auto& pile : v) {
+    if (pile.size() > max_pile_size) {
+      max_pile_size = pile.size();
+    }
+  }
+  while (1) {
+    if (m_stop_visualizing.load())
+      break;
+    int minu = INT_MAX;
+    int index = -1;
+    for (int i = 0; i < v.size(); i++) {
+      if (!v[i].empty()) {
+        int visual_index = i * (max_pile_size + 1) + (v[i].size() - 1);
+        update_rec_style(m_auxiliary_shape, true, false, visual_index,
+                         v[i][v[i].size() - 1], sf::Color::Yellow);
+      }
+    }
+    for (int i = 0; i < v.size(); i++) {
+      if (minu > v[i][v[i].size() - 1]) {
+        if (index != -1) {
+          int prev_visual_index =
+              index * (max_pile_size + 1) + (v[index].size() - 1);
+          update_rec_style(m_auxiliary_shape, true, false, prev_visual_index,
+                           v[index][v[index].size() - 1], sf::Color::White);
+        }
+        minu = v[i][v[i].size() - 1];
+        index = i;
+        int visual_index = i * (max_pile_size + 1) + (v[i].size() - 1);
+        update_rec_style(m_auxiliary_shape, true, false, visual_index, minu,
+                         sf::Color::Green);
+      } else {
+        int visual_index = i * (max_pile_size + 1) + (v[i].size() - 1);
+        update_rec_style(m_auxiliary_shape, true, false, visual_index,
+                         v[i][v[i].size() - 1], sf::Color::White);
+      }
+    }
+    ans.push_back(minu);
+    v[index].pop_back();
+    if (v[index].empty()) {
+      v.erase(v.begin() + index);
+    }
+    if (v.size() == 0)
+      break;
+  }
+
+  return ans;
+}
+
+//TODO: ADD COLORING
+void Visualization::patience_sort() {
+  std::vector<std::vector<int>> piles;
+  int max_pile_size = 0;
+  for (int i = 0; i < m_element_number.size(); i++) {
+    if (m_stop_visualizing.load())
+      break;
+    bool placed = false;
+    if (piles.empty()) {
+      std::vector<int> new_pile;
+      new_pile.push_back(m_element_number[i]);
+      piles.push_back(new_pile);
+      update_rec_style(m_auxiliary_shape, true, false, 0, m_element_number[i],
+                       sf::Color::White, true);
+      max_pile_size = 1;
+    } else {
+      for (int j = 0; j < piles.size(); j++) {
+        if (m_element_number[i] < piles[j][piles[j].size() - 1]) {
+          piles[j].push_back(m_element_number[i]);
+          int visual_index = j * (max_pile_size + 1) + (piles[j].size() - 1);
+          update_rec_style(m_auxiliary_shape, true, false, visual_index,
+                           m_element_number[i], sf::Color::White, true);
+          if (piles[j].size() > max_pile_size) {
+            max_pile_size = piles[j].size();
+          }
+          placed = true;
+          break;
+        }
+      }
+      if (!placed) {
+        std::vector<int> new_pile;
+        new_pile.push_back(m_element_number[i]);
+        piles.push_back(new_pile);
+        int visual_index = (piles.size() - 1) * (max_pile_size + 1);
+        update_rec_style(m_auxiliary_shape, true, false, visual_index,
+                         m_element_number[i], sf::Color::White, true);
+      }
+    }
+  }
+  std::vector<int> ans = merge_piles(piles);
+  m_auxiliary_shape.clear();
+  m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
+  for (int i = 0; i < ans.size(); i++) {
+    if (m_stop_visualizing.load())
+      break;
+    m_element_number[i] = ans[i];
+    update_rec_style(m_element_shape, true, false, i, m_element_number[i],
+                     sf::Color::White, true);
+  }
+
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}

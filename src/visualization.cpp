@@ -20,7 +20,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   initialize_algorithms();
   m_empty_value = m_options[1] - 1;
   pause_timer();
-  m_arr_w_add_space = {"Splaysort", "Library Sort"};
+  m_arr_w_add_space = {"Splaysort", "Library Sort", "Patience Sorting"};
 }
 
 Visualization::~Visualization() {}
@@ -298,7 +298,7 @@ void Visualization::initialize_insertion_sort() {
     library_sort();
   };
   m_algo_func["Patience Sorting"] = [this]() {
-    library_sort();
+    patience_sort();
   };
 }
 void Visualization::initialize_selection_sort() {

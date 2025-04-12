@@ -788,7 +788,6 @@ void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
     algo_name = get_display_name();
   else
     algo_name = m_algorithm_variants[m_choosed_algo].getString();
-  std::cout << algo_name << '\n';
   final_visual->set_options(n_elements, min_val, max_val, algo_name);
   final_visual->visual();
 }
