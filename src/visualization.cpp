@@ -124,15 +124,13 @@ void Visualization::visual() {
                 m_algorithm_name) != m_arr_w_add_space.end()) {
     m_empty_value = m_options[1] - 1;
     m_auxiliary_shape.resize(4 + m_options[0] * 4);
-    m_box_pos = {50, 125, 1200, 700, 1200 - 50, (700 - 125) / 2};
-    m_auxiliary_shape[0] =
-        sf::Vertex(sf::Vector2f(50, 700 / 2.0), sf::Color::White);
+    m_box_pos = {50, 125, 1200, 700, 1200 - 50, 325};
+    m_auxiliary_shape[0] = sf::Vertex(sf::Vector2f(50, 375), sf::Color::White);
     m_auxiliary_shape[1] =
-        sf::Vertex(sf::Vector2f(1200, 700 / 2.0), sf::Color::White);
+        sf::Vertex(sf::Vector2f(1200, 375), sf::Color::White);
     m_auxiliary_shape[2] =
-        sf::Vertex(sf::Vector2f(1200, 700 / 2.0 + 1), sf::Color::White);
-    m_auxiliary_shape[3] =
-        sf::Vertex(sf::Vector2f(50, 700 / 2.0 + 1), sf::Color::White);
+        sf::Vertex(sf::Vector2f(1200, 376), sf::Color::White);
+    m_auxiliary_shape[3] = sf::Vertex(sf::Vector2f(50, 376), sf::Color::White);
 
   } else {
     m_auxiliary_shape.resize(0);
@@ -344,31 +342,58 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
     if (base + 3 >= m_auxiliary_shape.getVertexCount())
       return;
   }
+
+  // Minimum height as a percentage of the maximum possible height
+  const double min_height_percentage = 0.0;  // 5% of maximum height
+
   double t_i = (static_cast<double>(number) - m_options[1]) /
                (m_options[2] - m_options[1]);
-  double H_i = t_i * m_box_pos[5];
+
+  // Ensure t_i is at least min_height_percentage
+  t_i = std::max(t_i, min_height_percentage);
+
+  double H_i{};
+  if (&arr == &m_auxiliary_shape) {
+    // For auxiliary array, use the top section (from 125 to 375)
+    double auxiliary_bottom = 375;        // The middle line
+    double auxiliary_top = m_box_pos[1];  // 125 (top of viz area)
+    double auxiliary_height = auxiliary_bottom - auxiliary_top;
+
+    // Calculate height based on standardized value
+    H_i = t_i * auxiliary_height;
+  } else {
+    H_i = t_i * m_box_pos[5];
+  }
+
   double y_rectangle_top;
   double y_rectangle_bottom;
+
   if (&arr == &m_auxiliary_shape) {
-    y_rectangle_top = (m_box_pos[3] - H_i) / 2;
-    y_rectangle_bottom = m_box_pos[3] / 2.0;
+    // For auxiliary array in top half
+    y_rectangle_bottom = 375;  // Middle line
+    y_rectangle_top = y_rectangle_bottom - H_i;
   } else {
-    y_rectangle_top = m_box_pos[3] - H_i;
-    y_rectangle_bottom = m_box_pos[3];
+    // For main array in bottom half
+    y_rectangle_bottom = m_box_pos[3];  // Bottom of viz area
+    y_rectangle_top = y_rectangle_bottom - H_i;
   }
+
   int n = m_options[0];
   double total_width = m_box_pos[4];
   double max_spacing = 20.0;
   int n_threshold = 50;
   double spacing = 0.0;
+
   if (n > 1 && n < n_threshold)
     spacing = max_spacing *
               ((n_threshold - n) / static_cast<double>(n_threshold - 1));
   else
     spacing = 0.0;
+
   double effectiveWidth = (total_width - (n - 1) * spacing) / n;
   double x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
   double x_rectangle_right = x_rectangle_left + effectiveWidth;
+
   arr[base + 0] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_top),
                              sf::Color::White);
   arr[base + 1] = sf::Vertex(sf::Vector2f(x_rectangle_right, y_rectangle_top),
@@ -378,7 +403,6 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
   arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_bottom),
                              sf::Color::White);
 }
-
 //BUG: m_auxiliary_shape GOES OUT OF RANGE
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
