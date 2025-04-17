@@ -403,11 +403,10 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
   arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_bottom),
                              sf::Color::White);
 }
-//BUG: m_auxiliary_shape GOES OUT OF RANGE
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
   if (&arr == &m_auxiliary_shape) {
-    if (i < 0 || 2 * i + 1 >= m_auxiliary_shape.getVertexCount() / 4) {
+    if (i < 0 || i + 1 >= m_auxiliary_shape.getVertexCount() / 4) {
       std::cerr
           << "Error: update_rectangle_color auxiliary index out of range: " << i
           << " (position " << 2 * i + 1 << ")" << std::endl;
@@ -422,7 +421,7 @@ void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
   }
   int base;
   if (&arr == &m_auxiliary_shape) {
-    base = (2 * i + 1) * 4;
+    base = (i + 1) * 4;
   } else {
     base = i * 4;
   }

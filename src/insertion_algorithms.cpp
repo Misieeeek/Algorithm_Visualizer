@@ -639,7 +639,7 @@ void Visualization::splay_sort() {
     tree.update_all_visual_indices();
     auto current_state = tree.get_sorted_elements_with_visual_index();
     for (const auto& [visual_index, key] : current_state) {
-      update_rec_style(m_auxiliary_shape, true, false, visual_index, key,
+      update_rec_style(m_auxiliary_shape, true, true, visual_index, key,
                        sf::Color::White);
     }
     update_rec_style(m_auxiliary_shape, false, false, 0, 0, sf::Color::White,
