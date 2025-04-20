@@ -1,5 +1,6 @@
 #ifndef VISUALIZATION_H
 #define VISUALIZATION_H
+#include <vector>
 #pragma once
 
 #include <SFML/Graphics/VertexArray.hpp>
@@ -106,6 +107,14 @@ class Visualization : public Screen {
 
   //SELECTION SORT
   void selection_sort();
+
+  // SMOOTH SORT
+  void smooth_sort();
+  std::vector<int> leonardo(int k);
+  void heapify(int begin, int end, std::vector<int>& leo);
+  void sift(int pshift, int head, std::vector<int>& leo);
+  void trinkle(int p, int pshift, int head, bool is_trusty,
+               std::vector<int>& leo);
 
   //PATIENCE SORT
   void patience_sort();

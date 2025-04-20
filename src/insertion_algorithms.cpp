@@ -631,7 +631,7 @@ void Splay_Tree::get_sorted_elements_with_visual_index(
   get_sorted_elements_with_visual_index(node->m_right.get(), current_index,
                                         result);
 }
-//TODO: ADD COLORING
+
 void Visualization::splay_sort() {
   Splay_Tree tree;
   for (int i = 0; i < m_element_number.size(); i++) {
@@ -640,6 +640,9 @@ void Visualization::splay_sort() {
     auto current_state = tree.get_sorted_elements_with_visual_index();
     for (const auto& [visual_index, key] : current_state) {
       update_rec_style(m_auxiliary_shape, true, true, visual_index, key,
+                       sf::Color::Red);
+      // sf::sleep(sf::microseconds(25));
+      update_rec_style(m_auxiliary_shape, false, true, visual_index, 0,
                        sf::Color::White);
     }
     update_rec_style(m_auxiliary_shape, false, false, 0, 0, sf::Color::White,
@@ -729,6 +732,7 @@ void Visualization::patience_sort() {
       for (int j = 0; j < piles.size(); j++) {
         if (m_element_number[i] < piles[j][piles[j].size() - 1]) {
           piles[j].push_back(m_element_number[i]);
+          //visual_index is out of range
           int visual_index = j * (max_pile_size + 1) + (piles[j].size() - 1);
           update_rec_style(m_auxiliary_shape, true, false, visual_index,
                            m_element_number[i], sf::Color::White, true);
@@ -745,7 +749,7 @@ void Visualization::patience_sort() {
         piles.push_back(new_pile);
         int visual_index = (piles.size() - 1) * (max_pile_size + 1);
         update_rec_style(m_auxiliary_shape, true, false, visual_index,
-                         m_element_number[i], sf::Color::White, true);
+                         m_element_number[i], sf::Color::Red, true);
       }
     }
   }

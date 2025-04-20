@@ -32,7 +32,6 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
   m_choosed_algo = 0;
   m_lr_btn_shape.resize(0);
   m_triangle_arrow.resize(0);
-  //  m_gaps_index = 0;
   m_additional_option_index = 0;
 }
 
@@ -376,10 +375,7 @@ void Sorting_Class::initialize_insertion() {
 }
 void Sorting_Class::initialize_selection() {
   m_sort_map[{sort_cat::selection, 0}] = [this]() {
-    m_choosed_algo = 0;
-    set_default_options();
-    additional_option(false);
-    selection_sort();
+    set_setting_selected_algo(0, [this]() { selection_sort(); });
   };
   m_sort_map[{sort_cat::selection, 1}] = [this]() {
     set_setting_selected_algo(1, [this]() { selection_sort(); });
@@ -592,7 +588,7 @@ void Sorting_Class::insertion_sort() {
 
 void Sorting_Class::selection_sort() {
   std::vector<std::string> selection_sort_variants = {
-      "Selection Sort",  "Heapsort",   "Smoothsort",     "Cartesian Tree Sort",
+      "Selection Sort",  "Heapsort",   "Smooth Sort",    "Cartesian Tree Sort",
       "Tournament Sort", "Cycle Sort", "Weak-Heap Sort", "Back"};
   m_variants_size = selection_sort_variants.size();
   selection_sort_variants.insert(selection_sort_variants.end(),
@@ -769,7 +765,8 @@ std::string Sorting_Class::get_display_name() {
       "Shell Sort Lee";
   m_display_name[std::make_pair(std::string("Shell Sort"), 13)] =
       "Shell Sort SEJ";
-
+  m_display_name[std::make_pair(std::string("Selection Sort"), 0)] =
+      "Selection Sort";
   if (auto search = m_display_name.find(
           std::make_pair(m_algorithm_variants[m_choosed_algo].getString(),
                          m_additional_option_index));
@@ -788,6 +785,7 @@ void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
     algo_name = get_display_name();
   else
     algo_name = m_algorithm_variants[m_choosed_algo].getString();
+  std::cout << algo_name << '\n';
   final_visual->set_options(n_elements, min_val, max_val, algo_name);
   final_visual->visual();
 }

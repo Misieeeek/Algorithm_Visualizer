@@ -303,6 +303,9 @@ void Visualization::initialize_selection_sort() {
   m_algo_func["Selection Sort"] = [this]() {
     selection_sort();
   };
+  m_algo_func["Smooth Sort"] = [this]() {
+    smooth_sort();
+  };
 }
 void Visualization::initialize_merge_sort() {}
 void Visualization::initialize_exchange_sort() {}
@@ -403,13 +406,14 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
   arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_bottom),
                              sf::Color::White);
 }
+//BUG: m_auxiliary_shape COLOR GOES OUT OF INDEX FOR LIBRARY SORT & PATIENCE SORT
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
   if (&arr == &m_auxiliary_shape) {
     if (i < 0 || i + 1 >= m_auxiliary_shape.getVertexCount() / 4) {
       std::cerr
           << "Error: update_rectangle_color auxiliary index out of range: " << i
-          << " (position " << 2 * i + 1 << ")" << std::endl;
+          << " (position " << i + 1 << ")" << std::endl;
       return;
     }
   } else {
