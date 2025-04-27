@@ -20,7 +20,8 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   initialize_algorithms();
   m_empty_value = m_options[1] - 1;
   pause_timer();
-  m_arr_w_add_space = {"Splaysort", "Library Sort", "Patience Sorting"};
+  m_arr_w_add_space = {
+      {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 1}};
 }
 
 Visualization::~Visualization() {}
@@ -120,10 +121,11 @@ void Visualization::visual() {
   m_element_number.resize(m_options[0]);
   std::vector<double> boxes_pos;  // x_left, y_top, x_right
   boxes_pos.resize(3);
-  if (std::find(m_arr_w_add_space.begin(), m_arr_w_add_space.end(),
-                m_algorithm_name) != m_arr_w_add_space.end()) {
+  if (auto search = m_arr_w_add_space.find(m_algorithm_name);
+      search != m_arr_w_add_space.end()) {
     m_empty_value = m_options[1] - 1;
-    m_auxiliary_shape.resize(4 + m_options[0] * 4);
+    m_auxiliary_shape.resize(4 + (m_options[0] * 4) *
+                                     m_arr_w_add_space[m_algorithm_name]);
     m_box_pos = {50, 125, 1200, 700, 1200 - 50, 325};
     m_auxiliary_shape[0] = sf::Vertex(sf::Vector2f(50, 375), sf::Color::White);
     m_auxiliary_shape[1] =
@@ -290,7 +292,7 @@ void Visualization::initialize_insertion_sort() {
     splay_sort();
   };
   m_algo_func["Tree Sort"] = [this]() {
-    library_sort();
+    std::cout << "tree sort\n";
   };
   m_algo_func["Library Sort"] = [this]() {
     library_sort();
@@ -345,24 +347,16 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
     if (base + 3 >= m_auxiliary_shape.getVertexCount())
       return;
   }
-
-  // Minimum height as a percentage of the maximum possible height
-  const double min_height_percentage = 0.0;  // 5% of maximum height
-
+  const double min_height_percentage = 0.0;
   double t_i = (static_cast<double>(number) - m_options[1]) /
                (m_options[2] - m_options[1]);
-
-  // Ensure t_i is at least min_height_percentage
   t_i = std::max(t_i, min_height_percentage);
-
   double H_i{};
   if (&arr == &m_auxiliary_shape) {
-    // For auxiliary array, use the top section (from 125 to 375)
-    double auxiliary_bottom = 375;        // The middle line
-    double auxiliary_top = m_box_pos[1];  // 125 (top of viz area)
+    double auxiliary_bottom = 375;
+    double auxiliary_top = m_box_pos[1];
     double auxiliary_height = auxiliary_bottom - auxiliary_top;
 
-    // Calculate height based on standardized value
     H_i = t_i * auxiliary_height;
   } else {
     H_i = t_i * m_box_pos[5];
@@ -372,12 +366,10 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
   double y_rectangle_bottom;
 
   if (&arr == &m_auxiliary_shape) {
-    // For auxiliary array in top half
-    y_rectangle_bottom = 375;  // Middle line
+    y_rectangle_bottom = 375;
     y_rectangle_top = y_rectangle_bottom - H_i;
   } else {
-    // For main array in bottom half
-    y_rectangle_bottom = m_box_pos[3];  // Bottom of viz area
+    y_rectangle_bottom = m_box_pos[3];
     y_rectangle_top = y_rectangle_bottom - H_i;
   }
 
@@ -394,7 +386,14 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
     spacing = 0.0;
 
   double effectiveWidth = (total_width - (n - 1) * spacing) / n;
-  double x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
+  double x_rectangle_left{};
+
+  if (auto search = m_arr_w_add_space.find(m_algorithm_name);
+      search != m_arr_w_add_space.end() && &arr == &m_auxiliary_shape)
+    x_rectangle_left = m_box_pos[0] + (i * (effectiveWidth + spacing)) /
+                                          m_arr_w_add_space[m_algorithm_name];
+  else
+    x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
   double x_rectangle_right = x_rectangle_left + effectiveWidth;
 
   arr[base + 0] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_top),
@@ -410,7 +409,7 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
   if (&arr == &m_auxiliary_shape) {
-    if (i < 0 || i + 1 >= m_auxiliary_shape.getVertexCount() / 4) {
+    if (i < 0 || i + 1 >= m_auxiliary_shape.getVertexCount() / 4 + 4) {
       std::cerr
           << "Error: update_rectangle_color auxiliary index out of range: " << i
           << " (position " << i + 1 << ")" << std::endl;

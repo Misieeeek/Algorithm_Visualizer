@@ -35,6 +35,7 @@ void Visualization::insertion_sort() {
   m_visualizaing = false;
 }
 
+//TODO:: ADD MAX DEPTH FOR RECURSION
 bool Visualization::recur_insertion_sort(int n) {
   if (m_stop_visualizing.load()) {
     for (int i = 0; i < n; i++)
@@ -360,9 +361,9 @@ std::vector<int> Visualization::initialize_array(int n) {
   for (int i = 0; i < n; i++) {
     S[2 * i + 1] = m_element_number[i];
     update_rec_style(m_element_shape, true, false, i, m_options[1],
-                     sf::Color::Green);
+                     sf::Color::White);
     update_rec_style(m_auxiliary_shape, true, false, 2 * i + 1, S[2 * i + 1],
-                     sf::Color::Green);
+                     sf::Color::White);
   }
   return S;
 }
@@ -379,7 +380,7 @@ void Visualization::insert_element(std::vector<int>& S, int p) {
     insert_with_shift(S, x, y, s);
   S[p] = m_empty_value;
   update_rec_style(m_auxiliary_shape, true, false, p, m_empty_value,
-                   sf::Color::Green);
+                   sf::Color::White);
 }
 
 std::pair<int, int> Visualization::find_insertion_range(
@@ -414,8 +415,8 @@ std::pair<int, int> Visualization::find_insertion_range(
 void Visualization::insert_with_space(std::vector<int>& S, int x, int y,
                                       int s) {
   S[(x + y) >> 1] = s;
-  update_rec_style(m_auxiliary_shape, true, false, (x + y) >> 1, s,
-                   sf::Color::Green);
+  update_rec_style(m_auxiliary_shape, true, true, (x + y) >> 1, s,
+                   sf::Color::Red);
 }
 
 void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
@@ -428,8 +429,7 @@ void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
     while (temp != m_empty_value && y < S.size()) {
       std::swap(S[y], temp);
       lastIdx = y;
-      update_rec_style(m_auxiliary_shape, true, false, y, S[y],
-                       sf::Color::Green);
+      update_rec_style(m_auxiliary_shape, true, true, y, S[y], sf::Color::Red);
       y += 1;
     }
 
@@ -438,7 +438,7 @@ void Visualization::insert_with_shift(std::vector<int>& S, int x, int y,
     }
   } else {
     S[x] = s;
-    update_rec_style(m_auxiliary_shape, true, false, x, S[x], sf::Color::Green);
+    update_rec_style(m_auxiliary_shape, true, true, x, S[x], sf::Color::Red);
   }
 }
 
@@ -446,8 +446,7 @@ void Visualization::handle_overflow(std::vector<int>& S, int value) {
   for (int k = 0; k < S.size(); k++) {
     if (is_lb_empty(S[k])) {
       S[k] = value;
-      update_rec_style(m_auxiliary_shape, true, false, k, S[k],
-                       sf::Color::Green);
+      update_rec_style(m_auxiliary_shape, true, true, k, S[k], sf::Color::Red);
       break;
     }
   }
@@ -462,14 +461,14 @@ void Visualization::redistribute_elements(std::vector<int>& S, int max_p) {
       temp_values.push_back(S[s]);
       S[s] = m_empty_value;
       update_rec_style(m_auxiliary_shape, true, false, s, m_empty_value,
-                       sf::Color::Green);
+                       sf::Color::White);
     }
   }
   for (int idx = temp_values.size() - 1; idx >= 0; idx--) {
     if (dest_p >= 0 && dest_p < S.size()) {
       S[dest_p] = temp_values[idx];
-      update_rec_style(m_auxiliary_shape, true, false, dest_p, S[dest_p],
-                       sf::Color::Green);
+      update_rec_style(m_auxiliary_shape, true, true, dest_p, S[dest_p],
+                       sf::Color::White);
       dest_p -= 2;
     }
   }
@@ -484,17 +483,20 @@ void Visualization::finalize_sort(const std::vector<int>& S) {
     }
   }
   m_element_number = std::move(sorted_elements);
-  m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
+  for (int i = 0; i < m_auxiliary_shape.getVertexCount() / 4 - 1; i++)
+    update_rec_style(m_auxiliary_shape, true, true, i, m_options[1],
+                     sf::Color::White);
   for (int i = 0; i < m_element_number.size(); i++)
     update_rec_style(m_element_shape, true, false, i, m_element_number[i],
-                     sf::Color::Green);
-  m_auxiliary_shape.clear();
+                     sf::Color::White);
 }
 
 int Visualization::process_iteration(std::vector<int>& S, int n, int a, int b) {
   int max_p = 0;
-  update_rec_style(m_element_shape, false, false, 0, 0, sf::Color::Green, true);
+  update_rec_style(m_element_shape, false, false, 0, 0, sf::Color::White, true);
   for (int j = a; j < std::min(b, n + 1); j++) {
+    if (m_stop_visualizing.load())
+      return max_p;
     int p = 2 * j - 1;
     max_p = std::max(max_p, p);
     if (p >= S.size() || is_lb_empty(S[p]))
@@ -504,12 +506,13 @@ int Visualization::process_iteration(std::vector<int>& S, int n, int a, int b) {
   return max_p;
 }
 
-//TODO: ADD COLORING
 void Visualization::library_sort() {
   int n = m_element_number.size();
   std::vector<int> S = initialize_array(n);
   int m = std::floor(std::log2(n) + 1);
   for (int i = 0; i < m; i++) {
+    if (m_stop_visualizing.load())
+      break;
     int a = 1 << (i + 1);
     int b = 1 << (i + 2);
     int max_p = process_iteration(S, n, a, b);
@@ -647,10 +650,13 @@ void Visualization::splay_sort() {
     }
     update_rec_style(m_auxiliary_shape, false, false, 0, 0, sf::Color::White,
                      true);
+    if (m_stop_visualizing.load())
+      break;
   }
   auto sorted_result = tree.get_sorted_elements_with_visual_index();
-  m_auxiliary_shape.clear();
-  m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
+  for (int i = 0; i < m_auxiliary_shape.getVertexCount() / 4 - 1; i++)
+    update_rec_style(m_auxiliary_shape, true, true, i, m_options[1],
+                     sf::Color::White);
   for (const auto& [pos, key] : sorted_result) {
     m_element_number[pos] = key;
     update_rec_style(m_element_shape, true, false, pos, key, sf::Color::White);
@@ -718,8 +724,6 @@ void Visualization::patience_sort() {
   std::vector<std::vector<int>> piles;
   int max_pile_size = 0;
   for (int i = 0; i < m_element_number.size(); i++) {
-    if (m_stop_visualizing.load())
-      break;
     bool placed = false;
     if (piles.empty()) {
       std::vector<int> new_pile;
@@ -730,12 +734,13 @@ void Visualization::patience_sort() {
       max_pile_size = 1;
     } else {
       for (int j = 0; j < piles.size(); j++) {
+        if (m_stop_visualizing.load())
+          break;
         if (m_element_number[i] < piles[j][piles[j].size() - 1]) {
           piles[j].push_back(m_element_number[i]);
-          //visual_index is out of range
           int visual_index = j * (max_pile_size + 1) + (piles[j].size() - 1);
           update_rec_style(m_auxiliary_shape, true, false, visual_index,
-                           m_element_number[i], sf::Color::White, true);
+                           m_element_number[i], sf::Color::Red, true);
           if (piles[j].size() > max_pile_size) {
             max_pile_size = piles[j].size();
           }
@@ -754,11 +759,10 @@ void Visualization::patience_sort() {
     }
   }
   std::vector<int> ans = merge_piles(piles);
-  m_auxiliary_shape.clear();
-  m_box_pos = {50, 125, 1200, 700, 1200 - 50, 700 - 125};
+  for (int i = 0; i < m_auxiliary_shape.getVertexCount() / 4 - 1; i++)
+    update_rec_style(m_auxiliary_shape, true, true, i, m_options[1],
+                     sf::Color::White);
   for (int i = 0; i < ans.size(); i++) {
-    if (m_stop_visualizing.load())
-      break;
     m_element_number[i] = ans[i];
     update_rec_style(m_element_shape, true, false, i, m_element_number[i],
                      sf::Color::White, true);

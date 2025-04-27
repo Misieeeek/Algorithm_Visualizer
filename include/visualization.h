@@ -192,7 +192,7 @@ class Visualization : public Screen {
   int m_empty_value;
 
   // LIST OF ARRAYS WITH ADDITIONAL SPACE
-  std::array<std::string, c_arr_add_space> m_arr_w_add_space;
+  std::unordered_map<std::string, int> m_arr_w_add_space;
 };
 
 #endif
