@@ -374,25 +374,25 @@ void Sorting_Class::initialize_insertion() {
   additional_option(false);
 }
 void Sorting_Class::initialize_selection() {
-  m_sort_map[{sort_cat::selection, 0}] = [this]() {
+  m_sort_map[{sort_cat::selection, 0}] = [this]() {  // SELECTION SORT
     set_setting_selected_algo(0, [this]() { selection_sort(); });
   };
-  m_sort_map[{sort_cat::selection, 1}] = [this]() {
+  m_sort_map[{sort_cat::selection, 1}] = [this]() {  // HEAPSORT
     set_setting_selected_algo(1, [this]() { selection_sort(); });
   };
-  m_sort_map[{sort_cat::selection, 2}] = [this]() {
+  m_sort_map[{sort_cat::selection, 2}] = [this]() {  //SMOOTH SORT
     set_setting_selected_algo(2, [this]() { selection_sort(); });
   };
-  m_sort_map[{sort_cat::selection, 3}] = [this]() {
+  m_sort_map[{sort_cat::selection, 3}] = [this]() {  // CARTESIAN TREE SORT
     set_setting_selected_algo(3, [this]() { selection_sort(); });
   };
-  m_sort_map[{sort_cat::selection, 4}] = [this]() {
+  m_sort_map[{sort_cat::selection, 4}] = [this]() {  // TOURNAMENT SORT
     set_setting_selected_algo(4, [this]() { selection_sort(); });
   };
-  m_sort_map[{sort_cat::selection, 5}] = [this]() {
+  m_sort_map[{sort_cat::selection, 5}] = [this]() {  // CYCLE SORT
     set_setting_selected_algo(5, [this]() { selection_sort(); });
   };
-  m_sort_map[{sort_cat::selection, 6}] = [this]() {
+  m_sort_map[{sort_cat::selection, 6}] = [this]() {  // WEAK-HEAP SORT
     set_setting_selected_algo(6, [this]() { selection_sort(); });
   };
   additional_option(false);

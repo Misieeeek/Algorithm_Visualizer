@@ -7,6 +7,7 @@
 #include "sorting_class.h"
 
 class Splay_Tree;
+class Tree;
 
 class Visualization : public Screen {
  public:
@@ -104,6 +105,9 @@ class Visualization : public Screen {
 
   // SPLAY SORT
   void splay_sort();
+
+  //TREE SORT
+  void tree_sort();
 
   //SELECTION SORT
   void selection_sort();

@@ -3,6 +3,7 @@
 #include <SFML/System/Time.hpp>
 #include "sorting_class.h"
 #include "splay_tree.h"
+#include "tree.h"
 #include "visualization.h"
 
 void Visualization::insertion_sort() {
@@ -667,7 +668,6 @@ void Visualization::splay_sort() {
   m_visualizaing = false;
 }
 
-//TODO: ADD COLORING
 std::vector<int> Visualization::merge_piles(std::vector<std::vector<int>>& v) {
   std::vector<int> ans;
   int max_pile_size = 0;
@@ -719,7 +719,7 @@ std::vector<int> Visualization::merge_piles(std::vector<std::vector<int>>& v) {
   return ans;
 }
 
-//TODO: ADD COLORING
+//TODO: ADD COLORING (HARD)
 void Visualization::patience_sort() {
   std::vector<std::vector<int>> piles;
   int max_pile_size = 0;
@@ -766,6 +766,88 @@ void Visualization::patience_sort() {
     m_element_number[i] = ans[i];
     update_rec_style(m_element_shape, true, false, i, m_element_number[i],
                      sf::Color::White, true);
+  }
+
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}
+void Tree::update_visual_indices(Node* node, int& current_index) {
+  if (!node)
+    return;
+  update_visual_indices(node->m_left.get(), current_index);
+  node->m_visual_index = current_index++;
+  update_visual_indices(node->m_right.get(), current_index);
+}
+
+void Tree::update_all_visual_indices() {
+  int current_index = 0;
+  update_visual_indices(m_root.get(), current_index);
+}
+
+void Tree::store_sorted(Node* root, std::vector<int>& arr, int& i) {
+  if (!root)
+    return;
+  store_sorted(root->m_left.get(), arr, i);
+  arr[i++] = root->m_key;
+  store_sorted(root->m_right.get(), arr, i);
+}
+
+std::vector<std::pair<int, int>> Tree::get_sorted_elements_with_visual_index() {
+  std::vector<std::pair<int, int>> result;
+  int current_index = 0;
+  get_sorted_elements_with_visual_index(m_root.get(), current_index, result);
+  return result;
+}
+
+void Tree::get_sorted_elements_with_visual_index(
+    Node* node, int& current_index, std::vector<std::pair<int, int>>& result) {
+  if (node == nullptr)
+    return;
+  get_sorted_elements_with_visual_index(node->m_left.get(), current_index,
+                                        result);
+  result.emplace_back(current_index, node->m_key);
+  current_index++;
+  get_sorted_elements_with_visual_index(node->m_right.get(), current_index,
+                                        result);
+}
+
+std::unique_ptr<Tree::Node> Tree::insert(std::unique_ptr<Node>& node, int key) {
+  if (!node)
+    return std::make_unique<Node>(key);
+  if (key <= node->m_key)
+    node->m_left = insert(node->m_left, key);
+  else
+    node->m_right = insert(node->m_right, key);
+  return std::move(node);
+}
+
+//TODO:: ADD COLORING
+void Visualization::tree_sort() {
+  std::vector<int> original_values = m_element_number;
+  Tree tree;
+  for (size_t i = 0; i < m_element_number.size(); i++) {
+    tree.m_root = tree.insert(tree.m_root, m_element_number[i]);
+    tree.update_all_visual_indices();
+    auto current_state = tree.get_sorted_elements_with_visual_index();
+    for (size_t j = 0; j < m_element_number.size(); j++) {
+      if (j != i)
+        update_rec_style(m_element_shape, true, false, j, m_element_number[j],
+                         sf::Color::White);
+    }
+    for (const auto& [visual_index, key] : current_state) {
+      if (visual_index < m_element_number.size()) {
+        m_element_number[visual_index] = key;
+        update_rec_style(m_element_shape, true, false, visual_index, key,
+                         sf::Color::White);
+      }
+    }
+    if (m_stop_visualizing.load())
+      break;
+
+    update_rec_style(m_element_shape, false, false, 0, 0, sf::Color::White,
+                     true);
   }
 
   restart_timer();

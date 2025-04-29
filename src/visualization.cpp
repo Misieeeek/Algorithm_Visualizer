@@ -1,5 +1,4 @@
 #include "visualization.h"
-
 #include <thread>
 
 Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
@@ -292,7 +291,7 @@ void Visualization::initialize_insertion_sort() {
     splay_sort();
   };
   m_algo_func["Tree Sort"] = [this]() {
-    std::cout << "tree sort\n";
+    tree_sort();
   };
   m_algo_func["Library Sort"] = [this]() {
     library_sort();
@@ -405,7 +404,7 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
   arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_bottom),
                              sf::Color::White);
 }
-//BUG: m_auxiliary_shape COLOR GOES OUT OF INDEX FOR LIBRARY SORT & PATIENCE SORT
+//BUG: m_auxiliary_shape COLOR GOES OUT OF INDEX FOR  PATIENCE SORT
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
   if (&arr == &m_auxiliary_shape) {
