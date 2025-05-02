@@ -6,6 +6,7 @@
 
 // FORWARD DECLARATION OF CLASS Sorting_Class and Visualization
 class Sorting_Class;
+class Search_Class;
 class Visualization;
 
 class Visualizer : public Screen {
@@ -67,6 +68,7 @@ class Visualizer : public Screen {
   Screen** current_screen;
   Screen* main_menu;
   Sorting_Class* sort_class;
+  Search_Class* search_class;
   sf::RenderWindow* window_ptr;
   int m_selected_algorithm_index;
   static constexpr std::size_t c_num_algos = 8;

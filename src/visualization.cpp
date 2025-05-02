@@ -21,6 +21,28 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   pause_timer();
   m_arr_w_add_space = {
       {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 1}};
+  std::cout << "sort\n";
+}
+Visualization::Visualization(Screen** screen_ptr,
+                             Search_Class* search_class_ptr,
+                             sf::RenderWindow* window)
+    : current_screen(screen_ptr),
+      search_class(search_class_ptr),
+      window_ptr(window),
+      m_gen(m_rd()),
+      m_stop_visualizing(false),
+      m_offset(std::chrono::milliseconds(0)),
+      m_distribution(2) {
+  m_visualizaing = false;
+  set_styles();
+  m_selected_button_index = 1;
+  m_selected_button = 1;
+  m_element_shape.setPrimitiveType(sf::Quads);
+  m_auxiliary_shape.setPrimitiveType(sf::Quads);
+  initialize_algorithms();
+  m_empty_value = m_options[1] - 1;
+  pause_timer();
+  std::cout << "search\n";
 }
 
 Visualization::~Visualization() {}

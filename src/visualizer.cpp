@@ -12,6 +12,7 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
       m_drop_down_item_font_size(20) {
 
   sort_class = new Sorting_Class(screen_ptr, this, window_ptr);
+  search_class = new Search_Class(screen_ptr, this, window_ptr);
   std::array<std::string, c_num_algos> algo = {
       "Sorting Algorithms", "Searching Algorithms",
       "Data Structures",    "Dynamic Programming",
@@ -46,6 +47,7 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
 
 Visualizer::~Visualizer() {
   delete sort_class;
+  delete search_class;
 }
 
 void Visualizer::move_up() {
@@ -249,11 +251,15 @@ void Visualizer::initialize_sorting() {
   };
 }
 void Visualizer::initialize_searching() {
-  algorithm_map[{algo_cat::searching, 0}] = []() {
-    std::cout << "Linear Search\n";
+  algorithm_map[{algo_cat::searching, 0}] = [this]() {
+    *current_screen = search_class;
+    search_class->linear_search();
+    search_class->initalize_searching_algos();
   };
-  algorithm_map[{algo_cat::searching, 1}] = []() {
-    std::cout << "Binary Search\n";
+  algorithm_map[{algo_cat::searching, 1}] = [this]() {
+    *current_screen = search_class;
+    search_class->binary_search();
+    search_class->initalize_searching_algos();
   };
 }
 

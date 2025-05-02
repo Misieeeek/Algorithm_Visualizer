@@ -1,9 +1,8 @@
 #ifndef VISUALIZATION_H
 #define VISUALIZATION_H
-#include <vector>
 #pragma once
 
-#include <SFML/Graphics/VertexArray.hpp>
+#include "search_class.h"
 #include "sorting_class.h"
 
 class Splay_Tree;
@@ -12,6 +11,8 @@ class Tree;
 class Visualization : public Screen {
  public:
   Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
+                sf::RenderWindow* window);
+  Visualization(Screen** screen_ptr, Search_Class* search_class_ptr,
                 sf::RenderWindow* window);
   ~Visualization();
 
@@ -128,6 +129,7 @@ class Visualization : public Screen {
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
   Sorting_Class* sort_class;
+  Search_Class* search_class;
   sf::RenderWindow* window_ptr;
   int m_selected_button_index;
   int m_selected_button;
