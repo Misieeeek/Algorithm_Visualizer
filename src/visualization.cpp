@@ -1,10 +1,12 @@
 #include "visualization.h"
+#include <algorithm>
 #include <thread>
 
 Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
                              sf::RenderWindow* window)
     : current_screen(screen_ptr),
       sort_class(sort_class_ptr),
+      previous_screen(nullptr),
       window_ptr(window),
       m_gen(m_rd()),
       m_stop_visualizing(false),
@@ -21,13 +23,13 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   pause_timer();
   m_arr_w_add_space = {
       {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 1}};
-  std::cout << "sort\n";
 }
 Visualization::Visualization(Screen** screen_ptr,
                              Search_Class* search_class_ptr,
                              sf::RenderWindow* window)
     : current_screen(screen_ptr),
       search_class(search_class_ptr),
+      previous_screen(nullptr),
       window_ptr(window),
       m_gen(m_rd()),
       m_stop_visualizing(false),
@@ -113,7 +115,7 @@ void Visualization::change_option(int selected) {
     m_buttons_shape[0].setOutlineColor(sf::Color::Red);
     restart_timer();
     pause_timer();
-    *current_screen = sort_class;
+    *current_screen = previous_screen;
   } else {
     if (m_visualizaing == true) {
       m_buttons_text[1].setString("Start");
@@ -224,6 +226,23 @@ void Visualization::set_options(std::size_t n_elements, int min_val,
                            std::to_string(get_elapsed_time().count()));
 }
 
+void Visualization::set_options(std::size_t n_elements, int min_val,
+                                int max_val, int search_number,
+                                std::string algo_name) {
+  m_options[0] = n_elements;
+  m_options[1] = min_val;
+  m_options[2] = max_val;
+  m_options[3] = search_number;
+  m_algorithm_name = algo_name;
+  m_info_text[0].setString("Algorithm: " + m_algorithm_name);
+  m_info_text[1].setString("Number of elements: " + std::to_string(n_elements));
+  m_info_text[2].setString("Min range: " + std::to_string(min_val));
+  m_info_text[3].setString("Max range: " + std::to_string(max_val));
+  m_info_text[4].setString("Search number: " + std::to_string(search_number));
+  m_info_text[5].setString("Duration: " +
+                           std::to_string(get_elapsed_time().count()));
+}
+
 int Visualization::random_number_gen(int min_val, int max_val) {
   /*switch (m_distribution) {
     case 0: {
@@ -281,12 +300,15 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
 
 void Visualization::initialize_insertion_sort() {
   m_algo_func["Insertion Sort"] = [this]() {
+    previous_screen = sort_class;
     insertion_sort();
   };
   m_algo_func["Recursive Insertion Sort"] = [this]() {
+    previous_screen = sort_class;
     recur_insertion_sort(m_options[0]);
   };
   m_algo_func["Binary Insertion Sort"] = [this]() {
+    previous_screen = sort_class;
     binary_insertion_sort();
   };
   std::vector<std::string> shell_variants = {"Shell Sort",
@@ -306,27 +328,34 @@ void Visualization::initialize_insertion_sort() {
 
   for (const auto& name : shell_variants) {
     m_algo_func[name] = [this]() {
+      previous_screen = sort_class;
       shell_sort();
     };
   }
   m_algo_func["Splaysort"] = [this]() {
+    previous_screen = sort_class;
     splay_sort();
   };
   m_algo_func["Tree Sort"] = [this]() {
+    previous_screen = sort_class;
     tree_sort();
   };
   m_algo_func["Library Sort"] = [this]() {
+    previous_screen = sort_class;
     library_sort();
   };
   m_algo_func["Patience Sorting"] = [this]() {
+    previous_screen = sort_class;
     patience_sort();
   };
 }
 void Visualization::initialize_selection_sort() {
   m_algo_func["Selection Sort"] = [this]() {
+    previous_screen = sort_class;
     selection_sort();
   };
   m_algo_func["Smooth Sort"] = [this]() {
+    previous_screen = sort_class;
     smooth_sort();
   };
 }
@@ -335,6 +364,20 @@ void Visualization::initialize_exchange_sort() {}
 void Visualization::initialize_distribution_sort() {}
 void Visualization::initialize_concurrent_sort() {}
 
+void Visualization::initialize_linear_search() {
+  m_algo_func["Linear Search"] = [this]() {
+    previous_screen = search_class;
+    linear_search();
+  };
+}
+
+void Visualization::initialize_binary_search() {
+  m_algo_func["Binary Search"] = [this]() {
+    previous_screen = search_class;
+    binary_search();
+  };
+}
+
 void Visualization::initialize_algorithms() {
   initialize_insertion_sort();
   initialize_selection_sort();
@@ -342,6 +385,8 @@ void Visualization::initialize_algorithms() {
   initialize_exchange_sort();
   initialize_distribution_sort();
   initialize_concurrent_sort();
+  initialize_linear_search();
+  initialize_binary_search();
 }
 
 void Visualization::update_rec_style(sf::VertexArray& arr, bool update_pos,

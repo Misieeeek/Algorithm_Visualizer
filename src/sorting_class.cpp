@@ -1,7 +1,4 @@
 #include "sorting_class.h"
-#include <SFML/Graphics/PrimitiveType.hpp>
-#include <functional>
-#include <utility>
 #include "visualization.h"
 
 Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,

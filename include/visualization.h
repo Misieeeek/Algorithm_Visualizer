@@ -27,9 +27,12 @@ class Visualization : public Screen {
   // SET STYLES FOR SCREEN
   void set_styles();
 
-  // SET PREVIOUSLY CHOOSED OPTIONS
+  // SET PREVIOUSLY CHOOSED OPTIONS SORTING
   void set_options(std::size_t n_elements, int min_val, int max_val,
                    std::string algo_name);
+  // SET PREVIOUSLY CHOOSED OPTIONS SEARCHING
+  void set_options(std::size_t n_elements, int min_val, int max_val,
+                   int search_number, std::string algo_name);
 
   // RANDOM NUMBER GENERATOR
   int random_number_gen(int min_val, int max_val);
@@ -56,6 +59,10 @@ class Visualization : public Screen {
   void initialize_exchange_sort();
   void initialize_distribution_sort();
   void initialize_concurrent_sort();
+
+  // INITIALIZATION OF SEARCH ALGORITHMS
+  void initialize_linear_search();
+  void initialize_binary_search();
 
   //SHELL SORT GAPS GENERATORS
   void set_shell_gaps(
@@ -125,19 +132,25 @@ class Visualization : public Screen {
   void patience_sort();
   std::vector<int> merge_piles(std::vector<std::vector<int>>& v);
 
+  // LINEAR SEARCH
+  void linear_search();
+  //BINARY SEARCH
+  void binary_search();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   Screen** current_screen;
   Sorting_Class* sort_class;
   Search_Class* search_class;
+  Screen* previous_screen;
   sf::RenderWindow* window_ptr;
   int m_selected_button_index;
   int m_selected_button;
 
   // CONSTANTS
   static constexpr std::size_t c_buttons = 2;
-  static constexpr std::size_t c_info = 5;
-  static constexpr std::size_t c_options = 3;
+  static constexpr std::size_t c_info = 6;
+  static constexpr std::size_t c_options = 4;
   static constexpr std::size_t c_box_vertices = 5;
   static constexpr std::size_t c_arr_add_space = 3;
 

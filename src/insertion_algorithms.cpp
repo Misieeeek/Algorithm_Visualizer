@@ -1,6 +1,3 @@
-#include <SFML/Graphics/Color.hpp>
-#include <SFML/System/Sleep.hpp>
-#include <SFML/System/Time.hpp>
 #include "sorting_class.h"
 #include "splay_tree.h"
 #include "tree.h"

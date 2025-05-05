@@ -11,9 +11,9 @@ Search_Class::Search_Class(Screen** screen_ptr, Visualizer* viz_ptr,
       m_char_size_text_variants(20),
       m_possible_input(false),
       m_temp_value(""),
-      m_option_size(3),
+      m_option_size(4),
       m_additional_param(false),
-      m_additional_exists(true) {
+      m_additional_exists(false) {
 
   final_visual = new Visualization(screen_ptr, this, window_ptr);
   //INITIALIZE VISUALIZATION BUTTONS
@@ -21,11 +21,11 @@ Search_Class::Search_Class(Screen** screen_ptr, Visualizer* viz_ptr,
                                    "Best Case"};
   visualization_buttons_style(150);
   // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
-  // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
-  m_visualization_options_names = {
-      "Number of elemenst:", "Minimum value:", "Maximum value:"};
-  m_visualization_options = {10, 0, 100};
-  textbox(20, 3, 150);
+  // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100, SEARCHING VALUE = RANDOM/0
+  m_visualization_options_names = {"Number of elemenst:", "Minimum value:",
+                                   "Maximum value:", "Searching value: "};
+  m_visualization_options = {10, 0, 100, 5};  //TODO: RANDOM
+  textbox(20, c_input, 150);
   m_choosed_algo = 0;
   m_lr_btn_shape.resize(0);
   m_triangle_arrow.resize(0);
@@ -200,10 +200,10 @@ int Search_Class::pressed() {
 }
 
 void Search_Class::set_default_options() {
-  m_option_size = 3;
+  m_option_size = 4;
   m_visualization_options_names.resize(m_option_size);
-  m_visualization_options_names = {
-      "Number of elemenst:", "Minimum value:", "Maximum value:"};
+  m_visualization_options_names = {"Number of elemenst:", "Minimum value:",
+                                   "Maximum value:", "Searching value: "};
 }
 
 void Search_Class::additional_option(bool additional) {
@@ -218,11 +218,14 @@ void Search_Class::additional_option(bool additional) {
   m_search_class_map[m_variants_size + 2] = [this]() {
     input_box_selected(2);
   };
+  m_search_class_map[m_variants_size + 3] = [this]() {
+    input_box_selected(3);
+  };
   int i = (additional) ? 1 : 0;
   if (additional) {
     m_additional_option.setString(
         m_additional_option_names[m_additional_option_index]);
-    m_search_class_map[m_variants_size + 3] = [this]() {
+    m_search_class_map[m_variants_size + 4] = [this]() {
       if (m_additional_param) {
         m_additional_param = false;
         display_lr_buttons(false);
@@ -232,18 +235,18 @@ void Search_Class::additional_option(bool additional) {
       }
     };
   }
-  m_search_class_map[m_variants_size + 3 + i] = [this]() {
-    algo_viz(m_visualization_options[0], m_visualization_options[1],
-             m_visualization_options[2]);
-  };
   m_search_class_map[m_variants_size + 4 + i] = [this]() {
-    algo_viz(10, 0, 10);
+    algo_viz(m_visualization_options[0], m_visualization_options[1],
+             m_visualization_options[2], m_visualization_options[3]);
   };
   m_search_class_map[m_variants_size + 5 + i] = [this]() {
-    algo_viz(100, 0, 100, false);
+    algo_viz(10, 0, 10, 5);  // TODO: CHANGE TO RANDOM
   };
   m_search_class_map[m_variants_size + 6 + i] = [this]() {
-    algo_viz(100, 0, 100, true);
+    algo_viz(100, 0, 100, 5, false);  // TODO: CHANGE TO RANDOM
+  };
+  m_search_class_map[m_variants_size + 7 + i] = [this]() {
+    algo_viz(100, 0, 100, 5, true);  // TODO: CHANGE TO RANDOM
   };
 }
 
@@ -326,8 +329,19 @@ void Search_Class::initalize_searching_algos() {
   initialize_binary();
 }
 
-void Search_Class::initialize_linear() {}
-void Search_Class::initialize_binary() {}
+void Search_Class::initialize_linear() {
+  m_search_map[{search_cat::linear, 0}] = [this]() {  // LINEAR SEARCH
+    set_setting_selected_algo(0, [this]() { linear_search(); });
+  };
+  additional_option(false);
+}
+
+void Search_Class::initialize_binary() {
+  m_search_map[{search_cat::binary, 0}] = [this]() {  // BINARY SEARCH
+    set_setting_selected_algo(0, [this]() { binary_search(); });
+  };
+  additional_option(false);
+}
 
 void Search_Class::find_algo(int selected) {
   auto it = m_search_map.find(std::make_pair(m_sc, selected));
@@ -400,11 +414,33 @@ void Search_Class::set_style(std::vector<std::string> variants, int pos_y) {
   }
 }
 
-void Search_Class::linear_search() {}
+void Search_Class::linear_search() {
+  std::vector<std::string> linear_search_variants = {"Linear Search", "Back"};
+  m_variants_size = linear_search_variants.size();
+  linear_search_variants.insert(linear_search_variants.end(),
+                                m_visualization_options_names.begin(),
+                                m_visualization_options_names.end());
+  linear_search_variants.insert(linear_search_variants.end(),
+                                m_visualization_buttons_names.begin(),
+                                m_visualization_buttons_names.end());
+  set_style(linear_search_variants, 150);
+  m_sc = search_cat::linear;
+}
 
-void Search_Class::binary_search() {}
+void Search_Class::binary_search() {
+  std::vector<std::string> linear_search_variants = {"Binary Search", "Back"};
+  m_variants_size = linear_search_variants.size();
+  linear_search_variants.insert(linear_search_variants.end(),
+                                m_visualization_options_names.begin(),
+                                m_visualization_options_names.end());
+  linear_search_variants.insert(linear_search_variants.end(),
+                                m_visualization_buttons_names.begin(),
+                                m_visualization_buttons_names.end());
+  set_style(linear_search_variants, 150);
+  m_sc = search_cat::binary;
+}
 
-void Search_Class::textbox(int char_size_textbox, std::size_t number_of_inputs,
+void Search_Class::textbox(int char_size_textbox, size_t number_of_inputs,
                            int pos_y) {
   std::vector<std::string> temp(number_of_inputs);
   for (int i = 0; i < number_of_inputs; i++)
@@ -438,14 +474,21 @@ void Search_Class::input_box_selected(int item) {
     std::from_chars(m_temp_value.data(),
                     m_temp_value.data() + m_temp_value.size(),
                     m_visualization_options[m_selected_input_option]);
-    if (m_visualization_options[1] > m_visualization_options[2]) {
-      std::cerr << "Minimum value of elements can't be greater than maximum "
-                   "value of elements\nSetting default values"
-                << std::endl;
+    if (m_visualization_options[1] > m_visualization_options[2] ||
+        m_visualization_options[2] < m_visualization_options[3] ||
+        m_visualization_options[1] > m_visualization_options[3]) {
+      std::cerr
+          << "Minimum value of elements can't be greater than maximum value "
+             "and seeking value can't be greater than maximum value and "
+             "smaller than minimum value of elements"
+             "value of elements\nSetting default values"
+          << std::endl;
       m_visualization_options[1] = 0;
       m_visualization_options[2] = 100;
+      m_visualization_options[3] = 0;  //TODO: SET BACK TO RANDOM
       m_textbox_input_style[1].setString("0");
       m_textbox_input_style[2].setString("100");
+      m_textbox_input_style[3].setString("0");  //TODO: SET BACK TO RANDOM
     }
     m_text_input.str("");
     m_text_input.clear();
@@ -473,41 +516,10 @@ void Search_Class::visualization_buttons_style(int pos_y) {
 }
 
 std::string Search_Class::get_display_name() {
-  m_display_name[std::make_pair(std::string("Insertion Sort"), 0)] =
-      "Insertion Sort";
-  m_display_name[std::make_pair(std::string("Insertion Sort"), 1)] =
-      "Recursive Insertion Sort";
-  m_display_name[std::make_pair(std::string("Insertion Sort"), 2)] =
-      "Binary Insertion Sort";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 0)] = "Shell Sort";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 1)] =
-      "Shell Sort Frank & Lazarus";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 2)] =
-      "Shell Sort Hibbard";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 3)] =
-      "Shell Sort Papernov & Stasevich";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 4)] =
-      "Shell Sort Pratt";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 5)] =
-      "Shell Sort Knuth";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 6)] =
-      "Shell Sort Incerpi & Sedgewick";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 7)] =
-      "Shell Sort Sedgewick (1)";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 8)] =
-      "Shell Sort Sedgewick (2)";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 9)] =
-      "Shell Sort Gonnet & Baeza-Yates";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 10)] =
-      "Shell Sort Tokuda";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 11)] =
-      "Shell Sort Ciura";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 12)] =
-      "Shell Sort Lee";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 13)] =
-      "Shell Sort SEJ";
-  m_display_name[std::make_pair(std::string("Selection Sort"), 0)] =
-      "Selection Sort";
+  m_display_name[std::make_pair(std::string("Linear Search"), 0)] =
+      "Linear Search";
+  m_display_name[std::make_pair(std::string("Binary Search"), 0)] =
+      "Binary Search";
   if (auto search = m_display_name.find(
           std::make_pair(m_algorithm_variants[m_choosed_algo].getString(),
                          m_additional_option_index));
@@ -519,7 +531,8 @@ std::string Search_Class::get_display_name() {
   }
 }
 
-void Search_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
+void Search_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
+                            int search_number) {
   *current_screen = final_visual;
   std::string algo_name;
   if (m_additional_exists == true)
@@ -527,9 +540,10 @@ void Search_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
   else
     algo_name = m_algorithm_variants[m_choosed_algo].getString();
   std::cout << algo_name << '\n';
-  final_visual->set_options(n_elements, min_val, max_val, algo_name);
+  final_visual->set_options(n_elements, min_val, max_val, search_number,
+                            algo_name);
   final_visual->visual();
 }
 
 void Search_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
-                            bool bw_case) {}
+                            int search_number, bool bw_case) {}

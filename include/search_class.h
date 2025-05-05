@@ -33,10 +33,12 @@ class Search_Class : public Screen {
   // SET STYLE FOR VISUALIZATION BUTTONS
   void visualization_buttons_style(int pos_x);
 
-  // VISUALIZE ALGORITHM WITH GIVEN ELEMENTS, MIN VALUE AND MAX VALUE
-  void algo_viz(std::size_t n_elements, int min_val, int max_val);
+  // VISUALIZE ALGORITHM WITH GIVEN ELEMENTS, MIN VALUE, MAX VALUE AND SEARCH NUMBER
+  void algo_viz(std::size_t n_elements, int min_val, int max_val,
+                int search_number);
   // OVERLOAD algo_viz(...) FUNCTION, ADDITIONAL PARAMETER case, WHERE false = WORST CASE
-  void algo_viz(std::size_t n_elements, int min_val, int max_val, bool bw_case);
+  void algo_viz(std::size_t n_elements, int min_val, int max_val,
+                int search_number, bool bw_case);
 
   // SET INSERTION SEARCH PARAMS
   void set_selected_search_variants(int selected,
@@ -130,7 +132,7 @@ class Search_Class : public Screen {
   static constexpr int c_minus_key = 45;
   // HOLDING THE SIZE OF CERTAIN ELEMENTS
   static constexpr int c_headers = 3;
-  static constexpr int c_input = 3;
+  static constexpr int c_input = 4;
   static constexpr int c_buttons = 4;
 
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SEARCHING ALGORITHM
@@ -148,7 +150,7 @@ class Search_Class : public Screen {
   // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS, OPTIONAL PARAMETER
   std::vector<int> m_visualization_options;
   std::vector<std::string> m_visualization_options_names;
-  std::size_t m_option_size;
+  size_t m_option_size;
 
   // VISUALIZATION BUTTONS
   std::array<std::string, c_buttons> m_visualization_buttons_names;
