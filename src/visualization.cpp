@@ -22,7 +22,7 @@ Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
   m_empty_value = m_options[1] - 1;
   pause_timer();
   m_arr_w_add_space = {
-      {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 1}};
+      {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 2}};
 }
 Visualization::Visualization(Screen** screen_ptr,
                              Search_Class* search_class_ptr,
@@ -422,11 +422,9 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
     double auxiliary_bottom = 375;
     double auxiliary_top = m_box_pos[1];
     double auxiliary_height = auxiliary_bottom - auxiliary_top;
-
     H_i = t_i * auxiliary_height;
-  } else {
+  } else
     H_i = t_i * m_box_pos[5];
-  }
 
   double y_rectangle_top;
   double y_rectangle_bottom;
@@ -451,16 +449,27 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
   else
     spacing = 0.0;
 
-  double effectiveWidth = (total_width - (n - 1) * spacing) / n;
-  double x_rectangle_left{};
+  double multiplicator = 1.0;
+  if (&arr == &m_auxiliary_shape &&
+      m_arr_w_add_space.find(m_algorithm_name) != m_arr_w_add_space.end()) {
+    multiplicator = m_arr_w_add_space[m_algorithm_name];
+  }
 
-  if (auto search = m_arr_w_add_space.find(m_algorithm_name);
-      search != m_arr_w_add_space.end() && &arr == &m_auxiliary_shape)
-    x_rectangle_left = m_box_pos[0] + (i * (effectiveWidth + spacing)) /
-                                          m_arr_w_add_space[m_algorithm_name];
-  else
-    x_rectangle_left = m_box_pos[0] + i * (effectiveWidth + spacing);
-  double x_rectangle_right = x_rectangle_left + effectiveWidth;
+  int effective_n = n;
+  if (&arr == &m_auxiliary_shape && multiplicator > 1.0) {
+    effective_n = n * multiplicator;
+  }
+
+  double effective_width =
+      (total_width - (effective_n - 1) * spacing) / effective_n;
+
+  double x_rectangle_left{};
+  if (&arr == &m_auxiliary_shape) {
+    x_rectangle_left = m_box_pos[0] + i * (effective_width + spacing);
+  } else {
+    x_rectangle_left = m_box_pos[0] + i * (effective_width + spacing);
+  }
+  double x_rectangle_right = x_rectangle_left + effective_width;
 
   arr[base + 0] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_top),
                              sf::Color::White);
@@ -471,7 +480,7 @@ void Visualization::update_rectangle_pos(sf::VertexArray& arr, int i,
   arr[base + 3] = sf::Vertex(sf::Vector2f(x_rectangle_left, y_rectangle_bottom),
                              sf::Color::White);
 }
-//BUG: m_auxiliary_shape COLOR GOES OUT OF INDEX FOR  PATIENCE SORT
+
 void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
                                            sf::Color c) {
   if (&arr == &m_auxiliary_shape) {

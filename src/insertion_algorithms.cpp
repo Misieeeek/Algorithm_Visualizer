@@ -1,3 +1,6 @@
+#include <SFML/System/Sleep.hpp>
+#include <SFML/System/Time.hpp>
+#include <algorithm>
 #include "sorting_class.h"
 #include "splay_tree.h"
 #include "tree.h"
@@ -682,7 +685,7 @@ std::vector<int> Visualization::merge_piles(std::vector<std::vector<int>>& v) {
       if (!v[i].empty()) {
         int visual_index = i * (max_pile_size + 1) + (v[i].size() - 1);
         update_rec_style(m_auxiliary_shape, true, false, visual_index,
-                         v[i][v[i].size() - 1], sf::Color::Yellow);
+                         v[i][v[i].size() - 1], sf::Color::White);
       }
     }
     for (int i = 0; i < v.size(); i++) {
@@ -696,8 +699,8 @@ std::vector<int> Visualization::merge_piles(std::vector<std::vector<int>>& v) {
         minu = v[i][v[i].size() - 1];
         index = i;
         int visual_index = i * (max_pile_size + 1) + (v[i].size() - 1);
-        update_rec_style(m_auxiliary_shape, true, false, visual_index, minu,
-                         sf::Color::Green);
+        update_rec_style(m_auxiliary_shape, true, true, visual_index, minu,
+                         sf::Color::White);
       } else {
         int visual_index = i * (max_pile_size + 1) + (v[i].size() - 1);
         update_rec_style(m_auxiliary_shape, true, false, visual_index,
@@ -712,14 +715,13 @@ std::vector<int> Visualization::merge_piles(std::vector<std::vector<int>>& v) {
     if (v.size() == 0)
       break;
   }
-
   return ans;
 }
 
-//TODO: ADD COLORING (HARD)
 void Visualization::patience_sort() {
   std::vector<std::vector<int>> piles;
   int max_pile_size = 0;
+  int max_index = 0;
   for (int i = 0; i < m_element_number.size(); i++) {
     bool placed = false;
     if (piles.empty()) {
@@ -736,7 +738,9 @@ void Visualization::patience_sort() {
         if (m_element_number[i] < piles[j][piles[j].size() - 1]) {
           piles[j].push_back(m_element_number[i]);
           int visual_index = j * (max_pile_size + 1) + (piles[j].size() - 1);
-          update_rec_style(m_auxiliary_shape, true, false, visual_index,
+          if (visual_index > max_index)
+            max_index = visual_index;
+          update_rec_style(m_auxiliary_shape, true, true, visual_index,
                            m_element_number[i], sf::Color::Red, true);
           if (piles[j].size() > max_pile_size) {
             max_pile_size = piles[j].size();
@@ -745,11 +749,14 @@ void Visualization::patience_sort() {
           break;
         }
       }
+
       if (!placed) {
         std::vector<int> new_pile;
         new_pile.push_back(m_element_number[i]);
         piles.push_back(new_pile);
         int visual_index = (piles.size() - 1) * (max_pile_size + 1);
+        if (visual_index > max_index)
+          max_index = visual_index;
         update_rec_style(m_auxiliary_shape, true, false, visual_index,
                          m_element_number[i], sf::Color::Red, true);
       }
@@ -764,12 +771,12 @@ void Visualization::patience_sort() {
     update_rec_style(m_element_shape, true, false, i, m_element_number[i],
                      sf::Color::White, true);
   }
-
   restart_timer();
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
 }
+
 void Tree::update_visual_indices(Node* node, int& current_index) {
   if (!node)
     return;
@@ -820,7 +827,6 @@ std::unique_ptr<Tree::Node> Tree::insert(std::unique_ptr<Node>& node, int key) {
   return std::move(node);
 }
 
-//TODO:: ADD COLORING
 void Visualization::tree_sort() {
   std::vector<int> original_values = m_element_number;
   Tree tree;
@@ -830,19 +836,18 @@ void Visualization::tree_sort() {
     auto current_state = tree.get_sorted_elements_with_visual_index();
     for (size_t j = 0; j < m_element_number.size(); j++) {
       if (j != i)
-        update_rec_style(m_element_shape, true, false, j, m_element_number[j],
-                         sf::Color::White);
+        update_rec_style(m_element_shape, true, true, j, m_element_number[j],
+                         sf::Color::Red);
     }
     for (const auto& [visual_index, key] : current_state) {
       if (visual_index < m_element_number.size()) {
         m_element_number[visual_index] = key;
-        update_rec_style(m_element_shape, true, false, visual_index, key,
+        update_rec_style(m_element_shape, true, true, visual_index, key,
                          sf::Color::White);
       }
     }
     if (m_stop_visualizing.load())
       break;
-
     update_rec_style(m_element_shape, false, false, 0, 0, sf::Color::White,
                      true);
   }
