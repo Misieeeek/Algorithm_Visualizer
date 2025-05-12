@@ -10,6 +10,7 @@ class Tree;
 
 class Visualization : public Screen {
  public:
+  Visualization();
   Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
                 sf::RenderWindow* window);
   Visualization(Screen** screen_ptr, Search_Class* search_class_ptr,
@@ -23,6 +24,12 @@ class Visualization : public Screen {
   void change_option(int selected) override;
 
   void visual();
+
+  // TEST GETTERS AND SETTERS
+  const std::vector<int>& test_get_elements() const;
+  void test_set_elements(const std::vector<int>& v);
+  // const std::vector<int>& test_get_aux_numbers() const { return m_au; }
+  // void test_set_aux_elements(const std::vector<int>& v) { m_element_number = v; }
 
   // SET STYLES FOR SCREEN
   void set_styles();

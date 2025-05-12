@@ -2,6 +2,27 @@
 #include <algorithm>
 #include <thread>
 
+Visualization::Visualization()
+    : current_screen(nullptr),
+      sort_class(nullptr),
+      previous_screen(nullptr),
+      window_ptr(nullptr),
+      m_gen(m_rd()),
+      m_element_number(),
+      m_stop_visualizing(false),
+      m_offset(std::chrono::milliseconds(0)),
+      m_distribution(0),
+      m_visualizaing(false),
+      m_selected_button_index(0),
+      m_selected_button(0) {
+  m_empty_value = -10;
+  m_arr_w_add_space = {};
+  m_auxiliary_shape.resize(0);
+  m_element_shape.resize(0);
+  m_stop_visualizing.store(false);
+  m_visualizaing = false;
+}
+
 Visualization::Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
                              sf::RenderWindow* window)
     : current_screen(screen_ptr),
@@ -510,4 +531,12 @@ void Visualization::update_rectangle_color(sf::VertexArray& arr, int i,
   for (int k = 0; k < 4; k++) {
     arr[base + k].color = c;
   }
+}
+
+const std::vector<int>& Visualization::test_get_elements() const {
+  return m_element_number;
+}
+void Visualization::test_set_elements(const std::vector<int>& v) {
+  m_element_number = v;
+  m_element_shape.resize(v.size() * 4);
 }

@@ -59,25 +59,9 @@ FetchContent_Declare(
 set(gtest_force_shared_crt ON CACHE BOOL "" FORCE)
 FetchContent_MakeAvailable(googletest)
 
-enable_testing()
-
-add_executable(tests
-  tests/test_algorithm.cpp
-)
-
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 file(GLOB_RECURSE SRC_FILES src/*.cpp)
-
-target_include_directories(tests PRIVATE ${CMAKE_SOURCE_DIR}/include)
-target_link_libraries(tests
-  PRIVATE
-    gtest_main
-    sfml-graphics
-    sfml-window
-    sfml-system
-)
-
 
 add_executable(${PROJECT_NAME} algorithm_visualizer.cpp ${SRC_FILES})
 target_include_directories(${PROJECT_NAME} PUBLIC ${CMAKE_SOURCE_DIR}/include)
@@ -87,3 +71,27 @@ target_link_libraries(${PROJECT_NAME} PRIVATE
   sfml-system
 )
 
+enable_testing()
+
+add_executable(tests
+  tests/insertion_sort_algos.cpp
+  ${SRC_FILES}
+)
+
+target_include_directories(tests
+  PRIVATE
+    ${CMAKE_SOURCE_DIR}/include
+)
+
+target_link_libraries(tests
+  PRIVATE
+    GTest::gtest_main
+    sfml-graphics
+    sfml-window
+    sfml-system
+)
+
+include(GoogleTest)
+gtest_discover_tests(tests
+  WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+)
