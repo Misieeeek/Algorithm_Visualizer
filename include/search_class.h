@@ -2,9 +2,12 @@
 #define SEARCHCLASS_H
 #pragma once
 
+#include <memory>
+#include "main_window.h"
 #include "visualizer.h"
 
-class Search_Class : public Screen {
+class Search_Class : public Screen,
+                     public std::enable_shared_from_this<Search_Class> {
  public:
   // IHERITENCE FROM CLASS SCREEN
   void draw(sf::RenderWindow& window) override;
@@ -16,10 +19,16 @@ class Search_Class : public Screen {
   void change_option(int selected) override;
   void typed_on(sf::Event input) override;
 
-  Search_Class(Screen** screen_ptr, Visualizer* viz_ptr,
+  Search_Class();
+  Search_Class(std::shared_ptr<Screen>& screen_ptr,
+               std::shared_ptr<Visualizer> viz_ptr,
                sf::RenderWindow* window);  // MENU HAS TO CHANGE
                                            // TO VISUALIZER
-  virtual ~Search_Class();
+  virtual ~Search_Class() = default;
+
+  // MAKE shared_ptr FROM this
+  void init_visualization_default();
+  void init_visualization_searching();
 
   //SET STYLE FOR SEARCH ALGO
   void set_style(std::vector<std::string> variants, int y_pos);
@@ -101,9 +110,10 @@ class Search_Class : public Screen {
 
  private:
   // DISPLAYS SCREEN FOR SERACHING
-  Screen** current_screen;
-  Visualizer* visualize;
-  Visualization* final_visual;
+  static std::shared_ptr<Screen> g_dummy_screen;
+  std::shared_ptr<Screen>& current_screen;
+  std::shared_ptr<Visualizer> visualize;
+  std::shared_ptr<Visualization> final_visual;
   sf::RenderWindow* window_ptr;
 
   // RESPONSIBLE FOR KEYBOARD MOVEMENT

@@ -36,7 +36,6 @@ void Visualization::insertion_sort() {
   m_visualizaing = false;
 }
 
-//TODO:: ADD MAX DEPTH FOR RECURSION
 bool Visualization::recur_insertion_sort(int n) {
   if (m_stop_visualizing.load()) {
     for (int i = 0; i < n; i++)

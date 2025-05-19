@@ -2,30 +2,27 @@
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <array>
+#include <memory>
 #include <string>
 #include "main_menu.h"
 #include "main_window.h"
 
-Options::Options(Screen** screen_ptr, MainMenu* menu)
-    : m_selected_options_index(0) {
+Options::Options(std::shared_ptr<Screen>& screen_ptr,
+                 std::shared_ptr<MainMenu> menu)
+    : current_screen(screen_ptr), main_menu(menu), m_selected_options_index(0) {
 
-  current_screen = screen_ptr;
-  main_menu = menu;
-
-  std::array<std::string, NUMBER_OF_OPTIONS> options = {"Speed", "Window",
-                                                        "Back"};
+  std::array<std::string, c_number_of_options> options = {"Speed", "Window",
+                                                          "Back"};
   Screen::set_sf_text_style(m_options_options, options, 70, 50, 150, false,
                             true, 0, 100);
-  m_options_options[NUMBER_OF_OPTIONS - 1].setFillColor(sf::Color::Red);
+  m_options_options[c_number_of_options - 1].setFillColor(sf::Color::Red);
   m_options_options[0].setFillColor(sf::Color::Green);
   m_selected_option = 0;
 }
 
-Options::~Options() {}
-
 void Options::move_up() {
   if (m_selected_options_index - 1 >= 0) {
-    if (m_selected_options_index == NUMBER_OF_OPTIONS - 1)
+    if (m_selected_options_index == c_number_of_options - 1)
       m_options_options[m_selected_options_index].setFillColor(sf::Color::Red);
     else
       m_options_options[m_selected_options_index].setFillColor(
@@ -37,7 +34,7 @@ void Options::move_up() {
 }
 
 void Options::move_down() {
-  if (m_selected_options_index + 1 < NUMBER_OF_OPTIONS) {
+  if (m_selected_options_index + 1 < c_number_of_options) {
     m_options_options[m_selected_options_index].setFillColor(sf::Color::White);
     m_selected_options_index++;
     m_options_options[m_selected_options_index].setFillColor(sf::Color::Green);
@@ -57,7 +54,7 @@ void Options::change_option(int selected) {
     case 1:
       break;
     case 2:
-      *current_screen = main_menu;
+      current_screen = main_menu;
       break;
   }
 }

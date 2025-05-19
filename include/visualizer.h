@@ -1,5 +1,6 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
+#include <memory>
 #pragma once
 
 #include "main_window.h"
@@ -9,11 +10,15 @@ class Sorting_Class;
 class Search_Class;
 class Visualization;
 
-class Visualizer : public Screen {
+class Visualizer : public Screen,
+                   public std::enable_shared_from_this<Visualizer> {
  public:
-  Visualizer(Screen** screen_ptr, Screen* menu, sf::RenderWindow* window);
-  virtual ~Visualizer();
+  Visualizer(std::shared_ptr<Screen>& screen_ptr, std::shared_ptr<Screen> menu,
+             sf::RenderWindow* window);
+  virtual ~Visualizer() = default;
 
+  // MAKE shared_ptr FROM this
+  void init_visualizer_categories();
   // RESPOSIBLE FOR DRAWING EVERYTHING
   void draw(sf::RenderWindow& window) override;
   // MOVE UP/DOWN (OPTIONS)
@@ -65,10 +70,10 @@ class Visualizer : public Screen {
   algo_cat m_ac;
 
   // MAIN MENU FOR EVERY CATEGORY OF ALGORITHMS
-  Screen** current_screen;
-  Screen* main_menu;
-  Sorting_Class* sort_class;
-  Search_Class* search_class;
+  std::shared_ptr<Screen>& current_screen;
+  std::shared_ptr<Screen> main_menu;
+  std::shared_ptr<Sorting_Class> sort_class;
+  std::shared_ptr<Search_Class> search_class;
   sf::RenderWindow* window_ptr;
   int m_selected_algorithm_index;
   static constexpr std::size_t c_num_algos = 8;

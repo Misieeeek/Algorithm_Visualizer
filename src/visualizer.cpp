@@ -1,7 +1,9 @@
+#include "visualizer.h"
+#include <memory>
 #include "visualization.h"
 
-Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
-                       sf::RenderWindow* window)
+Visualizer::Visualizer(std::shared_ptr<Screen>& screen_ptr,
+                       std::shared_ptr<Screen> menu, sf::RenderWindow* window)
     : current_screen(screen_ptr),
       main_menu(menu),
       window_ptr(window),
@@ -10,9 +12,6 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
       m_category_option(true),
       m_category_font_size(35),
       m_drop_down_item_font_size(20) {
-
-  sort_class = new Sorting_Class(screen_ptr, this, window_ptr);
-  search_class = new Search_Class(screen_ptr, this, window_ptr);
   std::array<std::string, c_num_algos> algo = {
       "Sorting Algorithms", "Searching Algorithms",
       "Data Structures",    "Dynamic Programming",
@@ -45,9 +44,13 @@ Visualizer::Visualizer(Screen** screen_ptr, Screen* menu,
   initialize_algorithms();
 }
 
-Visualizer::~Visualizer() {
-  delete sort_class;
-  delete search_class;
+void Visualizer::init_visualizer_categories() {
+  sort_class = std::make_shared<Sorting_Class>(current_screen,
+                                               shared_from_this(), window_ptr);
+  search_class = std::make_shared<Search_Class>(current_screen,
+                                                shared_from_this(), window_ptr);
+  sort_class->init_visualization_sorting();
+  search_class->init_visualization_searching();
 }
 
 void Visualizer::move_up() {
@@ -130,7 +133,7 @@ void Visualizer::change_option(int selected) {
       m_list_algorithms[0].setFillColor(sf::Color::Green);
       m_list_algorithms[c_num_algos - 1].setFillColor(sf::Color::Red);
       m_dropped = true;
-      *current_screen = main_menu;
+      current_screen = main_menu;
     } else {          // Every other option than EXIT
       if (m_opend) {  // Prevents activating drop down menu comming from main menu
         m_dropped = true;
@@ -217,7 +220,7 @@ int Visualizer::pressed() {
 
 void Visualizer::initialize_sorting() {
   algorithm_map[{algo_cat::sorting, 0}] = [this]() {
-    *current_screen = sort_class;
+    current_screen = sort_class;
     sort_class->insertion_sort();
     sort_class->initalize_sorting_algos();
     std::vector<std::string> names = {"Normal", "Recursive", "Binary"};
@@ -225,39 +228,39 @@ void Visualizer::initialize_sorting() {
         0, [this]() { sort_class->insertion_sort(); }, names, "Variations: ");
   };
   algorithm_map[{algo_cat::sorting, 1}] = [this]() {
-    *current_screen = sort_class;
+    current_screen = sort_class;
     sort_class->selection_sort();
     sort_class->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 2}] = [this]() {
-    *current_screen = sort_class;
+    current_screen = sort_class;
     sort_class->merge_sort();
     sort_class->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 3}] = [this]() {
-    *current_screen = sort_class;
+    current_screen = sort_class;
     sort_class->exchange_sort();
     sort_class->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 4}] = [this]() {
-    *current_screen = sort_class;
+    current_screen = sort_class;
     sort_class->distribution_sort();
     sort_class->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 5}] = [this]() {
-    *current_screen = sort_class;
+    current_screen = sort_class;
     sort_class->concurrent_sort();
     sort_class->initalize_sorting_algos();
   };
 }
 void Visualizer::initialize_searching() {
   algorithm_map[{algo_cat::searching, 0}] = [this]() {
-    *current_screen = search_class;
+    current_screen = search_class;
     search_class->linear_search();
     search_class->initalize_searching_algos();
   };
   algorithm_map[{algo_cat::searching, 1}] = [this]() {
-    *current_screen = search_class;
+    current_screen = search_class;
     search_class->binary_search();
     search_class->initalize_searching_algos();
   };

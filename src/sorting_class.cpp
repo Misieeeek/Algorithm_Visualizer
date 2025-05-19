@@ -1,7 +1,45 @@
 #include "sorting_class.h"
+#include <memory>
 #include "visualization.h"
 
-Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
+std::shared_ptr<Screen> Sorting_Class::g_dummy_screen = nullptr;
+
+Sorting_Class::Sorting_Class()
+    : current_screen(g_dummy_screen),
+      visualize(nullptr),
+      window_ptr(nullptr),
+      final_visual(nullptr),
+      m_selected_sort_algo(),
+      m_selected_sorting_algo_index(),
+      m_choosed_algo(),
+      m_sc(),
+      m_sort_class_map(),
+      m_sort_map(),
+      m_algorithm_variants(),
+      m_char_size_text_variants(),
+      m_headers_text(),
+      m_headers(),
+      m_visualization_options_names(),
+      m_visualization_options(),
+      m_option_size(),
+      m_visualization_buttons_names(),
+      m_visualization_buttons_shape(),
+      m_visualization_buttons_text(),
+      m_text_input(),
+      m_textbox_input_style(),
+      m_selected_input_option(),
+      m_possible_input(),
+      m_temp_value(),
+      m_additional_exists(),
+      m_additional_param(),
+      m_additional_option_index(0),
+      m_additional_option(),
+      m_additional_option_names(),
+      m_lr_btn_shape(),
+      m_triangle_arrow() {}
+
+Sorting_Class::Sorting_Class(std::shared_ptr<Screen>& screen_ptr,
+                             std::shared_ptr<Visualizer> viz_ptr,
                              sf::RenderWindow* window)
     : current_screen(screen_ptr),
       visualize(viz_ptr),
@@ -15,7 +53,6 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
       m_additional_param(false),
       m_additional_exists(true) {
 
-  final_visual = new Visualization(screen_ptr, this, window_ptr);
   //INITIALIZE VISUALIZATION BUTTONS
   m_visualization_buttons_names = {"Start", "Example", "Worst case",
                                    "Best Case"};
@@ -32,8 +69,13 @@ Sorting_Class::Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
   m_additional_option_index = 0;
 }
 
-Sorting_Class::~Sorting_Class() {
-  delete final_visual;
+void Sorting_Class::init_visualization_default() {
+  final_visual = std::make_unique<Visualization>();
+}
+
+void Sorting_Class::init_visualization_sorting() {
+  final_visual = std::make_unique<Visualization>(
+      current_screen, shared_from_this(), window_ptr);
 }
 
 void Sorting_Class::draw(sf::RenderWindow& window) {
@@ -277,6 +319,10 @@ void Sorting_Class::display_lr_buttons(bool display) {
 
 int Sorting_Class::get_additional_option_index() {
   return m_additional_option_index;
+}
+
+void Sorting_Class::set_additional_option_index(int value) {
+  m_additional_option_index = value;
 }
 
 void Sorting_Class::set_selected_sort_variants(
@@ -523,7 +569,7 @@ void Sorting_Class::change_option(int selected) {
     m_algorithm_variants[0].setFillColor(sf::Color::Green);
     m_algorithm_variants[m_variants_size].setFillColor(sf::Color::Red);
     set_default_options();
-    *current_screen = visualize;
+    current_screen = std::move(visualize);
   } else if (selected > m_variants_size - 1) {
     find_option(selected);
   } else {
@@ -776,7 +822,7 @@ std::string Sorting_Class::get_display_name() {
 }
 
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
-  *current_screen = final_visual;
+  current_screen = std::move(final_visual);
   std::string algo_name;
   if (m_additional_exists == true)
     algo_name = get_display_name();

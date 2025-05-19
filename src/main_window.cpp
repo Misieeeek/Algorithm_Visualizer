@@ -1,10 +1,12 @@
 #include "main_window.h"
+#include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
 #include <SFML/Window/Keyboard.hpp>
 #include <cstddef>
 #include <exception>
+#include <memory>
 #include "main_menu.h"
 #include "options.h"
 #include "visualizer.h"
@@ -18,10 +20,14 @@ MainWindow::MainWindow() {
 MainWindow::~MainWindow() {}
 
 void MainWindow::is_running(sf::RenderWindow& window) {
-  MainMenu main_menu;
-  Screen* current_screen = &main_menu;
-  Options options(&current_screen, &main_menu);
-  Visualizer visualize(&current_screen, &main_menu, &window);
+  std::shared_ptr<MainMenu> main_menu = std::make_shared<MainMenu>();
+  std::shared_ptr<Screen> current_screen = main_menu;
+  std::shared_ptr<Options> options =
+      std::make_shared<Options>(std::ref(current_screen), main_menu);
+  std::shared_ptr<Visualizer> visualize = std::make_shared<Visualizer>(
+      std::ref(current_screen), main_menu, &window);
+
+  visualize->init_visualizer_categories();
 
   int selected;
 
@@ -50,13 +56,13 @@ void MainWindow::is_running(sf::RenderWindow& window) {
               break;
             case sf::Keyboard::Enter:
               selected = current_screen->pressed();
-              if (current_screen == &main_menu) {
+              if (current_screen == main_menu) {
                 switch (selected) {
                   case 0:
-                    current_screen = &visualize;
+                    current_screen = visualize;
                     break;
                   case 1:
-                    current_screen = &options;
+                    current_screen = options;
                     break;
                   case 2:
                     window.close();

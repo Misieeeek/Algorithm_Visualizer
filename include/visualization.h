@@ -1,5 +1,7 @@
 #ifndef VISUALIZATION_H
 #define VISUALIZATION_H
+#include <memory>
+#include "main_window.h"
 #pragma once
 
 #include "search_class.h"
@@ -11,11 +13,13 @@ class Tree;
 class Visualization : public Screen {
  public:
   Visualization();
-  Visualization(Screen** screen_ptr, Sorting_Class* sort_class_ptr,
+  Visualization(std::shared_ptr<Screen> screen_ptr,
+                std::shared_ptr<Sorting_Class> sort_class_ptr,
                 sf::RenderWindow* window);
-  Visualization(Screen** screen_ptr, Search_Class* search_class_ptr,
+  Visualization(std::shared_ptr<Screen> screen_ptr,
+                std::shared_ptr<Search_Class> search_class_ptr,
                 sf::RenderWindow* window);
-  ~Visualization();
+  ~Visualization() = default;
 
   void draw(sf::RenderWindow& window) override;
   void move_left() override;
@@ -146,10 +150,10 @@ class Visualization : public Screen {
 
  private:
   // DISPLAYS SCREEN FOR SORTING
-  Screen** current_screen;
-  Sorting_Class* sort_class;
-  Search_Class* search_class;
-  Screen* previous_screen;
+  std::shared_ptr<Screen> current_screen;
+  std::shared_ptr<Sorting_Class> sort_class;
+  std::shared_ptr<Search_Class> search_class;
+  std::shared_ptr<Screen> previous_screen;
   sf::RenderWindow* window_ptr;
   int m_selected_button_index;
   int m_selected_button;

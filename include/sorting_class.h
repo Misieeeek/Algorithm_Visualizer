@@ -1,11 +1,13 @@
 #ifndef SORTCLASS_H
 #define SORTCLASS_H
-#include <unordered_map>
 #pragma once
 
+#include <memory>
+#include <unordered_map>
 #include "visualizer.h"
 
-class Sorting_Class : public Screen {
+class Sorting_Class : public Screen,
+                      public std::enable_shared_from_this<Sorting_Class> {
  public:
   // IHERITENCE FROM CLASS SCREEN
   void draw(sf::RenderWindow& window) override;
@@ -17,10 +19,16 @@ class Sorting_Class : public Screen {
   void change_option(int selected) override;
   void typed_on(sf::Event input) override;
 
-  Sorting_Class(Screen** screen_ptr, Visualizer* viz_ptr,
+  Sorting_Class();
+  Sorting_Class(std::shared_ptr<Screen>& screen_ptr,
+                std::shared_ptr<Visualizer> viz_ptr,
                 sf::RenderWindow* window);  // MENU HAS TO CHANGE
                                             // TO VISUALIZER
-  virtual ~Sorting_Class();
+  virtual ~Sorting_Class() = default;
+
+  // MAKE shared_ptr FROM this
+  void init_visualization_default();
+  void init_visualization_sorting();
 
   //SET STYLE FOR SORT ALGO
   void set_style(std::vector<std::string> variants, int y_pos);
@@ -101,6 +109,8 @@ class Sorting_Class : public Screen {
 
   // GET SELECTED ADDITIONAL OPTION INDEX
   int get_additional_option_index();
+  // SET ADDITIONAL OPTION INDEX
+  void set_additional_option_index(int value);
 
   // GET FULL NAME OF SELECTED ALGO
   std::string get_display_name();
@@ -111,9 +121,10 @@ class Sorting_Class : public Screen {
 
  private:
   // DISPLAYS SCREEN FOR SORTING
-  Screen** current_screen;
-  Visualizer* visualize;
-  Visualization* final_visual;
+  static std::shared_ptr<Screen> g_dummy_screen;
+  std::shared_ptr<Screen>& current_screen;
+  std::shared_ptr<Visualizer> visualize;
+  std::shared_ptr<Visualization> final_visual;
   sf::RenderWindow* window_ptr;
 
   // RESPONSIBLE FOR KEYBOARD MOVEMENT

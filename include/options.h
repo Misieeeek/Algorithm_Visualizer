@@ -1,6 +1,7 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 #include <SFML/Graphics/Text.hpp>
+#include <memory>
 #pragma once
 
 #include <SFML/Graphics.hpp>
@@ -10,12 +11,11 @@
 #include "main_menu.h"
 #include "main_window.h"
 
-#define NUMBER_OF_OPTIONS 3
-
 class Options : public Screen {
  public:
-  Options(Screen** screen_ptr, MainMenu* menu);
-  ~Options();
+  Options(std::shared_ptr<Screen>& screen_ptr, std::shared_ptr<MainMenu> menu);
+
+  ~Options() = default;
 
   void draw(sf::RenderWindow& window) override;
   void move_up() override;
@@ -30,10 +30,11 @@ class Options : public Screen {
   void move_right() override;
 
  private:
-  Screen** current_screen;
-  MainMenu* main_menu;
+  std::shared_ptr<Screen>& current_screen;
+  std::shared_ptr<MainMenu> main_menu;
   int m_selected_options_index;
-  std::array<sf::Text, NUMBER_OF_OPTIONS> m_options_options;
+  static constexpr size_t c_number_of_options = 3;
+  std::array<sf::Text, c_number_of_options> m_options_options;
   int m_selected_option;
 };
 

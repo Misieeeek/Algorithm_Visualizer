@@ -7,8 +7,6 @@
 #include <iostream>
 #include "main_window.h"
 
-#define NUMBER_OF_ITEMS 3
-
 class MainMenu : public Screen {
  public:
   MainMenu();
@@ -20,8 +18,9 @@ class MainMenu : public Screen {
   int pressed() override { return m_selected; }
 
  private:
+  static constexpr int c_number_of_items = 3;
   int m_selected_item_index;
-  std::array<sf::Text, NUMBER_OF_ITEMS> m_main_menu_options;
+  std::array<sf::Text, c_number_of_items> m_main_menu_options;
   int m_selected;
 };
 

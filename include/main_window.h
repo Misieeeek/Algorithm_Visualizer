@@ -1,5 +1,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
+#include <memory>
 #pragma once
 
 #include <SFML/Graphics.hpp>

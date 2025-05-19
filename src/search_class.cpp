@@ -1,7 +1,14 @@
 #include "search_class.h"
+#include <memory>
+#include "main_window.h"
 #include "visualization.h"
 
-Search_Class::Search_Class(Screen** screen_ptr, Visualizer* viz_ptr,
+std::shared_ptr<Screen> Search_Class::g_dummy_screen = nullptr;
+
+Search_Class::Search_Class() : current_screen(g_dummy_screen) {}
+
+Search_Class::Search_Class(std::shared_ptr<Screen>& screen_ptr,
+                           std::shared_ptr<Visualizer> viz_ptr,
                            sf::RenderWindow* window)
     : current_screen(screen_ptr),
       visualize(viz_ptr),
@@ -14,8 +21,6 @@ Search_Class::Search_Class(Screen** screen_ptr, Visualizer* viz_ptr,
       m_option_size(4),
       m_additional_param(false),
       m_additional_exists(false) {
-
-  final_visual = new Visualization(screen_ptr, this, window_ptr);
   //INITIALIZE VISUALIZATION BUTTONS
   m_visualization_buttons_names = {"Start", "Example", "Worst case",
                                    "Best Case"};
@@ -32,8 +37,13 @@ Search_Class::Search_Class(Screen** screen_ptr, Visualizer* viz_ptr,
   m_additional_option_index = 0;
 }
 
-Search_Class::~Search_Class() {
-  delete final_visual;
+void Search_Class::init_visualization_default() {
+  final_visual = std::make_unique<Visualization>();
+}
+
+void Search_Class::init_visualization_searching() {
+  final_visual = std::make_unique<Visualization>(
+      current_screen, shared_from_this(), window_ptr);
 }
 
 void Search_Class::draw(sf::RenderWindow& window) {
@@ -369,7 +379,7 @@ void Search_Class::change_option(int selected) {
     m_algorithm_variants[0].setFillColor(sf::Color::Green);
     m_algorithm_variants[m_variants_size].setFillColor(sf::Color::Red);
     set_default_options();
-    *current_screen = visualize;
+    current_screen = std::move(visualize);
   } else if (selected > m_variants_size - 1) {
     find_option(selected);
   } else {
@@ -533,7 +543,7 @@ std::string Search_Class::get_display_name() {
 
 void Search_Class::algo_viz(std::size_t n_elements, int min_val, int max_val,
                             int search_number) {
-  *current_screen = final_visual;
+  current_screen = std::move(final_visual);
   std::string algo_name;
   if (m_additional_exists == true)
     algo_name = get_display_name();
