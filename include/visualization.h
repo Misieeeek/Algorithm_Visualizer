@@ -1,9 +1,9 @@
 #ifndef VISUALIZATION_H
 #define VISUALIZATION_H
-#include <memory>
-#include "main_window.h"
 #pragma once
 
+#include <memory>
+#include "main_window.h"
 #include "search_class.h"
 #include "sorting_class.h"
 
@@ -13,10 +13,10 @@ class Tree;
 class Visualization : public Screen {
  public:
   Visualization();
-  Visualization(std::shared_ptr<Screen> screen_ptr,
+  Visualization(std::shared_ptr<Screen>& screen_ptr,
                 std::shared_ptr<Sorting_Class> sort_class_ptr,
                 sf::RenderWindow* window);
-  Visualization(std::shared_ptr<Screen> screen_ptr,
+  Visualization(std::shared_ptr<Screen>& screen_ptr,
                 std::shared_ptr<Search_Class> search_class_ptr,
                 sf::RenderWindow* window);
   ~Visualization() = default;
@@ -150,7 +150,8 @@ class Visualization : public Screen {
 
  private:
   // DISPLAYS SCREEN FOR SORTING
-  std::shared_ptr<Screen> current_screen;
+  static std::shared_ptr<Screen> g_dummy_screen;
+  std::shared_ptr<Screen>& current_screen;
   std::shared_ptr<Sorting_Class> sort_class;
   std::shared_ptr<Search_Class> search_class;
   std::shared_ptr<Screen> previous_screen;

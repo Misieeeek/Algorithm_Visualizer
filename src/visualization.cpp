@@ -4,8 +4,10 @@
 #include <thread>
 #include <utility>
 
+std::shared_ptr<Screen> Visualization::g_dummy_screen = nullptr;
+
 Visualization::Visualization()
-    : current_screen(nullptr),
+    : current_screen(g_dummy_screen),
       previous_screen(nullptr),
       window_ptr(nullptr),
       m_selected_button_index(),
@@ -43,7 +45,7 @@ Visualization::Visualization()
   // m_visualizaing = false;
 }
 
-Visualization::Visualization(std::shared_ptr<Screen> screen_ptr,
+Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
                              std::shared_ptr<Sorting_Class> sort_class_ptr,
                              sf::RenderWindow* window)
     : current_screen(screen_ptr),
@@ -66,7 +68,7 @@ Visualization::Visualization(std::shared_ptr<Screen> screen_ptr,
   m_arr_w_add_space = {
       {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 2}};
 }
-Visualization::Visualization(std::shared_ptr<Screen> screen_ptr,
+Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
                              std::shared_ptr<Search_Class> search_class_ptr,
                              sf::RenderWindow* window)
     : current_screen(screen_ptr),
@@ -340,15 +342,15 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
 
 void Visualization::initialize_insertion_sort() {
   m_algo_func["Insertion Sort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     insertion_sort();
   };
   m_algo_func["Recursive Insertion Sort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     recur_insertion_sort(m_options[0]);
   };
   m_algo_func["Binary Insertion Sort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     binary_insertion_sort();
   };
   std::vector<std::string> shell_variants = {"Shell Sort",
@@ -368,34 +370,34 @@ void Visualization::initialize_insertion_sort() {
 
   for (const auto& name : shell_variants) {
     m_algo_func[name] = [this]() {
-      previous_screen = std::move(sort_class);
+      previous_screen = sort_class;
       shell_sort();
     };
   }
   m_algo_func["Splaysort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     splay_sort();
   };
   m_algo_func["Tree Sort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     tree_sort();
   };
   m_algo_func["Library Sort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     library_sort();
   };
   m_algo_func["Patience Sorting"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     patience_sort();
   };
 }
 void Visualization::initialize_selection_sort() {
   m_algo_func["Selection Sort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     selection_sort();
   };
   m_algo_func["Smooth Sort"] = [this]() {
-    previous_screen = std::move(sort_class);
+    previous_screen = sort_class;
     smooth_sort();
   };
 }
@@ -406,14 +408,14 @@ void Visualization::initialize_concurrent_sort() {}
 
 void Visualization::initialize_linear_search() {
   m_algo_func["Linear Search"] = [this]() {
-    previous_screen = std::move(search_class);
+    previous_screen = search_class;
     linear_search();
   };
 }
 
 void Visualization::initialize_binary_search() {
   m_algo_func["Binary Search"] = [this]() {
-    previous_screen = std::move(search_class);
+    previous_screen = search_class;
     binary_search();
   };
 }

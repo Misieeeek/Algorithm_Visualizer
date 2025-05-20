@@ -70,12 +70,14 @@ Sorting_Class::Sorting_Class(std::shared_ptr<Screen>& screen_ptr,
 }
 
 void Sorting_Class::init_visualization_default() {
-  final_visual = std::make_unique<Visualization>();
+  final_visual = std::make_shared<Visualization>();
 }
 
 void Sorting_Class::init_visualization_sorting() {
-  final_visual = std::make_unique<Visualization>(
+  final_visual = std::make_shared<Visualization>(
       current_screen, shared_from_this(), window_ptr);
+  // final_visual = std::make_unique<Visualization>(
+  //     current_screen, shared_from_this(), window_ptr);
 }
 
 void Sorting_Class::draw(sf::RenderWindow& window) {
@@ -569,7 +571,7 @@ void Sorting_Class::change_option(int selected) {
     m_algorithm_variants[0].setFillColor(sf::Color::Green);
     m_algorithm_variants[m_variants_size].setFillColor(sf::Color::Red);
     set_default_options();
-    current_screen = std::move(visualize);
+    current_screen = visualize;
   } else if (selected > m_variants_size - 1) {
     find_option(selected);
   } else {
@@ -822,7 +824,7 @@ std::string Sorting_Class::get_display_name() {
 }
 
 void Sorting_Class::algo_viz(std::size_t n_elements, int min_val, int max_val) {
-  current_screen = std::move(final_visual);
+  current_screen = final_visual;
   std::string algo_name;
   if (m_additional_exists == true)
     algo_name = get_display_name();
