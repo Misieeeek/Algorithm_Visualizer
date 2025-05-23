@@ -1,6 +1,6 @@
 #include <algorithm>
-#include "search_class.h"
 #include "visualization.h"
+#include "visualization_options.h"
 
 void Visualization::linear_search() {
   for (int i = 0; i < m_element_number.size() - 1; i++) {

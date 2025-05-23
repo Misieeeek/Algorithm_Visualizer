@@ -1,10 +1,10 @@
 #include <SFML/System/Sleep.hpp>
 #include <SFML/System/Time.hpp>
 #include <algorithm>
-#include "sorting_class.h"
 #include "splay_tree.h"
 #include "tree.h"
 #include "visualization.h"
+#include "visualization_options.h"
 
 void Visualization::insertion_sort() {
   for (int i = 1; i < m_element_number.size(); ++i) {
@@ -247,7 +247,7 @@ void Visualization::set_shell_gaps(int selected_shell_gap) {
 }
 
 void Visualization::shell_sort() {
-  int selected_shell_gap = sort_class->get_additional_option_index();
+  int selected_shell_gap = viz_opt->get_additional_option_index();
   set_shell_gaps(selected_shell_gap);
   for (auto gap : m_gaps) {
     if (m_stop_visualizing.load())

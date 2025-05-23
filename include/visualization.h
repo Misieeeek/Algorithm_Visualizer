@@ -4,8 +4,7 @@
 
 #include <memory>
 #include "main_window.h"
-#include "search_class.h"
-#include "sorting_class.h"
+#include "visualization_options.h"
 
 class Splay_Tree;
 class Tree;
@@ -14,11 +13,11 @@ class Visualization : public Screen {
  public:
   Visualization();
   Visualization(std::shared_ptr<Screen>& screen_ptr,
-                std::shared_ptr<Sorting_Class> sort_class_ptr,
+                std::shared_ptr<Visualization_Options> viz_opt_ptr,
                 sf::RenderWindow* window);
-  Visualization(std::shared_ptr<Screen>& screen_ptr,
-                std::shared_ptr<Search_Class> search_class_ptr,
-                sf::RenderWindow* window);
+  // Visualization(std::shared_ptr<Screen>& screen_ptr,
+  //               std::shared_ptr<Search_Class> search_class_ptr,
+  //               sf::RenderWindow* window);
   ~Visualization() = default;
 
   void draw(sf::RenderWindow& window) override;
@@ -152,8 +151,8 @@ class Visualization : public Screen {
   // DISPLAYS SCREEN FOR SORTING
   static std::shared_ptr<Screen> g_dummy_screen;
   std::shared_ptr<Screen>& current_screen;
-  std::shared_ptr<Sorting_Class> sort_class;
-  std::shared_ptr<Search_Class> search_class;
+  std::shared_ptr<Visualization_Options> viz_opt;
+  // std::shared_ptr<Search_Class> search_class;
   std::shared_ptr<Screen> previous_screen;
   sf::RenderWindow* window_ptr;
   int m_selected_button_index;

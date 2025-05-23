@@ -1,5 +1,5 @@
-#include "sorting_class.h"
 #include "visualization.h"
+#include "visualization_options.h"
 
 void Visualization::selection_sort() {
   for (int i = 0; i < m_element_number.size(); i++) {

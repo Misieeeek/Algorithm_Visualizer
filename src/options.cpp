@@ -1,9 +1,9 @@
-#include "options.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <array>
 #include <memory>
 #include <string>
+#include "global_options.h"
 #include "main_menu.h"
 #include "main_window.h"
 

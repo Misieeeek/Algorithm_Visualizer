@@ -1,12 +1,12 @@
 #ifndef VISUALIZER_H
 #define VISUALIZER_H
-#include <memory>
 #pragma once
 
+#include <memory>
 #include "main_window.h"
 
-// FORWARD DECLARATION OF CLASS Sorting_Class and Visualization
-class Sorting_Class;
+// FORWARD DECLARATION OF CLASS Visualization_Options and Visualization
+class Visualization_Options;
 class Search_Class;
 class Visualization;
 
@@ -72,7 +72,7 @@ class Visualizer : public Screen,
   // MAIN MENU FOR EVERY CATEGORY OF ALGORITHMS
   std::shared_ptr<Screen>& current_screen;
   std::shared_ptr<Screen> main_menu;
-  std::shared_ptr<Sorting_Class> sort_class;
+  std::shared_ptr<Visualization_Options> viz_opt;
   std::shared_ptr<Search_Class> search_class;
   sf::RenderWindow* window_ptr;
   int m_selected_algorithm_index;

@@ -45,12 +45,9 @@ Visualizer::Visualizer(std::shared_ptr<Screen>& screen_ptr,
 }
 
 void Visualizer::init_visualizer_categories() {
-  sort_class = std::make_shared<Sorting_Class>(current_screen,
-                                               shared_from_this(), window_ptr);
-  search_class = std::make_shared<Search_Class>(current_screen,
-                                                shared_from_this(), window_ptr);
-  sort_class->init_visualization_sorting();
-  search_class->init_visualization_searching();
+  viz_opt = std::make_shared<Visualization_Options>(
+      current_screen, shared_from_this(), window_ptr);
+  viz_opt->init_visualization();
 }
 
 void Visualizer::move_up() {
@@ -220,49 +217,49 @@ int Visualizer::pressed() {
 
 void Visualizer::initialize_sorting() {
   algorithm_map[{algo_cat::sorting, 0}] = [this]() {
-    current_screen = sort_class;
-    sort_class->insertion_sort();
-    sort_class->initalize_sorting_algos();
+    current_screen = viz_opt;
+    viz_opt->insertion_sort();
+    viz_opt->initalize_sorting_algos();
     std::vector<std::string> names = {"Normal", "Recursive", "Binary"};
-    sort_class->set_selected_sort_variants(
-        0, [this]() { sort_class->insertion_sort(); }, names, "Variations: ");
+    viz_opt->set_selected_sort_variants(
+        0, [this]() { viz_opt->insertion_sort(); }, names, "Variations: ");
   };
   algorithm_map[{algo_cat::sorting, 1}] = [this]() {
-    current_screen = sort_class;
-    sort_class->selection_sort();
-    sort_class->initalize_sorting_algos();
+    current_screen = viz_opt;
+    viz_opt->selection_sort();
+    viz_opt->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 2}] = [this]() {
-    current_screen = sort_class;
-    sort_class->merge_sort();
-    sort_class->initalize_sorting_algos();
+    current_screen = viz_opt;
+    viz_opt->merge_sort();
+    viz_opt->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 3}] = [this]() {
-    current_screen = sort_class;
-    sort_class->exchange_sort();
-    sort_class->initalize_sorting_algos();
+    current_screen = viz_opt;
+    viz_opt->exchange_sort();
+    viz_opt->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 4}] = [this]() {
-    current_screen = sort_class;
-    sort_class->distribution_sort();
-    sort_class->initalize_sorting_algos();
+    current_screen = viz_opt;
+    viz_opt->distribution_sort();
+    viz_opt->initalize_sorting_algos();
   };
   algorithm_map[{algo_cat::sorting, 5}] = [this]() {
-    current_screen = sort_class;
-    sort_class->concurrent_sort();
-    sort_class->initalize_sorting_algos();
+    current_screen = viz_opt;
+    viz_opt->concurrent_sort();
+    viz_opt->initalize_sorting_algos();
   };
 }
 void Visualizer::initialize_searching() {
   algorithm_map[{algo_cat::searching, 0}] = [this]() {
-    current_screen = search_class;
-    search_class->linear_search();
-    search_class->initalize_searching_algos();
+    current_screen = viz_opt;
+    viz_opt->linear_search();
+    // viz_opt->initalize_searching_algos();
   };
   algorithm_map[{algo_cat::searching, 1}] = [this]() {
-    current_screen = search_class;
-    search_class->binary_search();
-    search_class->initalize_searching_algos();
+    current_screen = viz_opt;
+    viz_opt->binary_search();
+    // viz_opt->initalize_searching_algos();
   };
 }
 

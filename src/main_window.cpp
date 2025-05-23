@@ -7,8 +7,8 @@
 #include <cstddef>
 #include <exception>
 #include <memory>
+#include "global_options.h"
 #include "main_menu.h"
-#include "options.h"
 #include "visualizer.h"
 
 MainWindow::MainWindow() {

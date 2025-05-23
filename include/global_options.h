@@ -1,13 +1,13 @@
-#ifndef OPTIONS_H
-#define OPTIONS_H
-#include <SFML/Graphics/Text.hpp>
-#include <memory>
+#ifndef GLOBAL_OPTIONS_H
+#define GLOBAL_OPTIONS_H
 #pragma once
 
 #include <SFML/Graphics.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
 #include <SFML/Window/Event.hpp>
 #include <array>
+#include <memory>
 #include "main_menu.h"
 #include "main_window.h"
 

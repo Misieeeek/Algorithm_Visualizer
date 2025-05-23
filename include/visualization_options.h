@@ -1,13 +1,14 @@
-#ifndef SORTCLASS_H
-#define SORTCLASS_H
+#ifndef VISUALIZATION_OPTIONS_H
+#define VISUALIZATION_OPTIONS_H
 #pragma once
 
 #include <memory>
 #include <unordered_map>
 #include "visualizer.h"
 
-class Sorting_Class : public Screen,
-                      public std::enable_shared_from_this<Sorting_Class> {
+class Visualization_Options
+    : public Screen,
+      public std::enable_shared_from_this<Visualization_Options> {
  public:
   // IHERITENCE FROM CLASS SCREEN
   void draw(sf::RenderWindow& window) override;
@@ -19,16 +20,16 @@ class Sorting_Class : public Screen,
   void change_option(int selected) override;
   void typed_on(sf::Event input) override;
 
-  Sorting_Class();
-  Sorting_Class(std::shared_ptr<Screen>& screen_ptr,
-                std::shared_ptr<Visualizer> viz_ptr,
-                sf::RenderWindow* window);  // MENU HAS TO CHANGE
-                                            // TO VISUALIZER
-  virtual ~Sorting_Class() = default;
+  Visualization_Options();
+  Visualization_Options(std::shared_ptr<Screen>& screen_ptr,
+                        std::shared_ptr<Visualizer> viz_ptr,
+                        sf::RenderWindow* window);  // MENU HAS TO CHANGE
+                                                    // TO VISUALIZER
+  virtual ~Visualization_Options() = default;
 
   // MAKE shared_ptr FROM this
   void init_visualization_default();
-  void init_visualization_sorting();
+  void init_visualization();
 
   //SET STYLE FOR SORT ALGO
   void set_style(std::vector<std::string> variants, int y_pos);
@@ -38,6 +39,11 @@ class Sorting_Class : public Screen,
   void exchange_sort();
   void distribution_sort();
   void concurrent_sort();
+
+  //SET STYLE FOR SEARCH ALGO
+  void linear_search();
+  void binary_search();
+
   void textbox(int char_size_textbox, std::size_t number_of_inputs, int pos_y);
 
   // RESPONSIBLE FOR CHANDELING INPUTBOX
@@ -57,46 +63,49 @@ class Sorting_Class : public Screen,
                                   std::vector<std::string>& names,
                                   std::string name_of_input);
 
-  // STATE OF PRESSED SORTING ALGORITHM CATEGORY
-  enum class sort_cat {
-    insertion,
-    selection,
-    merge,
-    exchange,
-    distribution,
-    concurrent
+  // STATE OF SELECTED SORTING ALGORITHM CATEGORY
+  enum class algo_subcat {
+    insertion_sort,
+    selection_sort,
+    merge_sort,
+    exchange_sort,
+    distribution_sort,
+    concurrent_sort,
+    linear_search,
+    binary_search
   };
 
-  // COMPARATOR FOR STD::PAIR<SORT_CAT, INT> TO BE USED IN THE MAP
-  struct sort_cat_pair_comparator {
-    bool operator()(const std::pair<sort_cat, int>& lhs,
-                    const std::pair<sort_cat, int>& rhs) const {
+  // COMPARATOR FOR STD::PAIR<ALGO_SUBCAT, INT> TO BE USED IN THE MAP
+  struct algo_subcat_pair_comparator {
+    bool operator()(const std::pair<algo_subcat, int>& lhs,
+                    const std::pair<algo_subcat, int>& rhs) const {
       if (lhs.first != rhs.first)
-        return lhs.first < rhs.first;  // Compare categories first
-      return lhs.second < rhs.second;  // Then compare the index
+        return lhs.first < rhs.first;  // COMPARE CATEGORIES FIRST
+      return lhs.second < rhs.second;  // THEN COMPARE THE INDEX
     }
   };
 
-  // Custom hash function for std::pair<std::string, int>
+  // CUSTOM HASH FUNCTION FOR STD::PAIR<STD::STRING, INT>
   struct pair_hash {
     std::size_t operator()(const std::pair<std::string, int>& pair) const {
       auto hash1 = std::hash<std::string>{}(pair.first);
       auto hash2 = std::hash<int>{}(pair.second);
-      return hash1 ^ (hash2 << 1);  // Combine the two hashes
+      return hash1 ^ (hash2 << 1);  // COMBINE THE TWO HASHES
     }
   };
 
   //FIND ALGO IN M_SORT_MAP
   void find_algo(int selected);
 
-  //FIND OPTION IN M_SORT_CLASS_MAP
+  //FIND OPTION IN M_VIZ_OPT_MAP
   void find_option(int selected);
 
   // SETS SETTINGS FOR SELECTED ALGO, PREPARATION FOR VISUALIZATIO
   void set_setting_selected_algo(int selected, std::function<void()> func);
 
-  // INITALIZE SORTING OPTION SELECTOR
+  // INITALIZE CATEGORY ALGORITHM OPTION SELECTOR
   void initalize_sorting_algos();
+  void initalize_searching_algos();
 
   // CHANGE OPTION PLACEMENT IN THE ARRAY
   void additional_option(bool additional);
@@ -112,8 +121,19 @@ class Sorting_Class : public Screen,
   // SET ADDITIONAL OPTION INDEX
   void set_additional_option_index(int value);
 
-  // GET FULL NAME OF SELECTED ALGO
+  // INITALIZE FUNCITONS TO GET DISPLAY NAME
   std::string get_display_name();
+
+  // INITALIZE FULL NAME OF ALGO TO MAP
+  // INITALIZE SORTING
+  void init_sort_category_display_name();
+  // INITALIZE SUBSECTION OF SORTING ALGORITHMS
+  void init_insertion_sort_display_name();
+  void init_selection_sort_display_name();
+
+  // INITALIZE FULL NAME OF ALGO TO MAP
+  // INITALIZE SEARCHING
+  void init_search_category_display_name();
 
   // HASH MAP FOR FULL ALGORITHMS NAMES WITH ITS VARIANTS
   std::unordered_map<std::pair<std::string, int>, std::string, pair_hash>
@@ -128,14 +148,13 @@ class Sorting_Class : public Screen,
   sf::RenderWindow* window_ptr;
 
   // RESPONSIBLE FOR KEYBOARD MOVEMENT
-  int m_selected_sorting_algo_index;
-  int m_selected_sort_algo;
+  int m_selected_algo_index;
 
   // CHOOSED ALGO, HOLDS VALUE OF SELECTED ALGO
   int m_choosed_algo;
 
-  //STATE OF PRESSED SORTING ALGO CATEGORY
-  sort_cat m_sc;
+  //STATE OF SELECTED ALGO SUB-CATEGORY
+  algo_subcat m_asc;
   //INITALIZE DIFFERENCT SORTING ALGOS LIST
   void initialize_insertion();
   void initialize_selection();
@@ -143,10 +162,15 @@ class Sorting_Class : public Screen,
   void initialize_exchange();
   void initialize_distribution();
   void initialize_concurrent();
-  // SORTING MAP(CATEGORY, INDEX)
-  std::map<std::pair<sort_cat, int>, std::function<void()>,
-           sort_cat_pair_comparator>
-      m_sort_map;
+
+  //INITALIZE DIFFERENT SEARCHING ALGOS LIST
+  void initialize_linear();
+  void initialize_binary();
+
+  // ALGO MAP(CATEGORY, INDEX)
+  std::map<std::pair<algo_subcat, int>, std::function<void()>,
+           algo_subcat_pair_comparator>
+      m_algo_map;
   // SORTING CLASS MAP(M_SORT_MAP, OPTIONS, BUTTONS)
   std::unordered_map<int, std::function<void()>> m_sort_class_map;
   // CONSTANTS
@@ -162,6 +186,8 @@ class Sorting_Class : public Screen,
   // LIST OF ALGORITHMS VARIANTS, VARIES BY SORTING ALGORITHM
   // //STORES VARIANTS, OPTIONS, BUTTONS
   std::vector<sf::Text> m_algorithm_variants;
+  std::size_t
+      m_all_options_size;       // STORES SIZE OF VARIANTS + OPTIONS + BUTTONS
   std::size_t m_variants_size;  //STORES SIZE OF VARIANTS
 
   // TEXT STYLE & HEADERS
