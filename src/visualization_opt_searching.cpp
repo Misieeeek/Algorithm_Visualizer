@@ -1,3 +1,4 @@
+#include <filesystem>
 #include <memory>
 #include "main_window.h"
 #include "visualization.h"
@@ -6,18 +7,26 @@
 void Visualization_Options::initalize_searching_algos() {
   initialize_linear();
   initialize_binary();
+  init_search_category_display_name();
 }
 
 void Visualization_Options::initialize_linear() {
   m_algo_map[{algo_subcat::linear_search, 0}] = [this]() {  // LINEAR SEARCH
-    set_setting_selected_algo(0, [this]() { linear_search(); });
+    m_choosed_algo = 0;
+    set_default_options();
+    additional_option(false);
+    linear_search();
   };
   additional_option(false);
 }
 
 void Visualization_Options::initialize_binary() {
   m_algo_map[{algo_subcat::binary_search, 0}] = [this]() {  // BINARY SEARCH
-    set_setting_selected_algo(0, [this]() { binary_search(); });
+    m_choosed_algo = 0;
+    set_default_options();
+    additional_option(false);
+    binary_search();
+
   };
   additional_option(false);
 }

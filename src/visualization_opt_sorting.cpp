@@ -9,6 +9,7 @@ void Visualization_Options::initalize_sorting_algos() {
   initialize_exchange();
   initialize_distribution();
   initialize_concurrent();
+  init_sort_category_display_name();
 }
 
 void Visualization_Options::initialize_insertion() {
@@ -277,8 +278,6 @@ std::string Visualization_Options::get_display_name() {
                          m_additional_option_index));
       search != m_display_name.end())
     return search->second;
-  else {
-    std::cerr << "Name not found" << std::endl;
+  else
     return "Unknown Algorithm";
-  }
 }

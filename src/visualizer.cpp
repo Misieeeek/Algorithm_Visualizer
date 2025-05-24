@@ -254,12 +254,12 @@ void Visualizer::initialize_searching() {
   algorithm_map[{algo_cat::searching, 0}] = [this]() {
     current_screen = viz_opt;
     viz_opt->linear_search();
-    // viz_opt->initalize_searching_algos();
+    viz_opt->initalize_searching_algos();
   };
   algorithm_map[{algo_cat::searching, 1}] = [this]() {
     current_screen = viz_opt;
     viz_opt->binary_search();
-    // viz_opt->initalize_searching_algos();
+    viz_opt->initalize_searching_algos();
   };
 }
 

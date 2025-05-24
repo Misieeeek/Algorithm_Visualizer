@@ -8,7 +8,6 @@ std::shared_ptr<Screen> Visualization::g_dummy_screen = nullptr;
 
 Visualization::Visualization()
     : current_screen(g_dummy_screen),
-      previous_screen(nullptr),
       window_ptr(nullptr),
       m_selected_button_index(),
       m_selected_button(),
@@ -50,7 +49,6 @@ Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
                              sf::RenderWindow* window)
     : current_screen(screen_ptr),
       viz_opt(viz_opt_ptr),
-      previous_screen(nullptr),
       window_ptr(window),
       m_gen(m_rd()),
       m_stop_visualizing(false),
@@ -68,28 +66,6 @@ Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
   m_arr_w_add_space = {
       {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 2}};
 }
-// Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
-//                              std::shared_ptr<Search_Class> search_class_ptr,
-//                              sf::RenderWindow* window)
-//     : current_screen(screen_ptr),
-//       search_class(search_class_ptr),
-//       previous_screen(nullptr),
-//       window_ptr(window),
-//       m_gen(m_rd()),
-//       m_stop_visualizing(false),
-//       m_offset(std::chrono::milliseconds(0)),
-//       m_distribution(2) {
-//   m_visualizaing = false;
-//   set_styles();
-//   m_selected_button_index = 1;
-//   m_selected_button = 1;
-//   m_element_shape.setPrimitiveType(sf::Quads);
-//   m_auxiliary_shape.setPrimitiveType(sf::Quads);
-//   initialize_algorithms();
-//   m_empty_value = m_options[1] - 1;
-//   pause_timer();
-//   std::cout << "search\n";
-// }
 
 void Visualization::restart_timer() {
   m_offset = std::chrono::milliseconds(0);
@@ -157,7 +133,7 @@ void Visualization::change_option(int selected) {
     m_buttons_shape[0].setOutlineColor(sf::Color::Red);
     restart_timer();
     pause_timer();
-    current_screen = previous_screen;
+    current_screen = viz_opt;
   } else {
     if (m_visualizaing == true) {
       m_buttons_text[1].setString("Start");
@@ -342,15 +318,15 @@ void Visualization::standardize(std::vector<double>& box_pos, int number,
 
 void Visualization::initialize_insertion_sort() {
   m_algo_func["Insertion Sort"] = [this]() {
-    previous_screen = viz_opt;
+    // //previous_screen = viz_opt;
     insertion_sort();
   };
   m_algo_func["Recursive Insertion Sort"] = [this]() {
-    previous_screen = viz_opt;
+    // //previous_screen = viz_opt;
     recur_insertion_sort(m_options[0]);
   };
   m_algo_func["Binary Insertion Sort"] = [this]() {
-    previous_screen = viz_opt;
+    // //previous_screen = viz_opt;
     binary_insertion_sort();
   };
   std::vector<std::string> shell_variants = {"Shell Sort",
@@ -370,34 +346,34 @@ void Visualization::initialize_insertion_sort() {
 
   for (const auto& name : shell_variants) {
     m_algo_func[name] = [this]() {
-      previous_screen = viz_opt;
+      // //previous_screen = viz_opt;
       shell_sort();
     };
   }
   m_algo_func["Splaysort"] = [this]() {
-    previous_screen = viz_opt;
+    //previous_screen = viz_opt;
     splay_sort();
   };
   m_algo_func["Tree Sort"] = [this]() {
-    previous_screen = viz_opt;
+    //previous_screen = viz_opt;
     tree_sort();
   };
   m_algo_func["Library Sort"] = [this]() {
-    previous_screen = viz_opt;
+    //previous_screen = viz_opt;
     library_sort();
   };
   m_algo_func["Patience Sorting"] = [this]() {
-    previous_screen = viz_opt;
+    //previous_screen = viz_opt;
     patience_sort();
   };
 }
 void Visualization::initialize_selection_sort() {
   m_algo_func["Selection Sort"] = [this]() {
-    previous_screen = viz_opt;
+    //previous_screen = viz_opt;
     selection_sort();
   };
   m_algo_func["Smooth Sort"] = [this]() {
-    previous_screen = viz_opt;
+    //previous_screen = viz_opt;
     smooth_sort();
   };
 }
@@ -408,14 +384,12 @@ void Visualization::initialize_concurrent_sort() {}
 
 void Visualization::initialize_linear_search() {
   m_algo_func["Linear Search"] = [this]() {
-    previous_screen = viz_opt;
     linear_search();
   };
 }
 
 void Visualization::initialize_binary_search() {
   m_algo_func["Binary Search"] = [this]() {
-    previous_screen = viz_opt;
     binary_search();
   };
 }

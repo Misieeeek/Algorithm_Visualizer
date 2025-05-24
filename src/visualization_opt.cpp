@@ -59,7 +59,7 @@ Visualization_Options::Visualization_Options(
   // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
   // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
   m_visualization_options_names = {
-      "Number of elemenst:", "Minimum value:", "Maximum value:"};
+      "Number of elements:", "Minimum value:", "Maximum value:"};
   m_visualization_options = {10, 0, 100};
   textbox(20, 3, 150);
   m_choosed_algo = 0;

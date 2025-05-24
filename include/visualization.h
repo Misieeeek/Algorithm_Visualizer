@@ -153,7 +153,7 @@ class Visualization : public Screen {
   std::shared_ptr<Screen>& current_screen;
   std::shared_ptr<Visualization_Options> viz_opt;
   // std::shared_ptr<Search_Class> search_class;
-  std::shared_ptr<Screen> previous_screen;
+  // std::shared_ptr<Screen> previous_screen;
   sf::RenderWindow* window_ptr;
   int m_selected_button_index;
   int m_selected_button;
