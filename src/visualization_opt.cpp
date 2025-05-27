@@ -253,7 +253,7 @@ void Visualization_Options::additional_option(bool additional) {
   if (additional) {
     m_additional_option.setString(
         m_additional_option_names[m_additional_option_index]);
-    m_sort_class_map[m_variants_size + 3] = [this]() {
+    m_sort_class_map[m_all_options_size - 5] = [this]() {
       if (m_additional_param) {
         m_additional_param = false;
         display_lr_buttons(false);
@@ -263,17 +263,21 @@ void Visualization_Options::additional_option(bool additional) {
       }
     };
   }
-  m_sort_class_map[m_variants_size + 3 + i] = [this]() {
+  m_sort_class_map[m_all_options_size - 5 + i] = [this]() {
+    std::cout << "start\n";
     algo_viz(m_visualization_options[0], m_visualization_options[1],
              m_visualization_options[2]);
   };
-  m_sort_class_map[m_variants_size + 4 + i] = [this]() {
+  m_sort_class_map[m_all_options_size - 4 + i] = [this]() {
+    std::cout << "ex\n";
     algo_viz(10, 0, 10);
   };
-  m_sort_class_map[m_variants_size + 5 + i] = [this]() {
+  m_sort_class_map[m_all_options_size - 3 + i] = [this]() {
+    std::cout << "worst\n";
     algo_viz(100, 0, 100, false);
   };
-  m_sort_class_map[m_variants_size + 6 + i] = [this]() {
+  m_sort_class_map[m_all_options_size - 2 + i] = [this]() {
+    std::cout << "best\n";
     algo_viz(100, 0, 100, true);
   };
 }
@@ -498,50 +502,14 @@ void Visualization_Options::visualization_buttons_style(int pos_y) {
   }
 }
 
-void Visualization_Options::init_insertion_sort_display_name() {
-  m_display_name[std::make_pair(std::string("Insertion Sort"), 0)] =
-      "Insertion Sort";
-  m_display_name[std::make_pair(std::string("Insertion Sort"), 1)] =
-      "Recursive Insertion Sort";
-  m_display_name[std::make_pair(std::string("Insertion Sort"), 2)] =
-      "Binary Insertion Sort";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 0)] = "Shell Sort";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 1)] =
-      "Shell Sort Frank & Lazarus";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 2)] =
-      "Shell Sort Hibbard";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 3)] =
-      "Shell Sort Papernov & Stasevich";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 4)] =
-      "Shell Sort Pratt";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 5)] =
-      "Shell Sort Knuth";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 6)] =
-      "Shell Sort Incerpi & Sedgewick";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 7)] =
-      "Shell Sort Sedgewick (1)";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 8)] =
-      "Shell Sort Sedgewick (2)";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 9)] =
-      "Shell Sort Gonnet & Baeza-Yates";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 10)] =
-      "Shell Sort Tokuda";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 11)] =
-      "Shell Sort Ciura";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 12)] =
-      "Shell Sort Lee";
-  m_display_name[std::make_pair(std::string("Shell Sort"), 13)] =
-      "Shell Sort SEJ";
-}
-
-void Visualization_Options::init_selection_sort_display_name() {
-  m_display_name[std::make_pair(std::string("Selection Sort"), 0)] =
-      "Selection Sort";
-}
-
-void Visualization_Options::init_sort_category_display_name() {
-  init_insertion_sort_display_name();
-  init_selection_sort_display_name();
+std::string Visualization_Options::get_display_name() {
+  if (auto search = m_display_name.find(
+          std::make_pair(m_algorithm_variants[m_choosed_algo].getString(),
+                         m_additional_option_index));
+      search != m_display_name.end())
+    return search->second;
+  else
+    return "Unknown Algorithm";
 }
 
 void Visualization_Options::algo_viz(std::size_t n_elements, int min_val,
@@ -559,3 +527,35 @@ void Visualization_Options::algo_viz(std::size_t n_elements, int min_val,
 
 void Visualization_Options::algo_viz(std::size_t n_elements, int min_val,
                                      int max_val, bool bw_case) {}
+
+void Visualization_Options::input_logic(int char_typed) {
+  if (char_typed != c_delete_key && char_typed != c_enter_key) {
+    if (m_temp_value != "" && char_typed == c_minus_key)
+      std::cerr << "Don't use minus sign between numbers" << std::endl;
+    else {
+      if (m_temp_value.length() >= 7)
+        std::cerr << "Value is too big/small" << std::endl;
+      else {
+        m_text_input << static_cast<char>(char_typed);
+        m_temp_value.push_back(static_cast<char>(char_typed));
+        m_textbox_input_style[m_selected_input_option].setString(
+            m_text_input.str() + "_");
+      }
+    }
+  } else if (char_typed == c_delete_key) {
+    if (m_text_input.str().length() > 0)
+      delete_last_char();
+  }
+}
+
+void Visualization_Options::delete_last_char() {
+  std::string t = m_text_input.str();
+  std::string newT = "";
+  for (int i = 0; i < t.length() - 1; i++) {
+    newT += t[i];
+  }
+  m_text_input.str("");
+  m_text_input << newT;
+  m_textbox_input_style[m_selected_input_option].setString(m_text_input.str());
+  m_temp_value.pop_back();
+}

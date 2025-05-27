@@ -272,12 +272,48 @@ void Visualization_Options::concurrent_sort() {
   m_asc = algo_subcat::concurrent_sort;
 }
 
-std::string Visualization_Options::get_display_name() {
-  if (auto search = m_display_name.find(
-          std::make_pair(m_algorithm_variants[m_choosed_algo].getString(),
-                         m_additional_option_index));
-      search != m_display_name.end())
-    return search->second;
-  else
-    return "Unknown Algorithm";
+void Visualization_Options::init_insertion_sort_display_name() {
+  m_display_name[std::make_pair(std::string("Insertion Sort"), 0)] =
+      "Insertion Sort";
+  m_display_name[std::make_pair(std::string("Insertion Sort"), 1)] =
+      "Recursive Insertion Sort";
+  m_display_name[std::make_pair(std::string("Insertion Sort"), 2)] =
+      "Binary Insertion Sort";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 0)] = "Shell Sort";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 1)] =
+      "Shell Sort Frank & Lazarus";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 2)] =
+      "Shell Sort Hibbard";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 3)] =
+      "Shell Sort Papernov & Stasevich";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 4)] =
+      "Shell Sort Pratt";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 5)] =
+      "Shell Sort Knuth";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 6)] =
+      "Shell Sort Incerpi & Sedgewick";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 7)] =
+      "Shell Sort Sedgewick (1)";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 8)] =
+      "Shell Sort Sedgewick (2)";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 9)] =
+      "Shell Sort Gonnet & Baeza-Yates";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 10)] =
+      "Shell Sort Tokuda";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 11)] =
+      "Shell Sort Ciura";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 12)] =
+      "Shell Sort Lee";
+  m_display_name[std::make_pair(std::string("Shell Sort"), 13)] =
+      "Shell Sort SEJ";
+}
+
+void Visualization_Options::init_selection_sort_display_name() {
+  m_display_name[std::make_pair(std::string("Selection Sort"), 0)] =
+      "Selection Sort";
+}
+
+void Visualization_Options::init_sort_category_display_name() {
+  init_insertion_sort_display_name();
+  init_selection_sort_display_name();
 }

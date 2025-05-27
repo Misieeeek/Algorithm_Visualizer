@@ -232,40 +232,12 @@ class Visualization_Options
   // SHAPE OF LEFT/RIGHT BUTTONS
   std::vector<sf::RectangleShape> m_lr_btn_shape;
   std::vector<sf::ConvexShape> m_triangle_arrow;
+
   // INPUT LOGIC
-  void input_logic(int char_typed) {
-    if (char_typed != c_delete_key && char_typed != c_enter_key) {
-      if (m_temp_value != "" && char_typed == c_minus_key)
-        std::cerr << "Don't use minus sign between numbers" << std::endl;
-      else {
-        if (m_temp_value.length() >= 7)
-          std::cerr << "Value is too big/small" << std::endl;
-        else {
-          m_text_input << static_cast<char>(char_typed);
-          m_temp_value.push_back(static_cast<char>(char_typed));
-          m_textbox_input_style[m_selected_input_option].setString(
-              m_text_input.str() + "_");
-        }
-      }
-    } else if (char_typed == c_delete_key) {
-      if (m_text_input.str().length() > 0)
-        delete_last_char();
-    }
-  }
+  void input_logic(int char_typed);
 
   // DELETE INPUT
-  void delete_last_char() {
-    std::string t = m_text_input.str();
-    std::string newT = "";
-    for (int i = 0; i < t.length() - 1; i++) {
-      newT += t[i];
-    }
-    m_text_input.str("");
-    m_text_input << newT;
-    m_textbox_input_style[m_selected_input_option].setString(
-        m_text_input.str());
-    m_temp_value.pop_back();
-  }
+  void delete_last_char();
 };
 
 #endif
