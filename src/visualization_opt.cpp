@@ -36,7 +36,8 @@ Visualization_Options::Visualization_Options()
       m_additional_option(),
       m_additional_option_names(),
       m_lr_btn_shape(),
-      m_triangle_arrow() {}
+      m_triangle_arrow(),
+      m_added_options() {}
 
 Visualization_Options::Visualization_Options(
     std::shared_ptr<Screen>& screen_ptr, std::shared_ptr<Visualizer> viz_ptr,
@@ -50,7 +51,8 @@ Visualization_Options::Visualization_Options(
       m_temp_value(""),
       m_option_size(3),
       m_additional_param(false),
-      m_additional_exists(true) {
+      m_additional_exists(true),
+      m_added_options() {
 
   //INITIALIZE VISUALIZATION BUTTONS
   m_visualization_buttons_names = {"Start", "Example", "Worst case",
@@ -61,7 +63,7 @@ Visualization_Options::Visualization_Options(
   m_visualization_options_names = {
       "Number of elements:", "Minimum value:", "Maximum value:"};
   m_visualization_options = {10, 0, 100};
-  textbox(20, 3, 150);
+  textbox(m_char_size_text_variants, m_option_size, 150);
   m_choosed_algo = 0;
   m_lr_btn_shape.resize(0);
   m_triangle_arrow.resize(0);
@@ -219,7 +221,7 @@ void Visualization_Options::move_right() {
 }
 
 int Visualization_Options::pressed() {
-  if (m_selected_algo_index < 6 && m_selected_algo_index != 0)
+  if (m_selected_algo_index < m_variants_size && m_selected_algo_index != 0)
     m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::White);
   else if (m_selected_algo_index == 0) {
     m_algorithm_variants[m_selected_algo_index].setFillColor(sf::Color::Green);
@@ -233,27 +235,110 @@ void Visualization_Options::set_default_options() {
   m_option_size = 3;
   m_visualization_options_names.resize(m_option_size);
   m_visualization_options_names = {
-      "Number of elemenst:", "Minimum value:", "Maximum value:"};
+      "Number of elements:", "Minimum value:", "Maximum value:"};
+  for (int i = 0; i < 3; ++i) {
+    m_sort_class_map[m_variants_size + i] = [this, i]() {
+      input_box_selected(i);
+    };
+  }
+}
+
+void Visualization_Options::set_input_params_is() {
+  set_default_options();
+  m_added_options = 0;
+}
+
+void Visualization_Options::set_input_params_ss() {
+  set_default_options();
+  m_added_options = 0;
+}
+
+void Visualization_Options::set_input_params_ms() {
+  set_default_options();
+  m_added_options = 0;
+}
+
+void Visualization_Options::set_input_params_es() {
+  set_default_options();
+  m_added_options = 0;
+}
+
+void Visualization_Options::set_input_params_ds() {
+  set_default_options();
+  m_added_options = 0;
+}
+
+void Visualization_Options::set_input_params_cs() {
+  set_default_options();
+  m_added_options = 0;
+}
+
+void Visualization_Options::set_input_params_ls() {
+  m_added_options = 1;
+  m_option_size = 4;
+  m_visualization_options_names.resize(m_option_size);
+  m_visualization_options_names = {"Number of elements:", "Minimum value:",
+                                   "Maximum value:", "Search value:"};
+  m_visualization_options[3] = 5;
+  for (int i = 0; i < 4; ++i) {
+    m_sort_class_map[m_variants_size + i] = [this, i]() {
+      input_box_selected(i);
+    };
+  }
+}
+
+void Visualization_Options::set_input_params_bs() {
+  m_added_options = 1;
+  m_option_size = 4;
+  m_visualization_options_names = {"Number of elements:", "Minimum value:",
+                                   "Maximum value:", "Search value:"};
+  m_visualization_options[3] = 5;
+  for (int i = 0; i < m_option_size; ++i) {
+    m_sort_class_map[m_variants_size + i] = [this, i]() {
+      input_box_selected(i);
+    };
+  }
+}
+
+void Visualization_Options::set_input_params_by_sub_category() {
+  switch (m_asc) {
+    case algo_subcat::insertion_sort:
+      set_input_params_is();
+      break;
+    case algo_subcat::selection_sort:
+      set_input_params_ss();
+      break;
+    case algo_subcat::merge_sort:
+      set_input_params_ms();
+      break;
+    case algo_subcat::exchange_sort:
+      set_input_params_es();
+      break;
+    case algo_subcat::distribution_sort:
+      set_input_params_ds();
+      break;
+    case algo_subcat::concurrent_sort:
+      set_input_params_cs();
+      break;
+    case algo_subcat::linear_search:
+      set_input_params_ls();
+      break;
+    case algo_subcat::binary_search:
+      set_input_params_bs();
+      break;
+  }
 }
 
 //TODO:: fix to be more abstract (begin from the end)
 void Visualization_Options::additional_option(bool additional) {
   m_additional_option.setString("");
   display_lr_buttons(false);
-  m_sort_class_map[m_variants_size] = [this]() {
-    input_box_selected(0);
-  };
-  m_sort_class_map[m_variants_size + 1] = [this]() {
-    input_box_selected(1);
-  };
-  m_sort_class_map[m_variants_size + 2] = [this]() {
-    input_box_selected(2);
-  };
+  set_input_params_by_sub_category();
   int i = (additional) ? 1 : 0;
   if (additional) {
     m_additional_option.setString(
         m_additional_option_names[m_additional_option_index]);
-    m_sort_class_map[m_all_options_size - 5] = [this]() {
+    m_sort_class_map[m_variants_size + 3 + m_added_options] = [this]() {
       if (m_additional_param) {
         m_additional_param = false;
         display_lr_buttons(false);
@@ -263,54 +348,55 @@ void Visualization_Options::additional_option(bool additional) {
       }
     };
   }
-  m_sort_class_map[m_all_options_size - 5 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 3 + i + m_added_options] = [this]() {
     std::cout << "start\n";
     algo_viz(m_visualization_options[0], m_visualization_options[1],
              m_visualization_options[2]);
   };
-  m_sort_class_map[m_all_options_size - 4 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 4 + i + m_added_options] = [this]() {
     std::cout << "ex\n";
     algo_viz(10, 0, 10);
   };
-  m_sort_class_map[m_all_options_size - 3 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 5 + i + m_added_options] = [this]() {
     std::cout << "worst\n";
     algo_viz(100, 0, 100, false);
   };
-  m_sort_class_map[m_all_options_size - 2 + i] = [this]() {
+  m_sort_class_map[m_variants_size + 6 + i + m_added_options] = [this]() {
     std::cout << "best\n";
     algo_viz(100, 0, 100, true);
   };
 }
 
-void Visualization_Options::set_selected_sort_variants(
+void Visualization_Options::set_selected_algo_variants(
     int selected, std::function<void()> category_func,
-    std::vector<std::string>& names, std::string name_of_input) {
+    std::vector<std::string>& names, size_t opt_size, std::string name_of_input,
+    bool additional) {
   m_additional_option_index = 0;
   m_choosed_algo = selected;
-  m_option_size = 4;
+  m_option_size = opt_size;
   m_visualization_options_names.resize(m_option_size);
-  m_visualization_options_names[3] = name_of_input;
-  m_additional_option_names.clear();
-  for (auto& x : names)
-    m_additional_option_names.push_back(x);
+  m_visualization_options_names[m_option_size - 1] = name_of_input;
+  if (additional) {
+    m_additional_option_names = names;
+    m_additional_option.setFont(m_open_sans);
+    m_additional_option.setFillColor(sf::Color::White);
+    m_additional_option.setCharacterSize(10);
+    m_additional_option.setStyle(sf::Text::Bold);
+    float text_width =
+        m_additional_option_names[m_additional_option_index].length() * 5;
+    float min_x = 630;
+    float max_x = 780;
+    float center_x = (min_x + max_x) / 2;
+    m_additional_option.setPosition(center_x - text_width / 2, 310);
+    m_additional_option.setString(
+        m_additional_option_names[m_additional_option_index]);
+  }
   category_func();
   for (auto& x : m_algorithm_variants)
     x.setFillColor(sf::Color::White);
   m_algorithm_variants[m_variants_size - 1].setFillColor(sf::Color::Red);
   m_algorithm_variants[m_choosed_algo].setFillColor(sf::Color::Green);
-  additional_option(true);
-  m_additional_option.setFont(m_open_sans);
-  m_additional_option.setFillColor(sf::Color::White);
-  m_additional_option.setCharacterSize(10);
-  m_additional_option.setStyle(sf::Text::Bold);
-  float text_width =
-      m_additional_option_names[m_additional_option_index].length() * 5;
-  float min_x = 630;
-  float max_x = 780;
-  float center_x = (min_x + max_x) / 2;
-  m_additional_option.setPosition(center_x - text_width / 2, 310);
-  m_additional_option.setString(
-      m_additional_option_names[m_additional_option_index]);
+  additional_option(additional);
 }
 
 //TODO:: MAKE TRINAGLE GO GREY WHEN AT THE END OF POSSIBLE OPTIONS
@@ -354,7 +440,6 @@ void Visualization_Options::set_setting_selected_algo(
     int selected, std::function<void()> func) {
   m_additional_exists = false;
   m_choosed_algo = selected;
-  set_default_options();
   additional_option(false);
   func();
   m_algorithm_variants[0].setFillColor(sf::Color::White);
@@ -436,7 +521,7 @@ void Visualization_Options::set_style(std::vector<std::string> variants,
 
 void Visualization_Options::textbox(int char_size_textbox,
                                     std::size_t number_of_inputs, int pos_y) {
-  std::vector<std::string> temp(number_of_inputs);
+  std::vector<std::string> temp{number_of_inputs};
   for (int i = 0; i < number_of_inputs; i++)
     temp[i] = std::to_string(m_visualization_options[i]);
   Screen::set_sf_text_style(m_textbox_input_style, temp,

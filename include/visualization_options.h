@@ -58,10 +58,11 @@ class Visualization_Options
   void algo_viz(std::size_t n_elements, int min_val, int max_val, bool bw_case);
 
   // SET INSERTION SORT PARAMS
-  void set_selected_sort_variants(int selected,
+  void set_selected_algo_variants(int selected,
                                   std::function<void()> category_func,
                                   std::vector<std::string>& names,
-                                  std::string name_of_input);
+                                  size_t opt_size, std::string name_of_input,
+                                  bool additional);
 
   // STATE OF SELECTED SORTING ALGORITHM CATEGORY
   enum class algo_subcat {
@@ -233,11 +234,26 @@ class Visualization_Options
   std::vector<sf::RectangleShape> m_lr_btn_shape;
   std::vector<sf::ConvexShape> m_triangle_arrow;
 
+  //
+  size_t m_added_options;
+
   // INPUT LOGIC
   void input_logic(int char_typed);
 
   // DELETE INPUT
   void delete_last_char();
+
+  //
+  void set_input_params_by_sub_category();
+  //
+  void set_input_params_is();
+  void set_input_params_ss();
+  void set_input_params_ms();
+  void set_input_params_es();
+  void set_input_params_ds();
+  void set_input_params_cs();
+  void set_input_params_ls();
+  void set_input_params_bs();
 };
 
 #endif

@@ -16,8 +16,8 @@ void Visualization_Options::initialize_insertion() {
   m_algo_map[{algo_subcat::insertion_sort, 0}] = [this]() {  // INSERTION SORT
     m_additional_exists = true;
     std::vector<std::string> names = {"Normal", "Recursive", "Binary"};
-    set_selected_sort_variants(
-        0, [this]() { insertion_sort(); }, names, "Variations: ");
+    set_selected_algo_variants(
+        0, [this]() { insertion_sort(); }, names, 4, "Variations: ", true);
   };
   m_algo_map[{algo_subcat::insertion_sort, 1}] = [this]() {  // SHELL SORT
     m_additional_exists = true;
@@ -35,8 +35,8 @@ void Visualization_Options::initialize_insertion() {
                                       "Ciura",
                                       "Lee",
                                       "S & E & J"};
-    set_selected_sort_variants(
-        1, [this]() { insertion_sort(); }, names, "Gap: ");
+    set_selected_algo_variants(
+        1, [this]() { insertion_sort(); }, names, 4, "Gap: ", true);
   };
   m_algo_map[{algo_subcat::insertion_sort, 2}] = [this]() {  // SPLAYSORT
     set_setting_selected_algo(2, [this]() { insertion_sort(); });

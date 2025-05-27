@@ -12,10 +12,7 @@ void Visualization_Options::initalize_searching_algos() {
 
 void Visualization_Options::initialize_linear() {
   m_algo_map[{algo_subcat::linear_search, 0}] = [this]() {  // LINEAR SEARCH
-    m_choosed_algo = 0;
-    set_default_options();
-    additional_option(false);
-    linear_search();
+    set_setting_selected_algo(0, [this]() { linear_search(); });
   };
   additional_option(false);
 }

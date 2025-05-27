@@ -220,9 +220,10 @@ void Visualizer::initialize_sorting() {
     current_screen = viz_opt;
     viz_opt->insertion_sort();
     viz_opt->initalize_sorting_algos();
-    std::vector<std::string> names = {"Normal", "Recursive", "Binary"};
-    viz_opt->set_selected_sort_variants(
-        0, [this]() { viz_opt->insertion_sort(); }, names, "Variations: ");
+    std::vector<std::string> names{"Normal", "Recursive", "Binary"};
+    viz_opt->set_selected_algo_variants(
+        0, [this]() { viz_opt->insertion_sort(); }, names, 4,
+        "Variations: ", true);
   };
   algorithm_map[{algo_cat::sorting, 1}] = [this]() {
     current_screen = viz_opt;
@@ -255,6 +256,10 @@ void Visualizer::initialize_searching() {
     current_screen = viz_opt;
     viz_opt->linear_search();
     viz_opt->initalize_searching_algos();
+    std::vector<std::string> names{};
+    viz_opt->set_selected_algo_variants(
+        0, [this]() { viz_opt->linear_search(); }, names, 4,
+        "Search value:", false);
   };
   algorithm_map[{algo_cat::searching, 1}] = [this]() {
     current_screen = viz_opt;
