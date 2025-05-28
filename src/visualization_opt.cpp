@@ -141,6 +141,7 @@ void Visualization_Options::move_left() {
     if (m_additional_param) {
       if (m_additional_option_index > 0) {
         m_additional_option_index--;
+        make_lr_button_disappear();
         float text_width =
             m_additional_option_names[m_additional_option_index].length() * 5;
         float min_x = 630;
@@ -183,6 +184,7 @@ void Visualization_Options::move_right() {
     if (m_additional_param) {
       if (m_additional_option_index < m_additional_option_names.size() - 1) {
         m_additional_option_index++;
+        make_lr_button_disappear();
         float text_width =
             m_additional_option_names[m_additional_option_index].length() * 5;
         float min_x = 630;
@@ -399,18 +401,35 @@ void Visualization_Options::set_selected_algo_variants(
   additional_option(additional);
 }
 
-//TODO:: MAKE TRINAGLE GO GREY WHEN AT THE END OF POSSIBLE OPTIONS
+void Visualization_Options::make_lr_button_disappear() {
+  if (m_additional_option_index == 0) {
+    m_lr_btn_shape[0].setOutlineColor(sf::Color::Black);
+    m_triangle_arrow[0].setFillColor(sf::Color::Black);
+  } else {
+    m_lr_btn_shape[0].setOutlineColor(sf::Color::White);
+    m_triangle_arrow[0].setFillColor(sf::Color::Red);
+  }
+  if (m_additional_option_index == m_additional_option_names.size() - 1) {
+    m_lr_btn_shape[1].setOutlineColor(sf::Color::Black);
+    m_triangle_arrow[1].setFillColor(sf::Color::Black);
+  } else {
+    m_lr_btn_shape[1].setOutlineColor(sf::Color::White);
+    m_triangle_arrow[1].setFillColor(sf::Color::Red);
+  }
+}
+
 void Visualization_Options::display_lr_buttons(bool display) {
   if (display) {
     m_lr_btn_shape.resize(2);
     m_triangle_arrow.resize(2);
+    make_lr_button_disappear();
     for (int i = 0; i < 2; i++) {
       m_lr_btn_shape[i].setSize({20, 20});
+      // m_triangle_arrow[i].setFillColor(sf::Color::Red);
+      // m_lr_btn_shape[i].setOutlineColor(sf::Color::White);
       m_lr_btn_shape[i].setFillColor(sf::Color::Black);
-      m_lr_btn_shape[i].setOutlineColor(sf::Color::White);
       m_lr_btn_shape[i].setOutlineThickness(1.5);
       m_triangle_arrow[i].setPointCount(3);
-      m_triangle_arrow[i].setFillColor(sf::Color::Red);
       m_triangle_arrow[i].setOutlineThickness(1);
       m_triangle_arrow[i].setOutlineColor(sf::Color::Black);
     }

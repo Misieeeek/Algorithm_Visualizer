@@ -254,6 +254,9 @@ class Visualization_Options
   void set_input_params_cs();
   void set_input_params_ls();
   void set_input_params_bs();
+
+  //
+  void make_lr_button_disappear();
 };
 
 #endif
