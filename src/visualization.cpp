@@ -35,13 +35,6 @@ Visualization::Visualization()
       m_empty_value(-10),
       m_arr_w_add_space() {
   viz_opt = std::make_shared<Visualization_Options>();
-  // search_class = std::make_shared<Search_Class>();
-  // m_empty_value = -10;
-  // m_arr_w_add_space = {};
-  // m_auxiliary_shape.resize(0);
-  // m_element_shape.resize(0);
-  // m_stop_visualizing.store(false);
-  // m_visualizaing = false;
 }
 
 Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
@@ -534,4 +527,10 @@ const std::vector<int>& Visualization::test_get_elements() const {
 void Visualization::test_set_elements(const std::vector<int>& v) {
   m_element_number = v;
   m_element_shape.resize(v.size() * 4);
+}
+
+void Visualization::test_set_aux_elements(size_t number_of_elements,
+                                          int additional_space_multiplier) {
+  m_auxiliary_shape.resize(4 + (number_of_elements * 4) *
+                                   additional_space_multiplier);
 }

@@ -28,6 +28,10 @@ class Visualization : public Screen {
 
   void visual();
 
+  // SET AUXILIARY SHAPE SIZE
+  void test_set_aux_elements(size_t number_of_elements,
+                             int additional_space_multiplier);
+
   // TEST GETTERS AND SETTERS
   const std::vector<int>& test_get_elements() const;
   void test_set_elements(const std::vector<int>& v);
