@@ -1,0 +1,52 @@
+name: Test (Multi-Platform)
+
+on:
+  push:
+    branches: [master]
+  pull_request:
+    branches: [master]
+
+jobs:
+  build-and-test:
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    runs-on: ${{matrix.os}}
+
+    steps:
+      - name: checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install dependencies (Linux only)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y\
+          cmake \
+          g++ \
+          lubx11-dev \
+          libxcursor-dev \
+          libudev-dev \
+          libgl1-mesa-dev \
+          libflac-dev \
+          libogg-dev \
+          libvorbis-dev \
+          libopenal-dev \
+          libfreetype6-dev \
+          libjpeg-dev
+
+      - name: Install dependencies (macOS only)
+        if: runner.os == 'macOS'
+        run: |
+          brew update
+          brew install cmake freetype jpeg liboog libvorbis flac openal-soft
+
+      - name: Configure cmake
+        run: cmake -S . -B build
+
+      - name: Build
+        run: cmake --build build --config Release
+
+      - name: Run tests
+        run: ctest --test-dir build --output-on-failure
