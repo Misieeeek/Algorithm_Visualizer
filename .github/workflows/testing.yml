@@ -18,35 +18,11 @@ jobs:
       - name: checkout repository
         uses: actions/checkout@v4
 
-      - name: Install dependencies (Linux only)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y\
-          cmake \
-          build-essential \
-          lubx11-dev \
-          libxcursor-dev \
-          libudev-dev \
-          libgl1-mesa-dev \
-          libflac-dev \
-          libogg-dev \
-          libvorbis-dev \
-          libopenal-dev \
-          libfreetype6-dev \
-          libjpeg-dev
-
-      - name: Install dependencies (macOS only)
-        if: runner.os == 'macOS'
-        run: |
-          brew update
-          brew install cmake freetype jpeg liboog libvorbis flac openal-soft
-
       - name: Configure cmake
-        run: cmake -S . -B build
+        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
 
       - name: Build
-        run: cmake --build build --config Release
+        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}}
 
-      - name: Run tests
-        run: ctest --test-dir build --output-on-failure
+      - name: Test
+        run: ctest -C ${{env.BUILD_TYPE}}
