@@ -1,24 +1,51 @@
 name: Test (Multi-Platform)
+
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
+
 jobs:
   build-and-test:
     strategy:
+      fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-latest]
-    runs-on: ${{matrix.os}}
+        include:
+          - os: ubuntu-latest
+            cmake_generator: "Unix Makefiles"
+          - os: windows-latest
+            cmake_generator: "Visual Studio 17 2022"
+          - os: macos-latest
+            cmake_generator: "Unix Makefiles"
+
+    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: Cache CMake dependencies
+        uses: actions/cache@v4
+        with:
+          path: |
+            build/_deps
+            external/SFML
+          key: ${{ matrix.os }}-cmake-deps-${{ hashFiles('**/CMakeLists.txt') }}
+          restore-keys: |
+            ${{ matrix.os }}-cmake-deps-
 
       - name: Install system dependencies on Linux
         if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y \
+            build-essential \
+            cmake \
+            git \
             libx11-dev \
             libxrandr-dev \
             libxcursor-dev \
@@ -32,7 +59,9 @@ jobs:
             libfreetype-dev \
             libpng-dev \
             libbz2-dev \
-            libbrotli-dev
+            libbrotli-dev \
+            libgl1-mesa-dev \
+            libglu1-mesa-dev
 
       - name: Install system dependencies on macOS
         if: matrix.os == 'macos-latest'
@@ -43,11 +72,49 @@ jobs:
         if: matrix.os == 'windows-latest'
         uses: microsoft/setup-msbuild@v2
 
+      - name: Setup CMake
+        uses: jwlawson/actions-setup-cmake@v1.14
+        with:
+          cmake-version: "3.28.3"
+
+      - name: Create build directory
+        run: mkdir -p ${{ github.workspace }}/build
+        shell: bash
+
       - name: Configure CMake
-        run: cmake -B ${{github.workspace}}/build -DCMAKE_BUILD_TYPE=Release
+        run: |
+          cmake -B ${{ github.workspace }}/build \
+            -DCMAKE_BUILD_TYPE=Release \
+            -G "${{ matrix.cmake_generator }}" \
+            ${{ matrix.os == 'windows-latest' && '-A x64' || '' }}
+        shell: bash
 
       - name: Build
-        run: cmake --build ${{github.workspace}}/build --config Release
+        run: cmake --build ${{ github.workspace }}/build --config Release --parallel
 
       - name: Test
-        run: ctest --test-dir ${{github.workspace}}/build -C Release --verbose
+        run: |
+          cd ${{ github.workspace }}/build
+          ctest -C Release --verbose --output-on-failure --parallel
+        shell: bash
+
+      - name: Upload test logs on failure
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-logs-${{ matrix.os }}
+          path: |
+            build/Testing/
+            build/CMakeFiles/CMakeOutput.log
+            build/CMakeFiles/CMakeError.log
+          retention-days: 7
+
+      - name: Upload build artifacts
+        if: success()
+        uses: actions/upload-artifact@v4
+        with:
+          name: algorithm-visualizer-${{ matrix.os }}
+          path: |
+            build/Algorithm_Visualizer*
+            build/Release/Algorithm_Visualizer*
+          retention-days: 30
