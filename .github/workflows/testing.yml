@@ -1,11 +1,9 @@
 name: Test (Multi-Platform)
-
 on:
   push:
     branches: [master]
   pull_request:
     branches: [master]
-
 jobs:
   build-and-test:
     strategy:
@@ -19,14 +17,10 @@ jobs:
             cmake_generator: "Visual Studio 17 2022"
           - os: macos-latest
             cmake_generator: "Unix Makefiles"
-
     runs-on: ${{ matrix.os }}
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
-        with:
-          submodules: recursive
 
       - name: Cache CMake dependencies
         uses: actions/cache@v4
