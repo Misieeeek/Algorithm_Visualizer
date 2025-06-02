@@ -718,6 +718,12 @@ std::vector<int> Visualization::merge_piles(std::vector<std::vector<int>>& v) {
 }
 
 void Visualization::patience_sort() {
+  if (m_element_number.size() == 0) {
+    restart_timer();
+    m_buttons_text[1].setString("Start");
+    m_stop_visualizing.store(true);
+    m_visualizaing = false;
+  }
   std::vector<std::vector<int>> piles;
   int max_pile_size = 0;
   int max_index = 0;
