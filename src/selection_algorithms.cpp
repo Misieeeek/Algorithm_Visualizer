@@ -28,6 +28,17 @@ void Visualization::selection_sort() {
   m_visualizaing = false;
 }
 
+int Visualization::count_trailing_zeros(int x) {
+  if (x == 0)
+    return 32;
+  int count = 0;
+  while ((x & 1) == 0) {
+    x >>= 1;
+    count++;
+  }
+  return count;
+}
+
 std::vector<int> Visualization::leonardo(int k) {
   std::vector<int> leo;
   leo.push_back(1);
@@ -36,6 +47,7 @@ std::vector<int> Visualization::leonardo(int k) {
     leo.push_back(leo[i - 1] + leo[i - 2] + 1);
   return leo;
 }
+
 void Visualization::sift(int pshift, int head, std::vector<int>& leo) {
   int val = m_element_number[head];
   while (pshift > 1) {
@@ -89,7 +101,7 @@ void Visualization::trinkle(int p, int pshift, int head, bool is_trusty,
                      m_element_number[stepson], sf::Color::White);
     m_element_number[head] = m_element_number[stepson];
     head = stepson;
-    int trail = __builtin_ctz(p & ~1);
+    int trail = count_trailing_zeros(p & ~1);
     p >>= trail;
     pshift += trail;
     is_trusty = false;
@@ -112,7 +124,6 @@ void Visualization::smooth_sort() {
   int p = 1;
   int pshift = 1;
   int hi = m_element_number.size();
-
   while (head < hi) {
     if ((p & 3) == 3) {
       sift(pshift, head, leo);
@@ -136,10 +147,9 @@ void Visualization::smooth_sort() {
     head++;
   }
   trinkle(p, pshift, head - 1, false, leo);
-
   while (pshift != 1 || p != 1) {
     if (pshift <= 1) {
-      int trail = __builtin_ctz(p & ~1);
+      int trail = count_trailing_zeros(p & ~1);
       p >>= trail;
       pshift += trail;
     } else {

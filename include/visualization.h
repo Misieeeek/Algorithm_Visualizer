@@ -136,6 +136,7 @@ class Visualization : public Screen {
 
   // SMOOTH SORT
   void smooth_sort();
+  int count_trailing_zeros(int x);
   std::vector<int> leonardo(int k);
   void heapify(int begin, int end, std::vector<int>& leo);
   void sift(int pshift, int head, std::vector<int>& leo);
