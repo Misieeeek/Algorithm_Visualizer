@@ -64,17 +64,18 @@ enable_testing()
 
 # CREATE TESTS EXECUTABLE IF GOOGLETEST IS AVAILABLE
 if(TARGET gtest_main)
-    add_executable(tests
-        tests/insertion_sort_algos.cpp
+    # INSERTION SORT TESTS
+    add_executable(insertion_sort_tests
+        tests/insertion_sort_algos_tests.cpp
         ${SRC_FILES}
     )
     
-    target_include_directories(tests
+    target_include_directories(insertion_sort_tests
         PRIVATE
             ${CMAKE_SOURCE_DIR}/include
     )
     
-    target_link_libraries(tests
+    target_link_libraries(insertion_sort_tests
         PRIVATE
             GTest::gtest_main
             sfml-graphics
@@ -82,16 +83,40 @@ if(TARGET gtest_main)
             sfml-system
     )
     
+    # SELECTION SORT TESTS
+    add_executable(selection_sort_tests
+        tests/selection_sort_algos_tests.cpp
+        ${SRC_FILES}
+    )
+    
+    target_include_directories(selection_sort_tests
+        PRIVATE
+            ${CMAKE_SOURCE_DIR}/include
+    )
+    
+    target_link_libraries(selection_sort_tests
+        PRIVATE
+            GTest::gtest_main
+            sfml-graphics
+            sfml-window
+            sfml-system
+    ) 
     # PLATFORM-SPECIFIC LINKING FOR TESTS
     if(WIN32)
-        target_link_libraries(tests PRIVATE sfml-main)
+        target_link_libraries(insertion_sort_tests PRIVATE sfml-main)
+        target_link_libraries(selection_sort_tests PRIVATE sfml-main)
     endif()
     
     include(GoogleTest)
-    gtest_discover_tests(tests
+    gtest_discover_tests(insertion_sort_tests
         WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        TEST_PREFIX "InsertionSort."
     )
     
+    gtest_discover_tests(selection_sort_tests
+        WORKING_DIRECTORY ${CMAKE_BINARY_DIR}
+        TEST_PREFIX "SelectionSort."
+    )    
     message(STATUS "Tests configured successfully")
 else()
     message(WARNING "GoogleTest not available - skipping test build")
