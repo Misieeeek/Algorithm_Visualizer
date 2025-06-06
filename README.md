@@ -1,8 +1,8 @@
 # Algorithm Visualizer
 
-## A desktop application made in C++ using the SFML library, created to visualise algorithms
+## A desktop application made in C++ using the SFML library, created to visualize algorithms
 
-This project is mainly used to visualise algorithms, but an additional benefit is learning. That is, understanding how a particular algorithm works. The project is mainly based on the literature ‘Introduction to Algorithms’ by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein.
+This project is mainly used to visualize algorithms, but an additional benefit is learning. That is, understanding how a particular algorithm works. The project is mainly based on the literature ‘Introduction to Algorithms’ by Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein.
 I have divided the algorithms into 7 groups:
 
 - Sorting algorithms
@@ -17,8 +17,7 @@ I have divided the algorithms into 7 groups:
 - [Installation Guide](#installation-guide)
   - [Prerequisites](#prerequisites)
   - [Linux](#linux)
-  - [Windows (using Visual Studio)](#windows-using-visual-studio)
-  - [Windows (using MinGW)](#windows-using-mingw)
+  - [Windows](#windows)
 - [How To Use](#how-to-use)
 
 ## Installation Guide
@@ -32,7 +31,9 @@ I have divided the algorithms into 7 groups:
 1. Clone this repository:
    ```bash
    git clone https://github.com/Misieeeek/Algorithm_Visualizer.git
-   cd Algorithm_Visualizer/build
+   cd Algorithm_Visualizer
+   mkdir build
+   cd build
    ```
 2. Configure the project with CMake:
    ```bash
@@ -43,42 +44,24 @@ I have divided the algorithms into 7 groups:
    make
    ```
 
-#### Windows (using Visual Studio)
+#### Windows
 
 1. Clone this repository:
    ```cmd
    git clone https://github.com/Misieeeek/Algorithm_Visualizer.git
-   cd Algorithm_Visualizer/build
+   cd Algorithm_Visualizer
+   mkdir build
+   cd build
    ```
 2. Configure the project with CMake:
 
    ```cmd
-   cmake .. -G "Visual Studio 17 2022" -A x64
-   ```
-
-   Note: Adjust the Visual Studio version to match the one you have installed.
-
-3. Open the generated .sln file in Visual Studio and build the project, or use the command line:
-   ```cmd
-   cmake --build . --config Release
-   ```
-
-#### Windows (using MinGW)
-
-1. Clone this repository:
-   ```cmd
-   git clone https://github.com/Misieeeek/Algorithm_Visualizer.git
-   cd Algorithm_Visualizer/build
-   ```
-2. Configure the project with CMake:
-
-   ```cmd
-   cmake .. -G "MinGW Makefiles"
+   cmake ..
    ```
 
 3. Compile the project:
    ```cmd
-   mingw32-make
+   cmake --build .
    ```
 
 ## How To Use
