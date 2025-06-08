@@ -134,6 +134,10 @@ class Visualization : public Screen {
   //SELECTION SORT
   void selection_sort();
 
+  // HEAPSORT
+  void heapify(int n, int i);
+  void heap_sort();
+
   // SMOOTH SORT
   void smooth_sort();
   int count_trailing_zeros(int x);

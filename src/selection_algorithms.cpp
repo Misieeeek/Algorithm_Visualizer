@@ -166,3 +166,46 @@ void Visualization::smooth_sort() {
   m_stop_visualizing.store(true);
   m_visualizaing = false;
 }
+
+void Visualization::heapify(int n, int i) {
+  int largest = i;
+  int l = 2 * i + 1;
+  int r = 2 * i + 2;
+  if (l < n && m_element_number[l] > m_element_number[largest])
+    largest = l;
+  if (r < n && m_element_number[r] > m_element_number[largest])
+    largest = r;
+  if (largest != i) {
+    update_rec_style(m_element_shape, false, true, i, m_element_number[i],
+                     sf::Color::Red);
+    update_rec_style(m_element_shape, false, true, largest,
+                     m_element_number[largest], sf::Color::Red);
+    std::swap(m_element_number[i], m_element_number[largest]);
+    update_rec_style(m_element_shape, true, true, i, m_element_number[i],
+                     sf::Color::White);
+    update_rec_style(m_element_shape, true, true, largest,
+                     m_element_number[largest], sf::Color::White);
+    heapify(n, largest);
+  }
+}
+
+void Visualization::heap_sort() {
+  for (int i = m_element_number.size() / 2 - 1; i >= 0; i--)
+    heapify(m_element_number.size(), i);
+  for (int i = m_element_number.size() - 1; i > 0; i--) {
+    update_rec_style(m_element_shape, false, true, 0, m_element_number[0],
+                     sf::Color::Red);
+    update_rec_style(m_element_shape, false, true, i, m_element_number[i],
+                     sf::Color::Red);
+    std::swap(m_element_number[0], m_element_number[i]);
+    update_rec_style(m_element_shape, true, true, 0, m_element_number[0],
+                     sf::Color::White);
+    update_rec_style(m_element_shape, true, true, i, m_element_number[i],
+                     sf::Color::White, true);
+    heapify(i, 0);
+  }
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}

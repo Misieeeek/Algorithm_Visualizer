@@ -339,34 +339,30 @@ void Visualization::initialize_insertion_sort() {
 
   for (const auto& name : shell_variants) {
     m_algo_func[name] = [this]() {
-      // //previous_screen = viz_opt;
       shell_sort();
     };
   }
   m_algo_func["Splaysort"] = [this]() {
-    //previous_screen = viz_opt;
     splay_sort();
   };
   m_algo_func["Tree Sort"] = [this]() {
-    //previous_screen = viz_opt;
     tree_sort();
   };
   m_algo_func["Library Sort"] = [this]() {
-    //previous_screen = viz_opt;
     library_sort();
   };
   m_algo_func["Patience Sorting"] = [this]() {
-    //previous_screen = viz_opt;
     patience_sort();
   };
 }
 void Visualization::initialize_selection_sort() {
   m_algo_func["Selection Sort"] = [this]() {
-    //previous_screen = viz_opt;
     selection_sort();
   };
+  m_algo_func["Heapsort"] = [this]() {
+    heap_sort();
+  };
   m_algo_func["Smooth Sort"] = [this]() {
-    //previous_screen = viz_opt;
     smooth_sort();
   };
 }
