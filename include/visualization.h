@@ -131,12 +131,9 @@ class Visualization : public Screen {
   //TREE SORT
   void tree_sort();
 
-  //SELECTION SORT
-  void selection_sort();
-
-  // HEAPSORT
-  void heapify(int n, int i);
-  void heap_sort();
+  //PATIENCE SORT
+  void patience_sort();
+  std::vector<int> merge_piles(std::vector<std::vector<int>>& v);
 
   // SMOOTH SORT
   void smooth_sort();
@@ -147,9 +144,15 @@ class Visualization : public Screen {
   void trinkle(int p, int pshift, int head, bool is_trusty,
                std::vector<int>& leo);
 
-  //PATIENCE SORT
-  void patience_sort();
-  std::vector<int> merge_piles(std::vector<std::vector<int>>& v);
+  //SELECTION SORT
+  void selection_sort();
+
+  // HEAPSORT
+  void heapify(int n, int i);
+  void heap_sort();
+
+  // CARTESIAN TREE SORT
+  void cartesian_tree_sort();
 
   // LINEAR SEARCH
   void linear_search();

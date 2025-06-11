@@ -114,6 +114,8 @@ void Visualization::trinkle(int p, int pshift, int head, bool is_trusty,
 }
 
 void Visualization::smooth_sort() {
+  if (m_element_number.size() == 0)
+    return;
   int k = 1;
   std::vector<int> leo;
   while (leonardo(k).back() < m_element_number.size()) {
@@ -209,3 +211,5 @@ void Visualization::heap_sort() {
   m_stop_visualizing.store(true);
   m_visualizaing = false;
 }
+
+void Visualization::cartesian_tree_sort() {}
