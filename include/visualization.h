@@ -235,6 +235,16 @@ class Visualization : public Screen {
 
   // LIST OF ARRAYS WITH ADDITIONAL SPACE
   std::unordered_map<std::string, int> m_arr_w_add_space;
+
+  struct Node {
+    int data;
+    std::unique_ptr<Node> left, right;
+  };
+
+  std::unique_ptr<Node> build_cartesian_tree_util(
+      int root, std::vector<int>& parent, std::vector<int>& left_child,
+      std::vector<int>& right_child);
+  std::unique_ptr<Node> build_cartesian_tree();
 };
 
 #endif

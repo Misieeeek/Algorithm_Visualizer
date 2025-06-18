@@ -1,3 +1,6 @@
+#include <memory>
+#include "SFML/System/Sleep.hpp"
+#include "SFML/System/Time.hpp"
 #include "visualization.h"
 #include "visualization_options.h"
 
@@ -212,4 +215,69 @@ void Visualization::heap_sort() {
   m_visualizaing = false;
 }
 
-void Visualization::cartesian_tree_sort() {}
+void Visualization::cartesian_tree_sort() {
+  std::unique_ptr<Node> root = build_cartesian_tree();
+  m_auxiliary_shape.clear();
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}
+
+std::unique_ptr<Visualization::Node> Visualization::build_cartesian_tree_util(
+    int root, std::vector<int>& parent, std::vector<int>& left_child,
+    std::vector<int>& right_child) {
+  if (root == -1)
+    return NULL;
+
+  std::unique_ptr<Node> temp = std::make_unique<Node>();
+  temp->data = m_element_number[root];
+  update_rec_style(m_auxiliary_shape, true, false, root, m_element_number[root],
+                   sf::Color::White);
+  temp->left = build_cartesian_tree_util(left_child[root], parent, left_child,
+                                         right_child);
+  temp->right = build_cartesian_tree_util(right_child[root], parent, left_child,
+                                          right_child);
+
+  return temp;
+}
+
+std::unique_ptr<Visualization::Node> Visualization::build_cartesian_tree() {
+  size_t n = m_element_number.size();
+  if (n == 0)
+    return nullptr;
+
+  std::vector<int> parent(n, -1);
+  std::vector<int> left_child(n, -1);
+  std::vector<int> right_child(n, -1);
+
+  int root = 0, last;
+
+  for (int i = 1; i <= n - 1; i++) {
+    last = i - 1;
+    right_child[i] = -1;
+    while (m_element_number[last] <= m_element_number[i] && last != root)
+      last = parent[last];
+
+    if (m_element_number[last] <= m_element_number[i]) {
+      parent[root] = i;
+      left_child[i] = root;
+      root = i;
+    }
+
+    else if (right_child[last] == -1) {
+      right_child[last] = i;
+      parent[i] = last;
+      left_child[i] = -1;
+    }
+
+    else {
+      parent[right_child[last]] = i;
+      left_child[i] = right_child[last];
+      right_child[last] = i;
+      parent[i] = last;
+    }
+  }
+  parent[root] = -1;
+  return (build_cartesian_tree_util(root, parent, left_child, right_child));
+}

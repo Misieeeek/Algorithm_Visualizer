@@ -56,8 +56,10 @@ Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
   initialize_algorithms();
   m_empty_value = m_options[1] - 1;
   pause_timer();
-  m_arr_w_add_space = {
-      {"Splaysort", 1}, {"Library Sort", 2}, {"Patience Sorting", 2}};
+  m_arr_w_add_space = {{"Splaysort", 1},
+                       {"Library Sort", 2},
+                       {"Patience Sorting", 2},
+                       {"Cartesian Tree Sort", 1}};
 }
 
 void Visualization::restart_timer() {
@@ -364,6 +366,9 @@ void Visualization::initialize_selection_sort() {
   };
   m_algo_func["Smooth Sort"] = [this]() {
     smooth_sort();
+  };
+  m_algo_func["Cartesian Tree Sort"] = [this]() {
+    cartesian_tree_sort();
   };
 }
 void Visualization::initialize_merge_sort() {}
