@@ -238,13 +238,16 @@ class Visualization : public Screen {
 
   struct Node {
     int data;
-    std::unique_ptr<Node> left, right;
+    std::shared_ptr<Node> left, right;
+    int index;
+    int visual_index;
   };
 
-  std::unique_ptr<Node> build_cartesian_tree_util(
+  std::shared_ptr<Node> build_cartesian_tree_util(
       int root, std::vector<int>& parent, std::vector<int>& left_child,
       std::vector<int>& right_child);
-  std::unique_ptr<Node> build_cartesian_tree();
+  std::shared_ptr<Node> build_cartesian_tree();
+  void cartesian_inorder(std::shared_ptr<Node> root);
 };
 
 #endif

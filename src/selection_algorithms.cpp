@@ -1,4 +1,6 @@
+#include <functional>
 #include <memory>
+#include <queue>
 #include "SFML/System/Sleep.hpp"
 #include "SFML/System/Time.hpp"
 #include "visualization.h"
@@ -215,16 +217,51 @@ void Visualization::heap_sort() {
   m_visualizaing = false;
 }
 
+void Visualization::cartesian_inorder(std::shared_ptr<Node> root) {
+  using node_pair = std::pair<int, std::shared_ptr<Node>>;
+  std::priority_queue<node_pair, std::vector<node_pair>,
+                      std::greater<node_pair>>
+      prio_queue;
+
+  prio_queue.push(std::make_pair(root->data, root));
+  int i = 0;
+  while (!prio_queue.empty()) {
+    if (m_stop_visualizing.load())
+      break;
+    node_pair popped_pair = prio_queue.top();
+    prio_queue.pop();
+    auto current = popped_pair.second;
+    if (!current)
+      continue;
+
+    if (current->left != nullptr)
+      prio_queue.push(std::make_pair(current->left->data, current->left));
+
+    if (current->right != nullptr)
+      prio_queue.push(std::make_pair(current->right->data, current->right));
+
+    m_element_number[i] = current->data;
+    // sf::sleep(sf::seconds(1));
+    update_rec_style(m_element_shape, true, false, i, m_element_number[i],
+                     sf::Color::White);
+    update_rec_style(m_auxiliary_shape, false, true, current->index, 0,
+                     sf::Color::Black, true);
+    i++;
+  }
+}
+
 void Visualization::cartesian_tree_sort() {
-  std::unique_ptr<Node> root = build_cartesian_tree();
-  m_auxiliary_shape.clear();
+  if (m_element_number.size() == 0)
+    return;
+  std::shared_ptr<Node> root = build_cartesian_tree();
+  cartesian_inorder(root);
   restart_timer();
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
 }
 
-std::unique_ptr<Visualization::Node> Visualization::build_cartesian_tree_util(
+std::shared_ptr<Visualization::Node> Visualization::build_cartesian_tree_util(
     int root, std::vector<int>& parent, std::vector<int>& left_child,
     std::vector<int>& right_child) {
   if (root == -1)
@@ -232,8 +269,9 @@ std::unique_ptr<Visualization::Node> Visualization::build_cartesian_tree_util(
 
   std::unique_ptr<Node> temp = std::make_unique<Node>();
   temp->data = m_element_number[root];
+  temp->index = root;
   update_rec_style(m_auxiliary_shape, true, false, root, m_element_number[root],
-                   sf::Color::White);
+                   sf::Color::White, true);
   temp->left = build_cartesian_tree_util(left_child[root], parent, left_child,
                                          right_child);
   temp->right = build_cartesian_tree_util(right_child[root], parent, left_child,
@@ -242,7 +280,7 @@ std::unique_ptr<Visualization::Node> Visualization::build_cartesian_tree_util(
   return temp;
 }
 
-std::unique_ptr<Visualization::Node> Visualization::build_cartesian_tree() {
+std::shared_ptr<Visualization::Node> Visualization::build_cartesian_tree() {
   size_t n = m_element_number.size();
   if (n == 0)
     return nullptr;
@@ -254,12 +292,14 @@ std::unique_ptr<Visualization::Node> Visualization::build_cartesian_tree() {
   int root = 0, last;
 
   for (int i = 1; i <= n - 1; i++) {
+    if (m_stop_visualizing.load())
+      break;
     last = i - 1;
     right_child[i] = -1;
-    while (m_element_number[last] <= m_element_number[i] && last != root)
+    while (m_element_number[last] >= m_element_number[i] && last != root)
       last = parent[last];
 
-    if (m_element_number[last] <= m_element_number[i]) {
+    if (m_element_number[last] >= m_element_number[i]) {
       parent[root] = i;
       left_child[i] = root;
       root = i;
