@@ -91,9 +91,9 @@ void Visualization::draw(sf::RenderWindow& window) {
     window.draw(x);
   for (const auto& x : m_info_text)
     window.draw(x);
-  window.draw(m_viz_box.data(), m_viz_box.size(), sf::LineStrip);
   window.draw(m_element_shape);
   window.draw(m_auxiliary_shape);
+  window.draw(m_viz_box.data(), m_viz_box.size(), sf::LineStrip);
 }
 
 void Visualization::move_left() {
