@@ -321,3 +321,82 @@ std::shared_ptr<Visualization::Node> Visualization::build_cartesian_tree() {
   parent[root] = -1;
   return (build_cartesian_tree_util(root, parent, left_child, right_child));
 }
+
+void Visualization::tournament_sort() {
+  if (m_element_number.empty() || m_element_number.size() == 1)
+    return;
+  int value;
+  size_t n = m_element_number.size();
+  std::vector<int> temp(2 * n);
+  create_tournament_tree(value, temp, n);
+  for (int i = 0; i < m_element_number.size(); i++) {
+    if (m_stop_visualizing.load())
+      break;
+    m_element_number[i] = value;
+    update_rec_style(m_element_shape, true, false, i, m_element_number[i],
+                     sf::Color::Red);
+    recreate_tournament_tree(value, temp, n);
+  }
+  for (int i = 0; i < temp.size(); i++)
+    update_rec_style(m_auxiliary_shape, true, false, i, m_options[1],
+                     sf::Color::White);
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}
+
+int Visualization::tournament_winner(int pos1, int pos2, std::vector<int>& temp,
+                                     size_t n) {
+  int u = pos1 >= n ? pos1 : temp[pos1];
+  int v = pos2 >= n ? pos2 : temp[pos2];
+  if (temp[u] <= temp[v])
+    return u;
+  return v;
+}
+
+void Visualization::create_tournament_tree(int& value, std::vector<int>& temp,
+                                           size_t n) {
+  for (int i = 0; i < n; i++) {
+    if (m_stop_visualizing.load())
+      break;
+    temp[n + i] = m_element_number[i];
+    update_rec_style(m_auxiliary_shape, true, false, n + i, temp[n + i],
+                     sf::Color::White, true);
+  }
+
+  for (int i = 2 * n - 1; i > 1; i -= 2) {
+    if (m_stop_visualizing.load())
+      break;
+    int k = i / 2;
+    int j = i - 1;
+    temp[k] = tournament_winner(i, j, temp, n);
+    if (!(temp[temp[k]] > m_options[2]))
+      update_rec_style(m_auxiliary_shape, true, true, k, temp[temp[k]],
+                       sf::Color::White, true);
+  }
+
+  value = temp[temp[1]];
+  temp[temp[1]] = INT_MAX;
+}
+void Visualization::recreate_tournament_tree(int& value, std::vector<int>& temp,
+                                             size_t n) {
+  int i = temp[1];
+  while (i > 1) {
+    if (m_stop_visualizing.load())
+      break;
+    int j, k = i / 2;
+    if (i % 2 == 0 && i < 2 * n - 1)
+      j = i + 1;
+    else
+      j = i - 1;
+
+    temp[k] = tournament_winner(i, j, temp, n);
+    if (!(temp[temp[k]] > m_options[2]))
+      update_rec_style(m_auxiliary_shape, true, true, k, temp[temp[k]],
+                       sf::Color::White, true);
+    i = k;
+  }
+
+  value = temp[temp[1]];
+  temp[temp[1]] = INT_MAX;
+}

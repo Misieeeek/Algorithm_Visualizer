@@ -59,7 +59,8 @@ Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
   m_arr_w_add_space = {{"Splaysort", 1},
                        {"Library Sort", 2},
                        {"Patience Sorting", 2},
-                       {"Cartesian Tree Sort", 1}};
+                       {"Cartesian Tree Sort", 1},
+                       {"Tournament Sort", 2}};
 }
 
 void Visualization::restart_timer() {
@@ -85,14 +86,14 @@ void Visualization::pause_timer() {
 }
 void Visualization::draw(sf::RenderWindow& window) {
   std::lock_guard lock(m_mutex);
+  window.draw(m_element_shape);
+  window.draw(m_auxiliary_shape);
   for (const auto& x : m_buttons_shape)
     window.draw(x);
   for (const auto& x : m_buttons_text)
     window.draw(x);
   for (const auto& x : m_info_text)
     window.draw(x);
-  window.draw(m_element_shape);
-  window.draw(m_auxiliary_shape);
   window.draw(m_viz_box.data(), m_viz_box.size(), sf::LineStrip);
 }
 
@@ -369,6 +370,9 @@ void Visualization::initialize_selection_sort() {
   };
   m_algo_func["Cartesian Tree Sort"] = [this]() {
     cartesian_tree_sort();
+  };
+  m_algo_func["Tournament Sort"] = [this]() {
+    tournament_sort();
   };
 }
 void Visualization::initialize_merge_sort() {}
