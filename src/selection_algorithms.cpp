@@ -400,3 +400,59 @@ void Visualization::recreate_tournament_tree(int& value, std::vector<int>& temp,
   value = temp[temp[1]];
   temp[temp[1]] = INT_MAX;
 }
+
+void Visualization::cycle_sort() {
+  size_t n = m_element_number.size();
+  if (n == 0 || n == 1)
+    return;
+
+  int writes = 0;
+  for (int cycle_start = 0; cycle_start <= n - 2; cycle_start++) {
+    int item = m_element_number[cycle_start];
+
+    int pos = cycle_start;
+    for (int i = cycle_start + 1; i < n; i++)
+      if (m_element_number[i] < item)
+        pos++;
+
+    if (pos == cycle_start)
+      continue;
+
+    while (item == m_element_number[pos])
+      pos += 1;
+
+    if (pos != cycle_start) {
+      update_rec_style(m_element_shape, true, true, pos, m_element_number[pos],
+                       sf::Color::Red);
+      // sf::sleep(sf::seconds(0.1));
+      std::swap(item, m_element_number[pos]);
+      update_rec_style(m_element_shape, true, true, pos, m_element_number[pos],
+                       sf::Color::White);
+      writes++;
+    }
+
+    while (pos != cycle_start) {
+      pos = cycle_start;
+
+      for (int i = cycle_start + 1; i < n; i++)
+        if (m_element_number[i] < item)
+          pos += 1;
+
+      while (item == m_element_number[pos])
+        pos += 1;
+
+      if (item != m_element_number[pos]) {
+        update_rec_style(m_element_shape, true, true, pos,
+                         m_element_number[pos], sf::Color::Red);
+        // sf::sleep(sf::seconds(0.1));
+        std::swap(item, m_element_number[pos]);
+        update_rec_style(m_element_shape, true, true, pos,
+                         m_element_number[pos], sf::Color::White, true);
+        writes++;
+      }
+    }
+  }
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}

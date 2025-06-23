@@ -162,6 +162,9 @@ class Visualization : public Screen {
   // TOURNAMENT SORT
   void tournament_sort();
 
+  // CYCLE SORT
+  void cycle_sort();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   static std::shared_ptr<Screen> g_dummy_screen;

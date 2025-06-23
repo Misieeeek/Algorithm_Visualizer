@@ -374,6 +374,9 @@ void Visualization::initialize_selection_sort() {
   m_algo_func["Tournament Sort"] = [this]() {
     tournament_sort();
   };
+  m_algo_func["Cycle Sort"] = [this]() {
+    cycle_sort();
+  };
 }
 void Visualization::initialize_merge_sort() {}
 void Visualization::initialize_exchange_sort() {}
