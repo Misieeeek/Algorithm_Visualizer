@@ -1,3 +1,6 @@
+#include <algorithm>
+#include <bitset>
+#include <execution>
 #include <functional>
 #include <memory>
 #include <queue>
@@ -455,4 +458,67 @@ void Visualization::cycle_sort() {
   m_buttons_text[1].setString("Start");
   m_stop_visualizing.store(true);
   m_visualizaing = false;
+}
+
+void Visualization::weak_heap_sort() {
+  int n = m_element_number.size();
+  if (n <= 1)
+    return;
+
+  std::vector<bool> r(n, false);
+  for (int i = n - 1; i > 0; --i) {
+    int j = i;
+    while ((j & 1) == r[j >> 1])
+      j >>= 1;
+    int parent = j >> 1;
+    weak_heap_merge(r, parent, i);
+  }
+
+  for (int i = n - 1; i >= 2; --i) {
+    update_rec_style(m_element_shape, false, true, 0, m_element_number[0],
+                     sf::Color::Red);
+    update_rec_style(m_element_shape, false, true, i, m_element_number[i],
+                     sf::Color::Red);
+    std::swap(m_element_number[0], m_element_number[i]);
+    update_rec_style(m_element_shape, true, true, 0, m_element_number[0],
+                     sf::Color::White);
+    update_rec_style(m_element_shape, true, true, i, m_element_number[i],
+                     sf::Color::White, true);
+    int x = 1;
+    int y;
+    while ((y = 2 * x + (r[x] ? 1 : 0)) < i)
+      x = y;
+    while (x > 0) {
+      weak_heap_merge(r, 0, x);
+      x >>= 1;
+    }
+  }
+  update_rec_style(m_element_shape, false, true, 0, m_element_number[0],
+                   sf::Color::Red);
+  update_rec_style(m_element_shape, false, true, 1, m_element_number[1],
+                   sf::Color::Red);
+  std::swap(m_element_number[0], m_element_number[1]);
+  update_rec_style(m_element_shape, true, true, 0, m_element_number[0],
+                   sf::Color::White);
+  update_rec_style(m_element_shape, true, true, 1, m_element_number[1],
+                   sf::Color::White, true);
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
+}
+
+void Visualization::weak_heap_merge(std::vector<bool>& r, int parent,
+                                    int child) {
+  if (m_element_number[parent] < m_element_number[child]) {
+    r[child].flip();
+    update_rec_style(m_element_shape, false, true, parent,
+                     m_element_number[parent], sf::Color::Red);
+    update_rec_style(m_element_shape, false, true, child,
+                     m_element_number[child], sf::Color::Red);
+    std::swap(m_element_number[parent], m_element_number[child]);
+    update_rec_style(m_element_shape, true, true, parent,
+                     m_element_number[parent], sf::Color::White);
+    update_rec_style(m_element_shape, true, true, child,
+                     m_element_number[child], sf::Color::White);
+  }
 }

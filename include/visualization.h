@@ -165,6 +165,9 @@ class Visualization : public Screen {
   // CYCLE SORT
   void cycle_sort();
 
+  // WEAK HEAP SORT
+  void weak_heap_sort();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   static std::shared_ptr<Screen> g_dummy_screen;
@@ -259,6 +262,9 @@ class Visualization : public Screen {
   void recreate_tournament_tree(int& value, std::vector<int>& temp, size_t n);
   void create_tournament_tree(int& value, std::vector<int>& temp, size_t n);
   int tournament_winner(int pos1, int pos2, std::vector<int>& temp, size_t n);
+
+  // WEAK HEAP SORT
+  void weak_heap_merge(std::vector<bool>& r, int parent, int child);
 };
 
 #endif

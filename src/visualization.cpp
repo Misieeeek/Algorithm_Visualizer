@@ -377,6 +377,9 @@ void Visualization::initialize_selection_sort() {
   m_algo_func["Cycle Sort"] = [this]() {
     cycle_sort();
   };
+  m_algo_func["Weak-Heap Sort"] = [this]() {
+    weak_heap_sort();
+  };
 }
 void Visualization::initialize_merge_sort() {}
 void Visualization::initialize_exchange_sort() {}
