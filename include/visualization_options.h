@@ -131,6 +131,7 @@ class Visualization_Options
   // INITALIZE SUBSECTION OF SORTING ALGORITHMS
   void init_insertion_sort_display_name();
   void init_selection_sort_display_name();
+  void init_merge_sort_display_name();
 
   // INITALIZE FULL NAME OF ALGO TO MAP
   // INITALIZE SEARCHING

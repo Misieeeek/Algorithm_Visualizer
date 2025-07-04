@@ -313,7 +313,12 @@ void Visualization_Options::init_selection_sort_display_name() {
       "Selection Sort";
 }
 
+void Visualization_Options::init_merge_sort_display_name() {
+  m_display_name[std::make_pair(std::string("Merge Sort"), 0)] = "Merge Sort";
+}
+
 void Visualization_Options::init_sort_category_display_name() {
   init_insertion_sort_display_name();
   init_selection_sort_display_name();
+  init_merge_sort_display_name();
 }

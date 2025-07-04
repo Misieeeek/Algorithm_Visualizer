@@ -168,6 +168,9 @@ class Visualization : public Screen {
   // WEAK HEAP SORT
   void weak_heap_sort();
 
+  // MERGE SORT
+  void merge_sort();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   static std::shared_ptr<Screen> g_dummy_screen;
@@ -265,6 +268,10 @@ class Visualization : public Screen {
 
   // WEAK HEAP SORT
   void weak_heap_merge(std::vector<bool>& r, int parent, int child);
+
+  // MERGE SORT
+  void merge_sort(int l, int r);
+  void merge(int l, int m, int r);
 };
 
 #endif

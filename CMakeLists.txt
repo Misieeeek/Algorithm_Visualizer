@@ -101,6 +101,24 @@ if(TARGET gtest_main)
             sfml-window
             sfml-system
     ) 
+    # MERGE SORT TESTS
+    add_executable(merge_sort_tests
+        tests/merge_sort_algos_tests.cpp
+        ${SRC_FILES}
+    )
+    
+    target_include_directories(merge_sort_tests
+        PRIVATE
+            ${CMAKE_SOURCE_DIR}/include
+    )
+    
+    target_link_libraries(merge_sort_tests
+        PRIVATE
+            GTest::gtest_main
+            sfml-graphics
+            sfml-window
+            sfml-system
+    )
     # PLATFORM-SPECIFIC LINKING FOR TESTS
     if(WIN32)
         target_link_libraries(insertion_sort_tests PRIVATE sfml-main)
