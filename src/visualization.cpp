@@ -385,6 +385,9 @@ void Visualization::initialize_merge_sort() {
   m_algo_func["Merge Sort"] = [this]() {
     merge_sort();
   };
+  m_algo_func["Cascade Merge Sort"] = [this]() {
+    cascade_merge_sort();
+  };
 }
 void Visualization::initialize_exchange_sort() {}
 void Visualization::initialize_distribution_sort() {}

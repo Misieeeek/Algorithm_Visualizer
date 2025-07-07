@@ -171,6 +171,9 @@ class Visualization : public Screen {
   // MERGE SORT
   void merge_sort();
 
+  // CASCADE MERGE SORT
+  void cascade_merge_sort();
+
  private:
   // DISPLAYS SCREEN FOR SORTING
   static std::shared_ptr<Screen> g_dummy_screen;
@@ -272,6 +275,10 @@ class Visualization : public Screen {
   // MERGE SORT
   void merge_sort(int l, int r);
   void merge(int l, int m, int r);
+
+  // CASCADE MERGE SORT
+  std::vector<int> merge_two(const std::vector<int>& A,
+                             const std::vector<int>& B);
 };
 
 #endif
