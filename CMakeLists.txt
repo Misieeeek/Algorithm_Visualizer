@@ -119,6 +119,26 @@ if(TARGET gtest_main)
             sfml-window
             sfml-system
     )
+    
+    # EXCHANGE SORT TESTS
+    add_executable(exchange_sort_tests
+        tests/exchange_sort_algos_tests.cpp
+        ${SRC_FILES}
+    )
+    
+    target_include_directories(exchange_sort_tests
+        PRIVATE
+            ${CMAKE_SOURCE_DIR}/include
+    )
+    
+    target_link_libraries(exchange_sort_tests
+        PRIVATE
+            GTest::gtest_main
+            sfml-graphics
+            sfml-window
+            sfml-system
+    )
+
     # PLATFORM-SPECIFIC LINKING FOR TESTS
     if(WIN32)
         target_link_libraries(insertion_sort_tests PRIVATE sfml-main)
