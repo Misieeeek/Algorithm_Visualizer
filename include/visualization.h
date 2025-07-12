@@ -175,7 +175,7 @@ class Visualization : public Screen {
   void cascade_merge_sort();
 
   // HELP SORT (ITERATIVE QUICKSORT)
-  std::vector<int> help_sort(std::vector<int>& arr);
+  std::vector<int> help_sort(std::vector<int>& arr, int begin_visual_index);
 
  private:
   // DISPLAYS SCREEN FOR SORTING
@@ -284,7 +284,8 @@ class Visualization : public Screen {
                              const std::vector<int>& B);
 
   // HELP SORT (ITERATIVE QUICKSORT)
-  int help_partition(std::vector<int>& arr, int l, int h);
+  int help_partition(std::vector<int>& arr, int l, int h,
+                     int begin_visual_index);
 };
 
 #endif

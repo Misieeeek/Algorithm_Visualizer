@@ -56,11 +56,9 @@ Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
   initialize_algorithms();
   m_empty_value = m_options[1] - 1;
   pause_timer();
-  m_arr_w_add_space = {{"Splaysort", 1},
-                       {"Library Sort", 2},
-                       {"Patience Sorting", 2},
-                       {"Cartesian Tree Sort", 1},
-                       {"Tournament Sort", 2}};
+  m_arr_w_add_space = {{"Splaysort", 1},        {"Library Sort", 2},
+                       {"Patience Sorting", 2}, {"Cartesian Tree Sort", 1},
+                       {"Tournament Sort", 2},  {"Cascade Merge Sort", 2}};
 }
 
 void Visualization::restart_timer() {

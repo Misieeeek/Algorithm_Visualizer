@@ -97,14 +97,18 @@ void Visualization::cascade_merge_sort() {
   size_t block_size = 2;
   std::vector<std::vector<int>> blocks;
   blocks.reserve((m_element_number.size() + block_size - 1) / block_size);
+  int visual_index_increment = 0;
   for (size_t start = 0; start < m_element_number.size(); start += block_size) {
     size_t end = std::min(start + block_size, m_element_number.size());
     std::vector<int> block(m_element_number.begin() + start,
                            m_element_number.begin() + end);
-    std::sort(block.begin(), block.end());
+    help_sort(block, start + visual_index_increment);
+    visual_index_increment++;
     blocks.push_back(std::move(block));
   }
-
+  for (int i = 0; i < block_size * m_element_number.size(); i++)
+    update_rec_style(m_auxiliary_shape, true, false, i, m_empty_value + 1,
+                     sf::Color::White);
   std::vector<int> result = std::move(blocks[0]);
   for (size_t i = 1; i < blocks.size(); ++i) {
     result = merge_two(result, blocks[i]);
@@ -112,4 +116,8 @@ void Visualization::cascade_merge_sort() {
   for (int i = 0; i < m_element_number.size(); i++) {
     m_element_number[i] = result[i];
   }
+  restart_timer();
+  m_buttons_text[1].setString("Start");
+  m_stop_visualizing.store(true);
+  m_visualizaing = false;
 }
