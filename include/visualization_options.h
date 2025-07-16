@@ -143,17 +143,17 @@ class Visualization_Options
 
  private:
   // DISPLAYS SCREEN FOR SORTING
-  static std::shared_ptr<Screen> g_dummy_screen;
+  std::shared_ptr<Screen> g_dummy_screen{nullptr};
   std::shared_ptr<Screen>& current_screen;
   std::shared_ptr<Visualizer> visualize;
   std::shared_ptr<Visualization> final_visual;
   sf::RenderWindow* window_ptr;
 
   // RESPONSIBLE FOR KEYBOARD MOVEMENT
-  int m_selected_algo_index;
+  int m_selected_algo_index{0};
 
   // CHOOSED ALGO, HOLDS VALUE OF SELECTED ALGO
-  int m_choosed_algo;
+  int m_choosed_algo{0};
 
   //STATE OF SELECTED ALGO SUB-CATEGORY
   algo_subcat m_asc;
@@ -193,19 +193,21 @@ class Visualization_Options
   std::size_t m_variants_size;  //STORES SIZE OF VARIANTS
 
   // TEXT STYLE & HEADERS
-  int m_char_size_text_variants;
+  int m_char_size_text_variants{20};
   std::array<std::string, c_headers> m_headers_text;
   std::array<sf::Text, c_headers> m_headers;
 
   // VISUALIZATION OPTIONS
   // THIS VECTOR KEEPS STATE OF:
   // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS, OPTIONAL PARAMETER
-  std::vector<int> m_visualization_options;
-  std::vector<std::string> m_visualization_options_names;
-  std::size_t m_option_size;
+  std::vector<int> m_visualization_options{10, 0, 100};
+  std::vector<std::string> m_visualization_options_names{
+      "Number of elements:", "Minimum value:", "Maximum value:"};
+  std::size_t m_option_size{3};
 
   // VISUALIZATION BUTTONS
-  std::array<std::string, c_buttons> m_visualization_buttons_names;
+  std::array<std::string, c_buttons> m_visualization_buttons_names{
+      "Start", "Example", "Worst case", "Best Case"};
   std::array<sf::Text, c_buttons> m_visualization_buttons_text;
   std::array<sf::RectangleShape, c_buttons> m_visualization_buttons_shape;
 
@@ -213,23 +215,23 @@ class Visualization_Options
   std::array<sf::Text, c_input> m_textbox_input_style;
   std::ostringstream m_text_input;
   int m_selected_input_option;
-  std::string m_temp_value;
+  std::string m_temp_value{""};
 
   // IF THE IMPUT OPTION IS SELECTED
-  bool m_possible_input;
+  bool m_possible_input{false};
 
   // KEEPS STATE IF ADDITIONAL PARAMETER IS OPEN
-  bool m_additional_param;
+  bool m_additional_param{false};
 
   // KEEPS STATE IF ADDIOTIONAL PARAMETER EXISTS
-  bool m_additional_exists;
+  bool m_additional_exists{true};
 
   // LIST OF DIFFERENT SHELL SEQUENCE GAPS
-  sf::Text m_additional_option;
+  sf::Text m_additional_option{};
   std::vector<std::string> m_additional_option_names;
 
   // KEEPS THE STATE OF CURRENT ADDITIONAL OPTION INDEX
-  int m_additional_option_index;
+  int m_additional_option_index{0};
 
   // SHAPE OF LEFT/RIGHT BUTTONS
   std::vector<sf::RectangleShape> m_lr_btn_shape;

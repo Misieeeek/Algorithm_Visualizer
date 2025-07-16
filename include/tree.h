@@ -4,17 +4,14 @@ class Tree {
  public:
   struct Node {
     int m_key;
-    int m_visual_index;
-    std::unique_ptr<Node> m_left;
-    std::unique_ptr<Node> m_right;
+    int m_visual_index{0};
+    std::unique_ptr<Node> m_left{nullptr};
+    std::unique_ptr<Node> m_right{nullptr};
 
-    explicit Node(int key)
-        : m_key(key), m_visual_index(0), m_left(nullptr), m_right(nullptr) {}
+    explicit Node(int key) : m_key(key) {}
   };
 
-  std::unique_ptr<Node> m_root;
-
-  Tree() : m_root(nullptr) {}
+  std::unique_ptr<Node> m_root{nullptr};
 
   void update_visual_indices(Node* node, int& current_index);
   void update_all_visual_indices();

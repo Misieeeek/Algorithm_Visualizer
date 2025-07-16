@@ -1,15 +1,15 @@
+#include "global_options.h"
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
 #include <array>
 #include <memory>
 #include <string>
-#include "global_options.h"
 #include "main_menu.h"
 #include "main_window.h"
 
 Options::Options(std::shared_ptr<Screen>& screen_ptr,
                  std::shared_ptr<MainMenu> menu)
-    : current_screen(screen_ptr), main_menu(menu), m_selected_options_index(0) {
+    : current_screen(screen_ptr), main_menu(menu) {
 
   std::array<std::string, c_number_of_options> options = {"Speed", "Window",
                                                           "Back"};
@@ -17,7 +17,6 @@ Options::Options(std::shared_ptr<Screen>& screen_ptr,
                             true, 0, 100);
   m_options_options[c_number_of_options - 1].setFillColor(sf::Color::Red);
   m_options_options[0].setFillColor(sf::Color::Green);
-  m_selected_option = 0;
 }
 
 void Options::move_up() {

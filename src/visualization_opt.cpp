@@ -2,7 +2,7 @@
 #include "visualization.h"
 #include "visualization_options.h"
 
-std::shared_ptr<Screen> Visualization_Options::g_dummy_screen = nullptr;
+// std::shared_ptr<Screen> Visualization_Options::g_dummy_screen = nullptr;
 
 Visualization_Options::Visualization_Options()
     : current_screen(g_dummy_screen),
@@ -19,10 +19,7 @@ Visualization_Options::Visualization_Options()
       m_char_size_text_variants(),
       m_headers_text(),
       m_headers(),
-      m_visualization_options_names(),
-      m_visualization_options(),
       m_option_size(),
-      m_visualization_buttons_names(),
       m_visualization_buttons_shape(),
       m_visualization_buttons_text(),
       m_text_input(),
@@ -32,8 +29,6 @@ Visualization_Options::Visualization_Options()
       m_temp_value(),
       m_additional_exists(),
       m_additional_param(),
-      m_additional_option_index(0),
-      m_additional_option(),
       m_additional_option_names(),
       m_lr_btn_shape(),
       m_triangle_arrow(),
@@ -42,32 +37,12 @@ Visualization_Options::Visualization_Options()
 Visualization_Options::Visualization_Options(
     std::shared_ptr<Screen>& screen_ptr, std::shared_ptr<Visualizer> viz_ptr,
     sf::RenderWindow* window)
-    : current_screen(screen_ptr),
-      visualize(viz_ptr),
-      window_ptr(window),
-      m_selected_algo_index(0),
-      m_char_size_text_variants(20),
-      m_possible_input(false),
-      m_temp_value(""),
-      m_option_size(3),
-      m_additional_param(false),
-      m_additional_exists(true),
-      m_added_options() {
+    : current_screen(screen_ptr), visualize(viz_ptr), window_ptr(window) {
 
-  //INITIALIZE VISUALIZATION BUTTONS
-  m_visualization_buttons_names = {"Start", "Example", "Worst case",
-                                   "Best Case"};
   visualization_buttons_style(150);
-  // INITALIZE VISUALIZATION OPTIONS VECTOR WITH VALUES:
-  // NUMBER OF ELEMENTS = 10, MINIMUM RANGE OF ELEMENTS = 0, MAXIMUM RANGE OF ELEMENTS = 100
-  m_visualization_options_names = {
-      "Number of elements:", "Minimum value:", "Maximum value:"};
-  m_visualization_options = {10, 0, 100};
   textbox(m_char_size_text_variants, m_option_size, 150);
-  m_choosed_algo = 0;
   m_lr_btn_shape.resize(0);
   m_triangle_arrow.resize(0);
-  m_additional_option_index = 0;
 }
 
 void Visualization_Options::init_visualization_default() {

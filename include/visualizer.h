@@ -75,10 +75,10 @@ class Visualizer : public Screen,
   std::shared_ptr<Visualization_Options> viz_opt;
   std::shared_ptr<Search_Class> search_class;
   sf::RenderWindow* window_ptr;
-  int m_selected_algorithm_index;
-  static constexpr std::size_t c_num_algos = 8;
+  int m_selected_algorithm_index{0};
+  static constexpr std::size_t c_num_algos{8};
   std::array<sf::Text, c_num_algos> m_list_algorithms;
-  int m_selected_algorithm;
+  int m_selected_algorithm{0};
 
   // DROP DOWN MENU ITEMS LIST
   std::vector<sf::Text> m_list_algo;
@@ -94,40 +94,54 @@ class Visualizer : public Screen,
 
   // DROP DOWN MENU FOR SORTING ALGORITHMS
   std::array<sf::Text, c_num_sort> m_list_algo_sort;
-  std::array<std::string, c_num_sort> m_algo_sort;
+  std::array<std::string, c_num_sort> m_algo_sort{
+      "Insertion Sorts", "Selection Sorts",    "Merge Sorts",
+      "Exchange Sorts",  "Distribution Sorts", "Concurrent Sorts"};
 
   // DROP DOWN MENU FOR SEARCH ALGORITHMS
   std::array<sf::Text, c_num_search> m_list_algo_search;
-  std::array<std::string, c_num_search> m_algo_search;
+  std::array<std::string, c_num_search> m_algo_search{"Linear Search",
+                                                      "Binary Search"};
 
   // DROP DOWN MENU FOR DS ALGORITHMS
   std::array<sf::Text, c_num_ds> m_list_algo_ds;
-  std::array<std::string, c_num_ds> m_algo_ds;
+  std::array<std::string, c_num_ds> m_algo_ds{"Stack",
+                                              "Queue",
+                                              "Linked List",
+                                              "Hash Table",
+                                              "Binary Search Tree",
+                                              "Red-Black Tree",
+                                              "AVL Tree",
+                                              "Treaps"};
 
   // DROP DOWN MENU FOR DYNAMIC PROGRAMMING ALGORITHMS
   std::array<sf::Text, c_num_dynamic> m_list_algo_dynamic;
-  std::array<std::string, c_num_dynamic> m_algo_dynamic;
+  std::array<std::string, c_num_dynamic> m_algo_dynamic{
+      "Cut Rod", "Cut Rod (Memoization)", "Cut Rod (Tabulation)",
+      "Longest Common Subsequence"};
 
   // DROP DOWN MENU FOR GREEDY ALGORITHMS
   std::array<sf::Text, c_num_greedy> m_list_algo_greedy;
-  std::array<std::string, c_num_greedy> m_algo_greedy;
+  std::array<std::string, c_num_greedy> m_algo_greedy{"Huffman Coding",
+                                                      "Activity Selector"};
 
   // DROP DOWN MENU FOR ADVANCED DATA STRUCTURES ALGORITHMS
   std::array<sf::Text, c_num_advancedds> m_list_algo_advancedds;
-  std::array<std::string, c_num_advancedds> m_algo_advancedds;
+  std::array<std::string, c_num_advancedds> m_algo_advancedds{
+      "B-Tree", "Fibonacci Heap", "Van Emde Boas Tree"};
 
   // DROP DOWN MENU FOR GRAPH ALGORITHMS
   std::array<sf::Text, c_num_graph> m_list_algo_graph;
-  std::array<std::string, c_num_graph> m_algo_graph;
+  std::array<std::string, c_num_graph> m_algo_graph{"1", "2", "3"};
 
   // TEXT STYLES
-  const int m_category_font_size;
-  const int m_drop_down_item_font_size;
+  const int m_category_font_size{35};
+  const int m_drop_down_item_font_size{20};
 
   // DROP DOWN MENU COUNTERS AND CHECKER FOR CATEGORY OPTION
   int m_dropped_items;
   int m_dropped_items_index;
-  bool m_category_option;
+  bool m_category_option{true};
 
   // INITIALIZE ALGORITHM MAP, DIVIDED PER CATEGORY
   void initialize_sorting();

@@ -6,23 +6,16 @@ class Splay_Tree {
   struct Node {
     int m_key;
     int m_index;
-    int m_count;
-    int m_size;
-    int m_visual_index;
-    std::unique_ptr<Node> m_left;
-    std::unique_ptr<Node> m_right;
-    Node(int val, int ind)
-        : m_key(val),
-          m_index(ind),
-          m_count(1),
-          m_size(1),
-          m_visual_index(-1),
-          m_left(nullptr),
-          m_right(nullptr) {}
+    int m_count{1};
+    int m_size{1};
+    int m_visual_index{-1};
+    std::unique_ptr<Node> m_left{nullptr};
+    std::unique_ptr<Node> m_right{nullptr};
+    Node(int val, int ind) : m_key(val), m_index(ind) {}
   };
-  int m_root_index;
-  std::vector<int> m_help_vec;
-  std::unique_ptr<Node> m_root;
+  int m_root_index{0};
+  std::vector<int> m_help_vec{};
+  std::unique_ptr<Node> m_root{nullptr};
   std::unique_ptr<Node> right_rotate(std::unique_ptr<Node> x);
   std::unique_ptr<Node> left_rotate(std::unique_ptr<Node> x);
   std::unique_ptr<Node> splay(std::unique_ptr<Node> root, int key);
@@ -30,8 +23,6 @@ class Splay_Tree {
                                       std::vector<std::pair<int, int>>& result);
 
  public:
-  Splay_Tree() : m_root(nullptr), m_help_vec({}), m_root_index(0) {}
-  ~Splay_Tree() {};
   void insert(int key, int index);
   void splay_sort(std::span<int> data);
   void get_sorted_elements_with_visual_index(

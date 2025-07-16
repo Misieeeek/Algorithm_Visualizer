@@ -29,7 +29,7 @@
 
 class Screen {
  public:
-  Screen() : m_opend(false), m_main_active(true) { set_open_sans(); }
+  Screen() { set_open_sans(); }
   virtual ~Screen() = default;
   virtual void draw(sf::RenderWindow& window) = 0;
   virtual int pressed() = 0;
@@ -57,8 +57,8 @@ class Screen {
                                  int end_at);
 
  protected:
-  bool m_opend;
-  bool m_main_active;
+  bool m_opend = false;
+  bool m_main_active = true;
   bool m_dropped;
   sf::Font m_open_sans;
 };

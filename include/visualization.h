@@ -179,14 +179,14 @@ class Visualization : public Screen {
 
  private:
   // DISPLAYS SCREEN FOR SORTING
-  static std::shared_ptr<Screen> g_dummy_screen;
+  std::shared_ptr<Screen> g_dummy_screen = nullptr;
   std::shared_ptr<Screen>& current_screen;
   std::shared_ptr<Visualization_Options> viz_opt;
   // std::shared_ptr<Search_Class> search_class;
   // std::shared_ptr<Screen> previous_screen;
   sf::RenderWindow* window_ptr;
-  int m_selected_button_index;
-  int m_selected_button;
+  int m_selected_button_index = 1;
+  int m_selected_button = 1;
 
   // CONSTANTS
   static constexpr std::size_t c_buttons = 2;
@@ -204,7 +204,7 @@ class Visualization : public Screen {
   std::array<sf::Text, c_info> m_info_text;
   std::array<std::string, c_info> m_info_names;
   // STATE OF VISUALIZING (FALSE - NOT VISUALIZING, TRUE - VISUALIZING RIGHT NOW)
-  bool m_visualizaing;
+  bool m_visualizaing = false;
 
   // NUMBER OF ELEMENTS, MINIMUM RANGE OF NUMBERS, MAXIMUM RANGE OF NUMBERS
   std::array<int, c_options> m_options;
@@ -227,10 +227,10 @@ class Visualization : public Screen {
   std::mt19937 m_gen;
 
   // DISTRIBUTION OF ELEMENTS
-  int m_distribution;
+  int m_distribution{2};
 
   // STOP THREAD FLAG
-  std::atomic<bool> m_stop_visualizing;
+  std::atomic<bool> m_stop_visualizing{false};
   //SYNC THREADS
   std::mutex m_mutex;
 
@@ -246,7 +246,7 @@ class Visualization : public Screen {
   //TIMER
   std::chrono::milliseconds m_offset{0};
   std::chrono::high_resolution_clock::time_point m_last_resume_time;
-  bool m_is_running = false;
+  bool m_is_running{false};
 
   //EMPTY VALUE FOR LIBRARY SORT
   int m_empty_value;

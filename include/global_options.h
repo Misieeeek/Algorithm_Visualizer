@@ -32,10 +32,10 @@ class Options : public Screen {
  private:
   std::shared_ptr<Screen>& current_screen;
   std::shared_ptr<MainMenu> main_menu;
-  int m_selected_options_index;
+  int m_selected_options_index = 0;
   static constexpr size_t c_number_of_options = 3;
   std::array<sf::Text, c_number_of_options> m_options_options;
-  int m_selected_option;
+  int m_selected_option = 0;
 };
 
 #endif

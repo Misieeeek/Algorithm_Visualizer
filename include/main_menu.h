@@ -19,9 +19,9 @@ class MainMenu : public Screen {
 
  private:
   static constexpr int c_number_of_items = 3;
-  int m_selected_item_index;
+  int m_selected_item_index = 0;
   std::array<sf::Text, c_number_of_items> m_main_menu_options;
-  int m_selected;
+  int m_selected = 0;
 };
 
 #endif

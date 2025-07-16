@@ -4,7 +4,7 @@
 #include <thread>
 #include <utility>
 
-std::shared_ptr<Screen> Visualization::g_dummy_screen = nullptr;
+// std::shared_ptr<Screen> Visualization::g_dummy_screen = nullptr;
 
 Visualization::Visualization()
     : current_screen(g_dummy_screen),
@@ -43,14 +43,8 @@ Visualization::Visualization(std::shared_ptr<Screen>& screen_ptr,
     : current_screen(screen_ptr),
       viz_opt(viz_opt_ptr),
       window_ptr(window),
-      m_gen(m_rd()),
-      m_stop_visualizing(false),
-      m_offset(std::chrono::milliseconds(0)),
-      m_distribution(2) {
-  m_visualizaing = false;
+      m_gen(m_rd()) {
   set_styles();
-  m_selected_button_index = 1;
-  m_selected_button = 1;
   m_element_shape.setPrimitiveType(sf::Quads);
   m_auxiliary_shape.setPrimitiveType(sf::Quads);
   initialize_algorithms();

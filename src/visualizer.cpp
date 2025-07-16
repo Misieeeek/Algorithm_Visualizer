@@ -4,14 +4,7 @@
 
 Visualizer::Visualizer(std::shared_ptr<Screen>& screen_ptr,
                        std::shared_ptr<Screen> menu, sf::RenderWindow* window)
-    : current_screen(screen_ptr),
-      main_menu(menu),
-      window_ptr(window),
-      m_selected_algorithm_index(0),
-      m_selected_algorithm(0),
-      m_category_option(true),
-      m_category_font_size(35),
-      m_drop_down_item_font_size(20) {
+    : current_screen(screen_ptr), main_menu(menu), window_ptr(window) {
   std::array<std::string, c_num_algos> algo = {
       "Sorting Algorithms", "Searching Algorithms",
       "Data Structures",    "Dynamic Programming",
@@ -23,23 +16,6 @@ Visualizer::Visualizer(std::shared_ptr<Screen>& screen_ptr,
   m_list_algorithms[c_num_algos - 1].setFillColor(sf::Color::Red);
   m_list_algorithms[0].setFillColor(sf::Color::Green);
   m_dropped = false;
-  // SETTING NAMES FOR DIFFERENT ALGO CATEGORIES
-  m_algo_sort = {"Insertion Sorts", "Selection Sorts",    "Merge Sorts",
-                 "Exchange Sorts",  "Distribution Sorts", "Concurrent Sorts"};
-  m_algo_search = {"Linear Search", "Binary Search"};
-  m_algo_ds = {"Stack",
-               "Queue",
-               "Linked List",
-               "Hash Table",
-               "Binary Search Tree",
-               "Red-Black Tree",
-               "AVL Tree",
-               "Treaps"};
-  m_algo_dynamic = {"Cut Rod", "Cut Rod (Memoization)", "Cut Rod (Tabulation)",
-                    "Longest Common Subsequence"};
-  m_algo_greedy = {"Huffman Coding", "Activity Selector"};
-  m_algo_advancedds = {"B-Tree", "Fibonacci Heap", "Van Emde Boas Tree"};
-  m_algo_graph = {"1", "2", "3"};
   // INITIALIZE MAP FOR ALGORITHMS
   initialize_algorithms();
 }

@@ -3,14 +3,13 @@
 #include <array>
 #include <filesystem>
 
-MainMenu::MainMenu() : m_selected_item_index(0) {
+MainMenu::MainMenu() {
   std::array<std::string, c_number_of_items> options = {"Visualize", "Options",
                                                         "Exit"};
   Screen::set_sf_text_style(m_main_menu_options, options, 70, 50, 150, false,
                             true, 0, 100);
   m_main_menu_options[c_number_of_items - 1].setFillColor(sf::Color::Red);
   m_main_menu_options[0].setFillColor(sf::Color::Green);
-  m_selected = 0;
 }
 
 MainMenu::~MainMenu() {}
