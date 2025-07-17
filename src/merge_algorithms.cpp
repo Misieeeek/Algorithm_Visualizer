@@ -1,3 +1,5 @@
+#include "SFML/System/Sleep.hpp"
+#include "SFML/System/Time.hpp"
 #include "visualization.h"
 
 void Visualization::merge_sort() {
@@ -72,25 +74,43 @@ void Visualization::merge(int p, int q, int r) {
   }
 }
 
-std::vector<int> Visualization::merge_two(const std::vector<int>& A,
-                                          const std::vector<int>& B) {
+std::vector<int> Visualization::merge_two(const std::vector<int>& result,
+                                          const std::vector<int>& blocks) {
   std::vector<int> R;
-  R.reserve(A.size() + B.size());
+  R.reserve(result.size() + blocks.size());
   size_t i = 0, j = 0;
-  while (i < A.size() && j < B.size()) {
-    if (A[i] < B[j]) {
-      R.push_back(A[i++]);
+
+  while (i < result.size() && j < blocks.size()) {
+    if (result[i] < blocks[j]) {
+      R.push_back(result[i]);
+      update_rec_style(m_element_shape, true, false, R.size() - 1, result[i],
+                       sf::Color::White, true);
+      i++;
     } else {
-      R.push_back(B[j++]);
+      R.push_back(blocks[j]);
+      update_rec_style(m_element_shape, true, false, R.size() - 1, blocks[j],
+                       sf::Color::White, true);
+      j++;
     }
   }
-  while (i < A.size())
-    R.push_back(A[i++]);
-  while (j < B.size())
-    R.push_back(B[j++]);
+
+  while (i < result.size()) {
+    R.push_back(result[i]);
+    update_rec_style(m_element_shape, true, false, R.size() - 1, result[i],
+                     sf::Color::White);
+    i++;
+  }
+
+  while (j < blocks.size()) {
+    R.push_back(blocks[j]);
+    update_rec_style(m_element_shape, true, false, R.size() - 1, blocks[j],
+                     sf::Color::White, true);
+    j++;
+  }
+
   return R;
 }
-
+//TODO: Add option block_size
 void Visualization::cascade_merge_sort() {
   if (m_element_number.size() <= 1)
     return;
