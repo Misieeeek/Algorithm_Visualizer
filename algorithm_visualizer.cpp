@@ -1,5 +1,6 @@
-#include "main_window.h"
+#include "App/Application.h"
 
 int main() {
-  MainWindow main_window;
+  alviz::Application app;
+  app.run();
 }
