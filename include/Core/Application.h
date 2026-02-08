@@ -1,5 +1,5 @@
-#ifndef ALGOVIZ_APP_H_
-#define ALGOVIZ_APP_H_
+#ifndef ALGOVIZ_CORE_APPLICATION_H_
+#define ALGOVIZ_CORE_APPLICATION_H_
 #pragma once
 
 #include "SFML/Graphics/RenderWindow.hpp"
@@ -19,4 +19,4 @@ class Application {
 };
 }  // namespace alviz
 
-#endif  //ALGOVIZ_APP_H_
+#endif  // ALGOVIZ_CORE_APPLICATION_H_

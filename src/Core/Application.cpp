@@ -1,5 +1,5 @@
-#include "App/Application.h"
-#include <iostream>
+#include "Core/Application.h"
+
 #include "SFML/Window/Event.hpp"
 
 namespace alviz {

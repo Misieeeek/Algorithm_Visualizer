@@ -1,0 +1,50 @@
+Checks: >
+  clang-analyzer-*,
+  bugprone-*,
+  performance-*,
+  modernize-*,
+  readability-*,
+  cppcoreguidelines-*,
+  -cppcoreguidelines-owning-memory,
+  -cppcoreguidelines-avoid-magic-numbers
+
+WarningsAsErrors: ""
+
+CheckOptions:
+  # ===== NAME =====
+
+  # CLASS / STRUCT / ENUM
+  - key: readability-identifier-naming.ClassCase
+    value: PascalCase
+  - key: readability-identifier-naming.StructCase
+    value: PascalCase
+  - key: readability-identifier-naming.EnumCase
+    value: PascalCase
+  - key: readability-identifier-naming.EnumConstantCase
+    value: PascalCase
+
+  # FUNCTION & METHOD
+  - key: readability-identifier-naming.FunctionCase
+    value: camelCase
+  - key: readability-identifier-naming.MethodCase
+    value: camelCase
+
+  # VARIABLE
+  - key: readability-identifier-naming.VariableCase
+    value: camelCase
+  - key: readability-identifier-naming.ParameterCase
+    value: camelCase
+
+  # PRIVATE COMPONENT
+  - key: readability-identifier-naming.PrivateMemberPrefix
+    value: _
+  - key: readability-identifier-naming.PrivateMemberCase
+    value: camelCase
+
+  # CONSTANT
+  - key: readability-identifier-naming.ConstantCase
+    value: UPPER_CASE
+
+  # NAMESPACE
+  - key: readability-identifier-naming.NamespaceCase
+    value: lower_case
