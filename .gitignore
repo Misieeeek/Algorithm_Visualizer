@@ -1,7 +1,9 @@
 .cache/
 
-external/              # Ignoruje wszystko w external/
-!external/.gitkeep      # Ale zachowuje pusty katalog external/
+external/              
+!external/.gitkeep      
 
 build
 !build/.gitkeep
+
+venv/
