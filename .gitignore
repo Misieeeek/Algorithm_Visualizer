@@ -7,3 +7,5 @@ build
 !build/.gitkeep
 
 venv/
+
+CMakeUserPresets.json
