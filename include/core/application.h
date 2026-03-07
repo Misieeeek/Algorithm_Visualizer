@@ -2,7 +2,7 @@
 #define ALGOVIZ_CORE_APPLICATION_H_
 #pragma once
 
-#include "SFML/Graphics/RenderWindow.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
 
 namespace alviz {
 class Application {

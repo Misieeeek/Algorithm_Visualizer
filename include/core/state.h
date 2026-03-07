@@ -2,8 +2,8 @@
 #define ALGOVIZ_CORE_STATE_H_
 #pragma once
 
-#include "SFML/Graphics/RenderWindow.hpp"
-#include "SFML/Window/Event.hpp"
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Window/Event.hpp>
 
 namespace alviz {
 class State {};

@@ -8,6 +8,7 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 
 find_package(SFML CONFIG REQUIRED)
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS src/*.cpp)
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
 add_executable(Algorithm_visualizer
   algorithm_visualizer.cpp
@@ -27,6 +28,7 @@ target_link_libraries(Algorithm_visualizer
 target_include_directories(Algorithm_visualizer 
     PRIVATE 
         ${CMAKE_SOURCE_DIR}/include
+        ${CMAKE_SOURCE_DIR}/src
 )
 # # CREATE MAIN EXECUTABLE
 # add_executable(${PROJECT_NAME} algorithm_visualizer.cpp ${SRC_FILES})

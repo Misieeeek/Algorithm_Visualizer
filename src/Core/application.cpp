@@ -1,6 +1,6 @@
-#include "Core/Application.h"
+#include "core/application.h"
 
-#include "SFML/Window/Event.hpp"
+#include <SFML/Window/Event.hpp>
 
 namespace alviz {
 void Application::run() {
