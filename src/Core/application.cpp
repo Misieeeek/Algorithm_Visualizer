@@ -4,7 +4,7 @@
 
 namespace alviz {
 void Application::run() {
-  _window.create(sf::VideoMode(1280, 720), "Algorithm Visualizer",
+  _window.create(sf::VideoMode(_width, _height), _name,
                  sf::Style::Close | sf::Style::Resize);
   while (_window.isOpen()) {
     handleEvents();

@@ -3,6 +3,7 @@
 #pragma once
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <cstdint>
 
 namespace alviz {
 class Application {
@@ -16,6 +17,9 @@ class Application {
 
   sf::RenderWindow _window;
   bool _running;
+  uint16_t _width = 1280;
+  uint16_t _height = 720;
+  std::string _name = "Algorithm Visualizer";
 };
 }  // namespace alviz
 
