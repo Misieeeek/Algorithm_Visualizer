@@ -4,19 +4,31 @@
 
 namespace alviz {
 void Application::run() {
-  _window.create(sf::VideoMode(_width, _height), _name,
-                 sf::Style::Close | sf::Style::Resize);
+  createScreen();
   while (_window.isOpen()) {
     handleEvents();
     render();
   }
 }
 
+void Application::createScreen() {
+  _window.create(sf::VideoMode(_width, _height), _name,
+                 sf::Style::Close | sf::Style::Resize);
+}
+
 void Application::handleEvents() {
   sf::Event evnt;
   while (_window.pollEvent(evnt)) {
-    if (evnt.type == sf::Event::Closed) {
-      _window.close();
+    switch (evnt.type) {
+      case sf::Event::Closed:
+        _window.close();
+        break;
+      case sf::Event::TextEntered:
+
+        break;
+      case sf::Event::KeyPressed:
+
+        break;
     }
   }
 }
