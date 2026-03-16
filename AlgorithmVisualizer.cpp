@@ -1,4 +1,4 @@
-#include "include/core/application.h"
+#include "include/Core/Application.h"
 
 int main() {
   alviz::Application app;

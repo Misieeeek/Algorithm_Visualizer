@@ -1,7 +1,6 @@
 cmake_minimum_required(VERSION 4.2.3)
 project(Algorithm_Visualizer VERSION 1.0 LANGUAGES CXX)
 
-
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -10,26 +9,43 @@ find_package(SFML CONFIG REQUIRED)
 file(GLOB_RECURSE SRC_FILES CONFIGURE_DEPENDS src/*.cpp)
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 
-add_executable(Algorithm_visualizer
-  algorithm_visualizer.cpp
-  ${SRC_FILES}
+set(SRC_FILES
+    AlgorithmVisualizer.cpp
+    src/Core/Application.cpp
+    src/Core/StateManager.cpp 
+    src/GUI/CanvasSFML.cpp
 )
 
-target_link_libraries(Algorithm_visualizer
-    PRIVATE
-        sfml-system
-        sfml-window
-        sfml-graphics
-        sfml-audio
-        sfml-network
+set(HEADER_FILES
+    include/AlvizMath.h
+    include/GUI/Button.h
+    include/GUI/CanvasSFML.h
+    include/GUI/Label.h
+    include/GUI/TextWidget.h
+    include/GUI/Widget.h
+    include/GUI/Common.h
+    include/Core/Application.h
+    include/Core/State.h
+    include/Core/StateManager.h
 )
 
 # SET INCLUDE DIRECTORIES
-target_include_directories(Algorithm_visualizer 
-    PRIVATE 
-        ${CMAKE_SOURCE_DIR}/include
-        ${CMAKE_SOURCE_DIR}/src
+add_executable(Algorithm_visualizer
+    ${SRC_FILES}
+    ${HEADER_FILES}
 )
+
+target_include_directories(Algorithm_visualizer PRIVATE include)
+
+target_link_libraries(Algorithm_visualizer
+    PRIVATE
+        SFML::System
+        SFML::Window
+        SFML::Graphics
+        SFML::Audio
+        SFML::Network
+)
+
 # # CREATE MAIN EXECUTABLE
 # add_executable(${PROJECT_NAME} algorithm_visualizer.cpp ${SRC_FILES})
 #

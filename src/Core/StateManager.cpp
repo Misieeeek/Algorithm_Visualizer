@@ -1,3 +1,3 @@
-#include "core/stateManager.h"
+#include "Core/StateManager.h"
 
 namespace alviz {}  // namespace alviz

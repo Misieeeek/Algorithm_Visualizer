@@ -2,13 +2,21 @@
 #define ALGOVIZ_GUI_ICANVAS_H_
 #pragma once
 
-namespace GUI {
+#include <string>
+
+#include "AlvizMath.h"
+#include "GUI/Common.h"
+
+namespace alviz::gui {
 class ICanvas {
  public:
-  virtual ~ICanvas() = 0;
-  virtual void drawRect() = 0;
-  virtual void drawBorder() = 0;
-  virtual void drawText() = 0;
+  virtual ~ICanvas() = default;
+
+  virtual void drawRect(FloatRect bounds, Color fill) = 0;
+  virtual void drawBorder(FloatRect bounds, Color color,
+                          float thickness = 1.0) = 0;
+  virtual void drawText(const std::string& text, Vec2 pos, Color color,
+                        uint8_t size = 14) = 0;
 };
-}  // namespace GUI
+}  // namespace alviz::gui
 #endif

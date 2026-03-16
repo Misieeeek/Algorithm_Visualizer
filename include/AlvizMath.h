@@ -4,7 +4,7 @@ struct Vec2 {
   float x, y;
 };
 
-struct FloatRec {
+struct FloatRect {
   float x, y;
   float width, height;
 

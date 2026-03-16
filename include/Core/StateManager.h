@@ -7,7 +7,7 @@
 #include <memory>
 #include <stack>
 
-#include "state.h"
+#include "State.h"
 
 namespace alviz {
 class StateManager {};
