@@ -2,6 +2,7 @@
 #define ALGOVIZ_CORE_APPLICATION_H_
 #pragma once
 
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <cstdint>
 
@@ -16,6 +17,7 @@ class Application {
   void render();
 
   sf::RenderWindow _window;
+  sf::Font _font;
 
   bool _running;
   uint16_t _width = 1280;

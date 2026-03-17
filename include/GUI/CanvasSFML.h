@@ -2,6 +2,9 @@
 #define ALGOVIZ_GUI_CANVAS_SFML_H_
 #pragma once
 
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/Text.hpp>
+
 #include "ICanvas.h"
 
 namespace alviz::gui {
@@ -11,7 +14,13 @@ class CanvasSFML : public ICanvas {
   void drawBorder(FloatRect bounds, Color color,
                   float thickness = 1.0) override;
   void drawText(const std::string& text, Vec2 pos, Color color,
-                uint8_t size = 14) override;
+                uint8_t size = 14, uint32_t style = 0) override;
+
+ private:
+  void _setRectPosAndSize(FloatRect bounds);
+
+  sf::RectangleShape _rectShape;
+  sf::Text _text;
 };
 };  // namespace alviz::gui
 #endif
