@@ -13,4 +13,7 @@ struct FloatRect {
            pos_y <= y + height;
   };
 };
+
+enum class Key { Up, Down, Left, Right, Enter, Esc };
+
 }  // namespace alviz

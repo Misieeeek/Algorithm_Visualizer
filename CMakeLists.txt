@@ -23,6 +23,7 @@ set(HEADER_FILES
     include/GUI/Label.h
     include/GUI/TextWidget.h
     include/GUI/Widget.h
+    include/GUI/Container.h
     include/GUI/Common.h
     include/Core/Application.h
     include/Core/State.h
