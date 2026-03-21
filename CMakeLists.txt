@@ -14,6 +14,7 @@ set(SRC_FILES
     src/Core/Application.cpp
     src/Core/StateManager.cpp 
     src/GUI/CanvasSFML.cpp
+    src/GUI/Button.cpp
 )
 
 set(HEADER_FILES
