@@ -2,6 +2,8 @@
 
 #include <SFML/Window/Event.hpp>
 
+#include "GUI/Button.h"
+#include "GUI/Container.h"
 namespace alviz {
 void Application::run() {
   createScreen();
@@ -14,6 +16,9 @@ void Application::run() {
 void Application::createScreen() {
   _window.create(sf::VideoMode({_width, _height}), _name,
                  sf::Style::Close | sf::Style::Resize);
+  gui::Container con;
+  auto btn = std::make_shared<gui::Button>();
+  con.add(btn);
 }
 
 void Application::handleEvents() {

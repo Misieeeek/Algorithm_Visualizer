@@ -6,9 +6,12 @@
 
 #include "AlvizMath.h"
 #include "GUI/Common.h"
+#include "GUI/Styles.h"
 
 namespace alviz::gui {
 class ICanvas {
+  using TextStyle = styles::TextStyle;
+
  public:
   virtual ~ICanvas() = default;
 
@@ -16,7 +19,8 @@ class ICanvas {
   virtual void drawBorder(FloatRect bounds, Color color,
                           float thickness = 1.0) = 0;
   virtual void drawText(const std::string& text, Vec2 pos, Color color,
-                        uint8_t size = 14, uint32_t style = 0) = 0;
+                        uint8_t size = 14,
+                        TextStyle style = TextStyle::Regular) = 0;
 };
 }  // namespace alviz::gui
 #endif

@@ -27,6 +27,9 @@ class Widget {
   void setFocused(bool isFocused);
   [[nodiscard]] bool getFocused() const;
 
+  void setBounds(FloatRect bounds);
+  [[nodiscard]] FloatRect getBounds() const;
+
  private:
   FloatRect _bounds;
   bool _visible = true;
