@@ -9,16 +9,19 @@
 
 namespace alviz::gui {
 class CanvasSFML : public ICanvas {
+  using TextStyle = styles::TextStyle;
+
  public:
   void drawRect(FloatRect bounds, Color fill) override;
   void drawBorder(FloatRect bounds, Color color,
                   float thickness = 1.0) override;
   void drawText(const std::string& text, Vec2 pos, Color color,
-                uint8_t size = 14, uint32_t style = 0) override;
+                uint8_t size = 14,
+                TextStyle style = TextStyle::Regular) override;
 
  private:
   void _setRectPosAndSize(FloatRect bounds);
-
+  static sf::Text::Style toSFML(TextStyle style);
   sf::RectangleShape _rectShape;
   sf::Text _text;
 };

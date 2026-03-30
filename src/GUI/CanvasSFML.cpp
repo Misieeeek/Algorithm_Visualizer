@@ -13,16 +13,29 @@ void CanvasSFML::drawBorder(FloatRect bounds, Color color, float thickness) {
 }
 
 void CanvasSFML::drawText(const std::string& text, Vec2 pos, Color color,
-                          uint8_t size, uint32_t style) {
+                          uint8_t size, TextStyle style) {
   _text.setString(text);
   _text.setPosition({pos.x, pos.y});
   _text.setFillColor({color.r, color.g, color.b, color.a});
   _text.setCharacterSize(size);
-  _text.setStyle(style);
+  _text.setStyle(toSFML(style));
 }
 
 void CanvasSFML::_setRectPosAndSize(FloatRect bounds) {
   _rectShape.setPosition({bounds.x, bounds.y});
   _rectShape.setSize({bounds.width, bounds.height});
+}
+
+sf::Text::Style CanvasSFML::toSFML(TextStyle style) {
+  switch (style) {
+    case TextStyle::Bold:
+      return sf::Text::Bold;
+    case TextStyle::Italic:
+      return sf::Text::Italic;
+    case TextStyle::Underline:
+      return sf::Text::Underlined;
+    default:
+      return sf::Text::Regular;
+  }
 }
 };  // namespace alviz::gui
