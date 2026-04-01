@@ -26,6 +26,14 @@ struct ButtonStyle {
   TextStyle style{TextStyle::Regular};
 };
 
+inline TextStyle operator|(TextStyle style1, TextStyle style2) {
+  return static_cast<TextStyle>(static_cast<uint8_t>(style1) |
+                                static_cast<uint8_t>(style2));
+}
+
+inline bool operator&(TextStyle style1, TextStyle style2) {
+  return static_cast<uint8_t>(style1) & static_cast<uint8_t>(style2);
+}
 };  // namespace alviz::gui::styles
 
 #endif

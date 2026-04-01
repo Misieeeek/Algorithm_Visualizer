@@ -10,8 +10,8 @@ enum class Layout { Vertical, Horizontal, Grid, Absolute };
 
 class Container : public Widget {
  public:
-  void add(std::shared_ptr<Widget> widget);
-  void remove(std::shared_ptr<Widget> widget);
+  void add(const std::shared_ptr<Widget> widget);
+  void remove(const std::shared_ptr<Widget> widget);
   void update() override;
   void render(ICanvas& canvas) override;
   void onKey(Key key) override;

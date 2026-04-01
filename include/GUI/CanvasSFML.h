@@ -21,7 +21,8 @@ class CanvasSFML : public ICanvas {
 
  private:
   void _setRectPosAndSize(FloatRect bounds);
-  static sf::Text::Style toSFML(TextStyle style);
+  static uint32_t toSFML(TextStyle style);
+  static sf::Color toSFML(Color color);
   sf::RectangleShape _rectShape;
   sf::Text _text;
 };

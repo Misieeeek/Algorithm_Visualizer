@@ -2,7 +2,6 @@ Checks: >
   clang-analyzer-*,
   bugprone-*,
   performance-*,
-  modernize-*,
   readability-*,
   cppcoreguidelines-*,
   -cppcoreguidelines-avoid-magic-numbers,

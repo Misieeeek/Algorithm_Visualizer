@@ -26,16 +26,23 @@ void CanvasSFML::_setRectPosAndSize(FloatRect bounds) {
   _rectShape.setSize({bounds.width, bounds.height});
 }
 
-sf::Text::Style CanvasSFML::toSFML(TextStyle style) {
-  switch (style) {
-    case TextStyle::Bold:
-      return sf::Text::Bold;
-    case TextStyle::Italic:
-      return sf::Text::Italic;
-    case TextStyle::Underline:
-      return sf::Text::Underlined;
-    default:
-      return sf::Text::Regular;
+uint32_t CanvasSFML::toSFML(TextStyle style) {
+  uint32_t result = sf::Text::Regular;
+
+  if (style & TextStyle::Bold) {
+    result |= sf::Text::Bold;
   }
+  if (style & TextStyle::Italic) {
+    result |= sf::Text::Italic;
+  }
+  if (style & TextStyle::Underline) {
+    result |= sf::Text::Underlined;
+  }
+
+  return result;
+}
+
+sf::Color CanvasSFML::toSFML(Color color) {
+  return sf::Color(color.r, color.g, color.b, color.a);
 }
 };  // namespace alviz::gui

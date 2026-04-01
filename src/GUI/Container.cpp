@@ -1,11 +1,11 @@
 #include "GUI/Container.h"
 
 namespace alviz::gui {
-void Container::add(std::shared_ptr<Widget>& widget) {
+void Container::add(const std::shared_ptr<Widget> widget) {
   _children.push_back(widget);
 }
 
-void Container::remove(std::shared_ptr<Widget>& widget) {
+void Container::remove(const std::shared_ptr<Widget> widget) {
   std::erase(_children, widget);
 }
 
