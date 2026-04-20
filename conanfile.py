@@ -6,31 +6,39 @@ from conan.tools.scm import Version
 
 
 class FormatterRecipe(ConanFile):
+    name = "formatter"
     settings = "os", "compiler", "build_type", "arch"
     generators = "CMakeToolchain", "CMakeDeps"
+
+    _min_compiler_version = {
+        "gcc": "14",
+        "clang": "16",
+        "apple-clang": "15",
+        "msvc": "194",
+    }
 
     def requirements(self):
         self.requires("sfml/3.0.2")
 
     def build_requirements(self):
-        self.tool_requires("cmake/4.3.0")
-        self.tool_requires("ninja/1.13.2")
-        self.tool_requires("doxygen/1.16.1")
+        self.tool_requires("cmake/[>=4.3]")
+        self.tool_requires("doxygen/[>=1.16]")
 
     def validate(self):
         if not valid_min_cppstd(self, 23):
-            raise ConanInvalidConfiguration("Task requires atleast C++23")
+            raise ConanInvalidConfiguration("formatter requires at least C++23")
 
-        compiler = self.settings.compiler
-        version = Version(self.settings.compiler.version)
+        compiler = str(self.settings.compiler)
+        min_version = self._min_compiler_version.get(compiler)
 
-        if compiler == "gcc" and version < "14":
-            raise ConanInvalidConfiguration("This project requires GCC >= 14")
-        if compiler == "clang" and version < "16":
-            raise ConanInvalidConfiguration("This project requires Clang >= 16")
-        if compiler == "msvc" and version < "194":
+        if min_version is None:
+            self.output.warning(
+                f"compiler '{compiler}' is not tested; use at your own risk"
+            )
+        elif Version(self.settings.compiler.version) < min_version:
             raise ConanInvalidConfiguration(
-                "This project requires MSVC >= 19.4 (VS 2022)"
+                f"formatter requires {compiler} >= {min_version} for C++23 "
+                f"(got {self.settings.compiler.version})"
             )
 
     def layout(self):
