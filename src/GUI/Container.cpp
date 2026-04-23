@@ -1,4 +1,4 @@
-#include "GUI/Container.h"
+import GUI.Container;
 
 namespace alviz::gui {
 void Container::add(const std::shared_ptr<Widget> widget) {

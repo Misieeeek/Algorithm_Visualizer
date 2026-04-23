@@ -1,4 +1,4 @@
-#include "GUI/CanvasSFML.h"
+import GUI.CanvasSFML;
 
 namespace alviz::gui {
 void CanvasSFML::drawRect(FloatRect bounds, Color fill) {

@@ -1,4 +1,4 @@
-#include "GUI/Widget.h"
+import GUI.Widget;
 
 namespace alviz::gui {
 void Widget::update() {}

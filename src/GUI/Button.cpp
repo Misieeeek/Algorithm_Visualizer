@@ -1,4 +1,4 @@
-#include "GUI/Button.h"
+import GUI.Button;
 
 namespace alviz::gui {
 void Button::render(ICanvas& canvas) {
