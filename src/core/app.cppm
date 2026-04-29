@@ -7,7 +7,7 @@ module;
 export module Alviz.App;
 
 export namespace alviz {
-class Application {
+class App {
  public:
   void run();
 

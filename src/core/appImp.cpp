@@ -1,34 +1,35 @@
-#include "Core/Application.h"
-
 #include <SFML/Window/Event.hpp>
 
-#include "GUI/Button.h"
-#include "GUI/Container.h"
+module Alviz.App;
+
+import GUI.Button;
+import GUI.Container;
+
 namespace alviz {
-void Application::run() {
+void App::run() {
   createScreen();
-  while (_window.isOpen()) {
+  while (window_.isOpen()) {
     handleEvents();
     render();
   }
 }
 
-void Application::createScreen() {
-  _window.create(sf::VideoMode({_width, _height}), _name,
+void App::createScreen() {
+  _window.create(sf::VideoMode({width_, height_}), name_,
                  sf::Style::Close | sf::Style::Resize);
   gui::Container con;
   auto btn = std::make_shared<gui::Button>();
   con.add(btn);
 }
 
-void Application::handleEvents() {
-  while (const std::optional EVENT = _window.pollEvent()) {
+void App::handleEvents() {
+  while (const std::optional EVENT = window_.pollEvent()) {
   }
 }
 
-void Application::render() {
-  _window.clear();
-  _window.display();
+void App::render() {
+  window_.clear();
+  window_.display();
 }
 
 }  // namespace alviz
