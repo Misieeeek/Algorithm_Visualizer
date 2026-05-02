@@ -6,12 +6,12 @@ include(${CMAKE_SOURCE_DIR}/cmake/Coverage.cmake)
 include(${CMAKE_SOURCE_DIR}/cmake/Valgrind.cmake)
 
 add_executable(unit_tests
-    #   insertion_sort_algos_test.cpp 
+    insertion_sort_algos_test.cpp 
 )
 
 target_link_libraries(unit_tests PRIVATE
     GTest::gtest_main GTest::gmock
-    # core_lib
+    core_lib
 )
 
 option(USE_VALGRIND "Prepare binary for Valgrind (disables Sanitizers)" OFF)
