@@ -1,22 +1,30 @@
-import GUI.Button;
+module;
+
+#include <functional>
+#include <string>
+
+module GUI.Button;
+
+import GUI.Styles;
+import GUI.Common;
 
 namespace alviz::gui {
 void Button::render(ICanvas& canvas) {
-  Color background = getFocused() ? _style.focused : _style.normal;
+  Color background = getFocused() ? style_.focused : style_.normal;
   canvas.drawRect(getBounds(), background);
-  canvas.drawBorder(getBounds(), _style.border, _style.borderThickness);
-  canvas.drawText(_text, {getBounds().x + 8, getBounds().y + 8}, _style.text,
-                  _style.fontSize, _style.style);
+  canvas.drawBorder(getBounds(), style_.border, style_.borderThickness);
+  canvas.drawText(text_, {getBounds().x + 8, getBounds().y + 8}, style_.text,
+                  style_.fontSize, style_.style);
 }
 
 void Button::press() {
-  if (_onClick) {
-    _onClick();
+  if (onClick_) {
+    onClick_();
   }
 }
 
 void Button::setOnPress(std::function<void()> callback) {
-  _onClick = std::move(callback);
+  onClick_ = std::move(callback);
 }
 
 void Button::onMouseClick(math::f32 xPos, math::f32 yPos) {

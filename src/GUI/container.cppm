@@ -1,13 +1,18 @@
 module;
 
+#include <cstddef>
+#include <memory>
+#include <vector>
+
 export module GUI.Container;
 
+import GUI.ICanvas;
 import Alviz.Math;
 import GUI.Widget;
 
 export namespace alviz::gui {
 
-using math = alviz::math;
+namespace math = alviz::math;
 
 enum class Layout { Vertical, Horizontal, Grid, Absolute };
 

@@ -1,4 +1,17 @@
-import GUI.CanvasSFML;
+module;
+
+#include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Font.hpp>
+#include <SFML/Graphics/RectangleShape.hpp>
+#include <SFML/Graphics/RenderWindow.hpp>
+#include <SFML/Graphics/Text.hpp>
+#include <string>
+
+module GUI.CanvasSFML;
+
+import Alviz.Math;
+import GUI.Common;
+import GUI.Styles;
 
 namespace alviz::gui {
 void CanvasSFML::drawRect(FloatRect bounds, Color fill) {

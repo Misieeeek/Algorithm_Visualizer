@@ -5,6 +5,7 @@ module;
 
 export module GUI.TextWidget;
 
+import GUI.ICanvas;
 import GUI.Widget;
 
 export namespace alviz::gui {

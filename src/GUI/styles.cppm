@@ -6,7 +6,7 @@ import Alviz.Math;
 import GUI.Common;
 
 export namespace alviz::gui::styles {
-using math = alviz::math;
+namespace math = alviz::math;
 
 enum class TextStyle { Regular, Bold, Italic, Underline };
 

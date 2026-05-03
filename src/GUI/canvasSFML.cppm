@@ -2,17 +2,20 @@ module;
 
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/Text.hpp>
+#include <string>
 
 export module GUI.CanvasSFML;
 
+import GUI.Common;
+import GUI.Styles;
 import Alviz.Math;
 import GUI.ICanvas;
 
 export namespace alviz::gui {
 class CanvasSFML : public ICanvas {
+ public:
   using TextStyle = styles::TextStyle;
 
- public:
   void drawRect(FloatRect bounds, Color fill) override;
   void drawBorder(FloatRect bounds, Color color,
                   math::f32 thickness = 1.0) override;

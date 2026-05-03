@@ -5,6 +5,7 @@ module;
 
 export module GUI.Label;
 
+import GUI.ICanvas;
 import Alviz.Math;
 import GUI.Styles;
 import GUI.TextWidget;

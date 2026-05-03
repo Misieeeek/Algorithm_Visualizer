@@ -1,4 +1,13 @@
-import GUI.Widget;
+module;
+
+#include "SFML/Graphics/Font.hpp"
+#include "SFML/Graphics/RenderWindow.hpp"
+#include "SFML/Graphics/Text.hpp"
+#include "SFML/Window/Window.hpp"
+
+module GUI.Widget;
+
+import Alviz.Math;
 
 namespace alviz::gui {
 void Widget::update() {}
@@ -20,5 +29,9 @@ bool Widget::visible() const { return visible_; }
 void Widget::setFocused(bool isFocused) { focused_ = isFocused; }
 
 bool Widget::getFocused() const { return focused_; }
+
+void Widget::setBounds(FloatRect bounds) { bounds_ = bounds; }
+
+FloatRect Widget::getBounds() const { return bounds_; }
 
 }  // namespace alviz::gui

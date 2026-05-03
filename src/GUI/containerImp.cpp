@@ -1,4 +1,14 @@
-import GUI.Container;
+module;
+
+#include <cstddef>
+#include <memory>
+#include <vector>
+
+module GUI.Container;
+
+import GUI.ICanvas;
+import Alviz.Math;
+import GUI.Widget;
 
 namespace alviz::gui {
 void Container::add(const std::shared_ptr<Widget> widget) {

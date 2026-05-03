@@ -1,18 +1,21 @@
 module;
 
+#include <functional>
+#include <string>
+
 #include "SFML/Graphics/RenderWindow.hpp"
 #include "SFML/Window/Window.hpp"
 
 export module GUI.Button;
 
-import std;
 import Alviz.Math;
+import GUI.Styles;
 import GUI.ICanvas;
 import GUI.Label;
 import GUI.TextWidget;
 
 export namespace alviz::gui {
-using math = alviz::math;
+namespace math = alviz::math;
 
 class Button : public TextWidget {
  public:

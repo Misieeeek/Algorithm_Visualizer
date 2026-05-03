@@ -5,7 +5,8 @@ target_sources(GUI_lib
         buttonImp.cpp
         canvasSFMLImp.cpp 
         containerImp.cpp 
-        widgetImp.cpp 
+        widgetImp.cpp
+        textWidgetImp.cpp
     PUBLIC
         FILE_SET CXX_MODULES FILES
             ICanvas.cppm 
@@ -19,5 +20,4 @@ target_sources(GUI_lib
             widget.cppm
 )
 
-target_link_libraries(GUI_lib PUBLIC SFML::Graphics)
-
+target_link_libraries(GUI_lib PUBLIC SFML::Graphics SFML::Window SFML::System common_lib)

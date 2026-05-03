@@ -5,8 +5,6 @@ module;
 
 export module Alviz.StateManager;
 
-import std;
-
 import Alviz.State;
 
 export namespace alviz {

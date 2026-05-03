@@ -1,5 +1,6 @@
-#include "include/Core/Application.h"
+import Alviz.App;
+
 int main() {
-  alviz::Application app;
+  alviz::App app;
   app.run();
 }

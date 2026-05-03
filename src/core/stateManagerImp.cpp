@@ -1,3 +1,5 @@
-#include "Core/StateManager.h"
+module;
+
+module Alviz.StateManager;
 
 namespace alviz {}  // namespace alviz

@@ -1,19 +1,20 @@
 module;
 
+#include <string>
+
 export module GUI.ICanvas;
 
-import std;
 import Alviz.Math;
 import GUI.Common;
 import GUI.Styles;
 
 export namespace alviz::gui {
-using math = alviz::math;
+namespace math = alviz::math;
 
 class ICanvas {
+ public:
   using TextStyle = styles::TextStyle;
 
- public:
   virtual ~ICanvas() = default;
 
   virtual void drawRect(FloatRect bounds, Color fill) = 0;

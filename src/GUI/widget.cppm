@@ -11,7 +11,7 @@ import Alviz.Math;
 import GUI.ICanvas;
 
 export namespace alviz::gui {
-using math = alviz::math;
+namespace math = alviz::math;
 
 class Widget {
  public:
@@ -31,11 +31,11 @@ class Widget {
   void setFocused(bool isFocused);
   [[nodiscard]] bool getFocused() const;
 
-  void setBounds(math::f32Rect bounds);
-  [[nodiscard]] math::f32Rect getBounds() const;
+  void setBounds(FloatRect bounds);
+  [[nodiscard]] FloatRect getBounds() const;
 
  private:
-  math::f32 Rect bounds_;
+  FloatRect bounds_;
   bool visible_ = true;
   bool focused_ = false;
 };

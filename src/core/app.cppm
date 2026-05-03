@@ -2,10 +2,10 @@ module;
 
 #include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <string>
 
 export module Alviz.App;
 
-import std;
 import Alviz.Math;
 
 export namespace alviz {
