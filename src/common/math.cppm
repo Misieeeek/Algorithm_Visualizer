@@ -5,22 +5,6 @@ export module Alviz.Math;
 import std;
 
 export namespace alviz {
-struct Vec2 {
-  float x, y;
-};
-
-struct FloatRect {
-  float x, y;
-  float width, height;
-
-  bool contains(float pos_x, float pos_y) const {
-    return pos_x >= x && pos_x <= x + width && pos_y >= y &&
-           pos_y <= y + height;
-  };
-};
-
-enum class Key { Up, Down, Left, Right, Enter, Esc };
-
 namespace math {
 using i8 = std::int8_t;
 using i16 = std::int16_t;
@@ -35,5 +19,21 @@ using u64 = std::uint64_t;
 using f32 = std::float_t;
 using f64 = std::double_t;
 }  // namespace math
+
+struct Vec2 {
+  math::f32 x, y;
+};
+
+struct FloatRect {
+  math::f32 x, y;
+  math::f32 width, height;
+
+  bool contains(math::f32 pos_x, math::f32 pos_y) const {
+    return pos_x >= x && pos_x <= x + width && pos_y >= y &&
+           pos_y <= y + height;
+  };
+};
+
+enum class Key { Up, Down, Left, Right, Enter, Esc };
 
 }  // namespace alviz

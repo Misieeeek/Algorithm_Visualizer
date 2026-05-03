@@ -14,7 +14,7 @@ void App::run() {
   }
 }
 
-void App::createScreen() {
+void App::createScreen_() {
   _window.create(sf::VideoMode({width_, height_}), name_,
                  sf::Style::Close | sf::Style::Resize);
   gui::Container con;
@@ -22,12 +22,12 @@ void App::createScreen() {
   con.add(btn);
 }
 
-void App::handleEvents() {
+void App::handleEvents_() {
   while (const std::optional EVENT = window_.pollEvent()) {
   }
 }
 
-void App::render() {
+void App::render_() {
   window_.clear();
   window_.display();
 }

@@ -5,6 +5,7 @@ module;
 
 export module GUI.Label;
 
+import Alviz.Math;
 import GUI.Styles;
 import GUI.TextWidget;
 
@@ -15,7 +16,7 @@ class Label : public TextWidget {
   [[nodiscard]] std::string getText() const;
 
  private:
-  std::string _text;
-  styles::TextStyle _style;
+  std::string text_;
+  styles::TextStyle style_;
 };
 }  // namespace alviz::gui

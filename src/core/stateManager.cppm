@@ -2,10 +2,10 @@ module;
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
-#include <memory>
-#include <stack>
 
 export module Alviz.StateManager;
+
+import std;
 
 import Alviz.State;
 

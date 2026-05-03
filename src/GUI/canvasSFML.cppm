@@ -5,6 +5,7 @@ module;
 
 export module GUI.CanvasSFML;
 
+import Alviz.Math;
 import GUI.ICanvas;
 
 export namespace alviz::gui {
@@ -14,16 +15,16 @@ class CanvasSFML : public ICanvas {
  public:
   void drawRect(FloatRect bounds, Color fill) override;
   void drawBorder(FloatRect bounds, Color color,
-                  float thickness = 1.0) override;
+                  math::f32 thickness = 1.0) override;
   void drawText(const std::string& text, Vec2 pos, Color color,
-                uint8_t size = 14,
+                math::u8 size = 14,
                 TextStyle style = TextStyle::Regular) override;
 
  private:
-  void _setRectPosAndSize(FloatRect bounds);
-  static uint32_t toSFML(TextStyle style);
+  void setRectPosAndSize_(FloatRect bounds);
+  static math::u32 toSFML(TextStyle style);
   static sf::Color toSFML(Color color);
-  sf::RectangleShape _rectShape;
-  sf::Text _text;
+  sf::RectangleShape rectShape_;
+  sf::Text text_;
 };
 };  // namespace alviz::gui

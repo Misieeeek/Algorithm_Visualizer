@@ -19,7 +19,7 @@ void Button::setOnPress(std::function<void()> callback) {
   _onClick = std::move(callback);
 }
 
-void Button::onMouseClick(float xPos, float yPos) {
+void Button::onMouseClick(math::f32 xPos, math::f32 yPos) {
   if (contains(xPos, yPos)) {
     press();
   }

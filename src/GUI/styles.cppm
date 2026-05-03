@@ -2,14 +2,17 @@ module;
 
 export module GUI.Styles;
 
+import Alviz.Math;
 import GUI.Common;
 
 export namespace alviz::gui::styles {
+using math = alviz::math;
+
 enum class TextStyle { Regular, Bold, Italic, Underline };
 
 struct LabelStyle {
   Color color{.r = 255, .g = 255, .b = 255, .a = 255};
-  uint16_t size{14};
+  math::u16 size{14};
   TextStyle style{TextStyle::Regular};
 };
 
@@ -21,16 +24,16 @@ struct ButtonStyle {
   Color text{.r = 255, .g = 255, .b = 255, .a = 255};
   Color border{.r = 150, .g = 150, .b = 150, .a = 255};
   float borderThickness{1.F};
-  uint16_t fontSize{14};
+  math::u16 fontSize{14};
   TextStyle style{TextStyle::Regular};
 };
 
 inline TextStyle operator|(TextStyle style1, TextStyle style2) {
-  return static_cast<TextStyle>(static_cast<uint8_t>(style1) |
-                                static_cast<uint8_t>(style2));
+  return static_cast<TextStyle>(static_cast<math::u8>(style1) |
+                                static_cast<math::u8>(style2));
 }
 
 inline bool operator&(TextStyle style1, TextStyle style2) {
-  return static_cast<uint8_t>(style1) & static_cast<uint8_t>(style2);
+  return static_cast<math::u8>(style1) & static_cast<math::u8>(style2);
 }
 };  // namespace alviz::gui::styles

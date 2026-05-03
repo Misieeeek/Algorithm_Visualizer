@@ -2,21 +2,21 @@ import GUI.Container;
 
 namespace alviz::gui {
 void Container::add(const std::shared_ptr<Widget> widget) {
-  _children.push_back(widget);
+  children_.push_back(widget);
 }
 
 void Container::remove(const std::shared_ptr<Widget> widget) {
-  std::erase(_children, widget);
+  std::erase(children_, widget);
 }
 
 void Container::update() {
-  for (auto& child : _children) {
+  for (auto& child : children_) {
     child->update();
   }
 };
 
 void Container::render(ICanvas& canvas) {
-  for (auto& child : _children) {
+  for (auto& child : children_) {
     if (child->visible()) {
       child->render(canvas);
     }
@@ -24,63 +24,63 @@ void Container::render(ICanvas& canvas) {
 };
 
 void Container::onKey(Key key) {
-  if (auto focused = _getFocused()) {
+  if (auto focused = getFocused_()) {
     focused->onKey(key);
   }
 };
 
-void Container::onText(uint32_t unicode) {
-  if (auto focused = _getFocused()) {
+void Container::onText(math::u32 unicode) {
+  if (auto focused = getFocused_()) {
     focused->onText(unicode);
   }
 };
 
-void Container::onMouseMove(float xPos, float yPos) {
-  for (auto& child : _children) {
+void Container::onMouseMove(math::f32 xPos, math::f32 yPos) {
+  for (auto& child : children_) {
     child->onMouseMove(xPos, yPos);
   }
 };
 
-void Container::onMouseClick(float xPos, float yPos) {
-  for (auto& child : _children) {
+void Container::onMouseClick(math::f32 xPos, math::f32 yPos) {
+  for (auto& child : children_) {
     if (child->contains(xPos, yPos)) {
-      _setFocus(child);
+      setFocus_(child);
       child->onMouseClick(xPos, yPos);
       return;
     }
   }
 };
 
-std::shared_ptr<Widget> Container::_getFocused() {
-  if (_focusIndex < 0 || _focusIndex >= _children.size()) {
+std::shared_ptr<Widget> Container::getFocused_() {
+  if (focusIndex_ < 0 || focusIndex_ >= children_.size()) {
     return nullptr;
   }
-  return _children[_focusIndex];
+  return children_[focusIndex_];
 }
 
-void Container::_setFocus(std::shared_ptr<Widget>& widget) {
-  if (_focusIndex >= 0) {
-    _children[_focusIndex]->setFocused(false);
+void Container::setFocus_(std::shared_ptr<Widget>& widget) {
+  if (focusIndex_ >= 0) {
+    children_[focusIndex_]->setFocused(false);
   }
 
-  auto iter = std::ranges::find(_children, widget);
-  if (iter != _children.end()) {
+  auto iter = std::ranges::find(children_, widget);
+  if (iter != children_.end()) {
     return;
   }
 
-  _focusIndex = std::distance(_children.begin(), iter);
+  focusIndex_ = std::distance(children_.begin(), iter);
   widget->setFocused(true);
 }
 
-void Container::_nextFocus() {
-  if (_children.empty()) {
+void Container::nextFocus_() {
+  if (children_.empty()) {
     return;
   }
 
-  if (_focusIndex >= 0) {
-    _children[_focusIndex]->setFocused(false);
+  if (focusIndex_ >= 0) {
+    children_[focusIndex_]->setFocused(false);
   }
-  _focusIndex = (_focusIndex + 1) % _children.size();
-  _children[_focusIndex]->setFocused(true);
+  focusIndex_ = (focusIndex_ + 1) % children_.size();
+  children_[focusIndex_]->setFocused(true);
 }
 }  // namespace alviz::gui
