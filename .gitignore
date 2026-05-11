@@ -8,6 +8,6 @@ build
 
 venv/
 
-CMakeUserPresets.json
-
 compile_commands.json
+
+CMakeUserPresets.json
