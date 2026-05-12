@@ -5,46 +5,62 @@ Checks: >
   readability-*,
   cppcoreguidelines-*,
   -cppcoreguidelines-avoid-magic-numbers,
-  -cppcoreguidelines-owning-memory, 
-  -readability-magic-numbers,
+  -cppcoreguidelines-owning-memory,
+  -readability-magic-numbers
 
 WarningsAsErrors: ""
 
 CheckOptions:
-  # ===== NAME =====
-
-  # CLASS / STRUCT / ENUM
+  # ===== TYPES =====
   - key: readability-identifier-naming.ClassCase
-    value: PascalCase
+    value: CamelCase
   - key: readability-identifier-naming.StructCase
-    value: PascalCase
+    value: CamelCase
   - key: readability-identifier-naming.EnumCase
-    value: PascalCase
+    value: CamelCase
   - key: readability-identifier-naming.EnumConstantCase
-    value: PascalCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypeAliasCase
+    value: CamelCase
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
 
-  # FUNCTION & METHOD
+  # ===== FUNCTIONS / METHODS =====
   - key: readability-identifier-naming.FunctionCase
-    value: camelCase
+    value: camelBack
   - key: readability-identifier-naming.MethodCase
-    value: camelCase
+    value: camelBack
 
-  # VARIABLE
+  # ===== VARIABLES =====
   - key: readability-identifier-naming.VariableCase
-    value: camelCase
+    value: camelBack
   - key: readability-identifier-naming.ParameterCase
-    value: camelCase
+    value: camelBack
+  - key: readability-identifier-naming.LocalVariableCase
+    value: camelBack
 
-  # PRIVATE COMPONENT
-  - key: readability-identifier-naming.PrivateMemberPrefix
-    value: _
+  # ===== CLASS MEMBERS =====
   - key: readability-identifier-naming.PrivateMemberCase
-    value: camelCase
+    value: camelBack
+  - key: readability-identifier-naming.PrivateMemberSuffix
+    value: "_"
+  - key: readability-identifier-naming.ProtectedMemberCase
+    value: camelBack
+  - key: readability-identifier-naming.ProtectedMemberSuffix
+    value: "_"
+  - key: readability-identifier-naming.PublicMemberCase
+    value: camelBack
 
-  # CONSTANT
+  # ===== CONSTANTS =====
   - key: readability-identifier-naming.ConstantCase
     value: UPPER_CASE
+  - key: readability-identifier-naming.ConstexprVariableCase
+    value: CamelCase
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: UPPER_CASE
+  - key: readability-identifier-naming.StaticConstantCase
+    value: UPPER_CASE
 
-  # NAMESPACE
+  # ===== NAMESPACES =====
   - key: readability-identifier-naming.NamespaceCase
     value: lower_case
