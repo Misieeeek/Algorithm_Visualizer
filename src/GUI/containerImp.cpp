@@ -20,9 +20,9 @@ void Container::remove(const std::shared_ptr<Widget> widget) {
   std::erase(children_, widget);
 }
 
-void Container::update() {
+void Container::update(math::f32 deltaTime) {
   for (auto& child : children_) {
-    child->update();
+    child->update(deltaTime);
   }
 };
 
@@ -35,13 +35,13 @@ void Container::render(ICanvas& canvas) {
 };
 
 void Container::onKey(Key key) {
-  if (auto focused = getFocused_()) {
+  if (auto focused = getFocused()) {
     focused->onKey(key);
   }
 };
 
 void Container::onText(math::u32 unicode) {
-  if (auto focused = getFocused_()) {
+  if (auto focused = getFocused()) {
     focused->onText(unicode);
   }
 };
@@ -55,27 +55,28 @@ void Container::onMouseMove(math::f32 xPos, math::f32 yPos) {
 void Container::onMouseClick(math::f32 xPos, math::f32 yPos) {
   for (auto& child : children_) {
     if (child->contains(xPos, yPos)) {
-      setFocus_(child);
+      setFocus(child);
       child->onMouseClick(xPos, yPos);
       return;
     }
   }
 };
 
-std::shared_ptr<Widget> Container::getFocused_() {
-  if (focusIndex_ < 0 || focusIndex_ >= children_.size()) {
+std::shared_ptr<Widget> Container::getFocused() {
+  if (focusIndex_ == kNoFocus) {
     return nullptr;
   }
+
   return children_[focusIndex_];
 }
 
-void Container::setFocus_(std::shared_ptr<Widget>& widget) {
-  if (focusIndex_ >= 0) {
+void Container::setFocus(std::shared_ptr<Widget>& widget) {
+  if (focusIndex_ >= kNoFocus) {
     children_[focusIndex_]->setFocused(false);
   }
 
   auto iter = std::ranges::find(children_, widget);
-  if (iter != children_.end()) {
+  if (iter == children_.end()) {
     return;
   }
 
@@ -83,12 +84,12 @@ void Container::setFocus_(std::shared_ptr<Widget>& widget) {
   widget->setFocused(true);
 }
 
-void Container::nextFocus_() {
+void Container::nextFocus() {
   if (children_.empty()) {
     return;
   }
 
-  if (focusIndex_ >= 0) {
+  if (focusIndex_ >= kNoFocus) {
     children_[focusIndex_]->setFocused(false);
   }
   focusIndex_ = (focusIndex_ + 1) % children_.size();

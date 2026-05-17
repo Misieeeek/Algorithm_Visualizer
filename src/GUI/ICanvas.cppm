@@ -23,5 +23,6 @@ class ICanvas {
   virtual void drawText(const std::string& text, Vec2 pos, Color color,
                         math::u8 size = 14,
                         TextStyle style = TextStyle::Regular) = 0;
+  virtual void drawCursor(FloatRect bounds, const std::string& textBefore) = 0;
 };
 }  // namespace alviz::gui

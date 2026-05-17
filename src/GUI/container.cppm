@@ -6,6 +6,7 @@ module;
 
 export module GUI.Container;
 
+import std;
 import GUI.ICanvas;
 import Alviz.Math;
 import GUI.Widget;
@@ -20,7 +21,7 @@ class Container : public Widget {
  public:
   void add(const std::shared_ptr<Widget> widget);
   void remove(const std::shared_ptr<Widget> widget);
-  void update() override;
+  void update(math::f32 deltaTime) override;
   void render(ICanvas& canvas) override;
   void onKey(Key key) override;
   void onText(math::u32 unicode) override;
@@ -28,12 +29,13 @@ class Container : public Widget {
   void onMouseClick(math::f32 xPos, math::f32 yPos) override;
 
  private:
-  std::shared_ptr<Widget> getFocused_();
-  void setFocus_(std::shared_ptr<Widget>& widget);
-  void nextFocus_();
+  std::shared_ptr<Widget> getFocused();
+  void setFocus(std::shared_ptr<Widget>& widget);
+  void nextFocus();
 
   std::vector<std::shared_ptr<Widget>> children_;
-  size_t focusIndex_ = 1;
+  static constexpr size_t kNoFocus = std::numeric_limits<size_t>::max();
+  size_t focusIndex_ = kNoFocus;
   Layout layout_;
 };
 }  // namespace alviz::gui

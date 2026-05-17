@@ -10,7 +10,7 @@ module GUI.Widget;
 import Alviz.Math;
 
 namespace alviz::gui {
-void Widget::update() {}
+void Widget::update(math::f32 deltaTime) {}
 
 void Widget::onKey(Key key) {}
 
@@ -20,9 +20,11 @@ void Widget::onMouseMove(math::f32 xPos, math::f32 yPos) {}
 
 void Widget::onMouseClick(math::f32 xPos, math::f32 yPos) {}
 
-bool Widget::contains(math::f32 xPos, math::f32 yPos) {
+bool Widget::contains(math::f32 xPos, math::f32 yPos) const {
   return bounds_.contains(xPos, yPos);
 }
+
+void Widget::setVisible(bool visibility) { visible_ = visibility; }
 
 bool Widget::visible() const { return visible_; }
 

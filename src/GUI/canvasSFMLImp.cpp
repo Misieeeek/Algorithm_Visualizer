@@ -15,27 +15,29 @@ import GUI.Styles;
 
 namespace alviz::gui {
 void CanvasSFML::drawRect(FloatRect bounds, Color fill) {
-  setRectPosAndSize_(bounds);
-  rectShape_.setFillColor({fill.r, fill.g, fill.b, fill.a});
+  setRectPosAndSize(bounds);
+  rectShape_.setFillColor(toSFML(fill));
+  window_.draw(rectShape_);
 }
 
 void CanvasSFML::drawBorder(FloatRect bounds, Color color,
                             math::f32 thickness) {
-  setRectPosAndSize_(bounds);
-  rectShape_.setOutlineColor({color.r, color.g, color.b, color.a});
+  setRectPosAndSize(bounds);
+  rectShape_.setOutlineColor(toSFML(color));
   rectShape_.setOutlineThickness(thickness);
+  window_.draw(rectShape_);
 }
 
 void CanvasSFML::drawText(const std::string& text, Vec2 pos, Color color,
                           math::u8 size, TextStyle style) {
   text_.setString(text);
   text_.setPosition({pos.x, pos.y});
-  text_.setFillColor({color.r, color.g, color.b, color.a});
+  text_.setFillColor(toSFML(color));
   text_.setCharacterSize(size);
   text_.setStyle(toSFML(style));
 }
 
-void CanvasSFML::setRectPosAndSize_(FloatRect bounds) {
+void CanvasSFML::setRectPosAndSize(FloatRect bounds) {
   rectShape_.setPosition({bounds.x, bounds.y});
   rectShape_.setSize({bounds.width, bounds.height});
 }
@@ -58,5 +60,17 @@ math::u32 CanvasSFML::toSFML(TextStyle style) {
 
 sf::Color CanvasSFML::toSFML(Color color) {
   return sf::Color(color.r, color.g, color.b, color.a);
+}
+
+void CanvasSFML::drawCursor(FloatRect bounds, const std::string& textBefore) {
+  sf::Text temp = text_;
+  temp.setString(textBefore);
+  float cursorX = bounds.x + 4 + temp.getLocalBounds().size.x;
+
+  sf::RectangleShape cursor;
+  cursor.setPosition({cursorX, bounds.y + 4});
+  cursor.setSize({2.F, bounds.height - 8});
+  cursor.setFillColor(sf::Color::White);
+  window_.draw(cursor);
 }
 };  // namespace alviz::gui

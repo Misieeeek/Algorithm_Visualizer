@@ -3,7 +3,7 @@ add_library(GUI_lib STATIC)
 target_sources(
   GUI_lib
   PRIVATE buttonImp.cpp canvasSFMLImp.cpp containerImp.cpp widgetImp.cpp
-          textWidgetImp.cpp
+          inputImp.cpp labelImp.cpp
   PUBLIC FILE_SET
          CXX_MODULES
          FILES
@@ -14,7 +14,7 @@ target_sources(
          label.cppm
          container.cppm
          styles.cppm
-         textWidget.cppm
+         input.cppm
          widget.cppm)
 
 target_link_libraries(GUI_lib PUBLIC SFML::Graphics SFML::Window SFML::System

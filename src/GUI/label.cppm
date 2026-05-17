@@ -5,19 +5,21 @@ module;
 
 export module GUI.Label;
 
+import std;
 import GUI.ICanvas;
 import Alviz.Math;
 import GUI.Styles;
-import GUI.TextWidget;
+import GUI.Widget;
 
 export namespace alviz::gui {
-class Label : public TextWidget {
+class Label : public Widget {
  public:
   void render(ICanvas& canvas) override;
-  [[nodiscard]] std::string getText() const;
+  void setText(std::string text);
+  [[nodiscard]] const std::string& getText() const;
 
  private:
   std::string text_;
-  styles::TextStyle style_;
+  styles::LabelStyle style_;
 };
 }  // namespace alviz::gui

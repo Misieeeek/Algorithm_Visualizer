@@ -13,8 +13,8 @@ void Button::render(ICanvas& canvas) {
   Color background = getFocused() ? style_.focused : style_.normal;
   canvas.drawRect(getBounds(), background);
   canvas.drawBorder(getBounds(), style_.border, style_.borderThickness);
-  canvas.drawText(text_, {getBounds().x + 8, getBounds().y + 8}, style_.text,
-                  style_.fontSize, style_.style);
+  canvas.drawText(getText(), {getBounds().x + 8, getBounds().y + 8},
+                  style_.text, style_.fontSize, style_.style);
 }
 
 void Button::press() {

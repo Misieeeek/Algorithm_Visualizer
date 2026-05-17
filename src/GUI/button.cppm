@@ -12,12 +12,11 @@ import Alviz.Math;
 import GUI.Styles;
 import GUI.ICanvas;
 import GUI.Label;
-import GUI.TextWidget;
 
 export namespace alviz::gui {
 namespace math = alviz::math;
 
-class Button : public TextWidget {
+class Button : public Label {
  public:
   void render(ICanvas& canvas) override;
   void setOnPress(std::function<void()> callback);
@@ -28,6 +27,5 @@ class Button : public TextWidget {
  private:
   std::function<void()> onClick_;
   styles::ButtonStyle style_;
-  std::string text_;
 };
 }  // namespace alviz::gui

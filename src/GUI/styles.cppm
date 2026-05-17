@@ -8,7 +8,12 @@ import GUI.Common;
 export namespace alviz::gui::styles {
 namespace math = alviz::math;
 
-enum class TextStyle { Regular, Bold, Italic, Underline };
+enum class TextStyle : math::u8 {
+  Regular = 0,
+  Bold = 1 << 0,
+  Italic = 1 << 1,
+  Underline = 1 << 2
+};
 
 struct LabelStyle {
   Color color{.r = 255, .g = 255, .b = 255, .a = 255};

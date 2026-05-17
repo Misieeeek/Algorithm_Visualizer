@@ -1,10 +1,5 @@
 module;
 
-#include "SFML/Graphics/Font.hpp"
-#include "SFML/Graphics/RenderWindow.hpp"
-#include "SFML/Graphics/Text.hpp"
-#include "SFML/Window/Window.hpp"
-
 export module GUI.Widget;
 
 import Alviz.Math;
@@ -19,13 +14,15 @@ class Widget {
 
   virtual void render(ICanvas& canvas) = 0;
 
-  virtual void update();
+  virtual void update(math::f32 deltaTime);
   virtual void onKey(Key key);
   virtual void onText(math::u32 unicode);
   virtual void onMouseMove(math::f32 xPos, math::f32 yPos);
   virtual void onMouseClick(math::f32 xPos, math::f32 yPos);
 
-  bool contains(math::f32 xPos, math::f32 yPos);
+  [[nodiscard]] bool contains(math::f32 xPos, math::f32 yPos) const;
+
+  void setVisible(bool visibility);
   [[nodiscard]] bool visible() const;
 
   void setFocused(bool isFocused);
@@ -35,8 +32,8 @@ class Widget {
   [[nodiscard]] FloatRect getBounds() const;
 
  private:
-  FloatRect bounds_;
-  bool visible_ = true;
-  bool focused_ = false;
+  FloatRect bounds_{};
+  bool visible_{true};
+  bool focused_{false};
 };
 }  // namespace alviz::gui
