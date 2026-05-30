@@ -1,6 +1,7 @@
 module;
 
 #include <SFML/Graphics/Color.hpp>
+#include <SFML/Graphics/Font.hpp>
 #include <SFML/Graphics/RectangleShape.hpp>
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Graphics/Text.hpp>
@@ -18,6 +19,8 @@ class CanvasSFML : public ICanvas {
  public:
   using TextStyle = styles::TextStyle;
 
+  CanvasSFML(sf::RenderWindow& window, const sf::Font& defaultFont);
+
   void drawRect(FloatRect bounds, Color fill) override;
   void drawBorder(FloatRect bounds, Color color,
                   math::f32 thickness = 1.0) override;
@@ -33,6 +36,6 @@ class CanvasSFML : public ICanvas {
   static sf::Color toSFML(Color color);
   sf::RectangleShape rectShape_;
   sf::Text text_;
-  sf::RenderWindow window_;
+  sf::RenderWindow& window_;
 };
 };  // namespace alviz::gui

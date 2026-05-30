@@ -6,6 +6,7 @@ module;
 
 export module Alviz.App;
 
+import GUI.Container;
 import Alviz.Math;
 
 export namespace alviz {
@@ -14,9 +15,9 @@ class App {
   void run();
 
  private:
-  void createScreen_();
-  void handleEvents_();
-  void render_();
+  void createScreen();
+  void handleEvents();
+  void render();
 
   sf::RenderWindow window_;
   sf::Font font_;
@@ -25,5 +26,7 @@ class App {
   math::u16 width_ = 1280;
   math::u16 height_ = 720;
   std::string name_ = "Algorithm Visualizer";
+
+  gui::Container mainContainer_;
 };
 }  // namespace alviz

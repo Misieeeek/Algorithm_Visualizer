@@ -25,8 +25,8 @@ struct Vec2 {
 };
 
 struct FloatRect {
-  math::f32 x, y;
-  math::f32 width, height;
+  math::f32 x{0.0F}, y{0.0F};
+  math::f32 width{0.0F}, height{0.0F};
 
   bool contains(math::f32 pos_x, math::f32 pos_y) const {
     return pos_x >= x && pos_x <= x + width && pos_y >= y &&

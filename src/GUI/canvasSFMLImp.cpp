@@ -14,6 +14,10 @@ import GUI.Common;
 import GUI.Styles;
 
 namespace alviz::gui {
+
+CanvasSFML::CanvasSFML(sf::RenderWindow& window, const sf::Font& defaultFont)
+    : window_(window), text_(defaultFont) {}
+
 void CanvasSFML::drawRect(FloatRect bounds, Color fill) {
   setRectPosAndSize(bounds);
   rectShape_.setFillColor(toSFML(fill));

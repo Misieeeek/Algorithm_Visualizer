@@ -1,10 +1,8 @@
 module;
 
-#include <functional>
-#include <string>
-
 module GUI.Button;
 
+import std;
 import GUI.Styles;
 import GUI.Common;
 
