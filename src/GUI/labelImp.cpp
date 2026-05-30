@@ -17,4 +17,6 @@ void Label::render(ICanvas& canvas) {
 void Label::setText(std::string text) { text_ = std::move(text); }
 
 const std::string& Label::getText() const { return text_; }
+
+void Label::setStyle(styles::LabelStyle style) { style_ = std::move(style); }
 }  // namespace alviz::gui

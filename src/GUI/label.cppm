@@ -16,6 +16,7 @@ class Label : public Widget {
  public:
   void render(ICanvas& canvas) override;
   void setText(std::string text);
+  void setStyle(styles::LabelStyle style);
   [[nodiscard]] const std::string& getText() const;
 
  private:

@@ -18,6 +18,7 @@ class App {
   void createScreen();
   void handleEvents();
   void render();
+  void loadResources();
 
   sf::RenderWindow window_;
   sf::Font font_;
