@@ -35,6 +35,10 @@ void App::createScreen() {
 
 void App::handleEvents() {
   while (const std::optional EVENT = window_.pollEvent()) {
+    if (EVENT->is<sf::Event::Closed>()) {
+      window_.close();
+    } else if (const auto* keyPressed = EVENT->getIf<sf::Event::KeyPressed>()) {
+    }
   }
 }
 
