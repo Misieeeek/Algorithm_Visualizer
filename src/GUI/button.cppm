@@ -7,23 +7,25 @@ export module GUI.Button;
 
 import std;
 import Alviz.Math;
+import Alviz.Events;
 import GUI.Styles;
 import GUI.ICanvas;
 import GUI.Label;
 
 export namespace alviz::gui {
-namespace math = alviz::math;
-
-class Button : public Label {
+using namespace alviz::math;
+class Button : public Label, public IMouseListener {
  public:
   void render(ICanvas& canvas) override;
   void setOnPress(std::function<void()> callback);
-  void onMouseClick(math::f32 xPos, math::f32 yPos) override;
+  void onMouseClick(Vec2 pos) override;
+  void onMouseHover(Vec2 pos);
   void onKey(Key key) override;
   void press();
 
  private:
   std::function<void()> onClick_;
   styles::ButtonStyle style_;
+  bool hovered_{false};
 };
 }  // namespace alviz::gui

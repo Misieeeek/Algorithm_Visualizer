@@ -18,4 +18,4 @@ target_sources(
          widget.cppm)
 
 target_link_libraries(GUI_lib PUBLIC SFML::Graphics SFML::Window SFML::System
-                                     common_lib)
+                                     common_lib event_lib)

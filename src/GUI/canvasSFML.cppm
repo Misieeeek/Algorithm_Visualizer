@@ -15,6 +15,7 @@ import Alviz.Math;
 import GUI.ICanvas;
 
 export namespace alviz::gui {
+namespace math = alviz::math;
 class CanvasSFML : public ICanvas {
  public:
   using TextStyle = styles::TextStyle;

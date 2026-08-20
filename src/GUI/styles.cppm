@@ -23,7 +23,7 @@ struct LabelStyle {
 
 struct ButtonStyle {
   Color normal{.r = 50, .g = 50, .b = 50, .a = 255};
-  Color hovered{.r = 80, .g = 80, .b = 80, .a = 255};
+  Color hovered{.r = 184, .g = 174, .b = 37, .a = 255};
   Color focused{.r = 100, .g = 100, .b = 200, .a = 255};
   Color pressed{.r = 30, .g = 30, .b = 30, .a = 255};
   Color text{.r = 255, .g = 255, .b = 255, .a = 255};
