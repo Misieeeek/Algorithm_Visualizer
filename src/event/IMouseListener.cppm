@@ -11,8 +11,8 @@ class IMouseListener {
  public:
   virtual ~IMouseListener() = default;
 
-  virtual void onMouseMove(Vec2 pos) {};
-  virtual void onMouseClick(Vec2 pos) {};
+  virtual void onMouseMove(Vec2i pos) {};
+  virtual void onMouseClick(Vec2i pos) {};
   virtual void onButtonPressed(const sf::Event::MouseButtonPressed& evnt) {}
 };
 }  // namespace alviz

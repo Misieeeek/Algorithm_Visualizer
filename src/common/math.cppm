@@ -1,5 +1,6 @@
 module;
 
+#include <SFML/System/Vector2.hpp>
 #include <cstdint>
 
 export module Alviz.Math;
@@ -20,8 +21,13 @@ using f32 = float;
 using f64 = double;
 }  // namespace math
 
-struct Vec2 {
+struct Vec2f {
   math::f32 x, y;
+};
+
+struct Vec2i {
+  math::i32 x, y;
+  Vec2i fromSFML(const sf::Vector2i& pos) { return Vec2i{pos.x, pos.y}; }
 };
 
 struct FloatRect {

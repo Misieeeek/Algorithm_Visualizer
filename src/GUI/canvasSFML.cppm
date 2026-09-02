@@ -25,7 +25,7 @@ class CanvasSFML : public ICanvas {
   void drawRect(FloatRect bounds, Color fill) override;
   void drawBorder(FloatRect bounds, Color color,
                   math::f32 thickness = 1.0) override;
-  void drawText(const std::string& text, Vec2 pos, Color color,
+  void drawText(const std::string& text, Vec2f pos, Color color,
                 math::u8 size = 14,
                 TextStyle style = TextStyle::Regular) override;
 

@@ -20,7 +20,7 @@ class ICanvas {
   virtual void drawRect(FloatRect bounds, Color fill) = 0;
   virtual void drawBorder(FloatRect bounds, Color color,
                           math::f32 thickness = 1.0) = 0;
-  virtual void drawText(const std::string& text, Vec2 pos, Color color,
+  virtual void drawText(const std::string& text, Vec2f pos, Color color,
                         math::u8 size = 14,
                         TextStyle style = TextStyle::Regular) = 0;
   virtual void drawCursor(FloatRect bounds, const std::string& textBefore) = 0;

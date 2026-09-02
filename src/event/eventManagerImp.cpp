@@ -2,11 +2,13 @@ module;
 
 #include <SFML/Graphics/RenderWindow.hpp>
 #include <SFML/Window/Event.hpp>
+#include <SFML/Window/Mouse.hpp>
 
 module Alviz.EventManager;
 
 import std;
 import Alviz.Utils;
+import Alviz.Math;
 
 namespace alviz {
 void EventManager::pollAndDispatch(sf::RenderWindow& window) {
@@ -31,6 +33,13 @@ void EventManager::pollAndDispatch(sf::RenderWindow& window) {
                             [this](const sf::Event::MouseButtonPressed& evnt) {
                               for (auto* listener : mouseListeners_) {
                                 listener->onButtonPressed(evnt);
+                              }
+                            },
+                            [this](const sf::Event::MouseMoved& evnt) {
+                              for (auto* listener : mouseListeners_) {
+                                Vec2i vec{};
+                                listener->onMouseMove(
+                                    vec.fromSFML(sf::Mouse::getPosition()));
                               }
                             },
                             [](const auto&) {}});

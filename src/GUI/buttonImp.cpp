@@ -1,5 +1,8 @@
 module;
 
+#include <SFML/Window/Event.hpp>
+#include <SFML/Window/Mouse.hpp>
+
 module GUI.Button;
 
 import std;
@@ -31,13 +34,19 @@ void Button::setOnPress(std::function<void()> callback) {
   onClick_ = std::move(callback);
 }
 
-void Button::onMouseClick(Vec2 pos) {
+void Button::onButtonPressed(const sf::Event::MouseButtonPressed& evnt) {
+  std::cout << "Test\n";
+  if (evnt.button != sf::Mouse::Button::Left) return;
+  if (onClick_) onClick_();
+}
+
+void Button::onMouseClick(Vec2i pos) {
   if (contains(pos.x, pos.y)) {
     press();
   }
 }
 
-void Button::onMouseHover(Vec2 pos) { hovered_ = contains(pos.x, pos.y); }
+void Button::onMouseHover(Vec2i pos) { hovered_ = contains(pos.x, pos.y); }
 
 void Button::onKey(Key key) {
   if (key == Key::Enter && getFocused()) {
@@ -45,4 +54,5 @@ void Button::onKey(Key key) {
   }
 }
 
+void Button::onMouseMove(Vec2i pos) { std::cout << "xd\n"; }
 }  // namespace alviz::gui

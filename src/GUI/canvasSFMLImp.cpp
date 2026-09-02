@@ -32,7 +32,7 @@ void CanvasSFML::drawBorder(FloatRect bounds, Color color,
   window_.draw(rectShape_);
 }
 
-void CanvasSFML::drawText(const std::string& text, Vec2 pos, Color color,
+void CanvasSFML::drawText(const std::string& text, Vec2f pos, Color color,
                           math::u8 size, TextStyle style) {
   text_.setString(text);
   text_.setPosition({pos.x, pos.y});
