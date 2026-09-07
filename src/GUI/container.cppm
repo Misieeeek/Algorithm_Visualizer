@@ -10,6 +10,7 @@ import std;
 import GUI.ICanvas;
 import Alviz.Math;
 import GUI.Widget;
+import GUI.Key;
 
 export namespace alviz::gui {
 

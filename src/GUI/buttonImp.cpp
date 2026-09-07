@@ -8,6 +8,7 @@ module GUI.Button;
 import std;
 import GUI.Styles;
 import GUI.Common;
+import GUI.Key;
 
 namespace alviz::gui {
 namespace math = alviz::math;

@@ -10,6 +10,7 @@ module GUI.Container;
 import GUI.ICanvas;
 import Alviz.Math;
 import GUI.Widget;
+import GUI.Key;
 
 namespace alviz::gui {
 void Container::add(const std::shared_ptr<Widget> widget) {

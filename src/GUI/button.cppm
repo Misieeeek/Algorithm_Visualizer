@@ -13,6 +13,7 @@ import Alviz.Events;
 import GUI.Styles;
 import GUI.ICanvas;
 import GUI.Label;
+import GUI.Key;
 
 export namespace alviz::gui {
 using namespace alviz::math;

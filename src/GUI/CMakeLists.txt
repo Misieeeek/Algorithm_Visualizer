@@ -21,7 +21,8 @@ target_sources(
          styles.cppm
          input.cppm
          widget.cppm
-         GUIRoot.cppm)
+         GUIRoot.cppm
+         keysSFML.cppm)
 
 target_link_libraries(GUI_lib PUBLIC SFML::Graphics SFML::Window SFML::System
                                      common_lib event_lib)

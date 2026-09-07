@@ -3,6 +3,7 @@ module;
 export module GUI.Widget;
 
 import Alviz.Math;
+import GUI.Key;
 import GUI.ICanvas;
 
 export namespace alviz::gui {

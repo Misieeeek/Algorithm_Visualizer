@@ -10,6 +10,7 @@ import Alviz.Events;
 import Alviz.EventManager;
 import GUI.Widget;
 import GUI.Container;
+import GUI.Key;
 
 namespace alviz::gui {
 GUIRoot::GUIRoot(EventManager& events)

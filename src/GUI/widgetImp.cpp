@@ -8,11 +8,14 @@ module;
 module GUI.Widget;
 
 import Alviz.Math;
+import GUI.Key;
 
 namespace alviz::gui {
-void Widget::update(math::f32 deltaTime) {}
-
 void Widget::onKey(Key key) {}
+
+void Widget::onText(math::u32 unicode) {}
+
+void Widget::update(math::f32 deltaTime) {}
 
 void Widget::onMouseMove(Vec2i pos) {}
 
