@@ -46,17 +46,17 @@ void Container::onText(math::u32 unicode) {
   }
 };
 
-void Container::onMouseMove(math::f32 xPos, math::f32 yPos) {
+void Container::onMouseMove(Vec2i pos) {
   for (auto& child : children_) {
-    child->onMouseMove(xPos, yPos);
+    child->onMouseMove(pos);
   }
 };
 
-void Container::onMouseClick(math::f32 xPos, math::f32 yPos) {
+void Container::onMouseClick(Vec2i pos) {
   for (auto& child : children_) {
-    if (child->contains(xPos, yPos)) {
+    if (child->contains(pos)) {
       setFocus(child);
-      child->onMouseClick(xPos, yPos);
+      child->onMouseClick(pos);
       return;
     }
   }

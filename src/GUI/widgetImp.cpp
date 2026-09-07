@@ -14,14 +14,13 @@ void Widget::update(math::f32 deltaTime) {}
 
 void Widget::onKey(Key key) {}
 
-void Widget::onText(math::u32 unicode) {}
+void Widget::onMouseMove(Vec2i pos) {}
 
-void Widget::onMouseMove(math::f32 xPos, math::f32 yPos) {}
+void Widget::onMouseClick(Vec2i pos) {}
 
-void Widget::onMouseClick(math::f32 xPos, math::f32 yPos) {}
-
-bool Widget::contains(math::f32 xPos, math::f32 yPos) const {
-  return bounds_.contains(xPos, yPos);
+bool Widget::contains(Vec2i pos) const {
+  return bounds_.contains(static_cast<math::f32>(pos.y),
+                          static_cast<math::f32>(pos.y));
 }
 
 void Widget::setVisible(bool visibility) { visible_ = visibility; }

@@ -35,24 +35,23 @@ void Button::setOnPress(std::function<void()> callback) {
 }
 
 void Button::onButtonPressed(const sf::Event::MouseButtonPressed& evnt) {
-  std::cout << "Test\n";
   if (evnt.button != sf::Mouse::Button::Left) return;
-  if (onClick_) onClick_();
+  if (onClick_) {
+    onClick_();
+  }
 }
 
 void Button::onMouseClick(Vec2i pos) {
-  if (contains(pos.x, pos.y)) {
+  if (contains(pos)) {
     press();
   }
 }
 
-void Button::onMouseHover(Vec2i pos) { hovered_ = contains(pos.x, pos.y); }
+void Button::onMouseMove(Vec2i pos) { hovered_ = contains(pos); }
 
 void Button::onKey(Key key) {
   if (key == Key::Enter && getFocused()) {
     press();
   }
 }
-
-void Button::onMouseMove(Vec2i pos) { std::cout << "xd\n"; }
 }  // namespace alviz::gui

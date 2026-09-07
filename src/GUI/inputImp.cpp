@@ -42,11 +42,9 @@ void Input::onText(math::u32 unicode) {
   onTextChanged();
 }
 
-void Input::onMouseMove(math::f32 xPos, math::f32 yPos) {}
+void Input::onMouseMove(Vec2i pos) {}
 
-void Input::onMouseClick(math::f32 xPos, math::f32 yPos) {
-  setFocused(contains(xPos, yPos));
-}
+void Input::onMouseClick(Vec2i pos) { setFocused(contains(pos)); }
 
 void Input::setPlaceholder(std::string placeholder) {
   placeholder_ = std::move(placeholder);

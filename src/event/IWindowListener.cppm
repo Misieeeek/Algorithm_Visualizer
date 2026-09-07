@@ -10,6 +10,7 @@ enum class WindowEvent { CLOSED, RESIZED, FOCUSLOST, FOCUSGAINED };
 class IWindowListener {
  public:
   virtual ~IWindowListener() = default;
+
   virtual void onWindowClosed() = 0;
   virtual void onWindowResized(FloatRect size) {}
   virtual void onFocusLost() {};

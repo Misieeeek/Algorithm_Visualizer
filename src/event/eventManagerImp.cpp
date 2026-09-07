@@ -37,9 +37,7 @@ void EventManager::pollAndDispatch(sf::RenderWindow& window) {
                             },
                             [this](const sf::Event::MouseMoved& evnt) {
                               for (auto* listener : mouseListeners_) {
-                                Vec2i vec{};
-                                listener->onMouseMove(
-                                    vec.fromSFML(sf::Mouse::getPosition()));
+                                listener->onMouseMove(evnt);
                               }
                             },
                             [](const auto&) {}});

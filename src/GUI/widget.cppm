@@ -17,10 +17,10 @@ class Widget {
   virtual void update(math::f32 deltaTime);
   virtual void onKey(Key key);
   virtual void onText(math::u32 unicode);
-  virtual void onMouseMove(math::f32 xPos, math::f32 yPos);
-  virtual void onMouseClick(math::f32 xPos, math::f32 yPos);
+  virtual void onMouseMove(Vec2i pos);
+  virtual void onMouseClick(Vec2i pos);
 
-  [[nodiscard]] bool contains(math::f32 xPos, math::f32 yPos) const;
+  [[nodiscard]] bool contains(Vec2i pos) const;
 
   void setVisible(bool visibility);
   [[nodiscard]] bool visible() const;

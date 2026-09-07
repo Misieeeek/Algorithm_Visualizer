@@ -17,8 +17,8 @@ class Input : public Widget {
   void render(ICanvas& canvas) override;
   void update(math::f32 deltaTime) override;
   void onText(math::u32 unicode) override;
-  void onMouseMove(math::f32 xPos, math::f32 yPos) override;
-  void onMouseClick(math::f32 xPos, math::f32 yPos) override;
+  void onMouseMove(Vec2i pos) override;
+  void onMouseClick(Vec2i pos) override;
 
   void setPlaceholder(std::string placeholder);
   [[nodiscard]] const std::string& getText() const;
