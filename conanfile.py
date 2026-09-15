@@ -19,6 +19,7 @@ class FormatterRecipe(ConanFile):
 
     def requirements(self):
         self.requires("sfml/3.0.2")
+        self.requires("gtest/1.14.0")
 
     def build_requirements(self):
         self.tool_requires("cmake/[>=4.4]")

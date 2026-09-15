@@ -1,6 +1,7 @@
 module;
 
 #include <SFML/Graphics/RenderWindow.hpp>
+#include <cstddef>
 
 export module Alviz.EventManager;
 
@@ -14,6 +15,9 @@ class EventManager {
       IKeyboardListener& keyboard);
   [[nodiscard]] ListenerConnection addMouseListener(IMouseListener& mouse);
   [[nodiscard]] ListenerConnection addWindowListener(IWindowListener& window);
+  [[nodiscard]] std::size_t keyboardListenersCount() const noexcept;
+  [[nodiscard]] std::size_t mouseListenersCount() const noexcept;
+  [[nodiscard]] std::size_t windowListenersCount() const noexcept;
 
  private:
   void notifyWindowListeners(WindowEvent evnt);

@@ -21,9 +21,9 @@ class GUIRoot : public IMouseListener, public IKeyboardListener {
   void onMouseMove(const sf::Event::MouseMoved& evnt) override;
   void onButtonPressed(const sf::Event::MouseButtonPressed& evnt) override;
 
-  void add(std::shared_ptr<Widget> widget) { root_.add(std::move(widget)); }
-  void render(ICanvas& canvas) { root_.render(canvas); }
-  void update(math::f32 dt) { root_.update(dt); }
+  void add(std::shared_ptr<Widget> widget);
+  void render(ICanvas& canvas);
+  void update(math::f32 dt);
 
  private:
   Container root_;

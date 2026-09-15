@@ -83,4 +83,16 @@ void EventManager::notifyWindowListeners(WindowEvent evnt) {
     }
   }
 }
+
+std::size_t EventManager::keyboardListenersCount() const noexcept {
+  return keyboardListeners_.size();
+}
+
+std::size_t EventManager::mouseListenersCount() const noexcept {
+  return mouseListeners_.size();
+}
+
+std::size_t EventManager::windowListenersCount() const noexcept {
+  return windowListeners_.size();
+}
 }  // namespace alviz
